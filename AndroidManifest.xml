@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+		      package="cri.sanity" android:versionCode="2" android:versionName="0.2" android:installLocation="auto">
+
+  <application android:icon="@drawable/ic_app"
+               android:label="@string/app_name"
+               android:name=".A">
+               <!-- android:debuggable="true" -->
+
+    <activity android:name=".MainActivity" android:label="@string/app_name" android:launchMode="singleInstance">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+
+	  <service android:name=".MainService">
+			<intent-filter>
+				<action android:name="cri.sanity.MainService" />
+			</intent-filter>
+	  </service>
+
+	  <receiver android:name=".PhoneReceiver">
+      <intent-filter>
+        <action android:name="android.intent.action.PHONE_STATE" />
+      </intent-filter>
+    </receiver>
+
+  </application>
+
+  <uses-sdk android:minSdkVersion="7" />
+
+  <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.WRITE_SETTINGS" />
+	<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+	<uses-permission android:name="android.permission.BLUETOOTH" />
+	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+	<uses-permission android:name="android.permission.MODIFY_PHONE_STATE" />
+
+</manifest>

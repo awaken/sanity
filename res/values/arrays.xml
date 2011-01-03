@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string-array name="disable_delay_labels">
+		<item>Immediate</item>
+		<item>1 second</item>
+		<item>2 seconds</item>
+		<item>3 seconds</item>
+		<item>4 seconds</item>
+		<item>5 seconds</item>
+		<item>6 seconds</item>
+		<item>7 seconds</item>
+		<item>8 seconds</item>
+		<item>9 seconds</item>
+		<item>10 seconds</item>
+	</string-array>
+	<string-array name="disable_delay_values">
+		<item>0</item>
+		<item>1000</item>
+		<item>2000</item>
+		<item>3000</item>
+		<item>4000</item>
+		<item>5000</item>
+		<item>6000</item>
+		<item>7000</item>
+		<item>8000</item>
+		<item>9000</item>
+		<item>10000</item>
+	</string-array>
+
+	<string-array name="enable_delay_labels">
+		<item>Same as \"Turn off delay\"</item>
+		<item>Immediate</item>
+		<item>1 second</item>
+		<item>2 seconds</item>
+		<item>3 seconds</item>
+		<item>4 seconds</item>
+		<item>5 seconds</item>
+		<item>6 seconds</item>
+		<item>7 seconds</item>
+		<item>8 seconds</item>
+		<item>9 seconds</item>
+		<item>10 seconds</item>
+	</string-array>
+	<string-array name="enable_delay_values">
+		<item>-1</item>
+		<item>0</item>
+		<item>1000</item>
+		<item>2000</item>
+		<item>3000</item>
+		<item>4000</item>
+		<item>5000</item>
+		<item>6000</item>
+		<item>7000</item>
+		<item>8000</item>
+		<item>9000</item>
+		<item>10000</item>
+	</string-array>
+
+	<string-array name="volume_labels">
+		<item>Do not change</item>
+		<item>Level 1 (Minimum)</item>
+		<item>Level 2</item>
+		<item>Level 3</item>
+		<item>Level 4</item>
+		<item>Level 5</item>
+		<item>Level 6</item>
+		<item>Level 7</item>
+		<item>Level 8</item>
+		<item>Level 9</item>
+		<item>Level 10 (Maximum)</item>
+	</string-array>
+	<string-array name="volume_values">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+		<item>6</item>
+		<item>7</item>
+		<item>8</item>
+		<item>9</item>
+		<item>10</item>
+	</string-array>
+
+</resources>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_desc">
+    Software di gestione audio e per ridurre le onde elettromagnetiche durante le telefonate.
+    \nCopyright (C) 2010 - Cristiano Tagliamonte.
+  </string>
+
+	<string name="canc">Annulla</string>
+	<string name="yes">Sì</string>
+
+  <string name="main_cat">Opzioni principali</string>
+  <string name="enable_title">Abilita Sanity</string>
+  <string name="enable_sum">Abilita o disabilita il sistema Sanity. Se disabilitato, non verranno mai intraprese le azioni durante le telefonate.</string>
+  <string name="headset_title">Evita se uso le cuffie</string>
+  <string name="headset_sum">Seleziona per disabilitare il sistema Sanity quando le cuffie (con o senza fili) sono collegate.</string>
+  <string name="groups_cat">Gruppi di opzioni</string>
+  <string name="misc_cat">Varie</string>
+
+  <string name="devices_cat">Dispositivi da spegnere</string>
+  <string name="devices_sum">Quali dispositivi spegnere per ridurre le onde elettromagnetiche durante la telefonata.</string>
+  <string name="mobdata_title">Spegni Dati in Mobilità</string>
+  <string name="mobdata_sum">Disabilita la connessione Dati in Mobilità (2G/3G) durante la telefonata (sarà ripristinata al termine della chiamata).</string>
+  <string name="wifi_title">Spegni Wifi</string>
+  <string name="wifi_sum">Disabilita il Wifi durante la telefonata (sarà ripristinato al termine della chiamata).</string>
+  <string name="bt_title">Spegni Bluetooth</string>
+  <string name="bt_sum">Disabilita il Bluetooth durante la telefonata (sarà ripristinato al termine della chiamata).</string>
+
+	<string name="proximity_cat">Disabilita in prossimità</string>
+	<string name="proximity_sum">Opzioni per abilitare e disabilitare i dispositivi durante una chiamata utilizzando il sensore di prossimità.</string>
+  <string name="disable_near_title">Spegni in prossimità</string>
+  <string name="disable_near_sum">Spegni i dispositivi solo quando avvicini il telefono all\'orecchio durante una telefonata. (Se disabilitato, spegne a inizio chiamata.)</string>
+  <string name="disable_delay_title">Spegni in ritardo</string>
+  <string name="disable_delay_sum">Quanto tempo aspettare prima di spegnere i dispositivi quando il telefono è vicino all\'orecchio.</string>
+  <string name="restore_far_title">Riaccendi se distante</string>
+  <string name="restore_far_sum">Riaccendi i dispositivi (spenti da Sanity) durante una chiamata quando allontani il telefono dall\'orecchio.</string>
+  <string name="enable_delay_title">Riaccendi in ritardo</string>
+  <string name="enable_delay_sum">Quanto tempo aspettare prima di riaccendere i dispositivi quando il telefono è lontano dall\'orecchio.</string>
+
+  <string name="speaker_cat">Vivavoce</string>
+  <string name="speaker_sum">Opzioni per la gestione automatica del vivavoce (utilizza il sensore di prossimità).</string>
+  <string name="auto_speaker_title">Vivavoce automatico</string>
+  <string name="auto_speaker_sum">Abilita/disabilita automaticamente il vivavoce quando allontano/avvicino il telefono all\'orecchio.</string>
+  <string name="loud_speaker_title">Vivavoce forte</string>
+  <string name="loud_speaker_sum">Alza il volume al massimo quando il vivavoce viene attivato automaticamente da Sanity.</string>
+  <string name="speaker_call_title">Abilita a inizio chiamata</string>
+  <string name="speaker_call_sum">Abilita subito il vivavoce quando inizia la telefonata (solo se il telefono è lontano dall\'orecchio).</string>
+
+	<string name="vol_cat">Volume</string>
+	<string name="vol_sum">Opzioni per la gestione automatica del volume durante una telefonata.</string>
+	<string name="vol_phone_title">Volume telefono</string>
+	<string name="vol_phone_sum">Volume da impostare automaticamente durante una chiamata quando non si usano le cuffie.</string>
+	<string name="vol_wired_title">Cuffie con i fili</string>
+	<string name="vol_wired_sum">Volume da impostare automaticamente durante una chiamata mentre si usano le cuffie con i fili.</string>
+	<string name="vol_bt_title">Cuffie bluetooth</string>
+	<string name="vol_bt_sum">Volume da impostare automaticamente durante una chiamata mentre si usano le cuffie senza fili.</string>
+
+  <string name="notify_cat">Notifica</string>
+  <string name="notify_sum">Scegli quali notifiche visualizzare.</string>
+  <string name="notify_disable_title">Notifica lo spegnimento</string>
+  <string name="notify_disable_sum">Notifica quando i dispositivi vengono automaticamente spenti da Sanity.</string>
+  <string name="notify_enable_title">Notifica il ripristino</string>
+  <string name="notify_enable_sum">Notifica quando i dispositivi vengono automaticamente riaccesi da Sanity.</string>
+  <string name="notify_activity_title">Notifica l\'attività</string>
+  <string name="notify_activity_sum">Notifica quando l\'attività di Sanity è in esecuzione ma non è visibile sullo schermo.</string>
+
+  <string name="donate_title">Donazione</string>
+  <string name="donate_sum">Sanity è gratuito. Se questa applicazione ti piace, supporta lo sviluppo con una donazione.</string>
+  <string name="donated_title">Donazione completata</string>
+  <string name="donated_sum">Hai supportato Sanity. Grazie per la tua donazione!</string>
+
+  <string name="msg_devs_enabled">Sanity: dispositivi accesi</string>
+  <string name="msg_devs_disabled">Sanity: dispositivi spenti</string>
+  <string name="msg_run_enabled">Sanity è in esecuzione e abilitato</string>
+  <string name="msg_run_disabled">Sanity è in esecuzione ma è disabilitato</string>
+  <string name="msg_destroy">Sanity è in chiusura...</string>
+	<string name="msg_donate">Grazie per aver installato Sanity.
+	  \n\nQuesta è la versione libera, con tutte le funzionalità.
+	  Se Sanity ti piace, puoi effettuare una donazione per supportarlo.
+	  Una volta completata la donazione, questa finestra verrà soppressa.
+	  \n\nVuoi aprire ora il Market per la donazione?
+	</string>
+
+  <string name="msg_eula_title">Contratto di licenza software</string>
+  <string name="msg_eula">
+  	Questo programma è software libero: puoi ridistribuirlo e/o modificarlo nei termini della GNU Public License come
+  	pubblicato dalla Free Software Foundation, sia nella versione 3 della licenza, sia (a tua opinione) in qualsiasi
+  	altra versione successiva.
+  	\nQuesto programma è distribuito nella speranza che risulterà utile, ma SENZA NESSUNA GARANZIA; neppure la garanzia
+  	implicita di COMMERCIABILITA\' o IDONEITA\' PER UN PARTICOLARE SCOPO. Leggi la GNU Public License versione 3 per maggiori
+  	dettagli, puoi trovarne una copia su http://www.gnu.org/licenses/.
+  	\n
+  	\nScegli \"Ok\" per accettare la GNU Public License versione 3.
+  	\nScegli \"Annulla\" per rifiutarla.
+  </string>
+
+</resources>

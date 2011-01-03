@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+  <Preference android:title="@string/app_fullname"
+              android:summary="@string/app_desc"
+              android:key="app_logo" />
+
+	<PreferenceCategory android:title="@string/main_cat">
+    <CheckBoxPreference android:title="@string/enable_title"
+                        android:summary="@string/enable_sum"
+                        android:defaultValue="false"
+                        android:key="enabled" />
+    <CheckBoxPreference android:title="@string/headset_title"
+                        android:summary="@string/headset_sum"
+                        android:dependency="enabled"
+                        android:defaultValue="true"
+                        android:key="skip_headset" />
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/groups_cat">
+
+		<PreferenceScreen android:title="@string/devices_cat"
+		                  android:summary="@string/devices_sum"
+		                  android:dependency="enabled">
+      <Preference android:title="@string/app_fullname"
+                  android:summary="@string/app_desc"
+                  android:key="app_logo2" />
+      <PreferenceCategory android:title="@string/devices_cat">
+      <CheckBoxPreference android:title="@string/mobdata_title"
+                          android:summary="@string/mobdata_sum"
+                          android:defaultValue="true"
+                          android:key="mobdata" />
+      <CheckBoxPreference android:title="@string/wifi_title"
+                          android:summary="@string/wifi_sum"
+                          android:defaultValue="true"
+                          android:key="wifi" />
+      <CheckBoxPreference android:title="@string/bt_title"
+                          android:summary="@string/bt_sum"
+                          android:defaultValue="true"
+                          android:key="bt" />
+      </PreferenceCategory>
+    </PreferenceScreen>
+
+		<PreferenceScreen android:title="@string/proximity_cat"
+		                  android:summary="@string/proximity_sum"
+		                  android:dependency="enabled">
+      <Preference android:title="@string/app_fullname"
+                  android:summary="@string/app_desc"
+                  android:key="app_logo3" />
+      <PreferenceCategory android:title="@string/proximity_cat">
+	    <CheckBoxPreference android:title="@string/disable_near_title"
+	                        android:summary="@string/disable_near_sum"
+	                        android:defaultValue="true"
+	                        android:key="proximity" />
+	    <ListPreference android:title="@string/disable_delay_title"
+	                    android:summary="@string/disable_delay_sum"
+	                    android:dependency="proximity"
+	                    android:defaultValue="1000"
+	                    android:key="disable_delay"
+	                    android:entries="@array/disable_delay_labels"
+	                    android:entryValues="@array/enable_delay_values" />
+	    <CheckBoxPreference android:title="@string/restore_far_title"
+	                        android:summary="@string/restore_far_sum"
+	                        android:dependency="proximity"
+	                        android:defaultValue="true"
+	                        android:key="restore_far" />
+	    <ListPreference android:title="@string/enable_delay_title"
+	                    android:summary="@string/enable_delay_sum"
+	                    android:dependency="restore_far"
+	                    android:defaultValue="3000"
+	                    android:key="enable_delay"
+	                    android:entries="@array/enable_delay_labels"
+	                    android:entryValues="@array/enable_delay_values" />
+      </PreferenceCategory>
+		</PreferenceScreen>
+	
+		<PreferenceScreen android:title="@string/speaker_cat"
+		                  android:summary="@string/speaker_sum"
+		                  android:dependency="enabled">
+      <Preference android:title="@string/app_fullname"
+                  android:summary="@string/app_desc"
+                  android:key="app_logo4" />
+      <PreferenceCategory android:title="@string/speaker_cat">
+	    <CheckBoxPreference android:title="@string/auto_speaker_title"
+	                        android:summary="@string/auto_speaker_sum"
+	                        android:defaultValue="true"
+	                        android:key="auto_speaker" />
+	    <CheckBoxPreference android:title="@string/loud_speaker_title"
+	                        android:summary="@string/loud_speaker_sum"
+	                        android:dependency="auto_speaker"
+	                        android:defaultValue="true"
+	                        android:key="loud_speaker" />
+	    <CheckBoxPreference android:title="@string/speaker_call_title"
+	                        android:summary="@string/speaker_call_sum"
+	                        android:defaultValue="true"
+	                        android:key="speaker_call" />
+      </PreferenceCategory>
+		</PreferenceScreen>
+	
+		<PreferenceScreen android:title="@string/vol_cat"
+		                  android:summary="@string/vol_sum"
+		                  android:dependency="enabled">
+      <Preference android:title="@string/app_fullname"
+                  android:summary="@string/app_desc"
+                  android:key="app_logo5" />
+      <PreferenceCategory android:title="@string/vol_cat">
+	    <ListPreference android:title="@string/vol_phone_title"
+	                    android:summary="@string/vol_phone_sum"
+	                    android:defaultValue="0"
+	                    android:key="vol_phone"
+	                    android:entries="@array/volume_labels"
+	                    android:entryValues="@array/volume_values" />
+	    <ListPreference android:title="@string/vol_wired_title"
+	                    android:summary="@string/vol_wired_sum"
+	                    android:defaultValue="0"
+	                    android:key="vol_wired"
+	                    android:entries="@array/volume_labels"
+	                    android:entryValues="@array/volume_values" />
+	    <ListPreference android:title="@string/vol_bt_title"
+	                    android:summary="@string/vol_bt_sum"
+	                    android:defaultValue="0"
+	                    android:key="vol_bt"
+	                    android:entries="@array/volume_labels"
+	                    android:entryValues="@array/volume_values" />
+      </PreferenceCategory>
+		</PreferenceScreen>
+
+		<PreferenceScreen android:title="@string/notify_cat"
+		                  android:summary="@string/notify_sum"
+		                  android:dependency="enabled">
+      <Preference android:title="@string/app_fullname"
+                  android:summary="@string/app_desc"
+                  android:key="app_logo6" />
+      <PreferenceCategory android:title="@string/notify_cat">
+	    <CheckBoxPreference android:title="@string/notify_disable_title"
+	                        android:summary="@string/notify_disable_sum"
+	                        android:defaultValue="true"
+	                        android:key="notify_disable" />
+	    <CheckBoxPreference android:title="@string/notify_enable_title"
+	                        android:summary="@string/notify_enable_sum"
+	                        android:defaultValue="true"
+	                        android:key="notify_enable" />
+	    <CheckBoxPreference android:title="@string/notify_activity_title"
+	                        android:summary="@string/notify_activity_sum"
+	                        android:defaultValue="true"
+	                        android:key="notify_activity" />
+      </PreferenceCategory>
+		</PreferenceScreen>
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/misc_cat">
+    <Preference android:title="@string/donate_title"
+                android:summary="@string/donate_sum"
+                android:key="donate" />
+	</PreferenceCategory>
+
+</PreferenceScreen>

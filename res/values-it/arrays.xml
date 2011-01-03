@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string-array name="disable_delay_labels">
+		<item>Immediato</item>
+		<item>1 secondo</item>
+		<item>2 secondi</item>
+		<item>3 secondi</item>
+		<item>4 secondi</item>
+		<item>5 secondi</item>
+		<item>6 secondi</item>
+		<item>7 secondi</item>
+		<item>8 secondi</item>
+		<item>9 secondi</item>
+		<item>10 secondi</item>
+	</string-array>
+
+	<string-array name="enable_delay_labels">
+		<item>Come \"Spegni in ritardo\"</item>
+		<item>Immediato</item>
+		<item>1 secondo</item>
+		<item>2 secondi</item>
+		<item>3 secondi</item>
+		<item>4 secondi</item>
+		<item>5 secondi</item>
+		<item>6 secondi</item>
+		<item>7 secondi</item>
+		<item>8 secondi</item>
+		<item>9 secondi</item>
+		<item>10 secondi</item>
+	</string-array>
+
+	<string-array name="volume_labels">
+		<item>Non modificare</item>
+		<item>Livello 1 (Minimo)</item>
+		<item>Livello 2</item>
+		<item>Livello 3</item>
+		<item>Livello 4</item>
+		<item>Livello 5</item>
+		<item>Livello 6</item>
+		<item>Livello 7</item>
+		<item>Livello 8</item>
+		<item>Livello 9</item>
+		<item>Livello 10 (Massimo)</item>
+	</string-array>
+
+</resources>
