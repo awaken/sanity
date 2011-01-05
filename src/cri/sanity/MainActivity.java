@@ -1,12 +1,14 @@
 package cri.sanity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.Preference;
 
 
 public class MainActivity extends PrefActivity
 {
-	private static boolean isDonateAsking = false;
+	private boolean isDonateAsking = false;
 
 	//---- Activity override
 
@@ -15,20 +17,16 @@ public class MainActivity extends PrefActivity
   {
     super.onCreate(savedInstanceState);
     addPreferencesFromResource(R.xml.prefs);
-    //setContentView(R.layout.main);
     try {
-    	Click cl = new Click(){ boolean on() { A.gotoAuthorApps(); return true; }};
-      on("app_logo" , cl);
-      on("app_logo2", cl);
-      on("app_logo3", cl);
-      on("app_logo4", cl);
-      on("app_logo5", cl);
-      on("app_logo6", cl);
-      donateSetup();
-      agreeSetup();
+    	setupAppLogo();
+    	setupProximity();
+    	setupVolumeLevels();
+      setupDonate();
+  		if(A.is("agree")) checkDonate ();
+  		else              checkLicense();
     }
     catch(Exception e) {
-    	String msg = "Activity exception: "+e.getMessage();
+    	String msg = "Activity Exception: "+e.getMessage();
     	A.loge(msg);
     	A.loge(e);
     	if(A.DEBUG) A.notify(msg);
@@ -58,23 +56,66 @@ public class MainActivity extends PrefActivity
 	
 	//---- private api
 
-	private void agreeSetup()
+	private void setupAppLogo()
 	{
-		if(A.is("agree"))
-  		donateCheck();
-		else
-			A.alert(A.tr(R.string.msg_eula_title),
-				A.tr(R.string.app_fullname)+"\n\n"+A.tr(R.string.app_desc)+"\n\n"+A.tr(R.string.msg_eula),
-				new A.DlgClick(){ void on(){ A.putc("agree",true); setChecked("enabled",true); donateCheck(); }},
-				new A.DlgClick(){ void on(){ onBackPressed(); }},
-				A.ALERT_OKCANC, false
-			);
+  	// setup click listener for app logo
+  	Click cl = new Click(){ boolean on(){ A.gotoAuthorApps(); return true; }};
+  	for(int i=1; i<=Conf.LOGO_COUNT; ++i)
+  		on("app_logo"+i, cl);
 	}
 
-	private void donateSetup()
+	private void setupProximity()
+	{
+  	// setup preferences when proximity sensor exists or not
+  	if(Dev.sensorProxim() != null) {
+  		// disable "loud_speaker" when both "auto_speaker" and "speaker_call" are unchecked
+    	on("auto_speaker", new Click(){ boolean on(){
+    		findPref("loud_speaker").setEnabled(is(pref) || is("speaker_call"));
+    		return false;
+    	}});
+    	on("speaker_call", new Click(){ boolean on(){
+    		findPref("loud_speaker").setEnabled(is(pref) || is("auto_speaker"));
+    		return false;
+    	}});
+  	}
+  	else {
+  		// if no proximity sensor found: disable all proximity options
+  		setEnabled("screen_proximity", false);
+  		setEnabled("auto_speaker"    , false);
+  		setChecked("speaker_call"    , false);
+  		findPref("loud_speaker").setDependency("speaker_call");
+  	}
+	}
+	
+	private void setupVolumeLevels()
+	{
+  	// setup volume ranges for ListPreferences
+  	final String lev = A.tr(R.string.level) + " ";
+  	final int m = Dev.getVolumeMax(Dev.VOLUME_CALL);
+  	CharSequence[] av = new CharSequence[m+1];
+  	CharSequence[] ae = new CharSequence[m+1];
+  	av[0] = "0";
+  	av[1] = "1";
+  	av[m] = Integer.toString(m);
+  	ae[0] = A.tr(R.string.nochange);
+  	ae[1] = lev + av[1] + " ("+A.tr(R.string.min)+")";
+  	ae[m] = lev + av[m] + " ("+A.tr(R.string.max)+")";
+  	for(int i=2; i<m; ++i) {
+  		av[i] = Integer.toString(i);
+  		ae[i] = lev + av[i];
+  	}
+  	//String[] vols = new String[]{ "vol_phone", "vol_wired", "vol_bt" };
+  	for(String k : new String[]{ "vol_phone", "vol_wired", "vol_bt" }) {
+  		ListPreference lp = (ListPreference)findPref(k);
+  		lp.setEntries    (ae);
+  		lp.setEntryValues(av);
+  	}
+	}
+	
+	private void setupDonate()
 	{
 		Preference p = findPref("donate");
-    if(!A.isFull()) {
+    if(!A.isFull() && !startDonateApp()) {
       on(p, new Click(){ boolean on() {
       	A.gotoAuthorApps();
   	    return true;
@@ -87,16 +128,35 @@ public class MainActivity extends PrefActivity
     }
 	}
 	
-	private void donateCheck()
+	private void checkDonate()
 	{
 		if(isDonateAsking || A.isFull()) return;
 		isDonateAsking = true;
-		A.alert(A.tr(R.string.msg_donate),
+		A.alert(
+			A.tr(R.string.msg_donate),
 			new A.DlgClick(){ void on(){ A.gotoAuthorApps(); isDonateAsking = false; }},
 			new A.DlgClick(){ void on(){                     isDonateAsking = false; }}
 		);
 	}
 
+	private void checkLicense()
+	{
+		A.alert(
+		  A.tr(R.string.msg_eula_title),
+			A.tr(R.string.app_fullname)+"\n\n"+A.tr(R.string.app_desc)+"\n\n"+A.tr(R.string.msg_eula),
+			new A.DlgClick(){ void on(){ A.putc("agree",true); setChecked("enabled",true); }},
+			new A.DlgClick(){ void on(){ onBackPressed(); }},
+			A.ALERT_OKCANC, false
+		);
+	}
+
+	private boolean startDonateApp()
+	{
+		boolean done = startService(new Intent(Conf.ACTION_DONATE)) != null;
+		if(done) A.setFull();
+		return done;
+	}
+	
 	//---- static api
 
 	public static void notifyRun()

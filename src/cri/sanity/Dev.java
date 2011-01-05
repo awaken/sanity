@@ -11,12 +11,12 @@ import android.hardware.SensorManager;
 
 public final class Dev
 {
-	public static final int VOLUME_SYS   = AudioManager.STREAM_SYSTEM;
 	public static final int VOLUME_CALL  = AudioManager.STREAM_VOICE_CALL;
 	public static final int VOLUME_MEDIA = AudioManager.STREAM_MUSIC;
 	public static final int VOLUME_ALARM = AudioManager.STREAM_ALARM;
 	public static final int VOLUME_RING  = AudioManager.STREAM_RING;
 	public static final int VOLUME_DTMF  = AudioManager.STREAM_DTMF;
+	public static final int VOLUME_SYS   = AudioManager.STREAM_SYSTEM;
 	
 	private static Object iTelMan;
 
@@ -29,19 +29,19 @@ public final class Dev
 		return sm==null ? null : sm.getDefaultSensor(type);
 	}
 	public static Sensor sensorProxim() { return sensor(Sensor.TYPE_PROXIMITY     ); }
-	public static Sensor sensorOrient() { return sensor(Sensor.TYPE_ORIENTATION   ); }
+	/*public static Sensor sensorOrient() { return sensor(Sensor.TYPE_ORIENTATION   ); }
 	public static Sensor sensorAccel () { return sensor(Sensor.TYPE_ACCELEROMETER ); }
 	public static Sensor sensorLight () { return sensor(Sensor.TYPE_LIGHT         ); }
 	public static Sensor sensorMagnet() { return sensor(Sensor.TYPE_MAGNETIC_FIELD); }
 	public static Sensor sensorTemper() { return sensor(Sensor.TYPE_TEMPERATURE   ); }
 	public static Sensor sensorPress () { return sensor(Sensor.TYPE_PRESSURE      ); }
-	public static Sensor sensorGyro  () { return sensor(Sensor.TYPE_GYROSCOPE     ); }
+	public static Sensor sensorGyro  () { return sensor(Sensor.TYPE_GYROSCOPE     ); }*/
 
 	//---- having devices?
 	
 	public static boolean haveProxim() { return sensorProxim() != null; }
 	public static boolean haveWifi()   { return A.wifiMan()    != null; }
-	public static boolean haveLoc()    { return A.locMan()     != null; }
+	//public static boolean haveLoc()    { return A.locMan()     != null; }
 	public static boolean haveBt()     { return A.btAdapter()  != null; }
 	public static boolean haveTel()    { return A.telMan()     != null; }
 

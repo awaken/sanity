@@ -30,18 +30,4 @@
 		<item>10 secondi</item>
 	</string-array>
 
-	<string-array name="volume_labels">
-		<item>Non modificare</item>
-		<item>Livello 1 (Minimo)</item>
-		<item>Livello 2</item>
-		<item>Livello 3</item>
-		<item>Livello 4</item>
-		<item>Livello 5</item>
-		<item>Livello 6</item>
-		<item>Livello 7</item>
-		<item>Livello 8</item>
-		<item>Livello 9</item>
-		<item>Livello 10 (Massimo)</item>
-	</string-array>
-
 </resources>

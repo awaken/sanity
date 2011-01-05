@@ -8,21 +8,23 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.location.LocationManager;
+import android.content.res.Resources;
 import android.media.AudioManager;
+/*import android.location.LocationManager;
 import android.net.ConnectivityManager;
+import android.os.PowerManager;*/
 import android.net.Uri;
 import android.net.wifi.WifiManager;
-import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.hardware.SensorManager;
 import android.util.Log;
-import android.widget.Toast;
+//import android.widget.Toast;
 
 
 public final class A extends Application
@@ -60,7 +62,7 @@ public final class A extends Application
 	
 	private static A                        a;
 	private static String                   name;
-
+	private static Resources                res;
 	private static SharedPreferences        prefs;
 	private static SharedPreferences.Editor edit;
 
@@ -69,9 +71,9 @@ public final class A extends Application
 	private static TelephonyManager         telMan;
 	private static BluetoothAdapter         btAdapter;
 	private static WifiManager              wifiMan;
-	private static ConnectivityManager      connMan;
+	/*private static ConnectivityManager      connMan;
 	private static LocationManager          locMan;
-	private static PowerManager             powerMan;
+	private static PowerManager             powerMan;*/
 	private static SensorManager            sensorMan;
 
 	//---- inner classes
@@ -106,6 +108,8 @@ public final class A extends Application
 	public static final String             name() { return name;  }
 	public static SharedPreferences       prefs() { return prefs; }
 	public static SharedPreferences.Editor edit() { return edit;  }
+	public static final String              pkg() { return a.getPackageName(); }
+	public static final Resources           res() { return res==null? res=a.getResources() : res; }
 	
 	// log
 	public static int logd(String msg)  { return !DEBUG? 0 : Log.d(name, msg); }
@@ -114,41 +118,47 @@ public final class A extends Application
 	public static int logw(String msg)  { return !DEBUG? 0 : Log.w(name, msg); }
 	public static int loge(String msg)  { return !DEBUG? 0 : Log.e(name, msg); }
 	public static int loge(Throwable t) { return !DEBUG? 0 : Log.wtf(name, t); }
-	public static int prn (String msg)                      { return !DEBUG? 0 : Log.println(PRI, name, msg); }
-	public static int prn (int pri, String msg)             { return !DEBUG? 0 : Log.println(pri, name, msg); }
-	public static int prn (int pri, String tag, String msg) { return !DEBUG? 0 : Log.println(pri, tag , msg); }
-	public static int prn (String tag, String msg)          { return !DEBUG? 0 : Log.println(PRI, tag , msg); }
 
 	// misc
 	public static boolean isEmpty(String s) { return s==null || s.trim().length()<=0; }
 
-	public static String tr(int id) { return (String)a.getResources().getText(id); }
+	public static String tr(int id) { return (String)res().getText(id); }
 
 	public static long now() { return System.currentTimeMillis(); }
 
-	//public static void gotoMarketPkg(String pkg) { gotoUrl("market://search?q=pname:"+a.getPackageName()); }
-	public static void gotoAuthorApps()    { gotoUrl("market://search?q=pub:"+AUTHOR); }
-	public static void gotoUrl(String url) {
+	//public static boolean gotoMarketPkg(String pkg) { return gotoMarketUrl("search?q=pname:"+(pkg.isEmpty()?a.getPackageName():pkg)); }
+	public static boolean gotoAuthorApps()            { return gotoMarketUrl("search?q="+AUTHOR); }
+	public static boolean gotoMarketUrl(String query) {
+		boolean res = gotoUrl("market://"+query);
+		if(!res) alert(A.tr(R.string.msg_market_err));
+		return res;
+	}
+	public static boolean gotoUrl(String url) {
 		final Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		a.startActivity(i);
+		try {
+			a.startActivity(i);
+			return true;
+		} catch(ActivityNotFoundException e) {
+			return false;
+		}
 	}
 	
 	// string conversion
-	public int    s2i(String s) { return Integer.parseInt  (s); }
+	/*public int    s2i(String s) { return Integer.parseInt  (s); }
 	public long   s2l(String s) { return Long   .parseLong (s); }
 	public float  s2f(String s) { return Float  .parseFloat(s); }
 	public String i2s(int    n) { return Integer.toString  (n); }
 	public String l2s(long   n) { return Long   .toString  (n); }
-	public String f2s(float  n) { return Float  .toString  (n); }
+	public String f2s(float  n) { return Float  .toString  (n); }*/
 
 	// basic notification/interaction
-	public static void toast (String msg)           { Toast.makeText(a, msg  , Toast.LENGTH_LONG ).show(); }
+	/*public static void toast (String msg)           { Toast.makeText(a, msg  , Toast.LENGTH_LONG ).show(); }
 	public static void toast (int  resid)           { Toast.makeText(a, resid, Toast.LENGTH_LONG ).show(); }
 	public static void toast (String msg, int time) { Toast.makeText(a, msg  , time              ).show(); }
 	public static void toast (int  resid, int time) { Toast.makeText(a, resid, time              ).show(); }
 	public static void toastF(String msg)           { Toast.makeText(a, msg  , Toast.LENGTH_SHORT).show(); }
-	public static void toastF(int  resid)           { Toast.makeText(a, resid, Toast.LENGTH_SHORT).show(); }
+	public static void toastF(int  resid)           { Toast.makeText(a, resid, Toast.LENGTH_SHORT).show(); }*/
 
 	public static void notify(String msg)                          { notify(name , msg, NID, now()); }
 	public static void notify(String msg, int id)                  { notify(name , msg, id , now()); }
@@ -223,6 +233,7 @@ public final class A extends Application
 
 	public static boolean isEnabled () { return prefs.getBoolean(ENABLED_KEY , false); }
 	public static boolean isFull()     { return FULL || prefs.getBoolean("full", false); }
+	public static void    setFull()    { putc("full", true); }
 
 	public static boolean is(String key)                { return prefs.getBoolean(key, DEF_BOOL  ); }
 	public static boolean is(String key, boolean def)   { return prefs.getBoolean(key, def       ); }
@@ -286,17 +297,17 @@ public final class A extends Application
 	public static WifiManager wifiMan() {
 		return wifiMan==null? wifiMan=(WifiManager)a.getSystemService(Context.WIFI_SERVICE) : wifiMan;
 	}
-	public static ConnectivityManager connMan() {
+	/*public static ConnectivityManager connMan() {
 		return connMan==null? connMan=(ConnectivityManager)a.getSystemService(Context.CONNECTIVITY_SERVICE) : connMan;
 	}
 	public static LocationManager locMan() {
 		return locMan==null? locMan=(LocationManager)a.getSystemService(Context.LOCATION_SERVICE) : locMan;
 	}
-	public static SensorManager sensorMan() {
-		return sensorMan==null? sensorMan=(SensorManager)a.getSystemService(SENSOR_SERVICE) : sensorMan;
-	}
 	public static PowerManager powerMan() {
 		return powerMan==null? powerMan=(PowerManager)a.getSystemService(Context.POWER_SERVICE) : powerMan;
+	}*/
+	public static SensorManager sensorMan() {
+		return sensorMan==null? sensorMan=(SensorManager)a.getSystemService(SENSOR_SERVICE) : sensorMan;
 	}
 	public static BluetoothAdapter btAdapter() {
 		return btAdapter==null? btAdapter=BluetoothAdapter.getDefaultAdapter() : btAdapter;

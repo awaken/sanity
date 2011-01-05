@@ -27,15 +27,16 @@ public class MainService extends Service
 	//public void onCreate() { super.onCreate(); A.logd("MainService created"); }
 
 	@Override
-	public void onStart(Intent intent, int id)
+	public int onStartCommand(Intent intent, int flags, int id)
 	{
-		super.onStart(intent, id);
 		running = true;
+		super.onStartCommand(intent, flags, id);
 		if(A.activity == null) MainActivity.notifyRun();
 		A.logd("MainService started");
 		if(phoneListener == null) phoneListener = new PhoneListener();
 		phoneListener.startup();
 		A.telMan().listen(phoneListener, PhoneListener.LISTEN);
+		return START_STICKY;
 	}
 
 	@Override

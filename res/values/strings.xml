@@ -13,6 +13,11 @@
 	<string name="yes">Yes</string>
 	<string name="no">No</string>
 
+	<string name="min">Minimum</string>
+	<string name="max">Maximum</string>
+	<string name="level">Level</string>
+	<string name="nochange">Do not change</string>
+
   <string name="main_cat">Main options</string>
   <string name="enable_title">Enable Sanity</string>
   <string name="enable_sum">Enable or disable whole Sanity sytem. If disabled, Sanity never take actions during phone calls.</string>
@@ -42,13 +47,13 @@
   <string name="enable_delay_sum">Delay for turning ON devices when your ear is far to phone.</string>
 
   <string name="speaker_cat">Handsfree</string>
-  <string name="speaker_sum">Options for automatic handling of handsfree (using proximity sensor).</string>
+  <string name="speaker_sum">Options for automatic handsfree activation.</string>
   <string name="auto_speaker_title">Automatic handsfree</string>
   <string name="auto_speaker_sum">Automatically enable/disable handsfree when the phone is far/close to your ear.</string>
   <string name="loud_speaker_title">Loud speaker</string>
   <string name="loud_speaker_sum">Automatically set maximum volume when handsfree is enabled (the volume will automatically restored).</string>
   <string name="speaker_call_title">Enable on call start</string>
-  <string name="speaker_call_sum">Enable handsfree when call begins (only when phone is far to ear).</string>
+  <string name="speaker_call_sum">Enable handsfree when call begins.</string>
 
 	<string name="vol_cat">Volume</string>
 	<string name="vol_sum">Options for automatic volume setting during a call.</string>
@@ -77,6 +82,7 @@
   <string name="msg_devs_disabled">Sanity: devices disabled</string>
   <string name="msg_run_enabled">Sanity is running and enabled</string>
   <string name="msg_run_disabled">Sanity is running but disabled</string>
+  <string name="msg_market_err">Unable to open Market for showing author\'s applications! Check the Internet connection is properly working.</string>
 	<string name="msg_donate">Thank you for using Sanity.
 	  \n\nThis is the free version, with full capabilities.
 	  If you like Sanity, you can donate for supporting it.

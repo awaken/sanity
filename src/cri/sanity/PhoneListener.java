@@ -27,12 +27,12 @@ public class PhoneListener extends PhoneStateListener implements SensorEventList
 	private boolean applied = false, proxRegistered = false, headsetRegistered = false;
 	private boolean notifyEnable, notifyDisable, proximity, restoreFar, skipHeadset, autoSpeaker, loudSpeaker, speakerCall;
 	private boolean headsetOn, mobdataOn, wifiOn, btOn;
-	private int     volRestore, disableDelay, enableDelay;
-	private int     volPhone, volWired, volBt;
 	private boolean lastFar   = true;
 	private int     lastState = -1;
+	private int     disableDelay, enableDelay;
+	private int     volRestore, volPhone, volWired, volBt;
 
-	private final int    maxVolume  = Dev.getVolumeMax(Dev.VOLUME_CALL);
+	private final int    volMax     = Dev.getVolumeMax(Dev.VOLUME_CALL);
 	private final Sensor proxSensor = Dev.sensorProxim();
 	private final Timer  timer      = new Timer();
 	private TimerTask    timerTask;
@@ -83,9 +83,10 @@ public class PhoneListener extends PhoneStateListener implements SensorEventList
 	};
 	
 	//---- methods
-
+	
 	public void startup()
 	{
+		A.logd("max volume = "+volMax);
 		onRinging();
 		lastState = TelephonyManager.CALL_STATE_RINGING;
 		if(proximity)               A.logd("using proximity sensor.");
@@ -97,6 +98,7 @@ public class PhoneListener extends PhoneStateListener implements SensorEventList
 	public final boolean isRinging() { return lastState == TelephonyManager.CALL_STATE_RINGING; }
 	public final boolean isOffhook() { return lastState == TelephonyManager.CALL_STATE_OFFHOOK; }
 	public final boolean isIdle   () { return lastState == TelephonyManager.CALL_STATE_IDLE   ; }
+	private boolean isCallSpeaker () { return speakerCall && lastFar; }
 
 	private void updateHeadset(boolean on, int vol)
 	{
@@ -107,7 +109,7 @@ public class PhoneListener extends PhoneStateListener implements SensorEventList
 		enableDevs(on |= lastFar);
 		if(autoSpeaker) autoSpeaker(on);
 	}
-	
+
 	// invoked when headsets are (un)plugged for automatic volume (un)setting
 	private void volumeSetter(boolean on, int vol)
 	{
@@ -127,7 +129,7 @@ public class PhoneListener extends PhoneStateListener implements SensorEventList
 		notifyEnable  = A.is("notify_enable");
 		notifyDisable = A.is("notify_disable");
 		skipHeadset   = A.is("skip_headset");
-		proximity     = A.is("proximity");
+		proximity     = A.is("proximity") && proxSensor!=null;
 		restoreFar    = A.is("restore_far");
 		speakerCall   = A.is("speaker_call");
 		autoSpeaker   = A.is("auto_speaker");
@@ -155,9 +157,14 @@ public class PhoneListener extends PhoneStateListener implements SensorEventList
 		A.logd("onOffhook");
 		if(headsetOn)
 			volumeSetter(true, A.audioMan().isWiredHeadsetOn() ? volWired : volBt);
-		else if(speakerCall && lastFar)
-			forceAutoSpeakerOn();
-		if(!proximity) enableDevs(false);
+		else {
+			if(volPhone > 0)
+				Dev.setVolume(Dev.VOLUME_CALL, volPhone);
+			if(isCallSpeaker())
+				forceAutoSpeakerOn();
+		}
+		if(!proximity)
+			enableDevs(false);
 	}
 
 	// call completed: restore & shutdown
@@ -214,15 +221,15 @@ public class PhoneListener extends PhoneStateListener implements SensorEventList
 	private synchronized void autoSpeaker(boolean far)
 	{
 		if(headsetOn || far==Dev.isSpeakerOn()) return;
-		if(loudSpeaker && far && (lastFar!=far || volRestore!=SKIP_VOLUME)) {
+		if(far && loudSpeaker && (lastFar!=far || volRestore!=SKIP_VOLUME)) {
 			volRestore = Dev.getVolume(Dev.VOLUME_CALL);            // retrieve current call volume (to restore later)
-			if(volRestore == maxVolume) volRestore = SKIP_VOLUME;   // current volume is already at max: don't change
+			if(volRestore == volMax) volRestore = SKIP_VOLUME;      // current volume is already at max: don't change
 		}
-		Dev.enableSpeaker(far);                                   // auto enable/disable speaker when phone if far/near to ear
 		A.logd("auto set speaker to "+(far?"on":"off"));
+		Dev.enableSpeaker(far);                                   // auto enable/disable speaker when phone if far/near to ear
 		if(loudSpeaker && volRestore!=SKIP_VOLUME) {
 			if(far) {
-				Dev.setVolume(Dev.VOLUME_CALL, maxVolume);
+				Dev.setVolume(Dev.VOLUME_CALL, volMax);
 				A.logd("auto set volume to max");
 			}
 			else {
@@ -278,14 +285,14 @@ public class PhoneListener extends PhoneStateListener implements SensorEventList
 		a.unregisterReceiver(headsetBtReceiver);
 		A.logd("unregister headset listeners");
 	}
-
+	
 	//---- PhoneStateListener implementation
 
 	@Override
 	public void onCallForwardingIndicatorChanged(boolean cfi)
 	{
 		A.logd("onCallForwardingIndicatorChanged: "+cfi);
-		if(!headsetOn && speakerCall && isOffhook()) forceAutoSpeakerOn();
+		if(!headsetOn && isCallSpeaker() && isOffhook()) forceAutoSpeakerOn();
 	}
 
 	@Override
@@ -308,7 +315,7 @@ public class PhoneListener extends PhoneStateListener implements SensorEventList
 	{
 		final float   val = evt.values[0];
 		final boolean far = val > PROX_NEAR;
-		A.logd("proximity sensor value = "+val);
+		//A.logd("proximity sensor value = "+val);
 		if(!headsetOn) {
 			if(far == lastFar) return;
 			if(autoSpeaker) autoSpeaker(far);

@@ -8,6 +8,11 @@
 	<string name="canc">Annulla</string>
 	<string name="yes">Sì</string>
 
+	<string name="min">Minimo</string>
+	<string name="max">Massimo</string>
+	<string name="level">Livello</string>
+	<string name="nochange">Non modificare</string>
+
   <string name="main_cat">Opzioni principali</string>
   <string name="enable_title">Abilita Sanity</string>
   <string name="enable_sum">Abilita o disabilita il sistema Sanity. Se disabilitato, non verranno mai intraprese le azioni durante le telefonate.</string>
@@ -37,13 +42,13 @@
   <string name="enable_delay_sum">Quanto tempo aspettare prima di riaccendere i dispositivi quando il telefono è lontano dall\'orecchio.</string>
 
   <string name="speaker_cat">Vivavoce</string>
-  <string name="speaker_sum">Opzioni per la gestione automatica del vivavoce (utilizza il sensore di prossimità).</string>
+  <string name="speaker_sum">Opzioni per l\'attivazione automatica del vivavoce.</string>
   <string name="auto_speaker_title">Vivavoce automatico</string>
   <string name="auto_speaker_sum">Abilita/disabilita automaticamente il vivavoce quando allontano/avvicino il telefono all\'orecchio.</string>
   <string name="loud_speaker_title">Vivavoce forte</string>
   <string name="loud_speaker_sum">Alza il volume al massimo quando il vivavoce viene attivato automaticamente da Sanity.</string>
   <string name="speaker_call_title">Abilita a inizio chiamata</string>
-  <string name="speaker_call_sum">Abilita subito il vivavoce quando inizia la telefonata (solo se il telefono è lontano dall\'orecchio).</string>
+  <string name="speaker_call_sum">Abilita subito il vivavoce quando inizia la telefonata.</string>
 
 	<string name="vol_cat">Volume</string>
 	<string name="vol_sum">Opzioni per la gestione automatica del volume durante una telefonata.</string>
@@ -72,7 +77,7 @@
   <string name="msg_devs_disabled">Sanity: dispositivi spenti</string>
   <string name="msg_run_enabled">Sanity è in esecuzione e abilitato</string>
   <string name="msg_run_disabled">Sanity è in esecuzione ma è disabilitato</string>
-  <string name="msg_destroy">Sanity è in chiusura...</string>
+  <string name="msg_market_err">Impossibile aprire il Market per mostrare le applicazioni dell\'autore! Verifica che la connessione a Internet sia funzionante.</string>
 	<string name="msg_donate">Grazie per aver installato Sanity.
 	  \n\nQuesta è la versione libera, con tutte le funzionalità.
 	  Se Sanity ti piace, puoi effettuare una donazione per supportarlo.

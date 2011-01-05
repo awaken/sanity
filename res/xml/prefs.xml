@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
   <Preference android:title="@string/app_fullname"
               android:summary="@string/app_desc"
-              android:key="app_logo" />
+              android:key="app_logo1" />
 
 	<PreferenceCategory android:title="@string/main_cat">
     <CheckBoxPreference android:title="@string/enable_title"
@@ -42,7 +42,8 @@
 
 		<PreferenceScreen android:title="@string/proximity_cat"
 		                  android:summary="@string/proximity_sum"
-		                  android:dependency="enabled">
+		                  android:dependency="enabled"
+		                  android:key="screen_proximity">
       <Preference android:title="@string/app_fullname"
                   android:summary="@string/app_desc"
                   android:key="app_logo3" />
@@ -86,7 +87,6 @@
 	                        android:key="auto_speaker" />
 	    <CheckBoxPreference android:title="@string/loud_speaker_title"
 	                        android:summary="@string/loud_speaker_sum"
-	                        android:dependency="auto_speaker"
 	                        android:defaultValue="true"
 	                        android:key="loud_speaker" />
 	    <CheckBoxPreference android:title="@string/speaker_call_title"
@@ -106,21 +106,15 @@
 	    <ListPreference android:title="@string/vol_phone_title"
 	                    android:summary="@string/vol_phone_sum"
 	                    android:defaultValue="0"
-	                    android:key="vol_phone"
-	                    android:entries="@array/volume_labels"
-	                    android:entryValues="@array/volume_values" />
+	                    android:key="vol_phone" />
 	    <ListPreference android:title="@string/vol_wired_title"
 	                    android:summary="@string/vol_wired_sum"
 	                    android:defaultValue="0"
-	                    android:key="vol_wired"
-	                    android:entries="@array/volume_labels"
-	                    android:entryValues="@array/volume_values" />
+	                    android:key="vol_wired" />
 	    <ListPreference android:title="@string/vol_bt_title"
 	                    android:summary="@string/vol_bt_sum"
 	                    android:defaultValue="0"
-	                    android:key="vol_bt"
-	                    android:entries="@array/volume_labels"
-	                    android:entryValues="@array/volume_values" />
+	                    android:key="vol_bt" />
       </PreferenceCategory>
 		</PreferenceScreen>
 
