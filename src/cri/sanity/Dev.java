@@ -4,6 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import android.media.AudioManager;
 import android.provider.Settings;
+import android.provider.Settings.SettingNotFoundException;
+import android.provider.Settings.System;
 import android.telephony.TelephonyManager;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -19,6 +21,8 @@ public final class Dev
 	public static final int VOLUME_SYS   = AudioManager.STREAM_SYSTEM;
 	
 	private static Object iTelMan;
+	private static int    screenTimeout = -1;
+	//private static int    brightness    = -1;
 
 	private Dev() { }
 
@@ -41,11 +45,11 @@ public final class Dev
 	
 	public static boolean haveProxim() { return sensorProxim() != null; }
 	public static boolean haveWifi()   { return A.wifiMan()    != null; }
-	//public static boolean haveLoc()    { return A.locMan()     != null; }
 	public static boolean haveBt()     { return A.btAdapter()  != null; }
 	public static boolean haveTel()    { return A.telMan()     != null; }
+	//public static boolean haveLoc()    { return A.locMan()     != null; }
 
-	//public static boolean allowMobData() { return Settings.Secure.getInt(mActivity.getContentResolver(), "mobile_data", 1) == 1; }
+	//public static boolean allowMobData() { return Settings.Secure.getInt(A.ctxRes(), "mobile_data", 1) == 1; }
 
 	//---- check on/off device state
 	
@@ -56,15 +60,15 @@ public final class Dev
 	}
 
 	public static boolean isMobDataOn() {
-    if(Settings.Secure.getInt(A.app().getContentResolver(), "mobile_data", 1) != 1) return false;
+    if(Settings.Secure.getInt(A.ctxRes(), "mobile_data", 1) != 1) return false;
 		final int ds = A.telMan().getDataState();
 		return ds==TelephonyManager.DATA_CONNECTED || ds==TelephonyManager.DATA_CONNECTING;
 	}
-	public static boolean isWifiOn()   { return haveWifi() && A.wifiMan().isWifiEnabled(); }
-	public static boolean isBtOn()     { return haveBt() && A.btAdapter().isEnabled(); }
-	
+	public static boolean isWifiOn() { return haveWifi() && A.wifiMan().isWifiEnabled(); }
+	public static boolean isBtOn()   { return haveBt() && A.btAdapter().isEnabled(); }
+
 	//---- enable/disable devices
-	
+
 	public static boolean enableMobData(boolean enable) {
 		try {
 			// use undocumented android api
@@ -93,6 +97,48 @@ public final class Dev
 	public static void setVolume(int type, int vol) { A.audioMan().setStreamVolume(type, vol               , 0); }
 	public static void setVolumeMax(int type)       { A.audioMan().setStreamVolume(type, getVolumeMax(type), 0); }
 
+	//---- managing system
+
+	public static int getSysInt(String key) {
+		try {
+			return System.getInt(A.ctxRes(), key);
+		} catch(SettingNotFoundException e) {
+			return -1; 
+		}
+	}
+	public static void setSysInt(String key, int val) {
+		System.putInt(A.ctxRes(), key, val);
+		System.putInt(A.ctxRes(), key, val);
+	}
+
+	public static int getScreenOffTimeout() {
+		return getSysInt(System.SCREEN_OFF_TIMEOUT);
+	}
+	public static void setScreenOffTimeout(int timeout) {
+		if(screenTimeout < 0) screenTimeout = getScreenOffTimeout();
+		setSysInt(System.SCREEN_OFF_TIMEOUT, timeout);
+	}
+	public static void restoreScreenTimeout() {
+		if(screenTimeout < 0) return;
+		setScreenOffTimeout(screenTimeout);
+	}
+
+	/*public static int getBrightness() {
+		return getSysInt(System.SCREEN_BRIGHTNESS);
+	}
+	public static void setBrightness(int b) {
+		if(brightness < 0) brightness = getBrightness();
+		setSysInt(System.SCREEN_BRIGHTNESS, b);
+	}
+	public static void restoreBrightness() {
+		if(brightness < 0) return;
+		setBrightness(brightness);
+	}
+	
+	public static void dimScreen(boolean dim) {
+		setSysInt(System.DIM_SCREEN, dim? 1 : 0);
+	}*/
+	
 	//---- undocumented android api
 
 	private static Object iTelMan() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {

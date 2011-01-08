@@ -2,7 +2,9 @@
 <resources>
 
   <string name="app_name">Sanity</string>
-  <string name="app_fullname">Sanity \  v0.2</string>
+  <string name="app_ver">0.4</string>
+  <string name="app_fullname">Sanity \  v0.4</string>
+
   <string name="app_desc">
     Software for managing volume and for reducing electromagnetic waves during phone calls.
     \nCopyright (C) 2010 - Cristiano Tagliamonte.
@@ -29,7 +31,7 @@
   <string name="devices_cat">Devices to disable</string>
   <string name="devices_sum">Which devices should be disabled for reducing electromagnetic waves during a call.</string>
   <string name="mobdata_title">Turn off Mobile Data</string>
-  <string name="mobdata_sum">Disable Mobile Data during a call (it will be restored at call end).</string>
+  <string name="mobdata_sum">Disable Mobile Data (2G/3G) during a call (it will be restored at call end).</string>
   <string name="wifi_title">Turn off Wifi</string>
   <string name="wifi_sum">Disable Wifi during a call (it will be restored at call end).</string>
   <string name="bt_title">Turn off Bluetooth</string>
@@ -38,13 +40,15 @@
 	<string name="proximity_cat">Proximity disabling</string>
 	<string name="proximity_sum">Options for enabling and disabling devices during a call by checking proximity sensor.</string>
   <string name="disable_near_title">Turn off in proximity</string>
-  <string name="disable_near_sum">Turn off devices only when the phone is close to your ear. (If disabled, turn off when call start.)</string>
+  <string name="disable_near_sum">Turn OFF devices only when the phone is close to your ear. (If disabled, turn off when call start.)</string>
   <string name="disable_delay_title">Turn off delay</string>
   <string name="disable_delay_sum">Delay for turning OFF devices when your ear is close to phone.</string>
   <string name="restore_far_title">Turn on if far</string>
-  <string name="restore_far_sum">Restore devices during a call when the phone is not close to your ear.</string>
+  <string name="restore_far_sum">Turn ON devices (turned off by Sanity) during a call when the phone is NOT close to your ear.</string>
   <string name="enable_delay_title">Restore delay</string>
-  <string name="enable_delay_sum">Delay for turning ON devices when your ear is far to phone.</string>
+  <string name="enable_delay_sum">Delay for turning ON devices when the phone is NOT close to your ear.</string>
+  <string name="screen_off_title">Turn off backlight</string>
+  <string name="screen_off_sum">Force to turn OFF screen backlight during call when the phone is close to your ear.</string>
 
   <string name="speaker_cat">Handsfree</string>
   <string name="speaker_sum">Options for automatic handsfree activation.</string>
@@ -71,8 +75,10 @@
   <string name="notify_enable_title">Notify restoring</string>
   <string name="notify_enable_sum">Notify when devices are automatically restored by Sanity.</string>
   <string name="notify_activity_title">Notify activity</string>
-  <string name="notify_activity_sum">Notify when Sanity activity is running but it isn\'t visible on screen.</string>
+  <string name="notify_activity_sum">Notify if Sanity is running when a phone call starts.</string>
 
+  <string name="eula_title">License GNU GPL v3</string>
+  <string name="eula_sum">Tap here to open the ufficial web site of the GNU General Public License version 3.</string>
   <string name="donate_title">Donate</string>
   <string name="donate_sum">Sanity is free. If you like this application, support the development with a donation.</string>
   <string name="donated_title">Donation completed</string>
@@ -80,8 +86,7 @@
 
   <string name="msg_devs_enabled">Sanity: devices enabled</string>
   <string name="msg_devs_disabled">Sanity: devices disabled</string>
-  <string name="msg_run_enabled">Sanity is running and enabled</string>
-  <string name="msg_run_disabled">Sanity is running but disabled</string>
+  <string name="msg_running">Sanity is running</string>
   <string name="msg_market_err">Unable to open Market for showing author\'s applications! Check the Internet connection is properly working.</string>
 	<string name="msg_donate">Thank you for using Sanity.
 	  \n\nThis is the free version, with full capabilities.
@@ -92,7 +97,7 @@
 
   <string name="msg_eula_title">Software license agreement</string>
   <string name="msg_eula">
-    This program is free software: you can redistribute it and/or modify
+    This application is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.

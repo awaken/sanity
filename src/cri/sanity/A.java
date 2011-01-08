@@ -7,23 +7,26 @@ import android.app.Application;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.appwidget.AppWidgetProvider;
 import android.bluetooth.BluetoothAdapter;
 import android.content.ActivityNotFoundException;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.media.AudioManager;
-/*import android.location.LocationManager;
-import android.net.ConnectivityManager;
-import android.os.PowerManager;*/
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.hardware.SensorManager;
 import android.util.Log;
+//import android.os.SystemClock;
+//import android.os.PowerManager;
+//import android.location.LocationManager;
+//import android.net.ConnectivityManager;
 //import android.widget.Toast;
 
 
@@ -59,10 +62,12 @@ public final class A extends Application
 	//---- data
 
 	public  static Activity                 activity;
+	public  static AppWidgetProvider        widget;
 	
 	private static A                        a;
 	private static String                   name;
-	private static Resources                res;
+	private static Resources                resources;
+	private static ContentResolver          ctxRes;
 	private static SharedPreferences        prefs;
 	private static SharedPreferences.Editor edit;
 
@@ -71,9 +76,9 @@ public final class A extends Application
 	private static TelephonyManager         telMan;
 	private static BluetoothAdapter         btAdapter;
 	private static WifiManager              wifiMan;
-	/*private static ConnectivityManager      connMan;
-	private static LocationManager          locMan;
-	private static PowerManager             powerMan;*/
+	//private static ConnectivityManager      connMan;
+	//private static LocationManager          locMan;
+	//private static PowerManager             powerMan;
 	private static SensorManager            sensorMan;
 
 	//---- inner classes
@@ -109,9 +114,12 @@ public final class A extends Application
 	public static SharedPreferences       prefs() { return prefs; }
 	public static SharedPreferences.Editor edit() { return edit;  }
 	public static final String              pkg() { return a.getPackageName(); }
-	public static final Resources           res() { return res==null? res=a.getResources() : res; }
+	public static final Resources     resources() { return resources==null? resources=a.getResources() : resources; }
+	public static final ContentResolver  ctxRes() { return ctxRes==null? ctxRes=a.getContentResolver() : ctxRes;    }
 	
 	// log
+	public static int logd(Object o, String method)
+	                                    { return !DEBUG? 0 : Log.d(name, o.getClass().getSimpleName()+'.'+method); }
 	public static int logd(String msg)  { return !DEBUG? 0 : Log.d(name, msg); }
 	public static int logi(String msg)  { return !DEBUG? 0 : Log.i(name, msg); }
 	public static int logv(String msg)  { return !DEBUG? 0 : Log.v(name, msg); }
@@ -122,14 +130,15 @@ public final class A extends Application
 	// misc
 	public static boolean isEmpty(String s) { return s==null || s.trim().length()<=0; }
 
-	public static String tr(int id) { return (String)res().getText(id); }
+	public static String tr(int id) { return (String)resources().getText(id); }
 
 	public static long now() { return System.currentTimeMillis(); }
+	//public static long uptime() { return SystemClock.uptimeMillis(); }
 
-	//public static boolean gotoMarketPkg(String pkg) { return gotoMarketUrl("search?q=pname:"+(pkg.isEmpty()?a.getPackageName():pkg)); }
-	public static boolean gotoAuthorApps()            { return gotoMarketUrl("search?q="+AUTHOR); }
+	//public static boolean gotoMarketPkg(String pkg) { return gotoMarketUrl("search?q=pname:\""+(pkg.isEmpty()?a.getPackageName():pkg)+'"'); }
+	public static boolean gotoAuthorApps()            { return gotoMarketUrl("search?q=pub:\""+AUTHOR+'"'); }
 	public static boolean gotoMarketUrl(String query) {
-		boolean res = gotoUrl("market://"+query);
+		final boolean res = gotoUrl("market://"+query);
 		if(!res) alert(A.tr(R.string.msg_market_err));
 		return res;
 	}

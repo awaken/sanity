@@ -18,9 +18,10 @@ public class MainActivity extends PrefActivity
     super.onCreate(savedInstanceState);
     addPreferencesFromResource(R.xml.prefs);
     try {
-    	setupAppLogo();
+    	setupListeners();
     	setupProximity();
     	setupVolumeLevels();
+    	setupVersion();
       setupDonate();
   		if(A.is("agree")) checkDonate ();
   		else              checkLicense();
@@ -41,13 +42,6 @@ public class MainActivity extends PrefActivity
 	}
 	
 	@Override
-	public void onStop()
-	{
-  	notifyRun();
-  	super.onStop();
-	}
-	
-	@Override
 	public void onDestroy()
 	{
 		A.notifyCanc();
@@ -56,12 +50,23 @@ public class MainActivity extends PrefActivity
 	
 	//---- private api
 
-	private void setupAppLogo()
+	private void setupVersion()
+	{
+		final String ver = A.tr(R.string.app_ver);
+		final String old = A.gets("ver");
+		if(old.equals(ver)) return;
+		// put here upgrade changes
+		A.put("agree", false).putc("ver", ver);
+	}
+
+	private void setupListeners()
 	{
   	// setup click listener for app logo
-  	Click cl = new Click(){ boolean on(){ A.gotoAuthorApps(); return true; }};
+  	Click cl = new Click(){ boolean on(){ return A.gotoAuthorApps(); }};
   	for(int i=1; i<=Conf.LOGO_COUNT; ++i)
   		on("app_logo"+i, cl);
+  	// setup click listener for eula
+  	on("eula"   , new Click(){ boolean on(){ return A.gotoUrl(Conf.EULA_URL); }});
 	}
 
 	private void setupProximity()
@@ -92,8 +97,8 @@ public class MainActivity extends PrefActivity
   	// setup volume ranges for ListPreferences
   	final String lev = A.tr(R.string.level) + " ";
   	final int m = Dev.getVolumeMax(Dev.VOLUME_CALL);
-  	CharSequence[] av = new CharSequence[m+1];
-  	CharSequence[] ae = new CharSequence[m+1];
+  	final CharSequence[] av = new CharSequence[m+1];
+  	final CharSequence[] ae = new CharSequence[m+1];
   	av[0] = "0";
   	av[1] = "1";
   	av[m] = Integer.toString(m);
@@ -104,7 +109,6 @@ public class MainActivity extends PrefActivity
   		av[i] = Integer.toString(i);
   		ae[i] = lev + av[i];
   	}
-  	//String[] vols = new String[]{ "vol_phone", "vol_wired", "vol_bt" };
   	for(String k : new String[]{ "vol_phone", "vol_wired", "vol_bt" }) {
   		ListPreference lp = (ListPreference)findPref(k);
   		lp.setEntries    (ae);
@@ -144,8 +148,8 @@ public class MainActivity extends PrefActivity
 		A.alert(
 		  A.tr(R.string.msg_eula_title),
 			A.tr(R.string.app_fullname)+"\n\n"+A.tr(R.string.app_desc)+"\n\n"+A.tr(R.string.msg_eula),
-			new A.DlgClick(){ void on(){ A.putc("agree",true); setChecked("enabled",true); }},
-			new A.DlgClick(){ void on(){ onBackPressed(); }},
+			new A.DlgClick(){ void on(){ A.putc("agree",true); setChecked(A.ENABLED_KEY,true); }},
+			new A.DlgClick(){ void on(){ finish(); }},
 			A.ALERT_OKCANC, false
 		);
 	}
@@ -157,13 +161,4 @@ public class MainActivity extends PrefActivity
 		return done;
 	}
 	
-	//---- static api
-
-	public static void notifyRun()
-	{
-		if(!A.is("notify_activity")) return;
-		if(A.activity!=null && ((PrefActivity)A.activity).isQuitting()) return;
-		A.notify(A.tr(A.isEnabled() ? R.string.msg_run_enabled : R.string.msg_run_disabled));
-	}
-
 }

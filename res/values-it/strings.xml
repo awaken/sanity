@@ -40,6 +40,8 @@
   <string name="restore_far_sum">Riaccendi i dispositivi (spenti da Sanity) durante una chiamata quando allontani il telefono dall\'orecchio.</string>
   <string name="enable_delay_title">Riaccendi in ritardo</string>
   <string name="enable_delay_sum">Quanto tempo aspettare prima di riaccendere i dispositivi quando il telefono è lontano dall\'orecchio.</string>
+  <string name="screen_off_title">Spegni retroilluminazione</string>
+  <string name="screen_off_sum">Forza per spegnere la retroilluminazione dello schermo durante una telefonata quando il telefono è vicino all\'orecchio.</string>
 
   <string name="speaker_cat">Vivavoce</string>
   <string name="speaker_sum">Opzioni per l\'attivazione automatica del vivavoce.</string>
@@ -66,8 +68,10 @@
   <string name="notify_enable_title">Notifica il ripristino</string>
   <string name="notify_enable_sum">Notifica quando i dispositivi vengono automaticamente riaccesi da Sanity.</string>
   <string name="notify_activity_title">Notifica l\'attività</string>
-  <string name="notify_activity_sum">Notifica quando l\'attività di Sanity è in esecuzione ma non è visibile sullo schermo.</string>
+  <string name="notify_activity_sum">Notifica se Sanity è in esecuzione quando inizia una telefonata.</string>
 
+  <string name="eula_title">Licenza GNU GPL v3</string>
+  <string name="eula_sum">Tocca qui per aprire la pagina web ufficiale della GNU General Public License versione 3.</string>
   <string name="donate_title">Donazione</string>
   <string name="donate_sum">Sanity è gratuito. Se questa applicazione ti piace, supporta lo sviluppo con una donazione.</string>
   <string name="donated_title">Donazione completata</string>
@@ -75,8 +79,7 @@
 
   <string name="msg_devs_enabled">Sanity: dispositivi accesi</string>
   <string name="msg_devs_disabled">Sanity: dispositivi spenti</string>
-  <string name="msg_run_enabled">Sanity è in esecuzione e abilitato</string>
-  <string name="msg_run_disabled">Sanity è in esecuzione ma è disabilitato</string>
+  <string name="msg_running">Sanity è in esecuzione</string>
   <string name="msg_market_err">Impossibile aprire il Market per mostrare le applicazioni dell\'autore! Verifica che la connessione a Internet sia funzionante.</string>
 	<string name="msg_donate">Grazie per aver installato Sanity.
 	  \n\nQuesta è la versione libera, con tutte le funzionalità.
@@ -87,14 +90,14 @@
 
   <string name="msg_eula_title">Contratto di licenza software</string>
   <string name="msg_eula">
-  	Questo programma è software libero: puoi ridistribuirlo e/o modificarlo nei termini della GNU Public License come
+  	Questa applicazione è software libero: puoi ridistribuirlo e/o modificarlo nei termini della GNU General Public License come
   	pubblicato dalla Free Software Foundation, sia nella versione 3 della licenza, sia (a tua opinione) in qualsiasi
   	altra versione successiva.
   	\nQuesto programma è distribuito nella speranza che risulterà utile, ma SENZA NESSUNA GARANZIA; neppure la garanzia
-  	implicita di COMMERCIABILITA\' o IDONEITA\' PER UN PARTICOLARE SCOPO. Leggi la GNU Public License versione 3 per maggiori
+  	implicita di COMMERCIABILITA\' o IDONEITA\' PER UN PARTICOLARE SCOPO. Leggi la GNU General Public License versione 3 per maggiori
   	dettagli, puoi trovarne una copia su http://www.gnu.org/licenses/.
   	\n
-  	\nScegli \"Ok\" per accettare la GNU Public License versione 3.
+  	\nScegli \"Ok\" per accettare la GNU General Public License versione 3.
   	\nScegli \"Annulla\" per rifiutarla.
   </string>
 

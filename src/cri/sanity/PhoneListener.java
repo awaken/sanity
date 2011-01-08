@@ -25,7 +25,7 @@ public class PhoneListener extends PhoneStateListener implements SensorEventList
 	private static final int   FORCE_AUTOSPEAKER_DELAY = Conf.FORCE_AUTOSPEAKER_DELAY;
 
 	private boolean applied = false, proxRegistered = false, headsetRegistered = false;
-	private boolean notifyEnable, notifyDisable, proximity, restoreFar, skipHeadset, autoSpeaker, loudSpeaker, speakerCall;
+	private boolean notifyEnable, notifyDisable, proximity, restoreFar, skipHeadset, autoSpeaker, loudSpeaker, speakerCall, screenOff;
 	private boolean headsetOn, mobdataOn, wifiOn, btOn;
 	private boolean lastFar   = true;
 	private int     lastState = -1;
@@ -76,9 +76,10 @@ public class PhoneListener extends PhoneStateListener implements SensorEventList
 				A.logd("headsetBtReceiver skip: no remote class!");
 				return;
 			}
-			final boolean on = i.getAction() == "android.bluetooth.device.action.ACL_CONNECTED";
+			final String act = i.getAction();
+			final boolean on = act.equals("android.bluetooth.device.action.ACL_CONNECTED");
 			updateHeadset(on, volBt);
-			A.logd("headsetBtReceiver: on="+on+", action="+i.getAction());
+			A.logd("headsetBtReceiver: on="+on+", action="+act);
 		}
 	};
 	
@@ -136,6 +137,7 @@ public class PhoneListener extends PhoneStateListener implements SensorEventList
 		loudSpeaker   = A.is("loud_speaker");
 		disableDelay  = A.getsi("disable_delay");
 		enableDelay   = A.getsi("enable_delay");
+		screenOff     = proximity && A.is("screen_off");
 		if(enableDelay < 0) enableDelay = disableDelay;
 		volRestore = SKIP_VOLUME;
 		volWired   = A.getsi("vol_wired");
@@ -173,8 +175,11 @@ public class PhoneListener extends PhoneStateListener implements SensorEventList
 		A.logd("onIdle");
 		unregProximity();
 		unregHeadset();
+		timerTask = null;
+		timer.cancel();
+		//Dev.restoreBrightness();
+		Dev.restoreScreenTimeout();
 		if(isOffhook()) {
-			timer.cancel();
 			if(volRestore != SKIP_VOLUME) Dev.setVolume(Dev.VOLUME_CALL, volRestore);  // restore volume
 			enableDevs(true);                                                          // restore devices
 		}
@@ -206,12 +211,12 @@ public class PhoneListener extends PhoneStateListener implements SensorEventList
 	{
 		cleanTimerTask();
 		if(enable) {
-			if(enableDelay  == 0) { enableDevs(true ); return; } 
+			if(enableDelay  <= 0) { enableDevs(true ); return; } 
 			timerTask = new TimerTask() { public void run() { enableDevs(true ); } };
 	    timer.schedule(timerTask, enableDelay);
 		}
 		else {
-			if(disableDelay == 0) { enableDevs(false); return; }
+			if(disableDelay <= 0) { enableDevs(false); return; }
 			timerTask = new TimerTask() { public void run() { enableDevs(false); } };
 	    timer.schedule(timerTask, disableDelay);
 		}
@@ -247,6 +252,20 @@ public class PhoneListener extends PhoneStateListener implements SensorEventList
 		cleanTimerTask();
 		timerTask = new TimerTask(){ public void run(){ autoSpeaker(true); }};
     timer.schedule(timerTask, FORCE_AUTOSPEAKER_DELAY);
+	}
+	
+	private void screenOff(boolean off)
+	{
+		if(off) {
+			//Dev.setBrightness(0);
+			//Dev.dimScreen(true);
+			Dev.setScreenOffTimeout(Conf.CALL_SCREEN_TIMEOUT);
+		}
+		else {
+			//Dev.dimScreen(false);
+			//Dev.restoreBrightness();
+			Dev.restoreScreenTimeout();
+		}
 	}
 
 	private void regProximity()
@@ -306,7 +325,7 @@ public class PhoneListener extends PhoneStateListener implements SensorEventList
 		}
 		lastState = state;
 	}
-	
+
 	//---- SensorEventListener implementation
 
 	public void onAccuracyChanged(Sensor sensor, int accuracy) { /* never mind */ }
@@ -319,8 +338,10 @@ public class PhoneListener extends PhoneStateListener implements SensorEventList
 		if(!headsetOn) {
 			if(far == lastFar) return;
 			if(autoSpeaker) autoSpeaker(far);
-			if(proximity && (!far || restoreFar))
-				deferEnableDevs(far);
+			if(proximity) {
+				if(!far || restoreFar) deferEnableDevs(far);
+				if(screenOff) screenOff(!far);
+			}
 		}
 		lastFar = far;
 	}

@@ -71,6 +71,11 @@
 	                    android:key="enable_delay"
 	                    android:entries="@array/enable_delay_labels"
 	                    android:entryValues="@array/enable_delay_values" />
+	    <CheckBoxPreference android:title="@string/screen_off_title"
+	                        android:summary="@string/screen_off_sum"
+	                        android:dependency="proximity"
+	                        android:defaultValue="true"
+	                        android:key="screen_off" />
       </PreferenceCategory>
 		</PreferenceScreen>
 	
@@ -142,6 +147,9 @@
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="@string/misc_cat">
+    <Preference android:title="@string/eula_title"
+                android:summary="@string/eula_sum"
+                android:key="eula" />
     <Preference android:title="@string/donate_title"
                 android:summary="@string/donate_sum"
                 android:key="donate" />
