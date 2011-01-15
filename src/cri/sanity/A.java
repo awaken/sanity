@@ -7,7 +7,6 @@ import android.app.Application;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.appwidget.AppWidgetProvider;
 import android.bluetooth.BluetoothAdapter;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
@@ -62,7 +61,6 @@ public final class A extends Application
 	//---- data
 
 	public  static Activity                 activity;
-	public  static AppWidgetProvider        widget;
 	
 	private static A                        a;
 	private static String                   name;
@@ -77,8 +75,8 @@ public final class A extends Application
 	private static BluetoothAdapter         btAdapter;
 	private static WifiManager              wifiMan;
 	//private static ConnectivityManager      connMan;
-	//private static LocationManager          locMan;
 	//private static PowerManager             powerMan;
+	//private static LocationManager          locMan;
 	private static SensorManager            sensorMan;
 
 	//---- inner classes
@@ -115,7 +113,7 @@ public final class A extends Application
 	public static SharedPreferences.Editor edit() { return edit;  }
 	public static final String              pkg() { return a.getPackageName(); }
 	public static final Resources     resources() { return resources==null? resources=a.getResources() : resources; }
-	public static final ContentResolver  ctxRes() { return ctxRes==null? ctxRes=a.getContentResolver() : ctxRes;    }
+	public static final ContentResolver  ctnRes() { return ctxRes==null? ctxRes=a.getContentResolver() : ctxRes;    }
 	
 	// log
 	public static int logd(Object o, String method)
@@ -135,8 +133,11 @@ public final class A extends Application
 	public static long now() { return System.currentTimeMillis(); }
 	//public static long uptime() { return SystemClock.uptimeMillis(); }
 
-	//public static boolean gotoMarketPkg(String pkg) { return gotoMarketUrl("search?q=pname:\""+(pkg.isEmpty()?a.getPackageName():pkg)+'"'); }
-	public static boolean gotoAuthorApps()            { return gotoMarketUrl("search?q=pub:\""+AUTHOR+'"'); }
+	//public static boolean gotoMarketPkg()             { return gotoMarketPkg(a.getPackageName()); }
+	//public static boolean gotoMarketPkg(String pkg)   { return gotoMarketUrl("search?q=pname:\""+pkg+'"'); }
+	public static boolean gotoMarketPub()               { return gotoMarketUrl("search?q=pub:\""+AUTHOR+'"'); }
+	public static boolean gotoMarketDetails()           { return gotoMarketDetails(a.getPackageName()); }
+	public static boolean gotoMarketDetails(String pkg) { return gotoMarketUrl("details?id="+pkg); }
 	public static boolean gotoMarketUrl(String query) {
 		final boolean res = gotoUrl("market://"+query);
 		if(!res) alert(A.tr(R.string.msg_market_err));
@@ -309,11 +310,11 @@ public final class A extends Application
 	/*public static ConnectivityManager connMan() {
 		return connMan==null? connMan=(ConnectivityManager)a.getSystemService(Context.CONNECTIVITY_SERVICE) : connMan;
 	}
-	public static LocationManager locMan() {
-		return locMan==null? locMan=(LocationManager)a.getSystemService(Context.LOCATION_SERVICE) : locMan;
-	}
 	public static PowerManager powerMan() {
 		return powerMan==null? powerMan=(PowerManager)a.getSystemService(Context.POWER_SERVICE) : powerMan;
+	}
+	public static LocationManager locMan() {
+		return locMan==null? locMan=(LocationManager)a.getSystemService(Context.LOCATION_SERVICE) : locMan;
 	}*/
 	public static SensorManager sensorMan() {
 		return sensorMan==null? sensorMan=(SensorManager)a.getSystemService(SENSOR_SERVICE) : sensorMan;

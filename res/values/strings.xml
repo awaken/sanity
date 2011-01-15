@@ -2,13 +2,23 @@
 <resources>
 
   <string name="app_name">Sanity</string>
-  <string name="app_ver">0.4</string>
-  <string name="app_fullname">Sanity \  v0.4</string>
+  <string name="app_ver">0.5</string>
+  <string name="app_fullname">Sanity \  v0.5</string>
 
   <string name="app_desc">
-    Software for managing volume and for reducing electromagnetic waves during phone calls.
+    Software for managing volume and for reducing electromagnetic waves during calls.
     \nCopyright (C) 2010 - Cristiano Tagliamonte.
   </string>
+
+  <string name="changelog_body">
+     New: option to avoid automatic bluetooth disabling when there are bluetooth devices connected.\n
+   \nNew: option to delay automatic handsfree enabler.\n
+   \nFix: more bluetooth audio devices are recognized during phone call.\n
+   \nFix: minor bug caused occasional crashes at call end.\n
+   \nNew: tools for contacting the developer.
+  </string>
+  <string name="changelog_title">Recent changes</string>
+  <string name="changelog_sum">Show recent changes implemented in this Sanity version.</string>
 
 	<string name="ok">Ok</string>
 	<string name="canc">Cancel</string>
@@ -22,20 +32,22 @@
 
   <string name="main_cat">Main options</string>
   <string name="enable_title">Enable Sanity</string>
-  <string name="enable_sum">Enable or disable whole Sanity sytem. If disabled, Sanity never take actions during phone calls.</string>
-  <string name="headset_title">Skip if headsets are connected</string>
-  <string name="headset_sum">Check to disable Sanity system when headsets (wired or wireless) are connected.</string>
+  <string name="enable_sum">Enable or disable whole Sanity sytem. If disabled, this application won\'t affect during phone calls.</string>
+  <string name="headset_title">Skip if headsets are used</string>
+  <string name="headset_sum">Disable automatic handling of devices and handsfree when headsets (wired or wireless) are connected.</string>
   <string name="groups_cat">Options groups</string>
   <string name="misc_cat">Miscellaneous</string>
 
   <string name="devices_cat">Devices to disable</string>
   <string name="devices_sum">Which devices should be disabled for reducing electromagnetic waves during a call.</string>
   <string name="mobdata_title">Turn off Mobile Data</string>
-  <string name="mobdata_sum">Disable Mobile Data (2G/3G) during a call (it will be restored at call end).</string>
+  <string name="mobdata_sum">Disable Mobile Data (2G/3G) during a call (it will be restored at call end). It works with many phone models, but not with all.</string>
   <string name="wifi_title">Turn off Wifi</string>
   <string name="wifi_sum">Disable Wifi during a call (it will be restored at call end).</string>
   <string name="bt_title">Turn off Bluetooth</string>
   <string name="bt_sum">Disable Bluetooth during a call (it will be restored at call end).</string>
+  <string name="bt_skip_title">Skip BT if connected</string>
+  <string name="bt_skip_sum">Skip automatic Bluetooth enabling/disabling during a call if there are Bluetooth devices connected to phone.</string>
 
 	<string name="proximity_cat">Proximity disabling</string>
 	<string name="proximity_sum">Options for enabling and disabling devices during a call by checking proximity sensor.</string>
@@ -54,8 +66,10 @@
   <string name="speaker_sum">Options for automatic handsfree activation.</string>
   <string name="auto_speaker_title">Automatic handsfree</string>
   <string name="auto_speaker_sum">Automatically enable/disable handsfree when the phone is far/close to your ear.</string>
+  <string name="delay_speaker_title">Enable delay</string>
+  <string name="delay_speaker_sum">Delay for automatically turning ON handsfree when the phone is NOT close to your ear.</string>
   <string name="loud_speaker_title">Loud speaker</string>
-  <string name="loud_speaker_sum">Automatically set maximum volume when handsfree is enabled (the volume will automatically restored).</string>
+  <string name="loud_speaker_sum">Set maximum volume when Sanity automatically enables handsfree.</string>
   <string name="speaker_call_title">Enable on call start</string>
   <string name="speaker_call_sum">Enable handsfree when call begins.</string>
 
@@ -77,8 +91,17 @@
   <string name="notify_activity_title">Notify activity</string>
   <string name="notify_activity_sum">Notify if Sanity is running when a phone call starts.</string>
 
+  <string name="about_cat">About and contact</string>
+  <string name="about_sum">Information about this application and tools for contacting the developer.</string>
+  <string name="mail_title">Mail to developer</string>
+  <string name="mail_sum">Tap here to write an email to the developer. You can use email also for bug reports and feature requests.</string>
+  <string name="comment_title">Leave a comment</string>
+  <string name="comment_sum">You are invited to leave a comment about Sanity on Market. Tap here to open Market. Please don\'t report bugs in Market comments.</string>
   <string name="eula_title">License GNU GPL v3</string>
   <string name="eula_sum">Tap here to open the ufficial web site of the GNU General Public License version 3.</string>
+  <string name="paypal_title">PayPal donate</string>
+  <string name="paypal_sum">For supporting Sanity, you can donate the money amount you prefer using PayPal. Tap here to open PayPal site.</string>
+
   <string name="donate_title">Donate</string>
   <string name="donate_sum">Sanity is free. If you like this application, support the development with a donation.</string>
   <string name="donated_title">Donation completed</string>
@@ -88,6 +111,8 @@
   <string name="msg_devs_disabled">Sanity: devices disabled</string>
   <string name="msg_running">Sanity is running</string>
   <string name="msg_market_err">Unable to open Market for showing author\'s applications! Check the Internet connection is properly working.</string>
+  <string name="msg_email_choose">Choose how to send email</string>
+  <string name="msg_email_body">Hello Cristiano!</string>
 	<string name="msg_donate">Thank you for using Sanity.
 	  \n\nThis is the free version, with full capabilities.
 	  If you like Sanity, you can donate for supporting it.

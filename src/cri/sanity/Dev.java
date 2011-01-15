@@ -2,13 +2,15 @@ package cri.sanity;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import android.media.AudioManager;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.provider.Settings.System;
 import android.telephony.TelephonyManager;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.media.AudioManager;
+//import android.content.ContentResolver;
+//import android.location.LocationManager;
 
 
 public final class Dev
@@ -19,7 +21,7 @@ public final class Dev
 	public static final int VOLUME_RING  = AudioManager.STREAM_RING;
 	public static final int VOLUME_DTMF  = AudioManager.STREAM_DTMF;
 	public static final int VOLUME_SYS   = AudioManager.STREAM_SYSTEM;
-	
+
 	private static Object iTelMan;
 	private static int    screenTimeout = -1;
 	//private static int    brightness    = -1;
@@ -60,12 +62,13 @@ public final class Dev
 	}
 
 	public static boolean isMobDataOn() {
-    if(Settings.Secure.getInt(A.ctxRes(), "mobile_data", 1) != 1) return false;
+    if(Settings.Secure.getInt(A.ctnRes(), "mobile_data", 1) != 1) return false;
 		final int ds = A.telMan().getDataState();
 		return ds==TelephonyManager.DATA_CONNECTED || ds==TelephonyManager.DATA_CONNECTING;
 	}
 	public static boolean isWifiOn() { return haveWifi() && A.wifiMan().isWifiEnabled(); }
 	public static boolean isBtOn()   { return haveBt() && A.btAdapter().isEnabled(); }
+	//public static boolean isGpsOn()  { return haveLoc() && A.locMan().isProviderEnabled(LocationManager.GPS_PROVIDER); }
 
 	//---- enable/disable devices
 
@@ -87,6 +90,44 @@ public final class Dev
 		return enable ? A.btAdapter().enable() : A.btAdapter().disable();
 	}
 	
+	/*public static boolean enableGps(boolean enable) {
+		// this method is extracted from "Quick Settings" opensource project (http://code.google.com/p/quick-settings) by beworker
+		final ContentResolver resolver = A.ctnRes();
+		final String providers         = Settings.Secure.getString(resolver, Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+		final int i                    = providers.indexOf(LocationManager.GPS_PROVIDER);
+		String newProviders            = null;
+		if(enable) {
+			// add provider to the list
+			if(i < 0) {
+				// GPS is off and we need to add GPS provider
+				newProviders = providers;
+				if(providers.length() != 0)
+					newProviders += ',';
+				newProviders += LocationManager.GPS_PROVIDER;
+			} // else provider is already in the list
+		}
+		else {
+			// remove provider from the list
+			if(i >= 0) { // provider is in the list
+				newProviders = providers.substring(0, i);
+				int comma = providers.indexOf(',', i);
+				if(comma >= 0)
+					newProviders += providers.substring(comma + 1);
+				if(newProviders.endsWith(","))
+					newProviders = newProviders.substring(0, newProviders.length() - 1);
+			}
+		}
+		if(newProviders == null) return true;
+		try {
+			Settings.Secure.putString(A.ctnRes(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED, newProviders);
+			A.logd("enableGps: "+enable+", providers: "+newProviders);
+			return true;
+		} catch(SecurityException e) {
+			A.logd("unable to set Secure Settings for GPS!");
+			return false;
+		}
+	}*/
+
 	public static void enableSpeaker(boolean enable) { A.audioMan().setSpeakerphoneOn(enable); }
 
 	//---- volume
@@ -101,14 +142,14 @@ public final class Dev
 
 	public static int getSysInt(String key) {
 		try {
-			return System.getInt(A.ctxRes(), key);
+			return System.getInt(A.ctnRes(), key);
 		} catch(SettingNotFoundException e) {
 			return -1; 
 		}
 	}
 	public static void setSysInt(String key, int val) {
-		System.putInt(A.ctxRes(), key, val);
-		System.putInt(A.ctxRes(), key, val);
+		System.putInt(A.ctnRes(), key, val);
+		System.putInt(A.ctnRes(), key, val);
 	}
 
 	public static int getScreenOffTimeout() {

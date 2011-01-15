@@ -1,14 +1,19 @@
 package cri.sanity;
 
+import java.util.Currency;
+import java.util.Locale;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.text.Html;
 
 
 public class MainActivity extends PrefActivity
 {
-	private boolean isDonateAsking = false;
+	private static final String VER   = "ver";
+	private static final String AGREE = "agree";
 
 	//---- Activity override
 
@@ -17,56 +22,62 @@ public class MainActivity extends PrefActivity
   {
     super.onCreate(savedInstanceState);
     addPreferencesFromResource(R.xml.prefs);
+    //getWindow().setBackgroundDrawableResource(R.drawable.bg);
     try {
+      final String old = getOldVersion();
     	setupListeners();
     	setupProximity();
     	setupVolumeLevels();
-    	setupVersion();
       setupDonate();
-  		if(A.is("agree")) checkDonate ();
-  		else              checkLicense();
+  		if(!A.is(AGREE))
+  			checkLicense();
+  		else if(old.length() > 0) {
+  			setupUpgrade(old);
+  			alertChangeLog();
+  		}
+  		else
+  			checkDonate();
     }
     catch(Exception e) {
+    	if(!A.DEBUG) return;
     	String msg = "Activity Exception: "+e.getMessage();
     	A.loge(msg);
     	A.loge(e);
-    	if(A.DEBUG) A.notify(msg);
+    	A.notify(msg);
     }
   }
 
-	@Override
-	public void onResume()
-	{
-		super.onResume();
-		A.notifyCanc();
-	}
-	
-	@Override
-	public void onDestroy()
-	{
-		A.notifyCanc();
-		super.onDestroy();
-	}
-	
 	//---- private api
 
-	private void setupVersion()
+	private static String getOldVersion()
 	{
 		final String ver = A.tr(R.string.app_ver);
-		final String old = A.gets("ver");
-		if(old.equals(ver)) return;
-		// put here upgrade changes
-		A.put("agree", false).putc("ver", ver);
+		final String old = A.gets(VER);
+		final boolean ok = old.equals(ver);
+		if(!ok) A.putc(VER, ver);
+		return ok ? "" : old;
+	}
+
+	private void setupUpgrade(String oldVer)
+	{
+		// put here preferences changes for upgrading!
+	}
+	
+	private void alertChangeLog() {
+		A.alert(A.tr(R.string.changelog_title), A.tr(R.string.changelog_body));
 	}
 
 	private void setupListeners()
 	{
-  	// setup click listener for app logo
-  	Click cl = new Click(){ boolean on(){ return A.gotoAuthorApps(); }};
+		// setup click listeners for fake preferences
+  	final Click cl = new Click(){ boolean on(){ return A.gotoMarketPub(); }};
   	for(int i=1; i<=Conf.LOGO_COUNT; ++i)
   		on("app_logo"+i, cl);
-  	// setup click listener for eula
-  	on("eula"   , new Click(){ boolean on(){ return A.gotoUrl(Conf.EULA_URL); }});
+  	on("eula"     , new Click(){ boolean on(){ return A.gotoUrl(Conf.EULA_URL); }});
+  	on("comment"  , new Click(){ boolean on(){ return A.gotoMarketDetails();    }});
+  	on("changelog", new Click(){ boolean on(){ alertChangeLog(); return true;   }});
+  	on("mail"     , new Click(){ boolean on(){ return mailToDeveloper();        }});
+  	on("paypal"   , new Click(){ boolean on(){ return A.gotoUrl(Conf.DONATE_URL.replace(Conf.CURRENCY_VAR, Currency.getInstance(Locale.getDefault()).getCurrencyCode())); }});
 	}
 
 	private void setupProximity()
@@ -118,13 +129,9 @@ public class MainActivity extends PrefActivity
 	
 	private void setupDonate()
 	{
-		Preference p = findPref("donate");
-    if(!A.isFull() && !startDonateApp()) {
-      on(p, new Click(){ boolean on() {
-      	A.gotoAuthorApps();
-  	    return true;
-      }});
-    }
+		final Preference p = findPref("donate");
+    if(!A.isFull() && !startDonateApp())
+   		on(p, new Click(){ boolean on(){ return A.gotoMarketDetails(Conf.DONATE_PKG); }});
     else {
     	p.setTitle(R.string.donated_title);
     	p.setSummary(R.string.donated_sum);
@@ -134,12 +141,11 @@ public class MainActivity extends PrefActivity
 	
 	private void checkDonate()
 	{
-		if(isDonateAsking || A.isFull()) return;
-		isDonateAsking = true;
+		if(A.isFull()) return;
 		A.alert(
 			A.tr(R.string.msg_donate),
-			new A.DlgClick(){ void on(){ A.gotoAuthorApps(); isDonateAsking = false; }},
-			new A.DlgClick(){ void on(){                     isDonateAsking = false; }}
+			new A.DlgClick(){ void on(){ A.gotoMarketDetails(Conf.DONATE_PKG); }},
+			null
 		);
 	}
 
@@ -148,7 +154,7 @@ public class MainActivity extends PrefActivity
 		A.alert(
 		  A.tr(R.string.msg_eula_title),
 			A.tr(R.string.app_fullname)+"\n\n"+A.tr(R.string.app_desc)+"\n\n"+A.tr(R.string.msg_eula),
-			new A.DlgClick(){ void on(){ A.putc("agree",true); setChecked(A.ENABLED_KEY,true); }},
+			new A.DlgClick(){ void on(){ A.putc(AGREE,true); setChecked(A.ENABLED_KEY,true); }},
 			new A.DlgClick(){ void on(){ finish(); }},
 			A.ALERT_OKCANC, false
 		);
@@ -156,9 +162,20 @@ public class MainActivity extends PrefActivity
 
 	private boolean startDonateApp()
 	{
-		boolean done = startService(new Intent(Conf.ACTION_DONATE)) != null;
+		final boolean done = startService(new Intent(Conf.ACTION_DONATE)) != null;
 		if(done) A.setFull();
 		return done;
+	}
+	
+	private boolean mailToDeveloper()
+	{
+		final Intent i = new Intent(android.content.Intent.ACTION_SEND);
+		i.setType("text/html");
+		i.putExtra(Intent.EXTRA_EMAIL  , new String[]{ Conf.AUTHOR_EMAIL });
+		i.putExtra(Intent.EXTRA_SUBJECT, A.tr(R.string.app_fullname));
+		i.putExtra(Intent.EXTRA_TEXT   , Html.fromHtml(A.tr(R.string.msg_email_body)+"<br />"));
+		startActivity(Intent.createChooser(i, A.tr(R.string.msg_email_choose)));
+		return true;
 	}
 	
 }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 		      package="cri.sanity" android:installLocation="auto"
-		      android:versionCode="4" android:versionName="0.4">
+		      android:versionCode="6" android:versionName="0.5">
 
   <application android:icon="@drawable/ic_app"
                android:label="@string/app_name"
-               android:debuggable="false"
+               android:debuggable="true"
                android:name=".A">
 
     <activity android:name=".MainActivity"
@@ -29,19 +29,28 @@
       </intent-filter>
     </receiver>
 
+	  <receiver android:name=".BtReceiver">
+      <intent-filter>
+        <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
+        <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
+      </intent-filter>
+    </receiver>
+
   </application>
 
-  <uses-sdk android:minSdkVersion="7" />
+  <uses-sdk android:minSdkVersion="5" />
 
   <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 	<uses-permission android:name="android.permission.MODIFY_PHONE_STATE" />
+  <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
 	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-  <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
 	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 	<uses-permission android:name="android.permission.BLUETOOTH" />
 	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 	<uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+	<supports-screens android:largeScreens="true" android:anyDensity="true" />
 
 </manifest>

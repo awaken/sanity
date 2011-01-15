@@ -5,6 +5,16 @@
     \nCopyright (C) 2010 - Cristiano Tagliamonte.
   </string>
 
+  <string name="changelog_body">
+     Nuovo: opzione per evitare di disattivare automaticamente il bluetooth quando ci sono dei dispositivi bluetooth connessi.\n
+   \nNuovo: opzione per ritardare l\'attivazione automatica del vivavoce.\n
+   \nFix: vengono riconosciute più periferiche audio bluetooth durante la telefonata.\n
+   \nFix: bug minore che causava crash sporadici al termine della telefonata.\n
+   \nNuovo: strumenti per contattare lo sviluppatore.
+  </string>
+  <string name="changelog_title">Modifiche recenti</string>
+  <string name="changelog_sum">Visualizza le modifiche recenti implementate in questa versione di Sanity.</string>
+
 	<string name="canc">Annulla</string>
 	<string name="yes">Sì</string>
 
@@ -15,20 +25,22 @@
 
   <string name="main_cat">Opzioni principali</string>
   <string name="enable_title">Abilita Sanity</string>
-  <string name="enable_sum">Abilita o disabilita il sistema Sanity. Se disabilitato, non verranno mai intraprese le azioni durante le telefonate.</string>
+  <string name="enable_sum">Abilita o disabilita il sistema Sanity. Se disabilitato, questa applicazione non avrà effetti durante le telefonate.</string>
   <string name="headset_title">Evita se uso le cuffie</string>
-  <string name="headset_sum">Seleziona per disabilitare il sistema Sanity quando le cuffie (con o senza fili) sono collegate.</string>
+  <string name="headset_sum">Disabilita la gestione automatica dei dispositivi e del vivavoce quando le cuffie (con o senza fili) sono collegate.</string>
   <string name="groups_cat">Gruppi di opzioni</string>
   <string name="misc_cat">Varie</string>
 
   <string name="devices_cat">Dispositivi da spegnere</string>
   <string name="devices_sum">Quali dispositivi spegnere per ridurre le onde elettromagnetiche durante la telefonata.</string>
   <string name="mobdata_title">Spegni Dati in Mobilità</string>
-  <string name="mobdata_sum">Disabilita la connessione Dati in Mobilità (2G/3G) durante la telefonata (sarà ripristinata al termine della chiamata).</string>
+  <string name="mobdata_sum">Disabilita la connessione Dati in Mobilità (2G/3G) durante la telefonata (sarà ripristinata al termine della chiamata). Funziona sulla maggior parte dei telefoni, ma non su tutti.</string>
   <string name="wifi_title">Spegni Wifi</string>
   <string name="wifi_sum">Disabilita il Wifi durante la telefonata (sarà ripristinato al termine della chiamata).</string>
   <string name="bt_title">Spegni Bluetooth</string>
   <string name="bt_sum">Disabilita il Bluetooth durante la telefonata (sarà ripristinato al termine della chiamata).</string>
+  <string name="bt_skip_title">Evita BT se connesso</string>
+  <string name="bt_skip_sum">Evita di abilitare/disabilitare automaticamente il Bluetooth durante una chiamata se ci sono dispositivi Bluetooth connessi al telefono.</string>
 
 	<string name="proximity_cat">Disabilita in prossimità</string>
 	<string name="proximity_sum">Opzioni per abilitare e disabilitare i dispositivi durante una chiamata utilizzando il sensore di prossimità.</string>
@@ -47,8 +59,10 @@
   <string name="speaker_sum">Opzioni per l\'attivazione automatica del vivavoce.</string>
   <string name="auto_speaker_title">Vivavoce automatico</string>
   <string name="auto_speaker_sum">Abilita/disabilita automaticamente il vivavoce quando allontano/avvicino il telefono all\'orecchio.</string>
+  <string name="delay_speaker_title">Ritardo di attivazione</string>
+  <string name="delay_speaker_sum">Quanto tempo aspettare prima che il vivavoce venga automaticamente acceso quando allontani il telefono dall\'orecchio.</string>
   <string name="loud_speaker_title">Vivavoce forte</string>
-  <string name="loud_speaker_sum">Alza il volume al massimo quando il vivavoce viene attivato automaticamente da Sanity.</string>
+  <string name="loud_speaker_sum">Alza il volume al massimo quando Sanity attiva automaticamente il vivavoce.</string>
   <string name="speaker_call_title">Abilita a inizio chiamata</string>
   <string name="speaker_call_sum">Abilita subito il vivavoce quando inizia la telefonata.</string>
 
@@ -70,8 +84,17 @@
   <string name="notify_activity_title">Notifica l\'attività</string>
   <string name="notify_activity_sum">Notifica se Sanity è in esecuzione quando inizia una telefonata.</string>
 
+  <string name="about_cat">Info e contatti</string>
+  <string name="about_sum">Informazioni su questa applicazione e strumenti per contattare lo sviluppatore.</string>
+  <string name="mail_title">Scrivi allo sviluppatore</string>
+  <string name="mail_sum">Tocca qui per scrivere un\'email allo sviluppatore. Puoi usare l\'email anche per segnalare bug e richiedere migliorie.</string>
+  <string name="comment_title">Lascia un commento</string>
+  <string name="comment_sum">Sei invitato a lasciare un commento sul Market riguardo Sanity. Tocca qui per aprire il Market. Per favore evita di segnalare bug nei commenti del Market.</string>
   <string name="eula_title">Licenza GNU GPL v3</string>
   <string name="eula_sum">Tocca qui per aprire la pagina web ufficiale della GNU General Public License versione 3.</string>
+  <string name="paypal_title">Donazione PayPal</string>
+  <string name="paypal_sum">Per supportare Sanity, puoi donare l\'ammontare che preferisci usando PayPal. Tocca qui per aprire il sito di PayPal.</string>
+
   <string name="donate_title">Donazione</string>
   <string name="donate_sum">Sanity è gratuito. Se questa applicazione ti piace, supporta lo sviluppo con una donazione.</string>
   <string name="donated_title">Donazione completata</string>
@@ -81,6 +104,8 @@
   <string name="msg_devs_disabled">Sanity: dispositivi spenti</string>
   <string name="msg_running">Sanity è in esecuzione</string>
   <string name="msg_market_err">Impossibile aprire il Market per mostrare le applicazioni dell\'autore! Verifica che la connessione a Internet sia funzionante.</string>
+  <string name="msg_email_choose">Scegli come inviare l\'email</string>
+  <string name="msg_email_body">Ciao Cristiano!</string>
 	<string name="msg_donate">Grazie per aver installato Sanity.
 	  \n\nQuesta è la versione libera, con tutte le funzionalità.
 	  Se Sanity ti piace, puoi effettuare una donazione per supportarlo.

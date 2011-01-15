@@ -30,4 +30,13 @@
 		<item>10 secondi</item>
 	</string-array>
 
+	<string-array name="speaker_delay_labels">
+		<item>Immediato</item>
+		<item>1 secondo</item>
+		<item>2 secondi</item>
+		<item>3 secondi</item>
+		<item>4 secondi</item>
+		<item>5 secondi</item>
+	</string-array>
+
 </resources>
