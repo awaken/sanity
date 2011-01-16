@@ -6,11 +6,8 @@
   </string>
 
   <string name="changelog_body">
-     Nuovo: opzione per evitare di disattivare automaticamente il bluetooth quando ci sono dei dispositivi bluetooth connessi.\n
-   \nNuovo: opzione per ritardare l\'attivazione automatica del vivavoce.\n
-   \nFix: vengono riconosciute più periferiche audio bluetooth durante la telefonata.\n
-   \nFix: bug minore che causava crash sporadici al termine della telefonata.\n
-   \nNuovo: strumenti per contattare lo sviluppatore.
+    Nuovo: accende/spegne automaticamente il GPS durante le telefonate.\n
+    \nModifica: interfaccia utente migliorata.
   </string>
   <string name="changelog_title">Modifiche recenti</string>
   <string name="changelog_sum">Visualizza le modifiche recenti implementate in questa versione di Sanity.</string>
@@ -33,8 +30,10 @@
 
   <string name="devices_cat">Dispositivi da spegnere</string>
   <string name="devices_sum">Quali dispositivi spegnere per ridurre le onde elettromagnetiche durante la telefonata.</string>
-  <string name="mobdata_title">Spegni Dati in Mobilità</string>
-  <string name="mobdata_sum">Disabilita la connessione Dati in Mobilità (2G/3G) durante la telefonata (sarà ripristinata al termine della chiamata). Funziona sulla maggior parte dei telefoni, ma non su tutti.</string>
+  <string name="gps_title">Spegni GPS</string>
+  <string name="gps_sum">Disabilita il GPS durante la telefonata (sarà ripristinato al termine della chiamata). Funziona su molti telefoni, ma non su tutti.</string>
+  <string name="mobdata_title">Spegni Connessione dati</string>
+  <string name="mobdata_sum">Disabilita la connessione dati (2G/3G) durante la telefonata (sarà ripristinata al termine della chiamata). Funziona su molti telefoni, ma non su tutti.</string>
   <string name="wifi_title">Spegni Wifi</string>
   <string name="wifi_sum">Disabilita il Wifi durante la telefonata (sarà ripristinato al termine della chiamata).</string>
   <string name="bt_title">Spegni Bluetooth</string>
@@ -100,10 +99,12 @@
   <string name="donated_title">Donazione completata</string>
   <string name="donated_sum">Hai supportato Sanity. Grazie per la tua donazione!</string>
 
+	<string name="menu_main">Principale</string>
+
   <string name="msg_devs_enabled">Sanity: dispositivi accesi</string>
   <string name="msg_devs_disabled">Sanity: dispositivi spenti</string>
   <string name="msg_running">Sanity è in esecuzione</string>
-  <string name="msg_market_err">Impossibile aprire il Market per mostrare le applicazioni dell\'autore! Verifica che la connessione a Internet sia funzionante.</string>
+  <string name="msg_market_err">Impossibile aprire l\'applicazione Market! Verifica che la connessione a Internet sia funzionante.</string>
   <string name="msg_email_choose">Scegli come inviare l\'email</string>
   <string name="msg_email_body">Ciao Cristiano!</string>
 	<string name="msg_donate">Grazie per aver installato Sanity.

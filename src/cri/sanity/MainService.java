@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.IBinder;
 
 
-public class MainService extends Service
+public final class MainService extends Service
 {
 	private static boolean running = false;
 
@@ -13,12 +13,12 @@ public class MainService extends Service
 
 	//---- static methods
 
-	public static boolean isRunning() { return running; }
+	public static final boolean isRunning() { return running; }
 
-	public static void start() { A.app().startService(new Intent(A.app(), MainService.class)); }
-	public static void stop () { A.app(). stopService(new Intent(A.app(), MainService.class)); }
+	public static final void start() { A.app().startService(new Intent(A.app(), MainService.class)); }
+	public static final void stop () { A.app(). stopService(new Intent(A.app(), MainService.class)); }
 
-	public static void notifyRun()
+	public static final void notifyRun()
 	{
 		if(!A.is("notify_activity")) return;
 		A.notify(A.tr(R.string.msg_running));

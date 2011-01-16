@@ -12,3 +12,30 @@ An Android application for managing volume and for reducing electromagnetic wave
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU General Public License version 3 for more details,
     you can find a copy on http://www.gnu.org/licenses/.
+
+
+------------
+ Change log
+------------
+
+* version 0.6
+New: automatic enable/disable GPS during phone calls.
+Change: featured user interface.
+
+* version 0.5
+New: option to avoid automatic bluetooth disabling when there are bluetooth devices connected.
+New: option to delay automatic handsfree enabler.
+Fix: more bluetooth audio devices are recognized during phone call.
+Fix: minor bug caused occasional crashes at call end.
+New: tools for contacting the developer.
+
+* version 0.4
+Bug fix: now bluetooth headsets are correctly handled.
+Change: notify activity only when call starts.
+
+* version 0.3
+New: force turn off backlight option
+Known bugs: actually bluetooth headsets are not correctly handled; this problem will be resolved in the next version.
+
+* version 0.2
+First public release

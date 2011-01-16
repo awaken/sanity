@@ -6,9 +6,12 @@ import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.provider.Settings.System;
 import android.telephony.TelephonyManager;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.location.LocationManager;
 import android.media.AudioManager;
+import android.net.Uri;
 //import android.content.ContentResolver;
 //import android.location.LocationManager;
 
@@ -25,72 +28,76 @@ public final class Dev
 	private static Object iTelMan;
 	private static int    screenTimeout = -1;
 	//private static int    brightness    = -1;
+	private static final Uri uriGps = Uri.parse("3");
+
 
 	private Dev() { }
 
 	//---- getting devices
 
-	public static Sensor sensor(int type) {
+	public static final Sensor sensor(int type) {
 		SensorManager sm = A.sensorMan();
 		return sm==null ? null : sm.getDefaultSensor(type);
 	}
-	public static Sensor sensorProxim() { return sensor(Sensor.TYPE_PROXIMITY     ); }
-	/*public static Sensor sensorOrient() { return sensor(Sensor.TYPE_ORIENTATION   ); }
-	public static Sensor sensorAccel () { return sensor(Sensor.TYPE_ACCELEROMETER ); }
-	public static Sensor sensorLight () { return sensor(Sensor.TYPE_LIGHT         ); }
-	public static Sensor sensorMagnet() { return sensor(Sensor.TYPE_MAGNETIC_FIELD); }
-	public static Sensor sensorTemper() { return sensor(Sensor.TYPE_TEMPERATURE   ); }
-	public static Sensor sensorPress () { return sensor(Sensor.TYPE_PRESSURE      ); }
-	public static Sensor sensorGyro  () { return sensor(Sensor.TYPE_GYROSCOPE     ); }*/
+	public static final Sensor sensorProxim() { return sensor(Sensor.TYPE_PROXIMITY     ); }
+	/*public static final Sensor sensorOrient() { return sensor(Sensor.TYPE_ORIENTATION   ); }
+	public static final Sensor sensorAccel () { return sensor(Sensor.TYPE_ACCELEROMETER ); }
+	public static final Sensor sensorLight () { return sensor(Sensor.TYPE_LIGHT         ); }
+	public static final Sensor sensorMagnet() { return sensor(Sensor.TYPE_MAGNETIC_FIELD); }
+	public static final Sensor sensorTemper() { return sensor(Sensor.TYPE_TEMPERATURE   ); }
+	public static final Sensor sensorPress () { return sensor(Sensor.TYPE_PRESSURE      ); }
+	public static final Sensor sensorGyro  () { return sensor(Sensor.TYPE_GYROSCOPE     ); }*/
 
 	//---- having devices?
 	
-	public static boolean haveProxim() { return sensorProxim() != null; }
-	public static boolean haveWifi()   { return A.wifiMan()    != null; }
-	public static boolean haveBt()     { return A.btAdapter()  != null; }
-	public static boolean haveTel()    { return A.telMan()     != null; }
-	//public static boolean haveLoc()    { return A.locMan()     != null; }
+	public static final boolean haveProxim() { return sensorProxim() != null; }
+	public static final boolean haveWifi()   { return A.wifiMan()    != null; }
+	public static final boolean haveBt()     { return A.btAdapter()  != null; }
+	public static final boolean haveTel()    { return A.telMan()     != null; }
+	public static final boolean haveLoc()    { return A.locMan()     != null; }
 
-	//public static boolean allowMobData() { return Settings.Secure.getInt(A.ctxRes(), "mobile_data", 1) == 1; }
+	//public static final boolean allowMobData() { return Settings.Secure.getInt(A.ctxRes(), "mobile_data", 1) == 1; }
 
 	//---- check on/off device state
 	
-	public static boolean isSpeakerOn() { return A.audioMan().isSpeakerphoneOn(); }
-	public static boolean isHeadsetOn() {
+	public static final boolean isSpeakerOn() { return A.audioMan().isSpeakerphoneOn(); }
+	public static final boolean isHeadsetOn() {
 		AudioManager am = A.audioMan();
 		return am.isWiredHeadsetOn() || am.isBluetoothA2dpOn() || am.isBluetoothScoOn();
 	}
 
-	public static boolean isMobDataOn() {
+	public static final boolean isMobDataOn() {
     if(Settings.Secure.getInt(A.ctnRes(), "mobile_data", 1) != 1) return false;
 		final int ds = A.telMan().getDataState();
 		return ds==TelephonyManager.DATA_CONNECTED || ds==TelephonyManager.DATA_CONNECTING;
 	}
-	public static boolean isWifiOn() { return haveWifi() && A.wifiMan().isWifiEnabled(); }
-	public static boolean isBtOn()   { return haveBt() && A.btAdapter().isEnabled(); }
-	//public static boolean isGpsOn()  { return haveLoc() && A.locMan().isProviderEnabled(LocationManager.GPS_PROVIDER); }
+	public static final boolean isWifiOn() { return haveWifi() && A.wifiMan().isWifiEnabled(); }
+	public static final boolean isBtOn()   { return haveBt() && A.btAdapter().isEnabled(); }
+	public static final boolean isGpsOn()  { return haveLoc() && A.locMan().isProviderEnabled(LocationManager.GPS_PROVIDER); }
 
 	//---- enable/disable devices
 
-	public static boolean enableMobData(boolean enable) {
+	public static final boolean enableMobData(boolean enable) {
 		try {
 			// use undocumented android api
 			Object i = iTelMan();
 			return ((Boolean)i.getClass().getMethod(enable ? "enableDataConnectivity" : "disableDataConnectivity").invoke(i)).booleanValue();
 		}
 		catch(Exception e) {
+			A.logd("unable to "+(enable?"enable":"disable")+" mobile data: undocumented api failed ("+e+')');
 			return false;
 		}
 	}
 
-	public static boolean enableWifi(boolean enable) { return A.wifiMan().setWifiEnabled(enable); }
+	public static final boolean enableWifi(boolean enable) { return A.wifiMan().setWifiEnabled(enable); }
 
-	public static boolean enableBt(boolean enable) {
+	public static final boolean enableBt(boolean enable) {
 		if(!haveBt()) return false;
 		return enable ? A.btAdapter().enable() : A.btAdapter().disable();
 	}
 	
-	/*public static boolean enableGps(boolean enable) {
+	/*
+	public static final boolean enableGps(boolean enable) {
 		// this method is extracted from "Quick Settings" opensource project (http://code.google.com/p/quick-settings) by beworker
 		final ContentResolver resolver = A.ctnRes();
 		final String providers         = Settings.Secure.getString(resolver, Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
@@ -126,63 +133,74 @@ public final class Dev
 			A.logd("unable to set Secure Settings for GPS!");
 			return false;
 		}
-	}*/
+	}
+	*/
 
-	public static void enableSpeaker(boolean enable) { A.audioMan().setSpeakerphoneOn(enable); }
+	public static final void toggleGps() {
+    Intent i = new Intent();
+    i.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider");
+    i.addCategory("android.intent.category.ALTERNATIVE");
+    i.setData(uriGps);
+    A.app().sendBroadcast(i);
+	}
+
+	public static final void enableSpeaker(boolean enable) { A.audioMan().setSpeakerphoneOn(enable); }
 
 	//---- volume
 
-	public static int  getVolume   (int type) { return A.audioMan().getStreamVolume   (type); }
-	public static int  getVolumeMax(int type) { return A.audioMan().getStreamMaxVolume(type); }
+	public static final int  getVolume   (int type) { return A.audioMan().getStreamVolume   (type); }
+	public static final int  getVolumeMax(int type) { return A.audioMan().getStreamMaxVolume(type); }
 
-	public static void setVolume(int type, int vol) { A.audioMan().setStreamVolume(type, vol               , 0); }
-	public static void setVolumeMax(int type)       { A.audioMan().setStreamVolume(type, getVolumeMax(type), 0); }
+	public static final void setVolume(int type, int vol) { A.audioMan().setStreamVolume(type, vol               , 0); }
+	public static final void setVolumeMax(int type)       { A.audioMan().setStreamVolume(type, getVolumeMax(type), 0); }
 
 	//---- managing system
 
-	public static int getSysInt(String key) {
+	public static final int getSysInt(String key) {
 		try {
 			return System.getInt(A.ctnRes(), key);
 		} catch(SettingNotFoundException e) {
 			return -1; 
 		}
 	}
-	public static void setSysInt(String key, int val) {
+	public static final void setSysInt(String key, int val) {
 		System.putInt(A.ctnRes(), key, val);
 		System.putInt(A.ctnRes(), key, val);
 	}
 
-	public static int getScreenOffTimeout() {
+	public static final int getScreenOffTimeout() {
 		return getSysInt(System.SCREEN_OFF_TIMEOUT);
 	}
-	public static void setScreenOffTimeout(int timeout) {
+	public static final void setScreenOffTimeout(int timeout) {
 		if(screenTimeout < 0) screenTimeout = getScreenOffTimeout();
 		setSysInt(System.SCREEN_OFF_TIMEOUT, timeout);
 	}
-	public static void restoreScreenTimeout() {
+	public static final void restoreScreenTimeout() {
 		if(screenTimeout < 0) return;
 		setScreenOffTimeout(screenTimeout);
 	}
 
-	/*public static int getBrightness() {
+	/*
+	public static final int getBrightness() {
 		return getSysInt(System.SCREEN_BRIGHTNESS);
 	}
-	public static void setBrightness(int b) {
+	public static final void setBrightness(int b) {
 		if(brightness < 0) brightness = getBrightness();
 		setSysInt(System.SCREEN_BRIGHTNESS, b);
 	}
-	public static void restoreBrightness() {
+	public static final void restoreBrightness() {
 		if(brightness < 0) return;
 		setBrightness(brightness);
 	}
 	
-	public static void dimScreen(boolean dim) {
+	public static final void dimScreen(boolean dim) {
 		setSysInt(System.DIM_SCREEN, dim? 1 : 0);
-	}*/
+	}
+	*/
 	
 	//---- undocumented android api
 
-	private static Object iTelMan() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+	private static final Object iTelMan() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		if(iTelMan != null) return iTelMan;
 		TelephonyManager tm = A.telMan();
 		Method itm = tm.getClass().getDeclaredMethod("getITelephony");

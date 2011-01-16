@@ -14,7 +14,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 
 
-public class PhoneListener extends PhoneStateListener implements SensorEventListener
+public final class PhoneListener extends PhoneStateListener implements SensorEventListener
 {
 	public  static final String BTCOUNT_KEY = "bt_count";
 	public  static final int    LISTEN = LISTEN_CALL_STATE|LISTEN_CALL_FORWARDING_INDICATOR;
@@ -26,9 +26,10 @@ public class PhoneListener extends PhoneStateListener implements SensorEventList
 
 	public  int btCount;
 
-	private boolean shutdown = false, applied = false, proxRegistered = false, headsetRegistered = false;
+	//private boolean applied = false;
+	private boolean shutdown = false, proxRegistered = false, headsetRegistered = false;
 	private boolean notifyEnable, notifyDisable, proximity, restoreFar, skipHeadset, autoSpeaker, loudSpeaker, speakerCall, screenOff;
-	private boolean headsetOn, wiredHeadsetOn, mobdataOn, wifiOn, btOn, skipBtConn;
+	private boolean headsetOn, wiredHeadsetOn, mobdataOn, wifiOn, gpsOn, btOn, skipBtConn;
 	private boolean lastFar;
 	private int     lastState = -1;
 	private int     disableDelay, enableDelay, speakerDelay;
@@ -101,7 +102,7 @@ public class PhoneListener extends PhoneStateListener implements SensorEventList
 		Dev.setVolume(Dev.VOLUME_CALL, vol);
 		A.logd((on?"preferred":"restored")+" volume set to level "+vol);
 	}
-	
+
 	private void onRinging()
 	{
 		A.logd("onRinging");
@@ -127,6 +128,7 @@ public class PhoneListener extends PhoneStateListener implements SensorEventList
 		// get all enabled devices states
 		mobdataOn  = A.is("mobdata") && Dev.isMobDataOn();
 		wifiOn     = A.is("wifi")    && Dev.isWifiOn();
+		gpsOn      = A.is("gps")     && Dev.isGpsOn();
 		btOn       = A.is("bt")      && Dev.isBtOn();
 		skipBtConn = A.is("bt_skip");
 		btCount    = Math.max(A.geti(BTCOUNT_KEY), 0);
@@ -198,18 +200,16 @@ public class PhoneListener extends PhoneStateListener implements SensorEventList
 
 	private synchronized void enableDevs(boolean enable)
 	{
-		if(headsetOn || enable!=applied || !isDevEnabled()) return;
-		if(wifiOn   ) Dev.enableWifi   (enable);
-		if(mobdataOn) Dev.enableMobData(enable);
-		if(btOn     ) {
-			if(!skipBtConn || btCount<1 || (enable && enable!=Dev.isBtOn()))
-				Dev.enableBt(enable);
-			else if(!wifiOn && !mobdataOn)
-				return;
-		}
+		if(headsetOn) return;
+		boolean done = false;
+		if(wifiOn    && enable!=Dev.isWifiOn   ()) { Dev.enableWifi   (enable); done = true; }
+		if(mobdataOn && enable!=Dev.isMobDataOn()) { Dev.enableMobData(enable); done = true; }
+		if(gpsOn     && enable!=Dev.isGpsOn    ()) { Dev.toggleGps();           done = true; }
+		if(btOn      && enable!=Dev.isBtOn     ())
+			if(!skipBtConn || btCount<1)             { Dev.enableBt     (enable); done = true; }
+		if(!done) return;
 		if(enable) { if(notifyEnable ) A.notify(A.tr(R.string.msg_devs_enabled )); }
 		else       { if(notifyDisable) A.notify(A.tr(R.string.msg_devs_disabled)); }
-		applied = !enable;
 		A.logd("enableDevs: " + enable);
 	}
 
@@ -217,7 +217,7 @@ public class PhoneListener extends PhoneStateListener implements SensorEventList
 	{
 		cleanEnableTask();
 		if(enable) {
-			if(enableDelay  <= 0) { enableDevs(true ); return; } 
+			if(enableDelay  <= 0) { enableDevs(true ); return; }
 			enableTask = new TimerTask() { public void run() { enableDevs(true ); } };
 	    timer.schedule(enableTask, enableDelay);
 		}

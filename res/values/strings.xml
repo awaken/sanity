@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <string name="app_name">Sanity</string>
-  <string name="app_ver">0.5</string>
-  <string name="app_fullname">Sanity \  v0.5</string>
+  <string name="app">Sanity</string>
 
   <string name="app_desc">
     Software for managing volume and for reducing electromagnetic waves during calls.
@@ -11,11 +9,8 @@
   </string>
 
   <string name="changelog_body">
-     New: option to avoid automatic bluetooth disabling when there are bluetooth devices connected.\n
-   \nNew: option to delay automatic handsfree enabler.\n
-   \nFix: more bluetooth audio devices are recognized during phone call.\n
-   \nFix: minor bug caused occasional crashes at call end.\n
-   \nNew: tools for contacting the developer.
+    New: automatic enable/disable GPS during phone calls.\n
+  	\nChange: featured user interface.
   </string>
   <string name="changelog_title">Recent changes</string>
   <string name="changelog_sum">Show recent changes implemented in this Sanity version.</string>
@@ -40,6 +35,8 @@
 
   <string name="devices_cat">Devices to disable</string>
   <string name="devices_sum">Which devices should be disabled for reducing electromagnetic waves during a call.</string>
+  <string name="gps_title">Turn off GPS</string>
+  <string name="gps_sum">Disable GPS during a call (it will be restored at call end). It works with many phone models, but not with all.</string>
   <string name="mobdata_title">Turn off Mobile Data</string>
   <string name="mobdata_sum">Disable Mobile Data (2G/3G) during a call (it will be restored at call end). It works with many phone models, but not with all.</string>
   <string name="wifi_title">Turn off Wifi</string>
@@ -107,10 +104,12 @@
   <string name="donated_title">Donation completed</string>
   <string name="donated_sum">You have supported Sanity. Thank you for your donation!</string>
 
+	<string name="menu_main">Main</string>
+
   <string name="msg_devs_enabled">Sanity: devices enabled</string>
   <string name="msg_devs_disabled">Sanity: devices disabled</string>
   <string name="msg_running">Sanity is running</string>
-  <string name="msg_market_err">Unable to open Market for showing author\'s applications! Check the Internet connection is properly working.</string>
+  <string name="msg_market_err">Unable to open Market application! Check the Internet connection is properly working.</string>
   <string name="msg_email_choose">Choose how to send email</string>
   <string name="msg_email_body">Hello Cristiano!</string>
 	<string name="msg_donate">Thank you for using Sanity.
