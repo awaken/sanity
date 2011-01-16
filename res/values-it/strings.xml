@@ -6,11 +6,27 @@
   </string>
 
   <string name="changelog_body">
-    Nuovo: accende/spegne automaticamente il GPS durante le telefonate.\n
-    \nModifica: interfaccia utente migliorata.
+  	Versione 0.7\n
+  	- Nuovo: opzione per evitare di spegnere automaticamente la Connessione Dati quando il GPS è acceso.\n
+    \nVersione 0.6\n
+    - Nuovo: opzione per accendere/spegnere automaticamente il GPS durante le telefonate.\n
+    - Modifica: interfaccia utente migliorata.\n
+		\nVersione 0.5\n
+		- Nuovo: opzione per evitare di disattivare automaticamente il bluetooth quando ci sono dei dispositivi bluetooth connessi.\n
+		- Nuovo: opzione per ritardare l\'attivazione automatica del vivavoce.\n
+		- Fix: vengono riconosciute più periferiche audio bluetooth durante la telefonata.\n
+		- Fix: bug minore che causava crash sporadici al termine della telefonata.\n
+		- Nuovo: strumenti per contattare lo sviluppatore.\n
+		\nVersione 0.4\n
+		- Bug rimossi: ora le cuffie bluetooth vengono gestite correttamente.\n
+		- Modifiche: notifica l\'attività solo a inizio telefonata.\n
+		\nVersione 0.3\n
+		- Nuovo: opzione per forzare lo spegnimento della retroilluminazione.\n
+		\nVersione 0.2\n
+		- Prima versione pubblicata.\n
   </string>
   <string name="changelog_title">Modifiche recenti</string>
-  <string name="changelog_sum">Visualizza le modifiche recenti implementate in questa versione di Sanity.</string>
+  <string name="changelog_sum">Visualizza le modifiche recenti implementate nelle ultime versioni di Sanity.</string>
 
 	<string name="canc">Annulla</string>
 	<string name="yes">Sì</string>
@@ -32,8 +48,10 @@
   <string name="devices_sum">Quali dispositivi spegnere per ridurre le onde elettromagnetiche durante la telefonata.</string>
   <string name="gps_title">Spegni GPS</string>
   <string name="gps_sum">Disabilita il GPS durante la telefonata (sarà ripristinato al termine della chiamata). Funziona su molti telefoni, ma non su tutti.</string>
-  <string name="mobdata_title">Spegni Connessione dati</string>
-  <string name="mobdata_sum">Disabilita la connessione dati (2G/3G) durante la telefonata (sarà ripristinata al termine della chiamata). Funziona su molti telefoni, ma non su tutti.</string>
+  <string name="mobdata_title">Spegni Connessione Dati</string>
+  <string name="mobdata_sum">Disabilita la Connessione Dati (2G/3G) durante la telefonata (sarà ripristinata al termine della chiamata). Funziona su molti telefoni, ma non su tutti.</string>
+  <string name="mobdata_skip_title">Evita Conn. Dati se GPS</string>
+  <string name="mobdata_skip_sum">Evita di disabilitare automaticamente la Connessione Dati (2G/3G) durante la telefonata quando il GPS è acceso.</string>
   <string name="wifi_title">Spegni Wifi</string>
   <string name="wifi_sum">Disabilita il Wifi durante la telefonata (sarà ripristinato al termine della chiamata).</string>
   <string name="bt_title">Spegni Bluetooth</string>

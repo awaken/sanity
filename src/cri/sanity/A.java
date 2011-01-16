@@ -112,15 +112,15 @@ public final class A extends Application
 
 	// basic
 	public static final A                         app() { return a;     }
-	public static final String             name() { return name;  }
+	public static final String                   name() { return name;  }
 	public static final SharedPreferences       prefs() { return prefs; }
 	public static final SharedPreferences.Editor edit() { return edit;  }
-	public static final String              pkg() { return pkgInfo.packageName; }
-	public static final Resources     resources() { return resources==null? resources=a.getResources()       : resources; }
-	public static final ContentResolver  ctnRes() { return    ctxRes==null? ctxRes   =a.getContentResolver() : ctxRes;    }
-	public static final PackageInfo     pkgInfo() { return   pkgInfo; }
-	public static final String              ver() { return pkgInfo.versionName; }
-	
+	public static final String                    pkg() { return pkgInfo.packageName; }
+	public static final Resources           resources() { return resources==null? resources=a.getResources()       : resources; }
+	public static final ContentResolver        ctnRes() { return    ctxRes==null? ctxRes   =a.getContentResolver() : ctxRes;    }
+	public static final PackageInfo           pkgInfo() { return   pkgInfo; }
+	public static final String                    ver() { return pkgInfo.versionName; }
+
 	// log
 	public static final int logd(Object o, String method)
 	                                    { return !DEBUG? 0 : Log.d(name, o.getClass().getSimpleName()+'.'+method); }

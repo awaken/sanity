@@ -59,30 +59,26 @@ public class ActivityScreen extends PrefActivity
 		return true;
 	}
 	
-	//---- protected api
+	//---- public api
 
-	protected static final String getAppFullName() { 
+	public static final String getAppFullName() { 
 		return A.tr(R.string.app) + "  v" + A.ver();
 	}
 
-	protected static final void alertChangeLog() {
+	public static final void alertChangeLog() {
 		A.alert(A.tr(R.string.changelog_title), A.tr(R.string.changelog_body));
 	}
 
-	protected final void screener(String key, final Class<?> cls, int idPref, int idMenu)
-	{
+	public final void screener(String key, final Class<?> cls, int idPref, int idMenu) {
 		on(key, new Click(){ boolean on(){ startActivity(new Intent(A.app(), cls)); return true; }});
 		screener(cls, idPref, idMenu);
 	}
-
-	protected final void screener(final Class<?> cls, int idPref, int idMenu)
-	{
+	public final void screener(final Class<?> cls, int idPref, int idMenu) {
 		mapScreenPref.put(cls, idPref);
 		if(idMenu <= 0) return;
 		mapScreenMenu.put(cls, idMenu);
 		mapMenuScreen.put(idMenu, cls);
 	}
-
-	protected final void screener(final Class<?> cls, int idPref) {	screener(cls, idPref, 0); }
+	public final void screener(final Class<?> cls, int idPref) {	screener(cls, idPref, 0); }
 
 }

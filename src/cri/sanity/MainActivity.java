@@ -64,6 +64,7 @@ public class MainActivity extends ActivityScreen
 		setChecked(A.ENABLED_KEY , true);		// main prefs
 		setChecked("skip_headset", true);
 		A.put("mobdata"          , false)		// devices prefs
+		 .put("mobdata_skip"     , false)
 		 .put("wifi"             , true)
 		 .put("gps"              , false)
 		 .put("bt"               , true)

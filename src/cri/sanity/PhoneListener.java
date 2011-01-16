@@ -26,7 +26,6 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 
 	public  int btCount;
 
-	//private boolean applied = false;
 	private boolean shutdown = false, proxRegistered = false, headsetRegistered = false;
 	private boolean notifyEnable, notifyDisable, proximity, restoreFar, skipHeadset, autoSpeaker, loudSpeaker, speakerCall, screenOff;
 	private boolean headsetOn, wiredHeadsetOn, mobdataOn, wifiOn, gpsOn, btOn, skipBtConn;
@@ -126,9 +125,9 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 		volBt      = A.getsi("vol_bt");
 		volPhone   = A.getsi("vol_phone");
 		// get all enabled devices states
-		mobdataOn  = A.is("mobdata") && Dev.isMobDataOn();
-		wifiOn     = A.is("wifi")    && Dev.isWifiOn();
 		gpsOn      = A.is("gps")     && Dev.isGpsOn();
+		wifiOn     = A.is("wifi")    && Dev.isWifiOn();
+		mobdataOn  = A.is("mobdata") && Dev.isMobDataOn() && (!gpsOn || !A.is("mobdata_skip"));
 		btOn       = A.is("bt")      && Dev.isBtOn();
 		skipBtConn = A.is("bt_skip");
 		btCount    = Math.max(A.geti(BTCOUNT_KEY), 0);
@@ -202,9 +201,9 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 	{
 		if(headsetOn) return;
 		boolean done = false;
+		if(gpsOn     && enable!=Dev.isGpsOn    ()) { Dev.toggleGps();           done = true; }
 		if(wifiOn    && enable!=Dev.isWifiOn   ()) { Dev.enableWifi   (enable); done = true; }
 		if(mobdataOn && enable!=Dev.isMobDataOn()) { Dev.enableMobData(enable); done = true; }
-		if(gpsOn     && enable!=Dev.isGpsOn    ()) { Dev.toggleGps();           done = true; }
 		if(btOn      && enable!=Dev.isBtOn     ())
 			if(!skipBtConn || btCount<1)             { Dev.enableBt     (enable); done = true; }
 		if(!done) return;

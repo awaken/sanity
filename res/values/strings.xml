@@ -9,11 +9,27 @@
   </string>
 
   <string name="changelog_body">
-    New: automatic enable/disable GPS during phone calls.\n
-  	\nChange: featured user interface.
+  	Version 0.7\n
+  	- New: option to avoid automatic disabling of Mobile Data when GPS is enabled.\n
+  	\nVersion 0.6\n
+    - New: option to automatic enable/disable GPS during phone calls.\n
+  	- Change: featured user interface.\n
+		\nVersion 0.5\n
+		- New: option to avoid automatic bluetooth disabling when there are bluetooth devices connected.\n
+		- New: option to delay automatic handsfree enabler.\n
+		- Fix: more bluetooth audio devices are recognized during phone call.\n
+		- Fix: minor bug caused occasional crashes at call end.\n
+		- New: tools for contacting the developer.\n
+		\nVersion 0.4\n
+		- Bug fix: now bluetooth headsets are correctly handled.\n
+		- Change: notify activity only when call starts.\n
+		\nVersion 0.3\n
+		- New: force turn off backlight option.\n
+		\nVersion 0.2\n
+		- First published release.\n
   </string>
   <string name="changelog_title">Recent changes</string>
-  <string name="changelog_sum">Show recent changes implemented in this Sanity version.</string>
+  <string name="changelog_sum">Show recent changes implemented in the last Sanity versions.</string>
 
 	<string name="ok">Ok</string>
 	<string name="canc">Cancel</string>
@@ -39,12 +55,14 @@
   <string name="gps_sum">Disable GPS during a call (it will be restored at call end). It works with many phone models, but not with all.</string>
   <string name="mobdata_title">Turn off Mobile Data</string>
   <string name="mobdata_sum">Disable Mobile Data (2G/3G) during a call (it will be restored at call end). It works with many phone models, but not with all.</string>
+  <string name="mobdata_skip_title">Skip Mobile Data if GPS</string>
+  <string name="mobdata_skip_sum">Skip automatic Mobile Data (2G/3G) disabling during a call when GPS is enabled.</string>
   <string name="wifi_title">Turn off Wifi</string>
   <string name="wifi_sum">Disable Wifi during a call (it will be restored at call end).</string>
   <string name="bt_title">Turn off Bluetooth</string>
   <string name="bt_sum">Disable Bluetooth during a call (it will be restored at call end).</string>
   <string name="bt_skip_title">Skip BT if connected</string>
-  <string name="bt_skip_sum">Skip automatic Bluetooth enabling/disabling during a call if there are Bluetooth devices connected to phone.</string>
+  <string name="bt_skip_sum">Skip automatic Bluetooth disabling during a call if there are Bluetooth devices connected to phone.</string>
 
 	<string name="proximity_cat">Proximity disabling</string>
 	<string name="proximity_sum">Options for enabling and disabling devices during a call by checking proximity sensor.</string>
