@@ -18,6 +18,9 @@ An Android application for managing volume and for reducing electromagnetic wave
  Change log
 ------------
 
+* version 0.7
+New: option to avoid automatic disabling of Mobile Data when GPS is enabled.
+
 * version 0.6
 New: automatic enable/disable GPS during phone calls.
 Change: featured user interface.
