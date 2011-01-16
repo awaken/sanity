@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<Preference android:key="logo" />
+	<PreferenceCategory android:title="@string/vol_cat">
+	  <ListPreference android:title="@string/vol_phone_title"
+	                  android:summary="@string/vol_phone_sum"
+	                  android:key="vol_phone" />
+	  <ListPreference android:title="@string/vol_wired_title"
+	                  android:summary="@string/vol_wired_sum"
+	                  android:key="vol_wired" />
+	  <ListPreference android:title="@string/vol_bt_title"
+	                  android:summary="@string/vol_bt_sum"
+	                  android:key="vol_bt" />
+	</PreferenceCategory>
+</PreferenceScreen>

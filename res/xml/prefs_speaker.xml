@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<Preference android:key="logo" />
+	<PreferenceCategory android:title="@string/speaker_cat">
+	  <CheckBoxPreference android:title="@string/speaker_call_title"
+	                      android:summary="@string/speaker_call_sum"
+	                      android:key="speaker_call" />
+	  <CheckBoxPreference android:title="@string/loud_speaker_title"
+	                      android:summary="@string/loud_speaker_sum"
+	                      android:key="loud_speaker" />
+	  <CheckBoxPreference android:title="@string/auto_speaker_title"
+	                      android:summary="@string/auto_speaker_sum"
+	                      android:key="auto_speaker" />
+	  <ListPreference android:title="@string/delay_speaker_title"
+	                  android:summary="@string/delay_speaker_sum"
+	                  android:dependency="auto_speaker"
+	                  android:key="delay_speaker"
+	                  android:entries="@array/speaker_delay_labels"
+	                  android:entryValues="@array/speaker_delay_values" />
+	</PreferenceCategory>
+</PreferenceScreen>

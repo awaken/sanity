@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<Preference android:key="logo" />
+  <PreferenceCategory android:title="@string/devices_cat">
+	  <CheckBoxPreference android:title="@string/mobdata_title"
+	                      android:summary="@string/mobdata_sum"
+	                      android:key="mobdata" />
+	  <CheckBoxPreference android:title="@string/wifi_title"
+	                      android:summary="@string/wifi_sum"
+	                      android:key="wifi" />
+	  <CheckBoxPreference android:title="@string/gps_title"
+	                      android:summary="@string/gps_sum"
+	                      android:key="gps" />
+	  <CheckBoxPreference android:title="@string/bt_title"
+	                      android:summary="@string/bt_sum"
+	                      android:key="bt" />
+	  <CheckBoxPreference android:title="@string/bt_skip_title"
+	                      android:summary="@string/bt_skip_sum"
+	                      android:dependency="bt"
+	                      android:key="bt_skip" />
+  </PreferenceCategory>
+</PreferenceScreen>
