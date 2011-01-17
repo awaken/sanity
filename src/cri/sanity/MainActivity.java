@@ -17,6 +17,7 @@ public class MainActivity extends ActivityScreen
   {
 		screener(getClass(), R.xml.prefs);
     super.onCreate(savedInstanceState);
+    A.activity = this;
     final String old = getOldVersion();
   	setupScreens();
   	setupProximity();
@@ -30,6 +31,13 @@ public class MainActivity extends ActivityScreen
 		else if(!A.isFull())
 			askDonate();
   }
+	
+	@Override
+	public void onDestroy()
+	{
+		A.activity = null;
+		super.onDestroy();
+	}
 
 	//---- private api
 

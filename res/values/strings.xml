@@ -9,7 +9,9 @@
   </string>
 
   <string name="changelog_body">
-  	Version 0.7\n
+  	Version 0.8\n
+  	- Fix: user interface bugs
+  	\nVersion 0.7\n
   	- New: option to avoid automatic disabling of Mobile Data when GPS is enabled.\n
   	\nVersion 0.6\n
     - New: option to automatic enable/disable GPS during phone calls.\n

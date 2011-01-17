@@ -15,7 +15,7 @@ public class ScreenAbout extends ActivityScreen
     super.onCreate(savedInstanceState);
   	on("eula"     , new Click(){ boolean on(){ return A.gotoUrl(Conf.EULA_URL); }});
   	on("comment"  , new Click(){ boolean on(){ return A.gotoMarketDetails();    }});
-  	on("changelog", new Click(){ boolean on(){ alertChangeLog(); return true;   }});
+  	on("changelog", new Click(){ boolean on(){ return alertChangeLog();         }});
   	on("mail"     , new Click(){ boolean on(){ return mailToDeveloper();        }});
   	on("paypal"   , new Click(){ boolean on(){ return A.gotoUrl(Conf.DONATE_URL.replace(Conf.CURRENCY_VAR, Currency.getInstance(Locale.getDefault()).getCurrencyCode())); }});
   }

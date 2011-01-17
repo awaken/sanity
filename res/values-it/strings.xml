@@ -6,7 +6,9 @@
   </string>
 
   <string name="changelog_body">
-  	Versione 0.7\n
+  	Versione 0.8\n
+  	- Fix: malfunzionamenti nell\'interfaccia utente.\n
+  	\nVersione 0.7\n
   	- Nuovo: opzione per evitare di spegnere automaticamente la Connessione Dati quando il GPS è acceso.\n
     \nVersione 0.6\n
     - Nuovo: opzione per accendere/spegnere automaticamente il GPS durante le telefonate.\n

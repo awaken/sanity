@@ -36,10 +36,17 @@ public class ActivityScreen extends PrefActivity
   }
 	
 	@Override
+	public void onStart()
+	{
+		super.onStart();
+		A.activity = this;
+	}
+	
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		MenuInflater inflater = getMenuInflater();
-    inflater.inflate(R.menu.menu, menu);
+    inflater.inflate(R.menu.main, menu);
     final Integer i = mapScreenMenu.get(getClass());
     if(i != null) {
     	MenuItem mi = menu.findItem(i.intValue());
@@ -65,8 +72,9 @@ public class ActivityScreen extends PrefActivity
 		return A.tr(R.string.app) + "  v" + A.ver();
 	}
 
-	public static final void alertChangeLog() {
+	public static final boolean alertChangeLog() {
 		A.alert(A.tr(R.string.changelog_title), A.tr(R.string.changelog_body));
+		return true;
 	}
 
 	public final void screener(String key, final Class<?> cls, int idPref, int idMenu) {

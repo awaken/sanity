@@ -223,7 +223,7 @@ public final class A extends Application
   		case ALERT_YESNO:     idPos = LAB_YES; idNeg = LAB_NO  ;                   break;
   		case ALERT_YESNOCANC: idPos = LAB_YES; idNeg = LAB_NO  ; idNeu = LAB_CANC; break;
   	}
-		final AlertDialog.Builder adb = new AlertDialog.Builder(activity);
+		final AlertDialog.Builder adb = new AlertDialog.Builder(activity==null? a : activity);
 		adb.setIcon(R.drawable.ic_bar);
 		adb.setTitle(title);
 		adb.setMessage(msg);

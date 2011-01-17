@@ -1,6 +1,5 @@
 package cri.sanity;
 
-import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -9,9 +8,7 @@ import android.preference.Preference.OnPreferenceClickListener;
 
 
 public abstract class PrefActivity extends PreferenceActivity
-{
-	private boolean quitting = false;
-	
+{	
 	//---- inner classes
 
 	public static abstract class Click implements OnPreferenceClickListener
@@ -38,8 +35,6 @@ public abstract class PrefActivity extends PreferenceActivity
 
 	//---- methods
 
-	public final boolean isQuitting() { return quitting; }
-	
 	public final Preference findPref(String key)
 	{
 		Preference p = findPreference(key);
@@ -59,6 +54,9 @@ public abstract class PrefActivity extends PreferenceActivity
 	public final void setEnabled(String key, boolean enabled) {
 		findPref(key).setEnabled(enabled);
 	}
+	public final void setEnabled(Preference p, boolean enabled) {
+		p.setEnabled(enabled);
+	}
 	
 	public final void on(String key, Click  listener)            { on(findPref(key), listener);               }
 	public final void on(String key, Change listener)            { on(findPref(key), listener);               }
@@ -68,30 +66,6 @@ public abstract class PrefActivity extends PreferenceActivity
 	public final void on(Preference p, Click click, Change change) {
 		p.setOnPreferenceClickListener(click);
 		p.setOnPreferenceChangeListener(change);
-	}
-
-	//---- Activity override
-
-	@Override
-  public void onCreate(Bundle savedInstanceState)
-  {
-    super.onCreate(savedInstanceState);
-    A.activity = this;
-  }
-
-	@Override
-	public void onDestroy()
-	{
-		A.activity = null;
-		quitting   = false;
-		super.onDestroy();
-	}
-	
-	@Override
-	public void onBackPressed()
-	{
-		quitting = true;
-		super.onBackPressed();
 	}
 
 }
