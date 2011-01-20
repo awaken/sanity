@@ -18,18 +18,26 @@ import android.net.Uri;
 
 public final class Dev
 {
-	public static final int VOL_CALL  = AudioManager.STREAM_VOICE_CALL;
-	public static final int VOL_MEDIA = AudioManager.STREAM_MUSIC;
-	public static final int VOL_ALARM = AudioManager.STREAM_ALARM;
-	public static final int VOL_RING  = AudioManager.STREAM_RING;
-	public static final int VOL_DTMF  = AudioManager.STREAM_DTMF;
-	public static final int VOL_SYS   = AudioManager.STREAM_SYSTEM;
+	public static final int VOL_CALL   = AudioManager.STREAM_VOICE_CALL;
+	public static final int VOL_MEDIA  = AudioManager.STREAM_MUSIC;
+	public static final int VOL_ALARM  = AudioManager.STREAM_ALARM;
+	public static final int VOL_NOTIFY = AudioManager.STREAM_NOTIFICATION;
+	public static final int VOL_RING   = AudioManager.STREAM_RING;
+	public static final int VOL_DTMF   = AudioManager.STREAM_DTMF;
+	public static final int VOL_SYS    = AudioManager.STREAM_SYSTEM;
+	public static final int VOL_DEF    = AudioManager.USE_DEFAULT_STREAM_TYPE;
+	public static final int FLAG_VOL_SHOW    = AudioManager.FLAG_SHOW_UI;
+	public static final int FLAG_VOL_PLAY    = AudioManager.FLAG_PLAY_SOUND;
+	public static final int FLAG_VOL_VIBRATE = AudioManager.FLAG_VIBRATE;
+	public static final int FLAG_VOL_RINGER  = AudioManager.FLAG_ALLOW_RINGER_MODES;
+	public static final int FLAG_VOL_REMOVE  = AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE;
+
+	public static int defVolFlags = 0;
 
 	private static Object iTelMan;
 	private static int    screenTimeoutBak = -1;
 	//private static int    brightnessBak    = -1;
 	private static final Uri uriGps = Uri.parse("3");
-
 
 	private Dev() { }
 
@@ -152,8 +160,13 @@ public final class Dev
 	public static final int  getVolume   (int type) { return A.audioMan().getStreamVolume   (type); }
 	public static final int  getVolumeMax(int type) { return A.audioMan().getStreamMaxVolume(type); }
 
-	public static final void setVolume(int type, int vol) { A.audioMan().setStreamVolume(type, vol               , 0); }
-	public static final void setVolumeMax(int type)       { A.audioMan().setStreamVolume(type, getVolumeMax(type), 0); }
+	public static final void setVolume(int type, int vol)            { A.audioMan().setStreamVolume(type, vol, defVolFlags); }
+	public static final void setVolume(int type, int vol, int flags) { A.audioMan().setStreamVolume(type, vol, flags); }
+	public static final void setVolumeMax(int type)            { A.audioMan().setStreamVolume(type, getVolumeMax(type), defVolFlags); }
+	public static final void setVolumeMax(int type, int flags) { A.audioMan().setStreamVolume(type, getVolumeMax(type), flags); }
+
+	public static final void mute(int type, boolean enable) { A.audioMan().setStreamMute(type, enable); }
+	//public static final void solo(int type, boolean enable) { A.audioMan().setStreamSolo(type, enable); }
 
 	//---- managing system
 

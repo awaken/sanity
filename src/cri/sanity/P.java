@@ -26,15 +26,17 @@ public final class P
 	public static final String SPEAKER_CALL  = "speaker_call";
 	public static final String SPEAKER_LOUD  = "loud_speaker";
 	public static final String SPEAKER_AUTO  = "auto_speaker";
-	public static final String SPEAKER_DELAY = "speaker_delay";
+	public static final String SPEAKER_DELAY = "delay_speaker";
 	// volume
 	public static final String VOL_PHONE = "vol_phone";
 	public static final String VOL_WIRED = "vol_wired";
 	public static final String VOL_BT    = "vol_bt";
+	public static final String VOL_SOLO  = "vol_solo";
 	// notification
 	public static final String NOTIFY_ENABLE   = "notify_enable";
 	public static final String NOTIFY_DISABLE  = "notify_disable";
 	public static final String NOTIFY_ACTIVITY = "notify_activity";
+	public static final String NOTIFY_VOLUME   = "notify_volume";
 
 	// internals (not shown to user)
 	public static final String FULL     = "full";

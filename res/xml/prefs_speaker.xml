@@ -15,7 +15,7 @@
 	                  android:summary="@string/delay_speaker_sum"
 	                  android:dependency="auto_speaker"
 	                  android:key="delay_speaker"
-	                  android:entries="@array/speaker_delay_labels"
-	                  android:entryValues="@array/speaker_delay_values" />
+	                  android:entries="@array/delay_speaker_labels"
+	                  android:entryValues="@array/delay_speaker_values" />
 	</PreferenceCategory>
 </PreferenceScreen>

@@ -76,6 +76,8 @@
 	<string name="vol_wired_sum">Volume da impostare automaticamente durante una chiamata mentre si usano le cuffie con i fili.</string>
 	<string name="vol_bt_title">Cuffie bluetooth</string>
 	<string name="vol_bt_sum">Volume da impostare automaticamente durante una chiamata mentre si usano le cuffie senza fili.</string>
+	<string name="vol_solo_title">Solo conversazione</string>
+	<string name="vol_solo_sum">Ascolta solo l\'audio della conversazione, spegnendo ogni altro flusso audio durante la telefonata.</string>
 
   <string name="notify_cat">Notifica</string>
   <string name="notify_sum">Scegli quali notifiche visualizzare.</string>
@@ -85,6 +87,8 @@
   <string name="notify_enable_sum">Notifica quando i dispositivi vengono automaticamente riaccesi da Sanity.</string>
   <string name="notify_activity_title">Notifica l\'attività</string>
   <string name="notify_activity_sum">Notifica se Sanity è in esecuzione quando inizia una telefonata.</string>
+  <string name="notify_volume_title">Notifica volume</string>
+  <string name="notify_volume_sum">Notifica quando il volume viene automaticamente modificato da Sanity.</string>
 
   <string name="about_cat">Info e contatti</string>
   <string name="about_sum">Informazioni su questa applicazione e strumenti per contattare lo sviluppatore.</string>
@@ -102,7 +106,7 @@
   <string name="donated_title">Donazione completata</string>
   <string name="donated_sum">Hai supportato Sanity. Grazie per la tua donazione!</string>
   <string name="full_title">Versione completa</string>
-  <string name="full_sum">Questa è la versione completa di Sanity (senza le richieste di donazione).</string>
+  <string name="full_sum">Questa è la versione completa di Sanity.</string>
 
   <string name="msg_devs_enabled">Sanity: dispositivi accesi</string>
   <string name="msg_devs_disabled">Sanity: dispositivi spenti</string>
@@ -131,7 +135,12 @@
   <string name="changelog_title">Modifiche recenti</string>
   <string name="changelog_sum">Visualizza le modifiche recenti implementate nelle ultime versioni di Sanity.</string>
   <string name="changelog_body">
-  	Versione 0.9\n
+  	Versione 1.0\n
+  	- Nuovo: opzione di volume per rendere silenziosi tutti i flussi audio eccetto quello di conversazione (durante una chiamata).\n
+  	- Nuovo: opzione di notifica per mostrare i cambi automatici di volume.\n
+  	- Fix: l\'attivazione ritardata del vivavoce ora funziona.\n
+  	- Fix: bug minore nella gestione automatica del volume.\n
+  	\nVersione 0.9\n
   	- Nuovo: opzione per supportare quei telefoni che montano i sensori di prossimità invertiti.\n
   	- Nuovo: opzione per supportare i dispositivi audio bluetooth non riconosciuti.\n
   	- Fix: in certi casi i dispositivi non venivano rispristinati subito dopo uno squillo senza risposta.\n

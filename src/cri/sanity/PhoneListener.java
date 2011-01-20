@@ -18,7 +18,6 @@ public final class PhoneListener extends PhoneStateListener
 {
 	public  static final int    LISTEN = LISTEN_CALL_STATE|LISTEN_CALL_FORWARDING_INDICATOR;
 	private static final int    FORCE_AUTOSPEAKER_DELAY = Conf.FORCE_AUTOSPEAKER_DELAY;
-	private static final int    SKIP_VOLUME = -1;
 
 	private static PhoneListener activeInst;
 
@@ -31,12 +30,13 @@ public final class PhoneListener extends PhoneStateListener
 	private int     lastCallState = -1;
 	private int     disableDelay, enableDelay, speakerDelay;
 	private int     volRestore, volPhone, volWired, volBt;
+	private boolean volSolo;
 	private TimerTask enableTask, speakerTask;
 	private Timer     timer;
 
-	private final int volMax = Dev.getVolumeMax(Dev.VOL_CALL);
 	private final Sensor proximSensor = Dev.sensorProxim();
-	//private final float  proximMax    = proximSensor==null ? 666 : proximSensor.getMaximumRange();
+	//private final float proximMax = proximSensor==null ? 666 : proximSensor.getMaximumRange();
+	//private final int volMax = Dev.getVolumeMax(Dev.VOL_CALL);
 
 	//---- inner classes
 
@@ -71,7 +71,6 @@ public final class PhoneListener extends PhoneStateListener
 			final boolean on = i.getIntExtra("state",0) != 0;
 			if(on == wiredHeadsetOn) return;
 			updateHeadset(wiredHeadsetOn = on, volWired);
-			A.logd("wired headset connected = "+on);
 		}
 	};
 
@@ -82,29 +81,23 @@ public final class PhoneListener extends PhoneStateListener
 	
 	//---- methods
 
-	/*
-	public PhoneListener()
-	{
-		if(proximMax == 666)
-			A.logd("cannot get sensor max range: null proximity sensor");
-	}
-	*/
-	
 	public final void startup()
 	{
 		onRinging();
 		lastCallState = TelephonyManager.CALL_STATE_RINGING;
+		/*
 		if(A.DEBUG) {
 			if(proximRegistered)          A.logd("using proximity sensor");
 			else if(proximSensor == null) A.logd("no proximity: sensor not found");
 			else                          A.logd("no proximity: disabled option");
 		}
+		*/
 	}
 
-	public final int     getState     () { return lastCallState; }
-	public final boolean isRinging    () { return lastCallState == TelephonyManager.CALL_STATE_RINGING; }
+	//public final int     getState     () { return lastCallState; }
+	//public final boolean isRinging    () { return lastCallState == TelephonyManager.CALL_STATE_RINGING; }
+	//public final boolean isIdle       () { return lastCallState == TelephonyManager.CALL_STATE_IDLE   ; }
 	public final boolean isOffhook    () { return lastCallState == TelephonyManager.CALL_STATE_OFFHOOK; }
-	public final boolean isIdle       () { return lastCallState == TelephonyManager.CALL_STATE_IDLE   ; }
 	public final boolean isShutdown   () { return shutdown; }
 	public final boolean isCallSpeaker() { return speakerCall && lastFar; }
 	public final boolean hasAutoDev   () { return mobdataAuto || wifiAuto || btAuto || gpsAuto; }
@@ -124,7 +117,7 @@ public final class PhoneListener extends PhoneStateListener
 		if(autoSpeaker) autoSpeaker(on);
 		enableDevs(on);
 		if(screenOff) screenOff(!on);
-		A.logd("headset connected: "+on);
+		//A.logd("headset connected: "+on);
 	}
 
 	// invoked when headsets are (un)plugged for automatic volume (un)setting
@@ -134,14 +127,14 @@ public final class PhoneListener extends PhoneStateListener
 		if(!on)
 			vol = volPhone;
 		else if(volPhone <= 0)
-			volPhone = volRestore!=SKIP_VOLUME ? volRestore : Dev.getVolume(Dev.VOL_CALL);
+			volPhone = volRestore>0 ? volRestore : Dev.getVolume(Dev.VOL_CALL);
 		Dev.setVolume(Dev.VOL_CALL, vol);
-		A.logd((on?"preferred":"restored")+" volume set to level "+vol);
+		//A.logd((on?"preferred":"restored")+" volume set to level "+vol);
 	}
 
 	private void onRinging()
 	{
-		A.logd("onRinging");
+		//A.logd("onRinging");
 		timer    = new Timer();
 		shutdown = false;
 		lastFar  = true;
@@ -154,18 +147,20 @@ public final class PhoneListener extends PhoneStateListener
 		proximEnable  = A.is(P.ENABLE_PROXIMITY ) && proximDisable;
 		proximReverse = A.is(P.REVERSE_PROXIMITY);
 		speakerCall   = A.is(P.SPEAKER_CALL);
-		autoSpeaker   = A.is(P.SPEAKER_AUTO);
+		autoSpeaker   = A.is(P.SPEAKER_AUTO) && proximSensor!=null;
 		loudSpeaker   = A.is(P.SPEAKER_LOUD);
 		screenOff     = A.is(P.SCREEN_OFF);
 		speakerDelay  = A.getsi(P.SPEAKER_DELAY);
 		disableDelay  = A.getsi(P.DISABLE_DELAY);
 		enableDelay   = A.getsi(P.ENABLE_DELAY);
 		if(enableDelay < 0) enableDelay = disableDelay;
-		volRestore  = SKIP_VOLUME;
-		volPhone    = A.getsi(P.VOL_PHONE);
-		volWired    = A.getsi(P.VOL_WIRED);
-		volBt       = A.getsi(P.VOL_BT);
-		// get all enabled devices states
+		volRestore = 0;
+		volPhone   = A.getsi(P.VOL_PHONE);
+		volWired   = A.getsi(P.VOL_WIRED);
+		volBt      = A.getsi(P.VOL_BT);
+		volSolo    = A.is(P.VOL_SOLO);
+		volSolo(true);
+		if(A.is(P.NOTIFY_VOLUME)) Dev.defVolFlags = Dev.FLAG_VOL_SHOW;
 		gpsAuto     = A.is(P.AUTO_GPS)     && Dev.isGpsOn();
 		wifiAuto    = A.is(P.AUTO_WIFI)    && Dev.isWifiOn();
 		mobdataAuto = A.is(P.AUTO_MOBDATA) && Dev.isMobDataOn() && (!gpsAuto || !A.is(P.SKIP_MOBDATA));
@@ -182,7 +177,7 @@ public final class PhoneListener extends PhoneStateListener
 	// we have a call!
 	private void onOffhook()
 	{
-		A.logd("onOffhook");
+		//A.logd("onOffhook");
 		if(headsetOn)
 			setCallVolume(true, wiredHeadsetOn? volWired : volBt);
 		else {
@@ -196,7 +191,7 @@ public final class PhoneListener extends PhoneStateListener
 	// call completed: restore & shutdown
 	private void onIdle()
 	{
-		A.logd("onIdle");
+		//A.logd("onIdle");
 		shutdown = true;
 		unregProximity();
 		unregHeadset();
@@ -204,9 +199,10 @@ public final class PhoneListener extends PhoneStateListener
 		timer.cancel();
 		//Dev.restoreBrightness();
 		Dev.restoreScreenTimeout();
-		if(volRestore != SKIP_VOLUME)
+		if(volRestore > 0)
 			Dev.setVolume(Dev.VOL_CALL, volRestore);   // restore call volume before ringing
 		enableDevs(true);                            // restore all devices enabled before ringing
+		volSolo(false);                              // restore muted audio streams (if any)
 		activeInst = null;
 		MainService.stop();
 		System.gc();
@@ -261,9 +257,9 @@ public final class PhoneListener extends PhoneStateListener
 			enableTask = new TimerTask(){ public void run(){ enableDevs(false); }};
 	    timer.schedule(enableTask, disableDelay);
 		}
-		A.logd("defer "+(enable?"enable":"disable")+" devs");
+		//A.logd("defer "+(enable?"enable":"disable")+" devs");
 	}
-	
+
 	private void deferAutoSpeaker(boolean far)
 	{
 		cleanSpeakerTask();
@@ -275,27 +271,28 @@ public final class PhoneListener extends PhoneStateListener
 		}
 		speakerTask = new TimerTask(){ public void run(){ autoSpeaker(true); }};
     timer.schedule(speakerTask, speakerDelay);
-		A.logd("defer auto speaker on");
+		//A.logd("defer auto speaker on; delay="+speakerDelay);
 	}
 
 	private synchronized void autoSpeaker(boolean far)
 	{
 		if(headsetOn || far==Dev.isSpeakerOn()) return;
-		if(far && loudSpeaker && (lastFar!=far || volRestore!=SKIP_VOLUME)) {
-			volRestore = Dev.getVolume(Dev.VOL_CALL);               // retrieve current call volume (to restore later)
-			if(volRestore == volMax) volRestore = SKIP_VOLUME;      // current volume is already at max: don't change
+		if(far && loudSpeaker && volRestore<=0) {
+			volRestore = volPhone>0 ? volPhone : Dev.getVolume(Dev.VOL_CALL);  // retrieve current call volume (to restore later)
+			//if(volRestore == volMax) volRestore = SKIP_VOLUME;               // current volume is already at max: don't change
 		}
-		A.logd("auto set speaker: far="+far);
-		Dev.enableSpeaker(far);                                   // auto enable/disable speaker when phone if far/near to ear
-		if(loudSpeaker && volRestore!=SKIP_VOLUME) {
+		Dev.enableSpeaker(far);                // auto enable/disable speaker when phone if far/near to ear
+		//A.logd("auto set speaker: far="+far);
+		if(loudSpeaker) {
 			if(far) {
-				Dev.setVolume(Dev.VOL_CALL, 1000);
+				Dev.setVolumeMax(Dev.VOL_CALL);
+				//Dev.setVolume(Dev.VOL_CALL, 1000);
 				//Dev.setVolume(Dev.VOLUME_CALL, volMax);
-				A.logd("auto set loud speaker");
-			} else {
+				//A.logd("auto set loud speaker");
+			} else if(volRestore > 0) {
 				Dev.setVolume(Dev.VOL_CALL, volRestore);
-				A.logd("restore (from loud speaker) volume to "+volRestore);
-				volRestore = SKIP_VOLUME;
+				//A.logd("restore (from loud speaker) volume to "+volRestore);
+				//volRestore = 0;
 			}
 		}
 	}
@@ -308,7 +305,7 @@ public final class PhoneListener extends PhoneStateListener
 		// use enableTask so that any proximity changes will cancel this task
 		enableTask = new TimerTask(){ public void run(){ if(lastFar) autoSpeaker(true); }};
     timer.schedule(enableTask, FORCE_AUTOSPEAKER_DELAY);
-    A.logd("force auto speaker on");
+    //A.logd("force auto speaker on");
 	}
 
 	private void screenOff(boolean off)
@@ -317,11 +314,24 @@ public final class PhoneListener extends PhoneStateListener
 			//Dev.setBrightness(0);
 			//Dev.dimScreen(true);
 			Dev.setScreenOffTimeout(Conf.CALL_SCREEN_TIMEOUT);
+			//A.logd("screenOff: set minimum screen timeout");
 		} else {
 			//Dev.dimScreen(false);
 			//Dev.restoreBrightness();
 			Dev.restoreScreenTimeout();
+			//A.logd("screenOff: restore screen timeout");
 		}
+	}
+	
+	private void volSolo(boolean enable)
+	{
+		if(!volSolo) return;
+		Dev.mute(Dev.VOL_SYS   , enable);
+		Dev.mute(Dev.VOL_ALARM , enable);
+		Dev.mute(Dev.VOL_NOTIFY, enable);
+		Dev.mute(Dev.VOL_DTMF  , enable);
+		Dev.mute(Dev.VOL_MEDIA , enable);
+		//A.logd("set volume solo: "+enable);
 	}
 
 	private void regProximity() {
@@ -347,7 +357,7 @@ public final class PhoneListener extends PhoneStateListener
 	@Override
 	public void onCallForwardingIndicatorChanged(boolean cfi)
 	{
-		A.logd("onCallForwardingIndicatorChanged: "+cfi);
+		//A.logd("onCallForwardingIndicatorChanged: "+cfi);
 		if(!headsetOn && isCallSpeaker() && isOffhook()) forceAutoSpeakerOn();
 	}
 

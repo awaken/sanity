@@ -81,6 +81,8 @@
 	<string name="vol_wired_sum">Volume to automatically set during a call while using wired headsets.</string>
 	<string name="vol_bt_title">Bluetooth headsets</string>
 	<string name="vol_bt_sum">Volume to automatically set during a call while using wireless headsets.</string>
+	<string name="vol_solo_title">Conversation only</string>
+	<string name="vol_solo_sum">Play only the audio of the conversation, muting any other audio stream during phone calls.</string>
 
   <string name="notify_cat">Notification</string>
   <string name="notify_sum">Choose when Sanity should show notifications.</string>
@@ -90,6 +92,8 @@
   <string name="notify_enable_sum">Notify when devices are automatically restored by Sanity.</string>
   <string name="notify_activity_title">Notify activity</string>
   <string name="notify_activity_sum">Notify if Sanity is running when a phone call starts.</string>
+  <string name="notify_volume_title">Notify volume</string>
+  <string name="notify_volume_sum">Notify when volume is automatically changed by Sanity.</string>
 
   <string name="about_cat">About and contact</string>
   <string name="about_sum">Information about this application and tools for contacting the developer.</string>
@@ -107,7 +111,7 @@
   <string name="donated_title">Donation completed</string>
   <string name="donated_sum">You have supported Sanity. Thank you for your donation!</string>
   <string name="full_title">Full version</string>
-  <string name="full_sum">This is the full version of Sanity (without donation alerts).</string>
+  <string name="full_sum">This is the full version of Sanity.</string>
 
   <string name="msg_devs_enabled">Sanity: devices enabled</string>
   <string name="msg_devs_disabled">Sanity: devices disabled</string>
@@ -139,7 +143,12 @@
   <string name="changelog_title">Recent changes</string>
   <string name="changelog_sum">Show recent changes implemented in the last Sanity versions.</string>
   <string name="changelog_body">
-  	Version 0.9\n
+  	Version 1.0\n
+  	- New: volume option to mute all audio streams except the conversation one (during a call).\n
+  	- New: notification option to show automatic volume changes.\n
+  	- Fix: delay for turning on handsfree works now.\n
+  	- Fix: minor bug for handling automatic volume.\n
+  	\nVersion 0.9\n
   	- New: option for supporting phones have reversed proximity sensor.\n
   	- New: option for supporting unrecognized bluetooth audio devices.\n
   	- Fix: sometimes devices were not automatically restored after ringing without answer.\n

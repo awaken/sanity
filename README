@@ -18,6 +18,12 @@ An Android application for managing volume and for reducing electromagnetic wave
  Change log
 ------------
 
+* version 1.0  (20/01/2010)
+New: volume option to mute all audio streams except the conversation one (during a call).
+New: notification option to show automatic volume changes.
+Fix: delay for turning on handsfree works now.
+Fix: minor bug for handling automatic volume.
+
 * version 0.9
 New: option for supporting phones have reversed proximity sensor.
 New: option for supporting unrecognized bluetooth audio devices.
@@ -50,5 +56,5 @@ Change: notify activity only when call starts.
 New: force turn off backlight option
 Known bugs: actually bluetooth headsets are not correctly handled; this problem will be resolved in the next version.
 
-* version 0.2
+* version 0.2  (04/01/2010)
 First public release

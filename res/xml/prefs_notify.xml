@@ -11,5 +11,8 @@
 	  <CheckBoxPreference android:title="@string/notify_activity_title"
 	                      android:summary="@string/notify_activity_sum"
 	                      android:key="notify_activity" />
+	  <CheckBoxPreference android:title="@string/notify_volume_title"
+	                      android:summary="@string/notify_volume_sum"
+	                      android:key="notify_volume" />
 	</PreferenceCategory>
 </PreferenceScreen>

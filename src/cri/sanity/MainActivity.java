@@ -28,7 +28,7 @@ public class MainActivity extends ActivityScreen
 		else if(!A.isFull())
 			askDonate();
   }
-	
+
 	@Override
 	public void onStart()
 	{
@@ -78,31 +78,33 @@ public class MainActivity extends ActivityScreen
 
 	public static final void setDefaultPrefs()
 	{
-		A.put(P.ENABLED          , true)		// main prefs
+		A.put(P.ENABLED          , true)		// main
 		 .put(P.SKIP_HEADSET     , true)
 		 .put(P.FORCE_BT_AUDIO   , false)
 		 .put(P.REVERSE_PROXIMITY, false)
-		 .put(P.AUTO_MOBDATA     , false)		// devices prefs
+		 .put(P.AUTO_MOBDATA     , false)		// devices
 		 .put(P.SKIP_MOBDATA     , false)
 		 .put(P.AUTO_WIFI        , true)
 		 .put(P.AUTO_GPS         , false)
 		 .put(P.AUTO_BT          , true)
 		 .put(P.SKIP_BT          , true)
-		 .put(P.DISABLE_PROXIMITY, true)		// proximity prefs
+		 .put(P.DISABLE_PROXIMITY, true)		// proximity
 		 .put(P.DISABLE_DELAY    , "1000")
 		 .put(P.ENABLE_DELAY     , "3000")
 		 .put(P.ENABLE_PROXIMITY , true)
 		 .put(P.SCREEN_OFF       , true)
-		 .put(P.SPEAKER_CALL     , false)		// speaker prefs
+		 .put(P.SPEAKER_CALL     , false)		// speaker
 		 .put(P.SPEAKER_LOUD     , true)
 		 .put(P.SPEAKER_AUTO     , true)
 		 .put(P.SPEAKER_DELAY    , "0")
-		 .put(P.VOL_PHONE        , "0")			// volume prefs
+		 .put(P.VOL_PHONE        , "0")			// volume
 		 .put(P.VOL_WIRED        , "0")
 		 .put(P.VOL_BT           , "0")
-		 .put(P.NOTIFY_ENABLE    , true)		// notify prefs
+		 .put(P.VOL_SOLO         , false)
+		 .put(P.NOTIFY_ENABLE    , true)		// notify
 		 .put(P.NOTIFY_DISABLE   , true)
-		 .put(P.NOTIFY_ACTIVITY  , true);
+		 .put(P.NOTIFY_ACTIVITY  , true)
+		 .put(P.NOTIFY_VOLUME    , false);
 		A.commit();
 	}
 	
