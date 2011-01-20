@@ -27,8 +27,8 @@ import android.hardware.SensorManager;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.util.Log;
+import android.os.PowerManager;
 //import android.os.SystemClock;
-//import android.os.PowerManager;
 //import android.net.ConnectivityManager;
 //import android.widget.Toast;
 
@@ -79,7 +79,7 @@ public final class A extends Application
 	private static BluetoothAdapter         btAdapter;
 	private static WifiManager              wifiMan;
 	//private static ConnectivityManager      connMan;
-	//private static PowerManager             powerMan;
+	private static PowerManager             powerMan;
 	private static LocationManager          locMan;
 	private static SensorManager            sensorMan;
 
@@ -329,10 +329,10 @@ public final class A extends Application
 	public static final ConnectivityManager connMan() {
 		return connMan==null? connMan=(ConnectivityManager)a.getSystemService(Context.CONNECTIVITY_SERVICE) : connMan;
 	}
+	*/
 	public static final PowerManager powerMan() {
 		return powerMan==null? powerMan=(PowerManager)a.getSystemService(Context.POWER_SERVICE) : powerMan;
 	}
-	*/
 	public static final LocationManager locMan() {
 		return locMan==null? locMan=(LocationManager)a.getSystemService(Context.LOCATION_SERVICE) : locMan;
 	}

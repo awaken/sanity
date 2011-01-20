@@ -18,13 +18,16 @@ An Android application for managing volume and for reducing electromagnetic wave
  Change log
 ------------
 
+* version 1.1  (20/01/2010)
+New: option to force turn on screen when phone is far from ear.
+
 * version 1.0  (20/01/2010)
 New: volume option to mute all audio streams except the conversation one (during a call).
 New: notification option to show automatic volume changes.
 Fix: delay for turning on handsfree works now.
 Fix: minor bug for handling automatic volume.
 
-* version 0.9
+* version 0.9  (19/01/2010)
 New: option for supporting phones have reversed proximity sensor.
 New: option for supporting unrecognized bluetooth audio devices.
 Fix: sometimes devices were not automatically restored after ringing without answer.

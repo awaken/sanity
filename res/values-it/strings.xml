@@ -56,6 +56,8 @@
   <string name="enable_delay_sum">Quanto tempo aspettare prima di riaccendere i dispositivi quando il telefono è lontano dall\'orecchio.</string>
   <string name="screen_off_title">Spegni schermo</string>
   <string name="screen_off_sum">Forza per spegnere lo schermo durante una telefonata quando il telefono è vicino all\'orecchio.</string>
+  <string name="screen_on_title">Accendi schermo</string>
+  <string name="screen_on_sum">Forza per accendere lo schermo durante una telefonata quando il telefono è lontano dall\'orecchio.</string>
 
   <string name="speaker_cat">Vivavoce</string>
   <string name="speaker_sum">Opzioni per l\'attivazione automatica del vivavoce.</string>
@@ -135,7 +137,9 @@
   <string name="changelog_title">Modifiche recenti</string>
   <string name="changelog_sum">Visualizza le modifiche recenti implementate nelle ultime versioni di Sanity.</string>
   <string name="changelog_body">
-  	Versione 1.0\n
+  	Version 1.1\n
+  	- Nuovo: opzione per forzare lo spegnimento dello schermo quando il telefono è lontano dall\'orecchio.\n
+  	\nVersione 1.0\n
   	- Nuovo: opzione di volume per rendere silenziosi tutti i flussi audio eccetto quello di conversazione (durante una chiamata).\n
   	- Nuovo: opzione di notifica per mostrare i cambi automatici di volume.\n
   	- Fix: l\'attivazione ritardata del vivavoce ora funziona.\n
@@ -163,7 +167,7 @@
 		- Fix: ora le cuffie bluetooth vengono gestite correttamente.\n
 		- Modifiche: notifica l\'attività solo a inizio telefonata.\n
 		\nVersione 0.3\n
-		- Nuovo: opzione per forzare lo spegnimento della retroilluminazione.\n
+		- Nuovo: opzione per forzare lo spegnimento dello schermo quando è vicino all\'orecchio.\n
 		\nVersione 0.2\n
 		- Prima versione pubblicata.\n
   </string>

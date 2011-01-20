@@ -2,10 +2,13 @@ package cri.sanity;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
+import android.os.PowerManager;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.provider.Settings.System;
 import android.telephony.TelephonyManager;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -60,10 +63,10 @@ public final class Dev
 
 	//---- having devices?
 	
-	public static final boolean haveWifi()   { return A.wifiMan()    != null; }
-	public static final boolean haveBt()     { return A.btAdapter()  != null; }
-	public static final boolean haveTel()    { return A.telMan()     != null; }
-	public static final boolean haveLoc()    { return A.locMan()     != null; }
+	public static final boolean haveWifi() { return A.wifiMan()   != null; }
+	public static final boolean haveBt()   { return A.btAdapter() != null; }
+	public static final boolean haveTel()  { return A.telMan()    != null; }
+	public static final boolean haveLoc()  { return A.locMan()    != null; }
 
 	//public static final boolean allowMobData() { return Settings.Secure.getInt(A.ctxRes(), "mobile_data", 1) == 1; }
 
@@ -72,7 +75,7 @@ public final class Dev
 	public static final boolean isSpeakerOn() { return A.audioMan().isSpeakerphoneOn(); }
 	public static final boolean isHeadsetOn() {
 		final AudioManager am = A.audioMan();
-		return am.isWiredHeadsetOn() || am.isBluetoothA2dpOn() || am.isBluetoothScoOn();
+		return am!=null && (am.isWiredHeadsetOn() || am.isBluetoothA2dpOn() || am.isBluetoothScoOn());
 	}
 
 	public static final boolean isMobDataOn() {
@@ -83,6 +86,8 @@ public final class Dev
 	public static final boolean isWifiOn() { return haveWifi() && A.wifiMan().isWifiEnabled(); }
 	public static final boolean isBtOn()   { return haveBt() && A.btAdapter().isEnabled(); }
 	public static final boolean isGpsOn()  { return haveLoc() && A.locMan().isProviderEnabled(LocationManager.GPS_PROVIDER); }
+	
+	//public static final boolean isScreenOn() { return A.powerMan().isScreenOn(); }
 
 	//---- enable/disable devices
 
@@ -93,7 +98,7 @@ public final class Dev
 			return ((Boolean)i.getClass().getMethod(enable ? "enableDataConnectivity" : "disableDataConnectivity").invoke(i)).booleanValue();
 		}
 		catch(Exception e) {
-			A.logd("unable to "+(enable?"enable":"disable")+" mobile data: undocumented api failed ("+e+')');
+			//A.logd("unable to "+(enable?"enable":"disable")+" mobile data: undocumented api failed ("+e+')');
 			return false;
 		}
 	}
@@ -178,8 +183,9 @@ public final class Dev
 		}
 	}
 	public static final void setSysInt(String key, int val) {
-		System.putInt(A.ctnRes(), key, val);
-		System.putInt(A.ctnRes(), key, val);
+		final ContentResolver cr = A.ctnRes();
+		System.putInt(cr, key, val);
+		System.putInt(cr, key, val);
 	}
 
 	public static final int getScreenOffTimeout() {
@@ -211,6 +217,14 @@ public final class Dev
 		setSysInt(System.DIM_SCREEN, dim? 1 : 0);
 	}
 	*/
+	
+	public static final void wakeScreen() {
+		final PowerManager pm = A.powerMan();
+		if(pm.isScreenOn()) return;
+		PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "Dev");
+		wl.acquire();
+		wl.release();
+	}
 	
 	//---- undocumented android api
 

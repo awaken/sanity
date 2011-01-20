@@ -25,7 +25,7 @@ public final class PhoneListener extends PhoneStateListener
 	private boolean shutdown, notifyEnable, notifyDisable;
 	private boolean proximRegistered, proximReverse, proximDisable, proximEnable;
 	private boolean skipHeadset, autoSpeaker, loudSpeaker, speakerCall, headsetOn, wiredHeadsetOn;
-	private boolean mobdataAuto, wifiAuto, gpsAuto, btAuto, skipBtConn, screenOff;
+	private boolean mobdataAuto, wifiAuto, gpsAuto, btAuto, skipBtConn, screenOff, screenOn;
 	private boolean lastFar;
 	private int     lastCallState = -1;
 	private int     disableDelay, enableDelay, speakerDelay;
@@ -57,8 +57,7 @@ public final class PhoneListener extends PhoneStateListener
 					deferAutoSpeaker(far);
 				if(proximDisable && (!far || proximEnable))
 					deferEnableDevs(far);
-				if(screenOff)
-					screenOff(!far);
+				screenOff(!far);
 			}
 			lastFar = far;
 		}
@@ -116,7 +115,7 @@ public final class PhoneListener extends PhoneStateListener
 		on |= lastFar && proximDisable;
 		if(autoSpeaker) autoSpeaker(on);
 		enableDevs(on);
-		if(screenOff) screenOff(!on);
+		screenOff(!on);
 		//A.logd("headset connected: "+on);
 	}
 
@@ -150,6 +149,7 @@ public final class PhoneListener extends PhoneStateListener
 		autoSpeaker   = A.is(P.SPEAKER_AUTO) && proximSensor!=null;
 		loudSpeaker   = A.is(P.SPEAKER_LOUD);
 		screenOff     = A.is(P.SCREEN_OFF);
+		screenOn      = A.is(P.SCREEN_ON);
 		speakerDelay  = A.getsi(P.SPEAKER_DELAY);
 		disableDelay  = A.getsi(P.DISABLE_DELAY);
 		enableDelay   = A.getsi(P.ENABLE_DELAY);
@@ -185,7 +185,7 @@ public final class PhoneListener extends PhoneStateListener
 			if(isCallSpeaker()) forceAutoSpeakerOn();
 		}
 		if(!proximDisable) enableDevs(false);
-		if(screenOff) screenOff(true);
+		if(!screenOn) screenOff(true);
 	}
 
 	// call completed: restore & shutdown
@@ -203,6 +203,7 @@ public final class PhoneListener extends PhoneStateListener
 			Dev.setVolume(Dev.VOL_CALL, volRestore);   // restore call volume before ringing
 		enableDevs(true);                            // restore all devices enabled before ringing
 		volSolo(false);                              // restore muted audio streams (if any)
+		screenOff(false);
 		activeInst = null;
 		MainService.stop();
 		System.gc();
@@ -311,6 +312,7 @@ public final class PhoneListener extends PhoneStateListener
 	private void screenOff(boolean off)
 	{
 		if(off) {
+			if(!screenOff) return;
 			//Dev.setBrightness(0);
 			//Dev.dimScreen(true);
 			Dev.setScreenOffTimeout(Conf.CALL_SCREEN_TIMEOUT);
@@ -320,6 +322,7 @@ public final class PhoneListener extends PhoneStateListener
 			//Dev.restoreBrightness();
 			Dev.restoreScreenTimeout();
 			//A.logd("screenOff: restore screen timeout");
+			if(screenOn) Dev.wakeScreen();
 		}
 	}
 	
@@ -335,7 +338,7 @@ public final class PhoneListener extends PhoneStateListener
 	}
 
 	private void regProximity() {
-		proximRegistered = proximSensor!=null && (autoSpeaker || screenOff || (proximDisable && hasAutoDev()));
+		proximRegistered = proximSensor!=null && (autoSpeaker || screenOff || screenOn || (proximDisable && hasAutoDev()));
 		if(!proximRegistered) return;
 		A.sensorMan().registerListener(proximListener, proximSensor, SensorManager.SENSOR_DELAY_NORMAL);
 	}

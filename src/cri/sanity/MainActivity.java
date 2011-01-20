@@ -93,6 +93,7 @@ public class MainActivity extends ActivityScreen
 		 .put(P.ENABLE_DELAY     , "3000")
 		 .put(P.ENABLE_PROXIMITY , true)
 		 .put(P.SCREEN_OFF       , true)
+		 .put(P.SCREEN_ON        , false)
 		 .put(P.SPEAKER_CALL     , false)		// speaker
 		 .put(P.SPEAKER_LOUD     , true)
 		 .put(P.SPEAKER_AUTO     , true)

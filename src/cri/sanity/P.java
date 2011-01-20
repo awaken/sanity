@@ -22,6 +22,7 @@ public final class P
 	public static final String ENABLE_PROXIMITY  = "enable_proximity";
 	public static final String ENABLE_DELAY      = "enable_delay";
 	public static final String SCREEN_OFF        = "screen_off";
+	public static final String SCREEN_ON         = "screen_on";
 	// speaker
 	public static final String SPEAKER_CALL  = "speaker_call";
 	public static final String SPEAKER_LOUD  = "loud_speaker";

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
   <string name="app">Sanity</string>
 
   <string name="app_desc">
@@ -61,6 +60,8 @@
   <string name="enable_delay_sum">Delay for turning ON devices when the phone is NOT close to your ear.</string>
   <string name="screen_off_title">Turn off screen</string>
   <string name="screen_off_sum">Force to turn OFF the screen during call when the phone is close to your ear.</string>
+  <string name="screen_on_title">Turn on screen</string>
+  <string name="screen_on_sum">Force to turn ON the screen during call when the phone is far from your ear.</string>
 
   <string name="speaker_cat">Handsfree</string>
   <string name="speaker_sum">Options for automatic handsfree activation.</string>
@@ -143,7 +144,9 @@
   <string name="changelog_title">Recent changes</string>
   <string name="changelog_sum">Show recent changes implemented in the last Sanity versions.</string>
   <string name="changelog_body">
-  	Version 1.0\n
+  	Version 1.1\n
+  	- New: option to force turn on screen when phone is far from ear.\n
+  	\nVersion 1.0\n
   	- New: volume option to mute all audio streams except the conversation one (during a call).\n
   	- New: notification option to show automatic volume changes.\n
   	- Fix: delay for turning on handsfree works now.\n
@@ -171,7 +174,7 @@
 		- Fix: now bluetooth headsets are correctly handled.\n
 		- Change: notify activity only when call starts.\n
 		\nVersion 0.3\n
-		- New: force turn off backlight option.\n
+		- New: option to force turn off screen when phone is close to ear.\n
 		\nVersion 0.2\n
 		- First published release.\n
   </string>
