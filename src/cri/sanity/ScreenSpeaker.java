@@ -17,20 +17,20 @@ public class ScreenSpeaker extends ActivityScreen
   	// setup preferences when proximity sensor exists or not
   	if(Dev.sensorProxim() != null) {
   		// disable "loud_speaker" when both "auto_speaker" and "speaker_call" are unchecked
-    	on("auto_speaker", new Click(){ boolean on(){
-    		findPref("loud_speaker").setEnabled(is(pref) || is("speaker_call"));
+    	on(P.SPEAKER_AUTO, new Click(){ boolean on(){
+    		findPref(P.SPEAKER_LOUD).setEnabled(is(pref) || is(P.SPEAKER_CALL));
     		return false;
     	}});
-    	on("speaker_call", new Click(){ boolean on(){
-    		findPref("loud_speaker").setEnabled(is(pref) || is("auto_speaker"));
+    	on(P.SPEAKER_CALL, new Click(){ boolean on(){
+    		findPref(P.SPEAKER_LOUD).setEnabled(is(pref) || is(P.SPEAKER_AUTO));
     		return false;
     	}});
   	}
   	else {
   		// if no proximity sensor found: disable all proximity options
-  		setEnabled("auto_speaker", false);
-  		setChecked("speaker_call", false);
-  		findPref("loud_speaker").setDependency("speaker_call");
+  		setEnabled(P.SPEAKER_AUTO, false);
+  		setChecked(P.SPEAKER_CALL, false);
+  		findPref(P.SPEAKER_LOUD).setDependency(P.SPEAKER_CALL);
   	}
 	}
 

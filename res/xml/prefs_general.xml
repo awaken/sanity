@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+  <Preference android:key="logo" />
+
+	<PreferenceCategory android:title="@string/general_cat">
+    <CheckBoxPreference android:title="@string/enable_title"
+                        android:summary="@string/enable_sum"
+                        android:key="enabled" />
+    <CheckBoxPreference android:title="@string/skip_headset_title"
+                        android:summary="@string/skip_headset_sum"
+                        android:dependency="enabled"
+                        android:key="skip_headset" />
+    <CheckBoxPreference android:title="@string/force_bt_audio_title"
+                        android:summary="@string/force_bt_audio_sum"
+                        android:dependency="skip_headset"
+                        android:key="force_bt_audio" />
+    <CheckBoxPreference android:title="@string/reverse_proximity_title"
+                        android:summary="@string/reverse_proximity_sum"
+                        android:dependency="enabled"
+                        android:key="reverse_proximity" />
+    <Preference android:title="@string/reset_prefs_title"
+                android:summary="@string/reset_prefs_sum"
+                android:persistent="false"
+                android:key="reset_prefs" />
+	</PreferenceCategory>
+</PreferenceScreen>

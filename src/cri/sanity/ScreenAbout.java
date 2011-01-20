@@ -1,7 +1,5 @@
 package cri.sanity;
 
-import java.util.Currency;
-import java.util.Locale;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
@@ -13,16 +11,17 @@ public class ScreenAbout extends ActivityScreen
   public void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
-  	on("eula"     , new Click(){ boolean on(){ return A.gotoUrl(Conf.EULA_URL); }});
-  	on("comment"  , new Click(){ boolean on(){ return A.gotoMarketDetails();    }});
-  	on("changelog", new Click(){ boolean on(){ return alertChangeLog();         }});
-  	on("mail"     , new Click(){ boolean on(){ return mailToDeveloper();        }});
-  	on("paypal"   , new Click(){ boolean on(){ return A.gotoUrl(Conf.DONATE_URL.replace(Conf.CURRENCY_VAR, Currency.getInstance(Locale.getDefault()).getCurrencyCode())); }});
+  	on(P.EULA     , new Click(){ boolean on(){ return A.gotoUrl(Conf.EULA_URL); }});
+  	on(P.COMMENT  , new Click(){ boolean on(){ return A.gotoMarketDetails();    }});
+  	on(P.CHANGELOG, new Click(){ boolean on(){ return alertChangeLog();         }});
+  	on(P.MAIL     , new Click(){ boolean on(){ return mailToDeveloper();        }});
+  	on(P.PAYPAL   , new Click(){ boolean on(){ return A.gotoDonateUrl();        }});
   }
 
 	private boolean mailToDeveloper()
 	{
 		final Intent i = new Intent(android.content.Intent.ACTION_SEND);
+		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		i.setType("text/html");
 		i.putExtra(Intent.EXTRA_EMAIL  , new String[]{ Conf.AUTHOR_EMAIL });
 		i.putExtra(Intent.EXTRA_SUBJECT, getAppFullName());

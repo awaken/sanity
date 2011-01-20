@@ -5,31 +5,6 @@
     \nCopyright (C) 2010 - Cristiano Tagliamonte.
   </string>
 
-  <string name="changelog_body">
-  	Versione 0.8\n
-  	- Fix: malfunzionamenti nell\'interfaccia utente.\n
-  	\nVersione 0.7\n
-  	- Nuovo: opzione per evitare di spegnere automaticamente la Connessione Dati quando il GPS è acceso.\n
-    \nVersione 0.6\n
-    - Nuovo: opzione per accendere/spegnere automaticamente il GPS durante le telefonate.\n
-    - Modifica: interfaccia utente migliorata.\n
-		\nVersione 0.5\n
-		- Nuovo: opzione per evitare di disattivare automaticamente il bluetooth quando ci sono dei dispositivi bluetooth connessi.\n
-		- Nuovo: opzione per ritardare l\'attivazione automatica del vivavoce.\n
-		- Fix: vengono riconosciute più periferiche audio bluetooth durante la telefonata.\n
-		- Fix: bug minore che causava crash sporadici al termine della telefonata.\n
-		- Nuovo: strumenti per contattare lo sviluppatore.\n
-		\nVersione 0.4\n
-		- Bug rimossi: ora le cuffie bluetooth vengono gestite correttamente.\n
-		- Modifiche: notifica l\'attività solo a inizio telefonata.\n
-		\nVersione 0.3\n
-		- Nuovo: opzione per forzare lo spegnimento della retroilluminazione.\n
-		\nVersione 0.2\n
-		- Prima versione pubblicata.\n
-  </string>
-  <string name="changelog_title">Modifiche recenti</string>
-  <string name="changelog_sum">Visualizza le modifiche recenti implementate nelle ultime versioni di Sanity.</string>
-
 	<string name="canc">Annulla</string>
 	<string name="yes">Sì</string>
 
@@ -38,13 +13,21 @@
 	<string name="level">Livello</string>
 	<string name="nochange">Non modificare</string>
 
-  <string name="main_cat">Opzioni principali</string>
+  <string name="groups_cat">Preferenze</string>
+  <string name="misc_cat">Varie</string>
+
+  <string name="general_cat">Generale</string>
+  <string name="general_sum">Opzioni principali dell\'applicazione.</string>
   <string name="enable_title">Abilita Sanity</string>
   <string name="enable_sum">Abilita o disabilita il sistema Sanity. Se disabilitato, questa applicazione non avrà effetti durante le telefonate.</string>
-  <string name="headset_title">Evita se uso le cuffie</string>
-  <string name="headset_sum">Disabilita la gestione automatica dei dispositivi e del vivavoce quando le cuffie (con o senza fili) sono collegate.</string>
-  <string name="groups_cat">Gruppi di opzioni</string>
-  <string name="misc_cat">Varie</string>
+  <string name="skip_headset_title">Evita se uso le cuffie</string>
+  <string name="skip_headset_sum">Disabilita la gestione automatica dei dispositivi e del vivavoce quando le cuffie (con o senza fili) sono collegate.</string>
+  <string name="force_bt_audio_title">Forza l\'audio BT</string>
+  <string name="force_bt_audio_sum">Forza le periferiche audio bluetooth affinché siano correttamente gestite da Sanity.</string>
+  <string name="reverse_proximity_title">Inverti prossimità</string>
+  <string name="reverse_proximity_sum">Attiva questa opzione solo se Sanity accende/spegne al contrario il vivavoce o i dispositivi quando il telefono è lontano/vicino all\'orecchio.</string>
+	<string name="reset_prefs_title">Ripristina predefiniti</string>
+	<string name="reset_prefs_sum">Imposta tutte le preferenze dell\'applicazione ai valori iniziali predefiniti.</string>
 
   <string name="devices_cat">Dispositivi da spegnere</string>
   <string name="devices_sum">Quali dispositivi spegnere per ridurre le onde elettromagnetiche durante la telefonata.</string>
@@ -63,16 +46,16 @@
 
 	<string name="proximity_cat">Disabilita in prossimità</string>
 	<string name="proximity_sum">Opzioni per abilitare e disabilitare i dispositivi durante una chiamata utilizzando il sensore di prossimità.</string>
-  <string name="disable_near_title">Spegni in prossimità</string>
-  <string name="disable_near_sum">Spegni i dispositivi solo quando avvicini il telefono all\'orecchio durante una telefonata. (Se disabilitato, spegne a inizio chiamata.)</string>
+  <string name="disable_proximity_title">Spegni in prossimità</string>
+  <string name="disable_proximity_sum">Spegni i dispositivi solo quando avvicini il telefono all\'orecchio durante una telefonata. (Se disabilitato, spegne a inizio chiamata.)</string>
   <string name="disable_delay_title">Spegni in ritardo</string>
   <string name="disable_delay_sum">Quanto tempo aspettare prima di spegnere i dispositivi quando il telefono è vicino all\'orecchio.</string>
-  <string name="restore_far_title">Riaccendi se distante</string>
-  <string name="restore_far_sum">Riaccendi i dispositivi (spenti da Sanity) durante una chiamata quando allontani il telefono dall\'orecchio.</string>
+  <string name="enable_proximity_title">Riaccendi se distante</string>
+  <string name="enable_proximity_sum">Riaccendi i dispositivi (spenti da Sanity) durante una chiamata quando allontani il telefono dall\'orecchio.</string>
   <string name="enable_delay_title">Riaccendi in ritardo</string>
   <string name="enable_delay_sum">Quanto tempo aspettare prima di riaccendere i dispositivi quando il telefono è lontano dall\'orecchio.</string>
-  <string name="screen_off_title">Spegni retroilluminazione</string>
-  <string name="screen_off_sum">Forza per spegnere la retroilluminazione dello schermo durante una telefonata quando il telefono è vicino all\'orecchio.</string>
+  <string name="screen_off_title">Spegni schermo</string>
+  <string name="screen_off_sum">Forza per spegnere lo schermo durante una telefonata quando il telefono è vicino all\'orecchio.</string>
 
   <string name="speaker_cat">Vivavoce</string>
   <string name="speaker_sum">Opzioni per l\'attivazione automatica del vivavoce.</string>
@@ -118,25 +101,23 @@
   <string name="donate_sum">Sanity è gratuito. Se questa applicazione ti piace, supporta lo sviluppo con una donazione.</string>
   <string name="donated_title">Donazione completata</string>
   <string name="donated_sum">Hai supportato Sanity. Grazie per la tua donazione!</string>
-
-	<string name="menu_main">Principale</string>
+  <string name="full_title">Versione completa</string>
+  <string name="full_sum">Questa è la versione completa di Sanity (senza le richieste di donazione).</string>
 
   <string name="msg_devs_enabled">Sanity: dispositivi accesi</string>
   <string name="msg_devs_disabled">Sanity: dispositivi spenti</string>
   <string name="msg_running">Sanity è in esecuzione</string>
-  <string name="msg_market_err">Impossibile aprire l\'applicazione Market! Verifica che la connessione a Internet sia funzionante.</string>
+  <string name="msg_force_bt_audio">ATTENZIONE: se la tua periferica audio bluetooth funziona già bene con Sanity, non attivare questa opzione!\n\nQuesta opzione dovrebbe essere attivata solo se Sanity disattiva la tua periferica audio bluetooth durante la telefonata.\n\nSe questa opzione è attiva, Sanity non accenderà/spegnerà nulla quando una qualsiasi periferica bluetooth risulterà connessa.\n\nSei sicuro di voler attivare questa opzione per forzare l\'audio bluetooth?</string>
+  <string name="msg_reverse_proximity">ATTENZIONE: se Sanity funziona già bene sul tuo telefono, non attivare questa opzione!\n\nQuesta opzione va attivata su quei telefoni che montano un sensore di prossimità che funziona al contrario.\n\nSei sicuro di voler attivare questa opzione per invertire la prossimità?</string>
+  <string name="msg_reset_prefs">ATTENZIONE: questa funzione ripristinerà tutti i valori predefiniti delle preferenze.\n\nTutte le preferenze correnti verranno perse.\n\nVuoi davvero ripristinare tutte le preferenze ai valori iniziali?</string>
+  <string name="msg_market_err">Impossibile aprire l\'applicazione Market! Verifica che la connessione a Internet sia funzionante e che il Market sia correttamente installato.</string>
   <string name="msg_email_choose">Scegli come inviare l\'email</string>
   <string name="msg_email_body">Ciao Cristiano!</string>
-	<string name="msg_donate">Grazie per aver installato Sanity.
-	  \n\nQuesta è la versione libera, con tutte le funzionalità.
-	  Se Sanity ti piace, puoi effettuare una donazione per supportarlo.
-	  Una volta completata la donazione, questa finestra verrà soppressa.
-	  \n\nVuoi aprire ora il Market per la donazione?
-	</string>
+	<string name="msg_donate">Grazie per aver installato Sanity.\n\nQuesta è la versione libera, senza limitazioni nelle funzionalità. Se Sanity ti piace, puoi effettuare una donazione per supportarlo. Una volta completata la donazione, questa finestra verrà soppressa.\n\nVuoi aprire ora il Market per la donazione?</string>
 
   <string name="msg_eula_title">Contratto di licenza software</string>
   <string name="msg_eula">
-  	Questa applicazione è software libero: puoi ridistribuirlo e/o modificarlo nei termini della GNU General Public License come
+  	Questa applicazione è software libero: puoi ridistribuirla e/o modificarla nei termini della GNU General Public License come
   	pubblicato dalla Free Software Foundation, sia nella versione 3 della licenza, sia (a tua opinione) in qualsiasi
   	altra versione successiva.
   	\nQuesto programma è distribuito nella speranza che risulterà utile, ma SENZA NESSUNA GARANZIA; neppure la garanzia
@@ -145,6 +126,37 @@
   	\n
   	\nScegli \"Ok\" per accettare la GNU General Public License versione 3.
   	\nScegli \"Annulla\" per rifiutarla.
+  </string>
+
+  <string name="changelog_title">Modifiche recenti</string>
+  <string name="changelog_sum">Visualizza le modifiche recenti implementate nelle ultime versioni di Sanity.</string>
+  <string name="changelog_body">
+  	Versione 0.9\n
+  	- Nuovo: opzione per supportare quei telefoni che montano i sensori di prossimità invertiti.\n
+  	- Nuovo: opzione per supportare i dispositivi audio bluetooth non riconosciuti.\n
+  	- Fix: in certi casi i dispositivi non venivano rispristinati subito dopo uno squillo senza risposta.\n
+  	- Fix: altri bug minori.\n
+  	- Modifica: migliorie secondarie dell\'interfaccia utente.\n
+  	\nVersione 0.8\n
+  	- Fix: malfunzionamenti nell\'interfaccia utente.\n
+  	\nVersione 0.7\n
+  	- Nuovo: opzione per evitare di spegnere automaticamente la Connessione Dati quando il GPS è acceso.\n
+    \nVersione 0.6\n
+    - Nuovo: opzione per accendere/spegnere automaticamente il GPS durante le telefonate.\n
+    - Modifica: interfaccia utente migliorata.\n
+		\nVersione 0.5\n
+		- Nuovo: opzione per evitare di disattivare automaticamente il bluetooth quando ci sono dei dispositivi bluetooth connessi.\n
+		- Nuovo: opzione per ritardare l\'attivazione automatica del vivavoce.\n
+		- Fix: vengono riconosciute più periferiche audio bluetooth durante la telefonata.\n
+		- Fix: bug minore che causava crash sporadici al termine della telefonata.\n
+		- Nuovo: strumenti per contattare lo sviluppatore.\n
+		\nVersione 0.4\n
+		- Fix: ora le cuffie bluetooth vengono gestite correttamente.\n
+		- Modifiche: notifica l\'attività solo a inizio telefonata.\n
+		\nVersione 0.3\n
+		- Nuovo: opzione per forzare lo spegnimento della retroilluminazione.\n
+		\nVersione 0.2\n
+		- Prima versione pubblicata.\n
   </string>
 
 </resources>

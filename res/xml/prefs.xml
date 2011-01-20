@@ -2,42 +2,29 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
   <Preference android:key="logo" />
 
-	<PreferenceCategory android:title="@string/main_cat">
-    <CheckBoxPreference android:title="@string/enable_title"
-                        android:summary="@string/enable_sum"
-                        android:defaultValue="false"
-                        android:key="enabled" />
-    <CheckBoxPreference android:title="@string/headset_title"
-                        android:summary="@string/headset_sum"
-                        android:dependency="enabled"
-                        android:defaultValue="true"
-                        android:key="skip_headset" />
-	</PreferenceCategory>
-
 	<PreferenceCategory android:title="@string/groups_cat">
+		<Preference android:title="@string/general_cat"
+		            android:summary="@string/general_sum"
+		            android:persistent="false"
+		            android:key="screen_general" />
 		<Preference android:title="@string/devices_cat"
 		            android:summary="@string/devices_sum"
-		            android:dependency="enabled"
 		            android:persistent="false"
 		            android:key="screen_devices" />
 		<Preference android:title="@string/proximity_cat"
 		            android:summary="@string/proximity_sum"
-		            android:dependency="enabled"
 		            android:persistent="false"
 		            android:key="screen_proximity" />	
 		<Preference android:title="@string/speaker_cat"
 		            android:summary="@string/speaker_sum"
-		            android:dependency="enabled"
 		            android:persistent="false"
 		            android:key="screen_speaker" />
 		<Preference android:title="@string/vol_cat"
 		            android:summary="@string/vol_sum"
-		            android:dependency="enabled"
 		            android:persistent="false"
 		            android:key="screen_volume" />
 		<Preference android:title="@string/notify_cat"
 		            android:summary="@string/notify_sum"
-		            android:dependency="enabled"
 		            android:persistent="false"
 		            android:key="screen_notify" />
 	</PreferenceCategory>

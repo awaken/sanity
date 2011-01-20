@@ -1,6 +1,7 @@
 package cri.sanity;
 
 import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.Preference.OnPreferenceChangeListener;
@@ -35,12 +36,22 @@ public abstract class PrefActivity extends PreferenceActivity
 
 	//---- methods
 
-	public final Preference findPref(String key)
-	{
+	public final Preference findPref(String key) {
 		Preference p = findPreference(key);
 		if(p == null) A.logd("Unable to find Preference "+key);
 		return p;
 	}
+
+	// enabledDep is true if and only if "key" preference is dependent also to global "enabled" key
+	public final void updatePref(String key, boolean enabledDep) {
+		final Preference         p   = findPreference(key);
+		final CheckBoxPreference dep = (CheckBoxPreference)findPreference(p.getDependency());
+		enabledDep = !enabledDep || A.isEnabled();
+		p.setEnabled(enabledDep && (dep==null || (dep.isEnabled() && dep.isChecked())));
+		if(     p instanceof CheckBoxPreference) ((CheckBoxPreference)p).setChecked(A.is(key));
+		else if(p instanceof ListPreference    ) ((ListPreference)p).setValue(A.gets(key));
+	}
+	public final void updatePref(String key) { updatePref(key, true); }
 
 	public final boolean is(String key)   { return ((CheckBoxPreference)findPref(key)).isChecked(); }
 	public final boolean is(Preference p) { return ((CheckBoxPreference)p            ).isChecked(); }

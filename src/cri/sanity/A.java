@@ -1,5 +1,7 @@
 package cri.sanity;
 
+import java.util.Currency;
+import java.util.Locale;
 import java.util.Map;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -37,7 +39,6 @@ public final class A extends Application
 	public static final boolean  FULL   = Conf.FULL;
 	public static final String   AUTHOR = Conf.AUTHOR;
 	public static final Class<?> ACTIVITY_CLASS = Conf.ACTIVITY_CLASS;
-	public static final String   ENABLED_KEY    = "enabled";
 	public static final boolean  DEF_CANCELABLE = true;
 	public static final int      PRI = 1;
 	public static final int      NID = 33;
@@ -55,8 +56,8 @@ public final class A extends Application
 	public static final int      DEF_INT     = 0;
 	public static final int      DEF_LONG    = DEF_INT;
 	public static final float    DEF_FLOAT   = DEF_INT;
-	public static final String   DEF_SBOOL   = ""+DEF_BOOL;
-	public static final String   DEF_SINT    = ""+DEF_INT;
+	public static final String   DEF_SBOOL   = Boolean.toString(DEF_BOOL);
+	public static final String   DEF_SINT    = Integer.toString(DEF_INT );
 	public static final String   DEF_SLONG   = DEF_SINT;
 	public static final String   DEF_SFLOAT  = DEF_SINT;
 
@@ -84,7 +85,7 @@ public final class A extends Application
 
 	//---- inner classes
 
-	public static class DlgClick implements DialogInterface.OnClickListener
+	public static class Click implements DialogInterface.OnClickListener
 	{
 		public DialogInterface dlg;
 		public int id;
@@ -117,27 +118,32 @@ public final class A extends Application
 	public static final SharedPreferences.Editor edit() { return edit;  }
 	public static final String                    pkg() { return pkgInfo.packageName; }
 	public static final Resources           resources() { return resources==null? resources=a.getResources()       : resources; }
-	public static final ContentResolver        ctnRes() { return    ctxRes==null? ctxRes   =a.getContentResolver() : ctxRes;    }
-	public static final PackageInfo           pkgInfo() { return   pkgInfo; }
+	public static final ContentResolver        ctnRes() { return    ctxRes==null?    ctxRes=a.getContentResolver() : ctxRes;    }
+	public static final PackageInfo           pkgInfo() { return pkgInfo; }
 	public static final String                    ver() { return pkgInfo.versionName; }
 
 	// log
-	public static final int logd(Object o, String method)
-	                                    { return !DEBUG? 0 : Log.d(name, o.getClass().getSimpleName()+'.'+method); }
+	//public static final int logd(Object o, String method)
+	//                                    { return !DEBUG? 0 : Log.d(name, o.getClass().getSimpleName()+'.'+method); }
+	//public static final int logd(Throwable t) { return !DEBUG? 0 : Log.wtf(name, t); }
 	public static final int logd(String msg)  { return !DEBUG? 0 : Log.d(name, msg); }
-	public static final int logi(String msg)  { return !DEBUG? 0 : Log.i(name, msg); }
-	public static final int logv(String msg)  { return !DEBUG? 0 : Log.v(name, msg); }
-	public static final int logw(String msg)  { return !DEBUG? 0 : Log.w(name, msg); }
-	public static final int loge(String msg)  { return !DEBUG? 0 : Log.e(name, msg); }
-	public static final int loge(Throwable t) { return !DEBUG? 0 : Log.wtf(name, t); }
+	//public static final int logi(String msg)  { return !DEBUG? 0 : Log.i(name, msg); }
+	//public static final int logv(String msg)  { return !DEBUG? 0 : Log.v(name, msg); }
+	//public static final int logw(String msg)  { return !DEBUG? 0 : Log.w(name, msg); }
+	//public static final int loge(String msg)  { return !DEBUG? 0 : Log.e(name, msg); }
 
 	// misc
-	public static final boolean isEmpty(String s) { return s==null || s.trim().length()<=0; }
+	//public static final boolean isEmpty(String s) { return s==null || s.trim().length()<=0; }
 
 	public static final String tr(int id) { return (String)resources().getText(id); }
 
 	public static final long now() { return System.currentTimeMillis(); }
 	//public static final long uptime() { return SystemClock.uptimeMillis(); }
+
+	public static final String donateUrl() {
+		return Conf.DONATE_URL.replace(Conf.CURRENCY_VAR, Currency.getInstance(Locale.getDefault()).getCurrencyCode());
+	}
+	public static boolean gotoDonateUrl() { return gotoUrl(donateUrl()); }
 
 	//public static final boolean gotoMarketPkg()             { return gotoMarketPkg(a.getPackageName()); }
 	//public static final boolean gotoMarketPkg(String pkg)   { return gotoMarketUrl("search?q=pname:\""+pkg+'"'); }
@@ -200,22 +206,22 @@ public final class A extends Application
 	public static final AlertDialog alert(String msg) {
 		return alert(name, msg, null, null, null, ALERT_SIMPLE, DEF_CANCELABLE);
 	}
-	public static final AlertDialog alert(String msg, DlgClick pos, DlgClick neg) {
+	public static final AlertDialog alert(String msg, Click pos, Click neg) {
 		return alert(name, msg, pos, neg, null, DEF_ALERT, DEF_CANCELABLE);
 	}
-	public static final AlertDialog alert(String msg, DlgClick pos, DlgClick neg, int type) {
+	public static final AlertDialog alert(String msg, Click pos, Click neg, int type) {
 		return alert(name, msg, pos, neg, null, type, DEF_CANCELABLE);
 	}
-  public static final AlertDialog alert(String msg, DlgClick pos, DlgClick neg, int type, boolean cancelable) {
+  public static final AlertDialog alert(String msg, Click pos, Click neg, int type, boolean cancelable) {
   	return alert(name, msg, pos, neg, null, type, cancelable);
   }
-  public static final AlertDialog alert(String msg, DlgClick pos, DlgClick neg, DlgClick neu, int type) {
+  public static final AlertDialog alert(String msg, Click pos, Click neg, Click neu, int type) {
   	return alert(name, msg, pos, neg, neu, type, DEF_CANCELABLE);
   }
-  public static final AlertDialog alert(String msg, DlgClick pos, DlgClick neg, DlgClick neu, int type, boolean cancelable) {
+  public static final AlertDialog alert(String msg, Click pos, Click neg, Click neu, int type, boolean cancelable) {
   	return alert(name, msg, pos, neg, neu, type, cancelable);
   }
-  public static final AlertDialog alert(String title, String msg, DlgClick pos, DlgClick neg, DlgClick neu, int type, boolean cancelable) {
+  public static final AlertDialog alert(String title, String msg, Click pos, Click neg, Click neu, int type, boolean cancelable) {
   	int idPos=0, idNeg=0, idNeu=0;
   	switch(type) {
   		case ALERT_SIMPLE:    idPos = LAB_OK ;                                     break;
@@ -228,21 +234,21 @@ public final class A extends Application
 		adb.setTitle(title);
 		adb.setMessage(msg);
 		adb.setCancelable(cancelable);
-		if(idPos > 0) adb.setPositiveButton(idPos, pos==null? new DlgClick() : pos);
-		if(idNeg > 0) adb.setNegativeButton(idNeg, neg==null? new DlgClick() : neg);
-		if(idNeu > 0) adb.setNeutralButton (idNeu, neu==null? new DlgClick() : neu);
+		if(idPos > 0) adb.setPositiveButton(idPos, pos==null? new Click() : pos);
+		if(idNeg > 0) adb.setNegativeButton(idNeg, neg==null? new Click() : neg);
+		if(idNeu > 0) adb.setNeutralButton (idNeu, neu==null? new Click() : neu);
 		return adb.show();
 	}
-  public static final AlertDialog alert(String title, String msg, DlgClick pos, DlgClick neg, DlgClick neu, int type) {
+  public static final AlertDialog alert(String title, String msg, Click pos, Click neg, Click neu, int type) {
   	return alert(title, msg, pos, neg, neu, type, DEF_CANCELABLE);
   }
-  public static final AlertDialog alert(String title, String msg, DlgClick pos, DlgClick neg, int type, boolean cancelable) {
+  public static final AlertDialog alert(String title, String msg, Click pos, Click neg, int type, boolean cancelable) {
   	return alert(title, msg, pos, neg, null, type, cancelable);
   }
-  public static final AlertDialog alert(String title, String msg, DlgClick pos, DlgClick neg, int type) {
+  public static final AlertDialog alert(String title, String msg, Click pos, Click neg, int type) {
   	return alert(title, msg, pos, neg, null, type, DEF_CANCELABLE);
   }
-  public static final AlertDialog alert(String title, String msg, DlgClick pos, DlgClick neg) {
+  public static final AlertDialog alert(String title, String msg, Click pos, Click neg) {
   	return alert(title, msg, pos, neg, null, DEF_ALERT, DEF_CANCELABLE);
   }
   public static final AlertDialog alert(String title, String msg) {
@@ -251,9 +257,9 @@ public final class A extends Application
 
   //---- preferences
 
-	public static final boolean isEnabled () { return prefs.getBoolean(ENABLED_KEY , false); }
-	public static final boolean isFull()     { return FULL || prefs.getBoolean("full", false); }
-	public static final void    setFull()    { putc("full", true); }
+	public static final boolean isEnabled () { return prefs.getBoolean(P.ENABLED , false); }
+	public static final boolean isFull()     { return FULL || prefs.getBoolean(P.FULL, false); }
+	public static final void    setFull()    { putc(P.FULL, true); }
 
 	public static final boolean is(String key)                { return prefs.getBoolean(key, DEF_BOOL  ); }
 	public static final boolean is(String key, boolean def)   { return prefs.getBoolean(key, def       ); }
@@ -273,28 +279,30 @@ public final class A extends Application
 	public static final float   getsf(String key, String def) { return Float  .parseFloat(prefs.getString(key, def       )); }
 	
 	public static final Map<String,?> allPrefs() { return prefs.getAll(); }
+	public static final boolean has (String key) { return prefs.contains(key); }
+	public static final A       del (String key) { edit.remove(key);          return a; }
+	public static final A       delc(String key) { edit.remove(key).commit(); return a; }
 
 	public static final A put (String key, int    val) { edit.putInt   (key, val); return a; }
-	public static final A putc(String key, int    val) { edit.putInt   (key, val); edit.commit(); return a; }
+	public static final A putc(String key, int    val) { edit.putInt   (key, val).commit(); return a; }
 	public static final A put (String key, long   val) { edit.putLong  (key, val); return a; }
-	public static final A putc(String key, long   val) { edit.putLong  (key, val); edit.commit(); return a; }
+	public static final A putc(String key, long   val) { edit.putLong  (key, val).commit(); return a; }
 	public static final A put (String key, float  val) { edit.putFloat (key, val); return a; }
-	public static final A putc(String key, float  val) { edit.putFloat (key, val); edit.commit(); return a; }
+	public static final A putc(String key, float  val) { edit.putFloat (key, val).commit(); return a; }
 	public static final A put (String key, String val) { edit.putString(key, val); return a; }
-	public static final A putc(String key, String val) { edit.putString(key, val); edit.commit(); return a; }
+	public static final A putc(String key, String val) { edit.putString(key, val).commit(); return a; }
 
-	public static final A putc(String key, Object val) { put(key, val); edit.commit(); return a; }
+	public static final A putc(String key, Object val) { return put(key, val).commit(); }
 	public static final A put (String key, Object val) {
-		if(     val instanceof String ) edit().putString (key,  (String )val);
-		else if(val instanceof Boolean) edit().putBoolean(key, ((Boolean)val).booleanValue());
-		else if(val instanceof Integer) edit().putInt    (key, ((Integer)val).intValue());
-		else if(val instanceof Float  ) edit().putFloat  (key, ((Float  )val).floatValue());
-		else if(val instanceof Long   ) edit().putLong   (key, ((Long   )val).longValue());
-		else throw new IllegalArgumentException();
+		if(     val instanceof Boolean) edit().putBoolean(key, (Boolean)val);
+		else if(val instanceof Integer) edit().putInt    (key, (Integer)val);
+		else if(val instanceof Float  ) edit().putFloat  (key, (Float  )val);
+		else if(val instanceof Long   ) edit().putLong   (key, (Long   )val);
+		else                            edit().putString (key, val.toString());
 		return a;
 	}
 	
-	public static final A putAllc(Map<String,?> map) { putAll(map); edit.commit(); return a; }
+	public static final A putAllc(Map<String,?> map) { return putAll(map).commit(); }
 	public static final A putAll (Map<String,?> map) {
 		for(Map.Entry<String,?> entry : map.entrySet())
 			put(entry.getKey(), entry.getValue());

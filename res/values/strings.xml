@@ -8,31 +8,6 @@
     \nCopyright (C) 2010 - Cristiano Tagliamonte.
   </string>
 
-  <string name="changelog_body">
-  	Version 0.8\n
-  	- Fix: user interface bugs
-  	\nVersion 0.7\n
-  	- New: option to avoid automatic disabling of Mobile Data when GPS is enabled.\n
-  	\nVersion 0.6\n
-    - New: option to automatic enable/disable GPS during phone calls.\n
-  	- Change: featured user interface.\n
-		\nVersion 0.5\n
-		- New: option to avoid automatic bluetooth disabling when there are bluetooth devices connected.\n
-		- New: option to delay automatic handsfree enabler.\n
-		- Fix: more bluetooth audio devices are recognized during phone call.\n
-		- Fix: minor bug caused occasional crashes at call end.\n
-		- New: tools for contacting the developer.\n
-		\nVersion 0.4\n
-		- Bug fix: now bluetooth headsets are correctly handled.\n
-		- Change: notify activity only when call starts.\n
-		\nVersion 0.3\n
-		- New: force turn off backlight option.\n
-		\nVersion 0.2\n
-		- First published release.\n
-  </string>
-  <string name="changelog_title">Recent changes</string>
-  <string name="changelog_sum">Show recent changes implemented in the last Sanity versions.</string>
-
 	<string name="ok">Ok</string>
 	<string name="canc">Cancel</string>
 	<string name="yes">Yes</string>
@@ -43,13 +18,21 @@
 	<string name="level">Level</string>
 	<string name="nochange">Do not change</string>
 
-  <string name="main_cat">Main options</string>
+  <string name="groups_cat">Preferences</string>
+  <string name="misc_cat">Miscellaneous</string>
+
+  <string name="general_cat">General</string>
+  <string name="general_sum">Application main options.</string>
   <string name="enable_title">Enable Sanity</string>
   <string name="enable_sum">Enable or disable whole Sanity sytem. If disabled, this application won\'t affect during phone calls.</string>
-  <string name="headset_title">Skip if headsets are used</string>
-  <string name="headset_sum">Disable automatic handling of devices and handsfree when headsets (wired or wireless) are connected.</string>
-  <string name="groups_cat">Options groups</string>
-  <string name="misc_cat">Miscellaneous</string>
+  <string name="skip_headset_title">Skip if headsets are used</string>
+  <string name="skip_headset_sum">Disable automatic handling of devices and handsfree when headsets (wired or wireless) are connected.</string>
+  <string name="force_bt_audio_title">Force BT audio</string>
+  <string name="force_bt_audio_sum">Force bluetooth audio device to be correctly handled by Sanity.</string>
+  <string name="reverse_proximity_title">Reverse proximity</string>
+  <string name="reverse_proximity_sum">Check this option only if Sanity enable/disable handsfree or devices in a wrong way when the phone is far/close to your ear.</string>
+	<string name="reset_prefs_title">Reset to default</string>
+	<string name="reset_prefs_sum">Set default values to all application preferences.</string>
 
   <string name="devices_cat">Devices to disable</string>
   <string name="devices_sum">Which devices should be disabled for reducing electromagnetic waves during a call.</string>
@@ -68,16 +51,16 @@
 
 	<string name="proximity_cat">Proximity disabling</string>
 	<string name="proximity_sum">Options for enabling and disabling devices during a call by checking proximity sensor.</string>
-  <string name="disable_near_title">Turn off in proximity</string>
-  <string name="disable_near_sum">Turn OFF devices only when the phone is close to your ear. (If disabled, turn off when call start.)</string>
+  <string name="disable_proximity_title">Turn off in proximity</string>
+  <string name="disable_proximity_sum">Turn OFF devices only when the phone is close to your ear. (If disabled, turn off when call start.)</string>
   <string name="disable_delay_title">Turn off delay</string>
   <string name="disable_delay_sum">Delay for turning OFF devices when your ear is close to phone.</string>
-  <string name="restore_far_title">Turn on if far</string>
-  <string name="restore_far_sum">Turn ON devices (turned off by Sanity) during a call when the phone is NOT close to your ear.</string>
+  <string name="enable_proximity_title">Turn on if far</string>
+  <string name="enable_proximity_sum">Turn ON devices (turned off by Sanity) during a call when the phone is NOT close to your ear.</string>
   <string name="enable_delay_title">Restore delay</string>
   <string name="enable_delay_sum">Delay for turning ON devices when the phone is NOT close to your ear.</string>
-  <string name="screen_off_title">Turn off backlight</string>
-  <string name="screen_off_sum">Force to turn OFF screen backlight during call when the phone is close to your ear.</string>
+  <string name="screen_off_title">Turn off screen</string>
+  <string name="screen_off_sum">Force to turn OFF the screen during call when the phone is close to your ear.</string>
 
   <string name="speaker_cat">Handsfree</string>
   <string name="speaker_sum">Options for automatic handsfree activation.</string>
@@ -123,21 +106,19 @@
   <string name="donate_sum">Sanity is free. If you like this application, support the development with a donation.</string>
   <string name="donated_title">Donation completed</string>
   <string name="donated_sum">You have supported Sanity. Thank you for your donation!</string>
-
-	<string name="menu_main">Main</string>
+  <string name="full_title">Full version</string>
+  <string name="full_sum">This is the full version of Sanity (without donation alerts).</string>
 
   <string name="msg_devs_enabled">Sanity: devices enabled</string>
   <string name="msg_devs_disabled">Sanity: devices disabled</string>
   <string name="msg_running">Sanity is running</string>
-  <string name="msg_market_err">Unable to open Market application! Check the Internet connection is properly working.</string>
+  <string name="msg_force_bt_audio">WARNING: if your bluetooth audio already works well with Sanity, don\'t activate this option!\n\nThis option should be activated only if Sanity disables your bluetooth audio during a call.\n\nIf this option is activated, Sanity will enable/disable nothing when a bluetooth device is connected.\n\nAre you sure to activate this option to force bluetooth audio?</string>
+  <string name="msg_reverse_proximity">WARNING: if Sanity already works well on your phone, don\'t activate this option!\n\nThis option should be activated on those phones have a bugged proximity sensor.\n\nAre you sure to activate this option for reversing proximity?</string>
+  <string name="msg_reset_prefs">WARNING: this function will restore all default preference values.\n\nAll current application preferences will be lost.\n\nWould you really reset all preferences?</string>
+  <string name="msg_market_err">Unable to open Market application! Check the Internet connection is properly working and Market is rightly installed.</string>
   <string name="msg_email_choose">Choose how to send email</string>
   <string name="msg_email_body">Hello Cristiano!</string>
-	<string name="msg_donate">Thank you for using Sanity.
-	  \n\nThis is the free version, with full capabilities.
-	  If you like Sanity, you can donate for supporting it.
-	  When donating, this dialog will be suppressed.
-	  \n\nWould you open Market now for donating?
-	</string>
+	<string name="msg_donate">Thank you for using Sanity.\n\nThis is the free version, with full capabilities. If you like Sanity, you can donate for supporting it. When donating, this dialog will be suppressed.\n\nWould you open Market now for donating?</string>
 
   <string name="msg_eula_title">Software license agreement</string>
   <string name="msg_eula">
@@ -153,6 +134,37 @@
 		\n
 		\nChoose \"Ok\" button to agree this software license.
 		\nChoose \"Cancel" button to refuse it.
+  </string>
+
+  <string name="changelog_title">Recent changes</string>
+  <string name="changelog_sum">Show recent changes implemented in the last Sanity versions.</string>
+  <string name="changelog_body">
+  	Version 0.9\n
+  	- New: option for supporting phones have reversed proximity sensor.\n
+  	- New: option for supporting unrecognized bluetooth audio devices.\n
+  	- Fix: sometimes devices were not automatically restored after ringing without answer.\n
+  	- Fix: others minor bugs.\n
+  	- Change: minor user interface improvements.\n
+  	\nVersion 0.8\n
+  	- Fix: user interface bugs
+  	\nVersion 0.7\n
+  	- New: option to avoid automatic disabling of Mobile Data when GPS is enabled.\n
+  	\nVersion 0.6\n
+    - New: option to automatic enable/disable GPS during phone calls.\n
+  	- Change: featured user interface.\n
+		\nVersion 0.5\n
+		- New: option to avoid automatic bluetooth disabling when there are bluetooth devices connected.\n
+		- New: option to delay automatic handsfree enabler.\n
+		- Fix: more bluetooth audio devices are recognized during phone call.\n
+		- Fix: minor bug caused occasional crashes at call end.\n
+		- New: tools for contacting the developer.\n
+		\nVersion 0.4\n
+		- Fix: now bluetooth headsets are correctly handled.\n
+		- Change: notify activity only when call starts.\n
+		\nVersion 0.3\n
+		- New: force turn off backlight option.\n
+		\nVersion 0.2\n
+		- First published release.\n
   </string>
 
 </resources>

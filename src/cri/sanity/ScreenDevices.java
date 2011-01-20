@@ -9,14 +9,18 @@ public class ScreenDevices extends ActivityScreen
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setEnabled("mobdata_skip", A.is("mobdata") && !A.is("gps"));
-		on("gps", new Change(){ boolean on(){
-			setEnabled("mobdata_skip", !((Boolean)value).booleanValue() && A.is("mobdata"));
+
+		setEnabled(P.SKIP_MOBDATA, A.is(P.AUTO_MOBDATA) && !A.is(P.AUTO_GPS));
+
+		on(P.AUTO_MOBDATA, new Change(){ boolean on(){
+			setEnabled(P.SKIP_MOBDATA, ((Boolean)value).booleanValue() && !A.is(P.AUTO_GPS));
 			return true;
 		}});
-		on("mobdata", new Change(){ boolean on(){
-			setEnabled("mobdata_skip", ((Boolean)value).booleanValue() && !A.is("gps"));
+
+		on(P.AUTO_GPS, new Change(){ boolean on(){
+			setEnabled(P.SKIP_MOBDATA, !((Boolean)value).booleanValue() && A.is(P.AUTO_MOBDATA));
 			return true;
 		}});
 	}
+
 }

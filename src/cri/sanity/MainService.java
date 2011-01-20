@@ -7,6 +7,7 @@ import android.os.IBinder;
 
 public final class MainService extends Service
 {
+	private static final int START = START_STICKY;
 	private static boolean running = false;
 
 	private PhoneListener phoneListener;
@@ -20,7 +21,7 @@ public final class MainService extends Service
 
 	public static final void notifyRun()
 	{
-		if(!A.is("notify_activity")) return;
+		if(!A.is(P.NOTIFY_ACTIVITY)) return;
 		A.notify(A.tr(R.string.msg_running));
 	}
 
@@ -32,14 +33,14 @@ public final class MainService extends Service
 	@Override
 	public int onStartCommand(Intent intent, int flags, int id)
 	{
+		if(PhoneListener.isRunning()) return START;
 		running = true;
-		super.onStartCommand(intent, flags, id);
+		if(phoneListener == null) phoneListener = new PhoneListener();
+		A.telMan().listen(phoneListener, PhoneListener.LISTEN);
+		phoneListener.startup();
 		notifyRun();
 		A.logd("MainService started");
-		if(phoneListener == null) phoneListener = new PhoneListener();
-		phoneListener.startup();
-		A.telMan().listen(phoneListener, PhoneListener.LISTEN);
-		return START_STICKY;
+		return START;
 	}
 
 	@Override

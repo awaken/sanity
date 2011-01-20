@@ -2,28 +2,27 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
   <Preference android:key="logo" />
   <PreferenceCategory android:title="@string/proximity_cat">
-	  <CheckBoxPreference android:title="@string/disable_near_title"
-	                      android:summary="@string/disable_near_sum"
-	                      android:key="proximity" />
+	  <CheckBoxPreference android:title="@string/disable_proximity_title"
+	                      android:summary="@string/disable_proximity_sum"
+	                      android:key="disable_proximity" />
 	  <ListPreference android:title="@string/disable_delay_title"
 	                  android:summary="@string/disable_delay_sum"
-	                  android:dependency="proximity"
+	                  android:dependency="disable_proximity"
 	                  android:key="disable_delay"
 	                  android:entries="@array/disable_delay_labels"
 	                  android:entryValues="@array/disable_delay_values" />
-	  <CheckBoxPreference android:title="@string/restore_far_title"
-	                      android:summary="@string/restore_far_sum"
-	                      android:dependency="proximity"
-	                      android:key="restore_far" />
+	  <CheckBoxPreference android:title="@string/enable_proximity_title"
+	                      android:summary="@string/enable_proximity_sum"
+	                      android:dependency="disable_proximity"
+	                      android:key="enable_proximity" />
 	  <ListPreference android:title="@string/enable_delay_title"
 	                  android:summary="@string/enable_delay_sum"
-	                  android:dependency="restore_far"
+	                  android:dependency="enable_proximity"
 	                  android:key="enable_delay"
 	                  android:entries="@array/enable_delay_labels"
 	                  android:entryValues="@array/enable_delay_values" />
 	  <CheckBoxPreference android:title="@string/screen_off_title"
 	                      android:summary="@string/screen_off_sum"
-	                      android:dependency="proximity"
 	                      android:key="screen_off" />
   </PreferenceCategory>
 </PreferenceScreen>

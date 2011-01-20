@@ -26,7 +26,7 @@ public class ActivityScreen extends PrefActivity
     final Integer i = mapScreenPref.get(getClass());
     if(i == null) return;
     addPreferencesFromResource(i.intValue());
-		final Preference p = findPref("logo");
+		final Preference p = findPref(P.LOGO);
 		if(p != null) {
 			p.setTitle(getAppFullName());
 			p.setSummary(R.string.app_desc);
@@ -48,10 +48,8 @@ public class ActivityScreen extends PrefActivity
 		MenuInflater inflater = getMenuInflater();
     inflater.inflate(R.menu.main, menu);
     final Integer i = mapScreenMenu.get(getClass());
-    if(i != null) {
-    	MenuItem mi = menu.findItem(i.intValue());
-    	if(mi != null) mi.setEnabled(false);
-    }
+    if(i!=null && menu.findItem(i)!=null)
+    	menu.removeItem(i);
     return true;
 	}
 	
@@ -78,7 +76,10 @@ public class ActivityScreen extends PrefActivity
 	}
 
 	public final void screener(String key, final Class<?> cls, int idPref, int idMenu) {
-		on(key, new Click(){ boolean on(){ startActivity(new Intent(A.app(), cls)); return true; }});
+		screener(findPref(key), cls, idPref, idMenu);
+	}
+	public final void screener(Preference p, final Class<?> cls, int idPref, int idMenu) {
+		on(p, new Click(){ boolean on(){ startActivity(new Intent(A.app(), cls)); return true; }});
 		screener(cls, idPref, idMenu);
 	}
 	public final void screener(final Class<?> cls, int idPref, int idMenu) {

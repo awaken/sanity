@@ -9,18 +9,17 @@ import android.bluetooth.BluetoothDevice;
 
 public class BtReceiver extends BroadcastReceiver
 {
-
 	@Override
 	public void onReceive(Context context, Intent i)
 	{
 		final PhoneListener pl = PhoneListener.getActiveInstance();
 		final boolean conn     = i.getAction().equals(BluetoothDevice.ACTION_ACL_CONNECTED);
 		final boolean bt       = conn || Dev.isBtOn();
-		final int oldCount     = pl==null? A.geti(PhoneListener.BTCOUNT_KEY) : pl.btCount;
+		final int oldCount     = pl==null? A.geti(P.BT_COUNT) : pl.btCount;
 		final int newCount     = conn? Math.max(oldCount+1,1) : (bt? Math.max(oldCount-1,0) : 0);
 		if(oldCount == newCount) return;
-		A.putc(PhoneListener.BTCOUNT_KEY, newCount);		// this is the current count of bt devices connected
-		A.logd("BtReceiver: connected devices = "+newCount+"; last one is connected = "+conn);
+		A.putc(P.BT_COUNT, newCount);		// this is the current count of bt devices connected
+		A.logd("BtReceiver: "+newCount+" connected devices; last one is connected = "+conn);
 		if(!bt) A.logd("BtReceiver: bluetooth is disabled");
 		if(pl == null) return;
 		pl.btCount = newCount;

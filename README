@@ -18,6 +18,13 @@ An Android application for managing volume and for reducing electromagnetic wave
  Change log
 ------------
 
+* version 0.9
+New: option for supporting phones have reversed proximity sensor.
+New: option for supporting unrecognized bluetooth audio devices.
+Fix: sometimes devices were not automatically restored after ringing without answer.
+Fix: others minor bugs.
+Change: minor user interface improvements.
+
 * version 0.8
 Fix: user interface bugs
 
