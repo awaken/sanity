@@ -25,7 +25,7 @@ public final class PhoneListener extends PhoneStateListener
 	private boolean shutdown, notifyEnable, notifyDisable;
 	private boolean proximRegistered, proximReverse, proximDisable, proximEnable;
 	private boolean skipHeadset, autoSpeaker, loudSpeaker, speakerCall, headsetOn, wiredHeadsetOn;
-	private boolean mobdataAuto, wifiAuto, gpsAuto, btAuto, skipBtConn, screenOff, screenOn;
+	private boolean mobdataAuto, wifiAuto, gpsAuto, btAuto, skipBtConn, screenOff, screenOn, admin;
 	private boolean lastFar;
 	private int     lastCallState = -1;
 	private int     disableDelay, enableDelay, speakerDelay;
@@ -33,6 +33,7 @@ public final class PhoneListener extends PhoneStateListener
 	private boolean volSolo;
 	private TimerTask enableTask, speakerTask;
 	private Timer     timer;
+	//private Timer     timer2 = new Timer();
 
 	private final Sensor proximSensor = Dev.sensorProxim();
 	//private final float proximMax = proximSensor==null ? 666 : proximSensor.getMaximumRange();
@@ -138,6 +139,7 @@ public final class PhoneListener extends PhoneStateListener
 		shutdown = false;
 		lastFar  = true;
 		btCount  = Math.max(A.geti(P.BT_COUNT), 0);
+		admin    = A.is(P.ADMIN) && Admin.isActive();
 		skipHeadset   = A.is(P.SKIP_HEADSET);
 		skipBtConn    = A.is(P.SKIP_BT);
 		notifyEnable  = A.is(P.NOTIFY_ENABLE);
@@ -150,6 +152,7 @@ public final class PhoneListener extends PhoneStateListener
 		loudSpeaker   = A.is(P.SPEAKER_LOUD);
 		screenOff     = A.is(P.SCREEN_OFF);
 		screenOn      = A.is(P.SCREEN_ON);
+		//screenOn = screenOff = true;
 		speakerDelay  = A.getsi(P.SPEAKER_DELAY);
 		disableDelay  = A.getsi(P.DISABLE_DELAY);
 		enableDelay   = A.getsi(P.ENABLE_DELAY);
@@ -161,15 +164,18 @@ public final class PhoneListener extends PhoneStateListener
 		volSolo    = A.is(P.VOL_SOLO);
 		volSolo(true);
 		if(A.is(P.NOTIFY_VOLUME)) Dev.defVolFlags = Dev.FLAG_VOL_SHOW;
-		gpsAuto     = A.is(P.AUTO_GPS)     && Dev.isGpsOn();
-		wifiAuto    = A.is(P.AUTO_WIFI)    && Dev.isWifiOn();
-		mobdataAuto = A.is(P.AUTO_MOBDATA) && Dev.isMobDataOn() && (!gpsAuto || !A.is(P.SKIP_MOBDATA));
-		btAuto      = A.is(P.AUTO_BT)      && Dev.isBtOn();
+		final boolean hotspot = A.is(P.SKIP_HOTSPOT) && Dev.isHotspotOn();
+		final boolean tether  = A.is(P.SKIP_TETHER) && Dev.isTetheringOn();
+		gpsAuto     = A.is(P.AUTO_GPS) && Dev.isGpsOn();
+		wifiAuto    = !hotspot && A.is(P.AUTO_WIFI) && Dev.isWifiOn();
+		mobdataAuto = !hotspot && !tether && (!gpsAuto || !A.is(P.SKIP_MOBDATA)) && A.is(P.AUTO_MOBDATA) && Dev.isMobDataOn();
+		btAuto      = A.is(P.AUTO_BT) && Dev.isBtOn();
 		headsetOn   = skipHeadset && (Dev.isHeadsetOn() || (btCount>0 && A.is(P.FORCE_BT_AUDIO)));
 		wiredHeadsetOn = skipHeadset && A.audioMan().isWiredHeadsetOn();
 		// register listeners
 		regHeadset();
 		regProximity();
+		Dev.enableLock(false);
 		// set current active instance of this class (used by BtReceiver)
 		activeInst = this;
 	}
@@ -185,7 +191,7 @@ public final class PhoneListener extends PhoneStateListener
 			if(isCallSpeaker()) forceAutoSpeakerOn();
 		}
 		if(!proximDisable) enableDevs(false);
-		if(!screenOn) screenOff(true);
+		//if(!screenOn) screenOff(true);
 	}
 
 	// call completed: restore & shutdown
@@ -204,6 +210,7 @@ public final class PhoneListener extends PhoneStateListener
 		enableDevs(true);                            // restore all devices enabled before ringing
 		volSolo(false);                              // restore muted audio streams (if any)
 		screenOff(false);
+		Dev.enableLock(true);
 		activeInst = null;
 		MainService.stop();
 		System.gc();
@@ -235,11 +242,22 @@ public final class PhoneListener extends PhoneStateListener
 	{
 		if(!enable && headsetOn && skipHeadset) return;
 		boolean done = false;
-		if(gpsAuto     && enable!=Dev.isGpsOn    ()) { Dev.toggleGps();           done = true; }
-		if(wifiAuto    && enable!=Dev.isWifiOn   ()) { Dev.enableWifi   (enable); done = true; }
-		if(mobdataAuto && enable!=Dev.isMobDataOn()) { Dev.enableMobData(enable); done = true; }
-		if(btAuto      && enable!=Dev.isBtOn     ())
-			if(!skipBtConn || btCount<1)               { Dev.enableBt     (enable); done = true; }
+		if(gpsAuto && enable!=Dev.isGpsOn()) {
+			Dev.toggleGps();
+			done = true; 
+		}
+		if(wifiAuto && enable!=Dev.isWifiOn()) {
+			Dev.enableWifi(enable);
+			done = true;
+		}
+		if(mobdataAuto && enable!=Dev.isMobDataOn()) {
+			Dev.enableMobData(enable);
+			done = true;
+		}
+		if(btAuto && (!skipBtConn || btCount<1) && enable!=Dev.isBtOn()) {
+			Dev.enableBt(enable);
+			done = true;
+		}
 		if(!done) return;
 		if(enable) { if(notifyEnable ) A.notify(A.tr(R.string.msg_devs_enabled )); }
 		else       { if(notifyDisable) A.notify(A.tr(R.string.msg_devs_disabled)); }
@@ -311,11 +329,14 @@ public final class PhoneListener extends PhoneStateListener
 
 	private void screenOff(boolean off)
 	{
+		//if(off) timer2.schedule(new TimerTask(){ public void run(){ DisplayOff.start();  }}, 0);
+		//else    timer2.schedule(new TimerTask(){ public void run(){ DisplayOff.stop(); }}, 0);
 		if(off) {
 			if(!screenOff) return;
 			//Dev.setBrightness(0);
 			//Dev.dimScreen(true);
-			Dev.setScreenOffTimeout(Conf.CALL_SCREEN_TIMEOUT);
+			if(admin) A.devpolMan().lockNow();
+			else Dev.setScreenOffTimeout(Conf.CALL_SCREEN_TIMEOUT);
 			//A.logd("screenOff: set minimum screen timeout");
 		} else {
 			//Dev.dimScreen(false);

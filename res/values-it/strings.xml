@@ -35,14 +35,19 @@
   <string name="gps_sum">Disabilita il GPS durante la telefonata (sarà ripristinato al termine della chiamata). Funziona su molti telefoni, ma non su tutti.</string>
   <string name="mobdata_title">Spegni Connessione Dati</string>
   <string name="mobdata_sum">Disabilita la Connessione Dati (2G/3G) durante la telefonata (sarà ripristinata al termine della chiamata). Funziona su molti telefoni, ma non su tutti.</string>
-  <string name="mobdata_skip_title">Evita Conn. Dati se GPS</string>
-  <string name="mobdata_skip_sum">Evita di disabilitare automaticamente la Connessione Dati (2G/3G) durante la telefonata quando il GPS è acceso.</string>
   <string name="wifi_title">Spegni Wifi</string>
   <string name="wifi_sum">Disabilita il Wifi durante la telefonata (sarà ripristinato al termine della chiamata).</string>
   <string name="bt_title">Spegni Bluetooth</string>
   <string name="bt_sum">Disabilita il Bluetooth durante la telefonata (sarà ripristinato al termine della chiamata).</string>
+  <string name="devices_rules_cat">Eccezioni</string>
   <string name="bt_skip_title">Evita BT se connesso</string>
   <string name="bt_skip_sum">Evita di abilitare/disabilitare automaticamente il Bluetooth durante una chiamata se ci sono dispositivi Bluetooth connessi al telefono.</string>
+  <string name="mobdata_skip_title">Evita Conn. Dati se GPS</string>
+  <string name="mobdata_skip_sum">Evita di disabilitare automaticamente la Connessione Dati (2G/3G) durante la telefonata quando il GPS è acceso.</string>
+  <string name="hotspot_skip_title">Evita se Hotspot Wifi</string>
+  <string name="hotspot_skip_sum">Evita di disabilitare automaticamente il Wifi e la Conn. Dati (2G/3G) durante la telefonata quando il telefono è configurato come Router Wifi.</string>
+  <string name="tether_skip_title">Evita se Tethering USB</string>
+  <string name="tether_skip_sum">Evita di disabilitare automaticamente la Connessione Dati (2G/3G) durante la telefonata quando il Tethering USB è abilitato.</string>
 
 	<string name="proximity_cat">Disabilita in prossimità</string>
 	<string name="proximity_sum">Opzioni per abilitare e disabilitare i dispositivi durante una chiamata utilizzando il sensore di prossimità.</string>
@@ -110,10 +115,16 @@
   <string name="full_title">Versione completa</string>
   <string name="full_sum">Questa è la versione completa di Sanity.</string>
 
+	<string name="admin_title">Amministratore</string>
+	<string name="admin_sum">Usa i privilegi amministrativi per spegnere lo schermo quando avvicini il telefono all\'orecchio durante una chiamata.</string>
+	<string name="admin_disable">Sanity necessita dei privilegi amministrativi solo per poter spegnere lo schermo durante una telefonata. Senza questi privilegi, Sanity non può spegnere lo schermo quando avvicini il telefono all\'orecchio durante una telefonata.</string>
+	<string name="admin_explanation">Conferma questa richiesta per permettere a Sanity di spegnere lo schermo durante le telefonate.\n\nRICORDA di disattivare l\'opzione \"Amministratore\" di Sanity per poter disinstallare l\'applicazione! Fintantoché Sanity è un amministratore del dispositivo, non potrai disinstallarlo.</string>
+
+	<string name="msg_require_froyo">Qui è necessario almeno Android versione 2.2 (Froyo). Spiacente, il tuo telefono monta Android 2.1 (Eclair).</string>
   <string name="msg_devs_enabled">Sanity: dispositivi accesi</string>
   <string name="msg_devs_disabled">Sanity: dispositivi spenti</string>
   <string name="msg_running">Sanity è in esecuzione</string>
-  <string name="msg_force_bt_audio">ATTENZIONE: se la tua periferica audio bluetooth funziona già bene con Sanity, non attivare questa opzione!\n\nQuesta opzione dovrebbe essere attivata solo se Sanity disattiva la tua periferica audio bluetooth durante la telefonata.\n\nSe questa opzione è attiva, Sanity non accenderà/spegnerà nulla quando una qualsiasi periferica bluetooth risulterà connessa.\n\nSei sicuro di voler attivare questa opzione per forzare l\'audio bluetooth?</string>
+  <string name="msg_force_bt_audio">ATTENZIONE: se la tua periferica audio bluetooth funziona già bene con Sanity, non attivare questa opzione!\n\nQuesta opzione dovrebbe essere attivata solo se Sanity non funziona a dover con la tua periferica audio bluetooth.\n\nSe questa opzione è attiva, Sanity non accenderà/spegnerà nulla quando una qualsiasi periferica bluetooth risulterà connessa.\n\nSei sicuro di voler attivare questa opzione per forzare l\'audio bluetooth?</string>
   <string name="msg_reverse_proximity">ATTENZIONE: se Sanity funziona già bene sul tuo telefono, non attivare questa opzione!\n\nQuesta opzione va attivata su quei telefoni che montano un sensore di prossimità che funziona al contrario.\n\nSei sicuro di voler attivare questa opzione per invertire la prossimità?</string>
   <string name="msg_reset_prefs">ATTENZIONE: questa funzione ripristinerà tutti i valori predefiniti delle preferenze.\n\nTutte le preferenze correnti verranno perse.\n\nVuoi davvero ripristinare tutte le preferenze ai valori iniziali?</string>
   <string name="msg_market_err">Impossibile aprire l\'applicazione Market! Verifica che la connessione a Internet sia funzionante e che il Market sia correttamente installato.</string>
@@ -137,8 +148,18 @@
   <string name="changelog_title">Modifiche recenti</string>
   <string name="changelog_sum">Visualizza le modifiche recenti implementate nelle ultime versioni di Sanity.</string>
   <string name="changelog_body">
-  	Version 1.1\n
-  	- Nuovo: opzione per forzare lo spegnimento dello schermo quando il telefono è lontano dall\'orecchio.\n
+  	Version 1.4\n
+  	- Fix: chiusura forzata su Android 2.1 (Eclair), invece ora funziona.\n
+  	- Fix: bug minori.\n
+  	\nVersion 1.3\n
+  	- Nuovo: opzione come amministratore dispositivo per spegnere lo schermo (va abilita l\'opzione \"Amministratore\"), solo per Android 2.2+.\n
+  	- Fix: chiusura forzata durante il primo avvio senza aggiornamento.\n
+  	- Fix: malfunzionamenti minori.\n
+  	\nVersione 1.2\n
+  	- Nuovo: opzione per evitare lo spegnimento automatico del Wifi e della Connessione Dati quando l\'Hotspot Wifi è attivo.\n
+  	- Nuovo: opzione per evitare lo spegnimento automatico della Connessione Dati quando il Tethering USB è attivo.\n
+  	\nVersione 1.1\n
+  	- Nuovo: opzione per forzare l\'accensione dello schermo quando il telefono è lontano dall\'orecchio.\n
   	\nVersione 1.0\n
   	- Nuovo: opzione di volume per rendere silenziosi tutti i flussi audio eccetto quello di conversazione (durante una chiamata).\n
   	- Nuovo: opzione di notifica per mostrare i cambi automatici di volume.\n

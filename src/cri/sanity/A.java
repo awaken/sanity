@@ -28,9 +28,11 @@ import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.util.Log;
 import android.os.PowerManager;
+import android.net.ConnectivityManager;
+import android.app.KeyguardManager;
 //import android.os.SystemClock;
-//import android.net.ConnectivityManager;
 //import android.widget.Toast;
+import android.app.admin.DevicePolicyManager;
 
 
 public final class A extends Application
@@ -40,6 +42,7 @@ public final class A extends Application
 	public static final String   AUTHOR = Conf.AUTHOR;
 	public static final Class<?> ACTIVITY_CLASS = Conf.ACTIVITY_CLASS;
 	public static final boolean  DEF_CANCELABLE = true;
+	public static final int      SDK = android.os.Build.VERSION.SDK_INT;
 	public static final int      PRI = 1;
 	public static final int      NID = 33;
 	public static final int      ALERT_SIMPLE    = 0;
@@ -78,10 +81,12 @@ public final class A extends Application
 	private static TelephonyManager         telMan;
 	private static BluetoothAdapter         btAdapter;
 	private static WifiManager              wifiMan;
-	//private static ConnectivityManager      connMan;
 	private static PowerManager             powerMan;
 	private static LocationManager          locMan;
 	private static SensorManager            sensorMan;
+	private static ConnectivityManager      connMan;
+	private static KeyguardManager          keyguardMan;
+	private static DevicePolicyManager      devpolMan;
 
 	//---- inner classes
 
@@ -117,8 +122,8 @@ public final class A extends Application
 	public static final SharedPreferences       prefs() { return prefs; }
 	public static final SharedPreferences.Editor edit() { return edit;  }
 	public static final String                    pkg() { return pkgInfo.packageName; }
-	public static final Resources           resources() { return resources==null? resources=a.getResources()       : resources; }
-	public static final ContentResolver        ctnRes() { return    ctxRes==null?    ctxRes=a.getContentResolver() : ctxRes;    }
+	public static final Resources           resources() { if(resources==null) resources=a.getResources(); return resources; }
+	public static final ContentResolver        ctnRes() { if(ctxRes==null) ctxRes=a.getContentResolver(); return ctxRes; }
 	public static final PackageInfo           pkgInfo() { return pkgInfo; }
 	public static final String                    ver() { return pkgInfo.versionName; }
 
@@ -302,7 +307,7 @@ public final class A extends Application
 		return a;
 	}
 	
-	public static final A putAllc(Map<String,?> map) { return putAll(map).commit(); }
+	public static final A putcAll(Map<String,?> map) { return putAll(map).commit(); }
 	public static final A putAll (Map<String,?> map) {
 		for(Map.Entry<String,?> entry : map.entrySet())
 			put(entry.getKey(), entry.getValue());
@@ -314,33 +319,48 @@ public final class A extends Application
 	//---- manage devices
 
 	public static final NotificationManager notifMan() {
-		return notifMan==null? notifMan=(NotificationManager)a.getSystemService(Context.NOTIFICATION_SERVICE) : notifMan;
+		if(notifMan == null) notifMan = (NotificationManager)a.getSystemService(Context.NOTIFICATION_SERVICE);
+		return notifMan;
 	}
 	public static final AudioManager audioMan() { 
-		return audioMan==null? audioMan=(AudioManager)a.getSystemService(Context.AUDIO_SERVICE) : audioMan;
+		if(audioMan == null) audioMan = (AudioManager)a.getSystemService(AUDIO_SERVICE);
+		return audioMan;
 	}
 	public static final TelephonyManager telMan() {
-		return telMan==null? telMan=(TelephonyManager)a.getSystemService(Context.TELEPHONY_SERVICE) : telMan;
+		if(telMan == null) telMan = (TelephonyManager)a.getSystemService(TELEPHONY_SERVICE);
+		return telMan;
 	}
 	public static final WifiManager wifiMan() {
-		return wifiMan==null? wifiMan=(WifiManager)a.getSystemService(Context.WIFI_SERVICE) : wifiMan;
+		if(wifiMan == null) wifiMan = (WifiManager)a.getSystemService(WIFI_SERVICE);
+		return wifiMan;
 	}
-	/*
 	public static final ConnectivityManager connMan() {
-		return connMan==null? connMan=(ConnectivityManager)a.getSystemService(Context.CONNECTIVITY_SERVICE) : connMan;
+		if(connMan == null) connMan = (ConnectivityManager)a.getSystemService(CONNECTIVITY_SERVICE);
+		return connMan;
 	}
-	*/
+	public static final KeyguardManager keyguardMan() {
+		if(keyguardMan == null) keyguardMan = (KeyguardManager)a.getSystemService(KEYGUARD_SERVICE);
+		return keyguardMan;
+	}
+	public static final DevicePolicyManager devpolMan() {
+		if(devpolMan == null) devpolMan = (DevicePolicyManager)a.getSystemService(DEVICE_POLICY_SERVICE);
+		return devpolMan;
+	}
 	public static final PowerManager powerMan() {
-		return powerMan==null? powerMan=(PowerManager)a.getSystemService(Context.POWER_SERVICE) : powerMan;
+		if(powerMan == null) powerMan = (PowerManager)a.getSystemService(POWER_SERVICE);
+		return powerMan;
 	}
 	public static final LocationManager locMan() {
-		return locMan==null? locMan=(LocationManager)a.getSystemService(Context.LOCATION_SERVICE) : locMan;
+		if(locMan == null) locMan = (LocationManager)a.getSystemService(LOCATION_SERVICE);
+		return locMan;
 	}
 	public static final SensorManager sensorMan() {
-		return sensorMan==null? sensorMan=(SensorManager)a.getSystemService(SENSOR_SERVICE) : sensorMan;
+		if(sensorMan == null) sensorMan = (SensorManager)a.getSystemService(SENSOR_SERVICE);
+		return sensorMan;
 	}
 	public static final BluetoothAdapter btAdapter() {
-		return btAdapter==null? btAdapter=BluetoothAdapter.getDefaultAdapter() : btAdapter;
+		if(btAdapter == null) btAdapter = BluetoothAdapter.getDefaultAdapter();
+		return btAdapter;
 	}
 
 	//---- private api

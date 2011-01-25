@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 		      package="cri.sanity" android:installLocation="auto"
-		      android:versionCode="12" android:versionName="1.1">
+		      android:versionCode="15" android:versionName="1.4">
 
   <application android:icon="@drawable/ic_app"
                android:label="@string/app"
@@ -38,6 +38,17 @@
       </intent-filter>
     </receiver>
 
+		<receiver android:name=".Admin$Receiver"
+		          android:label="@string/app"
+		          android:permission="android.permission.BIND_DEVICE_ADMIN">
+	    <meta-data android:name="android.app.device_admin" android:resource="@xml/admin" />
+	    <intent-filter>
+	    	<action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+	    	<action android:name="android.app.action.DEVICE_ADMIN_DISABLED" />
+	    	<action android:name="android.app.action.DEVICE_ADMIN_DISABLE_REQUESTED" />
+	    </intent-filter>
+		</receiver>
+
   </application>
 
   <uses-sdk android:minSdkVersion="5" />
@@ -54,6 +65,7 @@
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 	<uses-permission android:name="android.permission.WRITE_SETTINGS" />
 	<uses-permission android:name="android.permission.WAKE_LOCK" />
+	<uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
 
 	<supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true"
 	                  android:xlargeScreens="true" android:anyDensity="true" />

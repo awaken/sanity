@@ -35,6 +35,7 @@
 
   <string name="devices_cat">Devices to disable</string>
   <string name="devices_sum">Which devices should be disabled for reducing electromagnetic waves during a call.</string>
+  <string name="devices_rules_cat">Exceptions</string>
   <string name="gps_title">Turn off GPS</string>
   <string name="gps_sum">Disable GPS during a call (it will be restored at call end). It works with many phone models, but not with all.</string>
   <string name="mobdata_title">Turn off Mobile Data</string>
@@ -47,6 +48,10 @@
   <string name="bt_sum">Disable Bluetooth during a call (it will be restored at call end).</string>
   <string name="bt_skip_title">Skip BT if connected</string>
   <string name="bt_skip_sum">Skip automatic Bluetooth disabling during a call if there are Bluetooth devices connected to phone.</string>
+  <string name="hotspot_skip_title">Skip if Hotspot Wifi</string>
+  <string name="hotspot_skip_sum">Skip automatic Mobile Data (2G/3G) and Wifi disabling during a call if phone is configured like Router Wifi.</string>
+  <string name="tether_skip_title">Skip if Tethering USB</string>
+  <string name="tether_skip_sum">Skip automatic Mobile Data disabling during a call if Tethering USB is enabled.</string>
 
 	<string name="proximity_cat">Proximity disabling</string>
 	<string name="proximity_sum">Options for enabling and disabling devices during a call by checking proximity sensor.</string>
@@ -114,10 +119,16 @@
   <string name="full_title">Full version</string>
   <string name="full_sum">This is the full version of Sanity.</string>
 
+	<string name="admin_title">Administrator</string>
+	<string name="admin_sum">Use administrator privileges for turning off screen when you put the phone close to your ear during a call.</string>
+	<string name="admin_disable">Sanity requires administrator privileges just for turning off the screen during a phone call. Without such privileges, Sanity cannot turn off screen when you put the phone close to your ear during a call. Anyway, disabling administrator is required to uninstall Sanity.</string>
+	<string name="admin_explanation">Confirm this request to allow Sanity for turning off the screen during phone calls.\n\REMEMBER to disable \"Administrator\" option in Sanity for uninstalling the application! While Sanity is a device administrator, you cannot uninstall it.</string>
+
+	<string name="msg_require_froyo">Here is required at least Android version 2.2 (Froyo). Sorry, your phone has Android 2.1 (Eclair).</string>
   <string name="msg_devs_enabled">Sanity: devices enabled</string>
   <string name="msg_devs_disabled">Sanity: devices disabled</string>
   <string name="msg_running">Sanity is running</string>
-  <string name="msg_force_bt_audio">WARNING: if your bluetooth audio already works well with Sanity, don\'t activate this option!\n\nThis option should be activated only if Sanity disables your bluetooth audio during a call.\n\nIf this option is activated, Sanity will enable/disable nothing when a bluetooth device is connected.\n\nAre you sure to activate this option to force bluetooth audio?</string>
+  <string name="msg_force_bt_audio">WARNING: if your bluetooth audio already works well with Sanity, don\'t activate this option!\n\nThis option should be activated only if Sanity doesn\'t work well with your bluetooth audio.\n\nIf this option is activated, Sanity will enable/disable nothing while any bluetooth device is connected.\n\nAre you sure to activate this option to force bluetooth audio?</string>
   <string name="msg_reverse_proximity">WARNING: if Sanity already works well on your phone, don\'t activate this option!\n\nThis option should be activated on those phones have a bugged proximity sensor.\n\nAre you sure to activate this option for reversing proximity?</string>
   <string name="msg_reset_prefs">WARNING: this function will restore all default preference values.\n\nAll current application preferences will be lost.\n\nWould you really reset all preferences?</string>
   <string name="msg_market_err">Unable to open Market application! Check the Internet connection is properly working and Market is rightly installed.</string>
@@ -144,7 +155,17 @@
   <string name="changelog_title">Recent changes</string>
   <string name="changelog_sum">Show recent changes implemented in the last Sanity versions.</string>
   <string name="changelog_body">
-  	Version 1.1\n
+  	Version 1.4\n
+  	- Fix: crash on Android 2.1 (Eclair), but now it works.\n
+  	- Fix: minor bugs.\n
+  	\nVersion 1.3\n
+  	- New: option to use device administration for turning off the screen (you have to enable \"Administrator\" option); Android 2.2+ required.\n
+  	- Fix: crash during first start when not upgrading.\n
+  	- Fix: minor bugs.\n
+  	\nVersion 1.2\n
+  	- New: option to skip automatic Wifi and Mobile Data disabling when Hotspot Wifi is enabled.\n
+  	- New: option to skip automatic Mobile Data disabling when Tethering USB is enabled.\n
+  	\nVersion 1.1\n
   	- New: option to force turn on screen when phone is far from ear.\n
   	\nVersion 1.0\n
   	- New: volume option to mute all audio streams except the conversation one (during a call).\n

@@ -7,37 +7,24 @@ import android.preference.Preference;
 
 public class MainActivity extends ActivityScreen
 {
-	//---- Activity override
-
 	@Override
   public void onCreate(Bundle savedInstanceState)
   {
 		screener(getClass(), R.xml.prefs);
     super.onCreate(savedInstanceState);
     A.activity = this;
-    final String oldVer = getOldVersion();
   	setupScreens();
   	setupProximity();
     setupDonate();
-		if(!A.is(P.AGREE))
-			askLicense();
-		else if(oldVer.length() > 0) {
-			if(!setupUpgrade(Float.parseFloat(oldVer)))
-				alertChangeLog();
-		}
-		else if(!A.isFull())
-			askDonate();
+		if(!A.is(P.AGREE))   askLicense();
+		else if(P.upgrade()) alertChangeLog();
+		else if(!A.isFull()) askDonate();
   }
 
 	@Override
 	public void onStart()
 	{
-		final boolean enabled = A.isEnabled();
-		setEnabled(P.SCREEN_DEVICES  , enabled);
-		setEnabled(P.SCREEN_PROXIMITY, enabled);
-		setEnabled(P.SCREEN_SPEAKER  , enabled);
-		setEnabled(P.SCREEN_VOLUME   , enabled);
-		setEnabled(P.SCREEN_NOTIFY   , enabled);
+		updateOptions();
 		super.onStart();
 	}
 
@@ -67,66 +54,6 @@ public class MainActivity extends ActivityScreen
   		setEnabled(P.SCREEN_PROXIMITY, false);
 	}
 
-	private static String getOldVersion()
-	{
-		final String ver = A.ver();
-		final String old = A.gets(P.VER);
-		final boolean ok = old.equals(ver);
-		if(!ok) A.putc(P.VER, ver);
-		return ok ? "" : old;
-	}
-
-	public static final void setDefaultPrefs()
-	{
-		A.put(P.ENABLED          , true)		// main
-		 .put(P.SKIP_HEADSET     , true)
-		 .put(P.FORCE_BT_AUDIO   , false)
-		 .put(P.REVERSE_PROXIMITY, false)
-		 .put(P.AUTO_MOBDATA     , false)		// devices
-		 .put(P.SKIP_MOBDATA     , false)
-		 .put(P.AUTO_WIFI        , true)
-		 .put(P.AUTO_GPS         , false)
-		 .put(P.AUTO_BT          , true)
-		 .put(P.SKIP_BT          , true)
-		 .put(P.DISABLE_PROXIMITY, true)		// proximity
-		 .put(P.DISABLE_DELAY    , "1000")
-		 .put(P.ENABLE_DELAY     , "3000")
-		 .put(P.ENABLE_PROXIMITY , true)
-		 .put(P.SCREEN_OFF       , true)
-		 .put(P.SCREEN_ON        , false)
-		 .put(P.SPEAKER_CALL     , false)		// speaker
-		 .put(P.SPEAKER_LOUD     , true)
-		 .put(P.SPEAKER_AUTO     , true)
-		 .put(P.SPEAKER_DELAY    , "0")
-		 .put(P.VOL_PHONE        , "0")			// volume
-		 .put(P.VOL_WIRED        , "0")
-		 .put(P.VOL_BT           , "0")
-		 .put(P.VOL_SOLO         , false)
-		 .put(P.NOTIFY_ENABLE    , true)		// notify
-		 .put(P.NOTIFY_DISABLE   , true)
-		 .put(P.NOTIFY_ACTIVITY  , true)
-		 .put(P.NOTIFY_VOLUME    , false);
-		A.commit();
-	}
-	
-	private boolean setupUpgrade(float oldVer)
-	{
-		// put here preferences changes for upgrading (from older version)
-		// return true only if this method shows a dialog (to avoid showing another dialog after this one)
-		boolean commit = false;
-		if(oldVer < 0.9) {
-			if(!A.has(P.SCREEN_OFF)) A.put(P.SCREEN_OFF, true);
-			A.put(P.SKIP_BT, true)
-			 .put(P.DISABLE_PROXIMITY, A.is("proximity"))
-			 .put(P.ENABLE_PROXIMITY , A.is("restore_far"))
-			 .del("proximity")
-			 .del("restore_far");
-			commit = true;
-		}
-		if(commit) A.commit();
-		return false;
-	}
-	
 	private void setupDonate()
 	{
 		final Preference p = findPref("donate");
@@ -158,10 +85,20 @@ public class MainActivity extends ActivityScreen
 		A.alert(
 		  A.tr(R.string.msg_eula_title),
 			getAppFullName()+"\n\n"+A.tr(R.string.app_desc)+"\n\n"+A.tr(R.string.msg_eula),
-			new A.Click(){ void on(){ A.putc(P.AGREE,true); setDefaultPrefs(); }},
+			new A.Click(){ void on(){ A.put(P.AGREE,true); P.setDefaults(); updateOptions(); }},
 			new A.Click(){ void on(){ finish(); }},
 			A.ALERT_OKCANC, false
 		);
+	}
+	
+	private void updateOptions()
+	{
+		final boolean enabled = A.isEnabled();
+		setEnabled(P.SCREEN_DEVICES  , enabled);
+		setEnabled(P.SCREEN_PROXIMITY, enabled);
+		setEnabled(P.SCREEN_SPEAKER  , enabled);
+		setEnabled(P.SCREEN_VOLUME   , enabled);
+		setEnabled(P.SCREEN_NOTIFY   , enabled);
 	}
 
 	private boolean startDonateApp()

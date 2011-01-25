@@ -35,11 +35,12 @@ public final class MainService extends Service
 	{
 		if(PhoneListener.isRunning()) return START;
 		running = true;
+		P.upgrade();
 		if(phoneListener == null) phoneListener = new PhoneListener();
 		A.telMan().listen(phoneListener, PhoneListener.LISTEN);
 		phoneListener.startup();
 		notifyRun();
-		A.logd("MainService started");
+		//A.logd("MainService started");
 		return START;
 	}
 
@@ -48,7 +49,7 @@ public final class MainService extends Service
 	{
 		A.telMan().listen(phoneListener, PhoneListener.LISTEN_NONE);
 		A.notifyCanc();
-		A.logd("MainService destroyed");
+		//A.logd("MainService destroyed");
 		running = false;
 		super.onDestroy();
 	}

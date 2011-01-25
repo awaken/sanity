@@ -11,9 +11,9 @@ public class ScreenGeneral extends ActivityScreen
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-
+		
 		on(P.FORCE_BT_AUDIO, new Change(){ boolean on(){
-			if(!((Boolean)value).booleanValue()) return true;
+			if(!(Boolean)value) return true;
 			A.alert(
 				A.tr(R.string.msg_force_bt_audio),
 				new A.Click(){ void on(){ ((CheckBoxPreference)pref).setChecked(true); }},
@@ -24,10 +24,10 @@ public class ScreenGeneral extends ActivityScreen
 			return false;
 		}});
 
-		final Preference p = findPref(P.REVERSE_PROXIMITY);
+		Preference p = findPref(P.REVERSE_PROXIMITY);
 		p.setEnabled(p.isEnabled() && Dev.sensorProxim()!=null);
 		on(p, new Change(){ boolean on(){
-			if(!((Boolean)value).booleanValue()) return true;
+			if(!(Boolean)value) return true;
 			A.alert(
 				A.tr(R.string.msg_reverse_proximity),
 				new A.Click(){ void on(){ ((CheckBoxPreference)pref).setChecked(true); }},
@@ -46,7 +46,7 @@ public class ScreenGeneral extends ActivityScreen
 					final String    ver = A.gets(P.VER);
 					final int   btcount = A.geti(P.BT_COUNT);
 					A.edit().clear();
-					MainActivity.setDefaultPrefs();
+					P.setDefaults();
 					setChecked(P.ENABLED, A.isEnabled());
 					updatePref(P.SKIP_HEADSET);
 					updatePref(P.FORCE_BT_AUDIO);
@@ -57,6 +57,27 @@ public class ScreenGeneral extends ActivityScreen
 			);
 			return true;
 		}});
+
+		if(A.SDK < 8) {
+			p = findPref(P.ADMIN);
+			p.setEnabled(false);
+			p.setSummary(R.string.msg_require_froyo);
+		}
+		else {
+			on(P.ADMIN, new Change(){ boolean on(){
+				final boolean admin = (Boolean)value;
+				if(admin) Admin.request(ScreenGeneral.this);
+				else      Admin.remove();
+				return admin == Admin.isActive();
+			}});
+		}
+	}
+
+	@Override
+	public void onStart()
+	{
+		super.onStart();
+		setChecked(P.ADMIN, Admin.isActive());		
 	}
 
 }
