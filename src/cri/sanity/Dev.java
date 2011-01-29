@@ -221,9 +221,11 @@ public final class Dev
 	public static final boolean isWakeScreen() { return wakeScreenLock!=null && wakeScreenLock.isHeld(); }
 	public static final void wakeScreen()      { wakeScreen(true); }
 	public static final void wakeScreen(boolean release) {
-		if(wakeScreenLock == null)
+		if(wakeScreenLock == null) {
 			wakeScreenLock = A.powerMan().newWakeLock(
 				PowerManager.SCREEN_DIM_WAKE_LOCK|PowerManager.ON_AFTER_RELEASE|PowerManager.ACQUIRE_CAUSES_WAKEUP, "Dev");
+			wakeScreenLock.setReferenceCounted(false);
+		}
 		wakeScreenLock.acquire();
 		if(release) wakeScreenLock.release();
 	}
@@ -240,7 +242,7 @@ public final class Dev
 
 	//---- undocumented android api
 
-	public static final Object iTelMan() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+	private static Object iTelMan() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
 		if(iTelMan != null) return iTelMan;
 		final TelephonyManager tm = A.telMan();
 		final Method itm = tm.getClass().getDeclaredMethod("getITelephony");

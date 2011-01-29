@@ -5,6 +5,7 @@
 	<item android:id="@+id/menu_proximity" android:icon="@drawable/menu_proximity" android:title="@string/proximity_cat" />
 	<item android:id="@+id/menu_speaker" android:icon="@drawable/menu_speaker" android:title="@string/speaker_cat" />
 	<item android:id="@+id/menu_vol" android:icon="@drawable/menu_vol" android:title="@string/vol_cat" />
+	<item android:id="@+id/menu_rec" android:icon="@drawable/menu_rec" android:title="@string/rec_cat" />
 	<item android:id="@+id/menu_notify" android:icon="@drawable/menu_notify" android:title="@string/notify_cat" />
 	<item android:id="@+id/menu_about" android:icon="@drawable/menu_about" android:title="@string/about_cat" />
 </menu>

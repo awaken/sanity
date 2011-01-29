@@ -59,6 +59,7 @@
   <string name="enable_proximity_sum">Riaccendi i dispositivi (spenti da Sanity) durante una chiamata quando allontani il telefono dall\'orecchio.</string>
   <string name="enable_delay_title">Riaccendi in ritardo</string>
   <string name="enable_delay_sum">Quanto tempo aspettare prima di riaccendere i dispositivi quando il telefono è lontano dall\'orecchio.</string>
+	<string name="screen_cat">Schermo</string>
   <string name="screen_off_title">Spegni schermo</string>
   <string name="screen_off_sum">Forza per spegnere lo schermo durante una telefonata quando il telefono è vicino all\'orecchio.</string>
   <string name="screen_on_title">Accendi schermo</string>
@@ -86,6 +87,22 @@
 	<string name="vol_solo_title">Solo conversazione</string>
 	<string name="vol_solo_sum">Ascolta solo l\'audio della conversazione, spegnendo ogni altro flusso audio durante la telefonata.</string>
 
+	<string name="rec_cat">Registratore</string>
+	<string name="rec_sum">Opzioni per registrare l\'audio della telefonata sulla memory card.</string>
+	<string name="rec_sum_free">Questa versione gratuita è limitata a 2 minuti per ogni registrazione.</string>
+	<string name="rec_warn_title">Avviso</string>
+	<string name="rec_warn_sum">Attenzione: in alcuni paesi la registrazione delle telefonate è proibita dalle leggi del governo. L\'autore dissente ogni uso illegale di Sanity. Sii consapevole, usalo a tuo rischio!</string>
+	<string name="rec_enable_title">Abilita la registrazione</string>
+	<string name="rec_enable_sum">Mette una notifica di registrazione nella barra di stato durante le telefonate: tocca quella notifica per avviare/arrestare la registrazione.</string>
+	<string name="rec_src_title">Sorgente audio</string>
+	<string name="rec_src_sum">Scegli il dispositivo usato per registrare l\'audio.</string>
+	<string name="rec_fmt_title">Formato file audio</string>
+	<string name="rec_fmt_sum">Scegli il formato file utilizzato per salvare le registrazioni audio.</string>
+	<string name="rec_browse_title">Naviga file registrati</string>
+	<string name="rec_browse_sum">Mostra la lista dei file audio delle registrazioni effettuate con Sanity.</string>
+	<string name="rec_info_title">Note importanti</string>
+	<string name="rec_info_sum">Il sistema di registrazione di Android è molto limitato: attualmente puoi registrare le chiamate solo quando il VIVAVOCE È ACCESO!</string>
+
   <string name="notify_cat">Notifica</string>
   <string name="notify_sum">Scegli quali notifiche visualizzare.</string>
   <string name="notify_disable_title">Notifica lo spegnimento</string>
@@ -99,6 +116,8 @@
 
   <string name="about_cat">Info e contatti</string>
   <string name="about_sum">Informazioni su questa applicazione e strumenti per contattare lo sviluppatore.</string>
+  <string name="uninstall_title">Come disinstallare</string>
+  <string name="uninstall_sum">Tocca qui per leggere le istruzioni su come disinstallare Sanity (utili solo su Android Froyo 2.2 o superiori).</string>
   <string name="mail_title">Scrivi allo sviluppatore</string>
   <string name="mail_sum">Tocca qui per scrivere un\'email allo sviluppatore. Puoi usare l\'email anche per segnalare bug e richiedere migliorie.</string>
   <string name="comment_title">Lascia un commento</string>
@@ -120,7 +139,14 @@
 	<string name="admin_disable">Sanity necessita dei privilegi amministrativi solo per poter spegnere lo schermo durante una telefonata. Senza questi privilegi, Sanity non può spegnere lo schermo quando avvicini il telefono all\'orecchio durante una telefonata.</string>
 	<string name="admin_explanation">Conferma questa richiesta per permettere a Sanity di spegnere lo schermo durante le telefonate.\n\nRICORDA di disattivare l\'opzione \"Amministratore\" di Sanity per poter disinstallare l\'applicazione! Fintantoché Sanity è un amministratore del dispositivo, non potrai disinstallarlo.</string>
 
+  <string name="msg_dir_err">Sanity errore: impossibile creare la cartella sulla sdcard per salvare le registrazioni audio!</string>
+  <string name="msg_rec_err">Sanity errore: impossibile avviare la registrazione audio!</string>
+  <string name="msg_rec_title">Sanity - Registratore</string>
+  <string name="msg_rec_start">Tocca qui per AVVIARE la registrazione</string>
+  <string name="msg_rec_stop">Tocca qui per ARRESTARE la registrazione</string>
+  <string name="msg_rec_free_limit">Sanity: limite di 2 minuti raggiunto, la registrazione è arrestata.</string>
 	<string name="msg_require_froyo">Qui è necessario almeno Android versione 2.2 (Froyo). Spiacente, il tuo telefono monta Android 2.1 (Eclair).</string>
+	<string name="msg_uninstall">Per disinstallare Sanity, è necessario disattivare l\'opzione \"Amministratore\" nella sezione \"Disabilita in prossimità\".\n\nFintantoché l\'opzione \"Amministratore\" è attivata, non sarà consentito disinstallare Sanity!\n\nSolo se questa opzione risulta disattivata, il processo di disinstallazione di Sanity avrà successo.</string>
   <string name="msg_devs_enabled">Sanity: dispositivi accesi</string>
   <string name="msg_devs_disabled">Sanity: dispositivi spenti</string>
   <string name="msg_running">Sanity è in esecuzione</string>
@@ -130,7 +156,8 @@
   <string name="msg_market_err">Impossibile aprire l\'applicazione Market! Verifica che la connessione a Internet sia funzionante e che il Market sia correttamente installato.</string>
   <string name="msg_email_choose">Scegli come inviare l\'email</string>
   <string name="msg_email_body">Ciao Cristiano!</string>
-	<string name="msg_donate">Grazie per aver installato Sanity.\n\nQuesta è la versione libera, senza limitazioni nelle funzionalità. Se Sanity ti piace, puoi effettuare una donazione per supportarlo. Una volta completata la donazione, questa finestra verrà soppressa.\n\nVuoi aprire ora il Market per la donazione?</string>
+	<string name="msg_donate">Grazie per aver installato Sanity. Questa è la versione libera e gratuita.\n\nSe Sanity ti piace, puoi effettuare una donazione per supportarlo. Una volta completata la donazione, questa finestra verrà soppressa e il limite di 2 minuti del registratore verrà rimosso.\n\nVuoi aprire ora il Market per la donazione?</string>
+	<string name="msg_browse_beta">Il registratore delle telefonate è sperimentale, è una versione beta in stato di testing.\n\nNella prossima versione Sanity integrerà un navigatore dei file audio registrati.\n\nComunque tutti i file registrati si trovano nella cartella \"Sanity\" dentro la tua memory card (puoi accedervi usando un file browser).</string>
 
   <string name="msg_eula_title">Contratto di licenza software</string>
   <string name="msg_eula">
@@ -148,11 +175,18 @@
   <string name="changelog_title">Modifiche recenti</string>
   <string name="changelog_sum">Visualizza le modifiche recenti implementate nelle ultime versioni di Sanity.</string>
   <string name="changelog_body">
-  	Version 1.4\n
+  	Versione 1.5\n
+  	- Nuovo: registratore vocale delle telefonate (nell\'edizione gratuita è limitato a massimo 2 minuti di registrazione per file audio; senza limiti nell\'edizione donazione).\n
+  	- Fix: ora le preferenze vengono correttamente salvate e possono essere modificate.\n
+  	- Fix: lo schermo non viene più spento automaticamente quando il telefono squilla.\n
+  	- Fix: comportamenti anomali durante chiamate multiple contemporanee.\n
+  	- Fix: malfunzionamenti minori.\n
+  	- Modifica: migliorie minori all\'interfaccia utente.\n
+  	\nVersione 1.4\n
   	- Fix: chiusura forzata su Android 2.1 (Eclair), invece ora funziona.\n
   	- Fix: bug minori.\n
-  	\nVersion 1.3\n
-  	- Nuovo: opzione come amministratore dispositivo per spegnere lo schermo (va abilita l\'opzione \"Amministratore\"), solo per Android 2.2+.\n
+  	\nVersione 1.3\n
+  	- Nuovo: opzione come amministratore dispositivo per spegnere lo schermo (va abilita l\'opzione \"Amministratore\"); solo per Android 2.2+.\n
   	- Fix: chiusura forzata durante il primo avvio senza aggiornamento.\n
   	- Fix: malfunzionamenti minori.\n
   	\nVersione 1.2\n

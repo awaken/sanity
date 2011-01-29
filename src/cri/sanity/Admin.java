@@ -8,14 +8,9 @@ import android.content.Intent;
 
 public final class Admin
 {
-	public static class Receiver extends DeviceAdminReceiver
-	{
+	public static class Receiver extends DeviceAdminReceiver {
 		@Override
 	  public CharSequence onDisableRequested(Context ctx, Intent i) { return A.tr(R.string.admin_disable); }
-		@Override
-	  public void onDisabled(Context ctx, Intent i) { A.putc(P.ADMIN, false); }
-		@Override
-	  public void onEnabled(Context ctx, Intent i) { A.putc(P.ADMIN, true); }
 	}
 
   //---- static methods
@@ -33,11 +28,10 @@ public final class Admin
     ctx.startActivity(i);
   }
 
-  public static final boolean remove()
+  public static final void remove()
   {
-  	if(!isActive()) return false;
+  	if(!isActive()) return;
   	A.devpolMan().removeActiveAdmin(compName());
-  	return true;
   }
 
 }

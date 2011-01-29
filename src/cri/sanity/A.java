@@ -1,5 +1,6 @@
 package cri.sanity;
 
+import java.io.File;
 import java.util.Currency;
 import java.util.Locale;
 import java.util.Map;
@@ -27,12 +28,13 @@ import android.hardware.SensorManager;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.util.Log;
+import android.os.Environment;
 import android.os.PowerManager;
 import android.net.ConnectivityManager;
 import android.app.KeyguardManager;
+import android.app.admin.DevicePolicyManager;
 //import android.os.SystemClock;
 //import android.widget.Toast;
-import android.app.admin.DevicePolicyManager;
 
 
 public final class A extends Application
@@ -141,6 +143,7 @@ public final class A extends Application
 	//public static final boolean isEmpty(String s) { return s==null || s.trim().length()<=0; }
 
 	public static final String tr(int id) { return (String)resources().getText(id); }
+	public static final boolean empty(String s) { return s==null || s.length()<=0; }
 
 	public static final long now() { return System.currentTimeMillis(); }
 	//public static final long uptime() { return SystemClock.uptimeMillis(); }
@@ -169,6 +172,18 @@ public final class A extends Application
 		} catch(ActivityNotFoundException e) {
 			return false;
 		}
+	}
+	
+	public static final String sdcardDir() {
+		String dir = Environment.getExternalStorageDirectory().getAbsolutePath() + '/' + A.name();
+		File file  = new File(dir);
+		if(!file.exists()) {
+			if(!file.mkdir()) return null;
+			//File nom = new File(dir + "/.nomedia");
+			//try { nom.createNewFile(); }
+			//catch(Exception e) {}
+		}
+		return dir;
 	}
 	
 	// string conversion
@@ -207,6 +222,7 @@ public final class A extends Application
 	}
 	public static final void notifyCanc()       { notifMan().cancel(NID); }
 	public static final void notifyCanc(int id) { notifMan().cancel( id); }
+	public static final void notifyCancAll()    { notifMan().cancelAll(); }
 
 	public static final AlertDialog alert(String msg) {
 		return alert(name, msg, null, null, null, ALERT_SIMPLE, DEF_CANCELABLE);
@@ -262,9 +278,9 @@ public final class A extends Application
 
   //---- preferences
 
-	public static final boolean isEnabled () { return prefs.getBoolean(P.ENABLED , false); }
-	public static final boolean isFull()     { return FULL || prefs.getBoolean(P.FULL, false); }
-	public static final void    setFull()    { putc(P.FULL, true); }
+	public static final boolean isEnabled () { return prefs.getBoolean(K.ENABLED , false); }
+	public static final boolean isFull()     { return FULL || prefs.getBoolean(K.FULL, false); }
+	public static final void    setFull()    { putc(K.FULL, true); }
 
 	public static final boolean is(String key)                { return prefs.getBoolean(key, DEF_BOOL  ); }
 	public static final boolean is(String key, boolean def)   { return prefs.getBoolean(key, def       ); }

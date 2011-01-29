@@ -11,11 +11,12 @@ public class ScreenAbout extends ActivityScreen
   public void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
-  	on(P.EULA     , new Click(){ boolean on(){ return A.gotoUrl(Conf.EULA_URL); }});
-  	on(P.COMMENT  , new Click(){ boolean on(){ return A.gotoMarketDetails();    }});
-  	on(P.CHANGELOG, new Click(){ boolean on(){ return alertChangeLog();         }});
-  	on(P.MAIL     , new Click(){ boolean on(){ return mailToDeveloper();        }});
-  	on(P.PAYPAL   , new Click(){ boolean on(){ return A.gotoDonateUrl();        }});
+  	on(K.EULA     , new Click(){ boolean on(){ return A.gotoUrl(Conf.EULA_URL); }});
+  	on(K.COMMENT  , new Click(){ boolean on(){ return A.gotoMarketDetails();    }});
+  	on(K.CHANGELOG, new Click(){ boolean on(){ return alertChangeLog();         }});
+  	on(K.MAIL     , new Click(){ boolean on(){ return mailToDeveloper();        }});
+  	on(K.PAYPAL   , new Click(){ boolean on(){ return A.gotoDonateUrl();        }});
+    on(K.UNINSTALL, new Click(){ boolean on(){ A.alert(A.tr(R.string.msg_uninstall)); return true; }});
   }
 
 	private boolean mailToDeveloper()

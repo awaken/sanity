@@ -55,7 +55,7 @@ public abstract class PrefActivity extends PreferenceActivity
 
 	public final boolean is(String key)   { return ((CheckBoxPreference)findPref(key)).isChecked(); }
 	public final boolean is(Preference p) { return ((CheckBoxPreference)p            ).isChecked(); }
-	
+
 	public final void setChecked(String key, boolean checked) {
 		((CheckBoxPreference)findPref(key)).setChecked(checked);
 	}

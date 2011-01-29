@@ -18,6 +18,14 @@ An Android application for managing volume and for reducing electromagnetic wave
   Change log
 -------------------
 
+* version 1.5  (29/01/2010)
+New: voice call recorder (in the free edition it's limited to maximum 2 minutes for each audio file; without limits in the donate edition).
+Fix: now preferences are correctly saved and can be modified.
+Fix: screen is no more turned automatically off while ringing.
+Fix: odd behavior on multiple calls at the same time.
+Fix: minor bugs.
+Change: minor user interface improvements.
+
 * version 1.4  (25/01/2010)
 Fix: crash on Android 2.1 (Eclair), but now it works.
 Fix: minor bugs.

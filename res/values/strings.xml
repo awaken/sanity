@@ -63,6 +63,7 @@
   <string name="enable_proximity_sum">Turn ON devices (turned off by Sanity) during a call when the phone is NOT close to your ear.</string>
   <string name="enable_delay_title">Restore delay</string>
   <string name="enable_delay_sum">Delay for turning ON devices when the phone is NOT close to your ear.</string>
+	<string name="screen_cat">Screen</string>
   <string name="screen_off_title">Turn off screen</string>
   <string name="screen_off_sum">Force to turn OFF the screen during call when the phone is close to your ear.</string>
   <string name="screen_on_title">Turn on screen</string>
@@ -90,6 +91,22 @@
 	<string name="vol_solo_title">Conversation only</string>
 	<string name="vol_solo_sum">Play only the audio of the conversation, muting any other audio stream during phone calls.</string>
 
+	<string name="rec_cat">Recorder</string>
+	<string name="rec_sum">Options for recording call audio on memory card.</string>
+	<string name="rec_sum_free">This free version is limited to 2 minutes for each recording.</string>
+	<string name="rec_warn_title">Warning</string>
+	<string name="rec_warn_sum">Attention please: in some countries call recording is forbidden by government laws. The author disagrees every illegal use of Sanity. Be awareness, use it at your risk!</string>
+	<string name="rec_enable_title">Enable recording system</string>
+	<string name="rec_enable_sum">Put recording notification on statusbar during phone call: tap that notification to start/stop call recording.</string>
+	<string name="rec_src_title">Audio source</string>
+	<string name="rec_src_sum">Select the source device used for recording audio.</string>
+	<string name="rec_fmt_title">Audio file format</string>
+	<string name="rec_fmt_sum">Select file format used to save audio file recordings.</string>
+	<string name="rec_browse_title">Browse recorded files</string>
+	<string name="rec_browse_sum">Show list of audio files recorded by Sanity.</string>
+	<string name="rec_info_title">Important notes</string>
+	<string name="rec_info_sum">Android recording system is very limited: actually you can record calls only when HANDSFREE IS TURNED ON!</string>
+
   <string name="notify_cat">Notification</string>
   <string name="notify_sum">Choose when Sanity should show notifications.</string>
   <string name="notify_disable_title">Notify turning off</string>
@@ -103,6 +120,8 @@
 
   <string name="about_cat">About and contact</string>
   <string name="about_sum">Information about this application and tools for contacting the developer.</string>
+  <string name="uninstall_title">How to uninstall</string>
+  <string name="uninstall_sum">Tap here to show instructions for uninstalling Sanity (useful only on Android Froyo 2.2 or greater).</string>
   <string name="mail_title">Mail to developer</string>
   <string name="mail_sum">Tap here to write an email to the developer. You can use email also for bug reports and feature requests.</string>
   <string name="comment_title">Leave a comment</string>
@@ -124,7 +143,14 @@
 	<string name="admin_disable">Sanity requires administrator privileges just for turning off the screen during a phone call. Without such privileges, Sanity cannot turn off screen when you put the phone close to your ear during a call. Anyway, disabling administrator is required to uninstall Sanity.</string>
 	<string name="admin_explanation">Confirm this request to allow Sanity for turning off the screen during phone calls.\n\REMEMBER to disable \"Administrator\" option in Sanity for uninstalling the application! While Sanity is a device administrator, you cannot uninstall it.</string>
 
+  <string name="msg_dir_err">Sanity error: unable to create directory on sdcard for saving audio recording!</string>
+  <string name="msg_rec_err">Sanity error: unable to start audio recording!</string>
+  <string name="msg_rec_title">Sanity - Recorder</string>
+  <string name="msg_rec_start">Tap here to START call recording</string>
+  <string name="msg_rec_stop">Tap here to STOP call recording</string>
+  <string name="msg_rec_free_limit">Sanity: 2 minutes limit reached, recording is stopped.</string>
 	<string name="msg_require_froyo">Here is required at least Android version 2.2 (Froyo). Sorry, your phone has Android 2.1 (Eclair).</string>
+	<string name="msg_uninstall">For uninstalling Sanity, you need to uncheck the \"Administrator\" option inside the \"Proximity disabling\" section.\n\nWhile the \"Administrator\" option is checked, you can\'t uninstall Sanity!\n\nOnly if this option is unchecked, the uninstall process of Sanity will success.</string>
   <string name="msg_devs_enabled">Sanity: devices enabled</string>
   <string name="msg_devs_disabled">Sanity: devices disabled</string>
   <string name="msg_running">Sanity is running</string>
@@ -134,7 +160,8 @@
   <string name="msg_market_err">Unable to open Market application! Check the Internet connection is properly working and Market is rightly installed.</string>
   <string name="msg_email_choose">Choose how to send email</string>
   <string name="msg_email_body">Hello Cristiano!</string>
-	<string name="msg_donate">Thank you for using Sanity.\n\nThis is the free version, with full capabilities. If you like Sanity, you can donate for supporting it. When donating, this dialog will be suppressed.\n\nWould you open Market now for donating?</string>
+	<string name="msg_donate">Thank you for using Sanity. This is the free version.\n\nIf you like Sanity, you can donate for supporting it. When donating, this dialog will be suppressed and the 2 minutes limit of the call recorder will be removed.\n\nWould you open Market now for donating?</string>
+	<string name="msg_browse_beta">The call recorder is experimental, it\'s just a beta version under testing.\n\nIn the next version Sanity will integrate a file browser of recorded audio files.\n\nAnyway, all recorded files are stored in the folder \"Sanity\" inside your memory card (you can use a file browser to reach them).</string>
 
   <string name="msg_eula_title">Software license agreement</string>
   <string name="msg_eula">
@@ -155,7 +182,14 @@
   <string name="changelog_title">Recent changes</string>
   <string name="changelog_sum">Show recent changes implemented in the last Sanity versions.</string>
   <string name="changelog_body">
-  	Version 1.4\n
+  	Version 1.5\n
+  	- New: voice call recorder (in the free edition it\'s limited to maximum 2 minutes for each audio file; without limits in the donate edition).\n
+  	- Fix: now preferences are correctly saved and can be modified.\n
+  	- Fix: screen is no more turned automatically off while ringing.\n
+  	- Fix: odd behavior on multiple calls at the same time.\n
+  	- Fix: minor bugs.\n
+  	- Change: minor user interface improvements.\n
+  	\nVersion 1.4\n
   	- Fix: crash on Android 2.1 (Eclair), but now it works.\n
   	- Fix: minor bugs.\n
   	\nVersion 1.3\n

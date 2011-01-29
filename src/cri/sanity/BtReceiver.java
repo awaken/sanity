@@ -15,12 +15,12 @@ public class BtReceiver extends BroadcastReceiver
 		final PhoneListener pl = PhoneListener.getActiveInstance();
 		final boolean conn     = i.getAction().equals(BluetoothDevice.ACTION_ACL_CONNECTED);
 		final boolean bt       = conn || Dev.isBtOn();
-		final int oldCount     = pl==null? A.geti(P.BT_COUNT) : pl.btCount;
+		final int oldCount     = pl==null? A.geti(K.BT_COUNT) : pl.btCount;
 		final int newCount     = conn? Math.max(oldCount+1,1) : (bt? Math.max(oldCount-1,0) : 0);
 		if(oldCount == newCount) return;
-		A.putc(P.BT_COUNT, newCount);		// this is the current count of bt devices connected
-		A.logd("BtReceiver: "+newCount+" connected devices; last one is connected = "+conn);
-		if(!bt) A.logd("BtReceiver: bluetooth is disabled");
+		A.putc(K.BT_COUNT, newCount);		// this is the current count of bt devices connected
+		//A.logd("BtReceiver: "+newCount+" connected devices; last one is connected = "+conn);
+		//if(!bt) A.logd("BtReceiver: bluetooth is disabled");
 		if(pl == null) return;
 		pl.btCount = newCount;
 		// assume: if a bt device is connected during call, that bt device is an audio one (like headset)

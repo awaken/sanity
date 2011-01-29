@@ -80,4 +80,24 @@
 		<item>8000</item>
 	</string-array>
 
+	<string-array name="rec_src_labels">
+		<item>Microphone</item>
+		<item>Phone call</item>
+	</string-array>
+	<string-array name="rec_src_values">
+		<item>1</item>
+		<item>4</item>
+	</string-array>
+
+	<string-array name="rec_fmt_labels">
+		<item>MPEG4</item>
+		<item>3GPP</item>
+		<item>AMR</item>
+	</string-array>
+	<string-array name="rec_fmt_values">
+		<item>2</item>
+		<item>1</item>
+		<item>3</item>
+	</string-array>
+
 </resources>

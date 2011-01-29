@@ -18,9 +18,6 @@
                         android:summary="@string/reverse_proximity_sum"
                         android:dependency="enabled"
                         android:key="reverse_proximity" />
-    <CheckBoxPreference android:title="@string/admin_title"
-                        android:summary="@string/admin_sum"
-                        android:key="admin" />
     <Preference android:title="@string/reset_prefs_title"
                 android:summary="@string/reset_prefs_sum"
                 android:persistent="false"

@@ -10,21 +10,21 @@ public class ScreenDevices extends ActivityScreen
 	{
 		super.onCreate(savedInstanceState);
 
-		setEnabled(P.SKIP_MOBDATA, A.is(P.AUTO_MOBDATA) && !A.is(P.AUTO_GPS));
-		setEnabled(P.SKIP_HOTSPOT, A.is(P.AUTO_MOBDATA) && Dev.isHotspotSupported());
-		setEnabled(P.SKIP_TETHER , A.is(P.AUTO_MOBDATA) && Dev.isTetheringSupported());
+		setEnabled(K.SKIP_MOBDATA, A.is(K.AUTO_MOBDATA) && !A.is(K.AUTO_GPS));
+		setEnabled(K.SKIP_HOTSPOT, A.is(K.AUTO_MOBDATA) && Dev.isHotspotSupported());
+		setEnabled(K.SKIP_TETHER , A.is(K.AUTO_MOBDATA) && Dev.isTetheringSupported());
 
-		on(P.AUTO_MOBDATA, new Change(){ boolean on(){
+		on(K.AUTO_MOBDATA, new Change(){ boolean on(){
 			final boolean auto = (Boolean)value;
-			setEnabled(P.SKIP_MOBDATA, auto && !A.is(P.AUTO_GPS));
-			setEnabled(P.SKIP_HOTSPOT, auto && Dev.isHotspotSupported());
-			setEnabled(P.SKIP_TETHER , auto && Dev.isTetheringSupported());
+			setEnabled(K.SKIP_MOBDATA, auto && !A.is(K.AUTO_GPS));
+			setEnabled(K.SKIP_HOTSPOT, auto && Dev.isHotspotSupported());
+			setEnabled(K.SKIP_TETHER , auto && Dev.isTetheringSupported());
 			return true;
 		}});
 
-		on(P.AUTO_GPS, new Change(){ boolean on(){
+		on(K.AUTO_GPS, new Change(){ boolean on(){
 			final boolean auto = (Boolean)value;
-			setEnabled(P.SKIP_MOBDATA, !auto && A.is(P.AUTO_MOBDATA));
+			setEnabled(K.SKIP_MOBDATA, !auto && A.is(K.AUTO_MOBDATA));
 			return true;
 		}});
 	}

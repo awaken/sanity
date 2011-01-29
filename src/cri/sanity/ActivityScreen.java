@@ -26,7 +26,7 @@ public class ActivityScreen extends PrefActivity
     final Integer i = mapScreenPref.get(getClass());
     if(i == null) return;
     addPreferencesFromResource(i.intValue());
-		final Preference p = findPref(P.LOGO);
+		final Preference p = findPref(K.LOGO);
 		if(p != null) {
 			p.setTitle(getAppFullName());
 			p.setSummary(R.string.app_desc);

@@ -23,6 +23,10 @@
 		            android:summary="@string/vol_sum"
 		            android:persistent="false"
 		            android:key="screen_volume" />
+		<Preference android:title="@string/rec_cat"
+		            android:summary="@string/rec_sum"
+		            android:persistent="false"
+		            android:key="screen_record" />
 		<Preference android:title="@string/notify_cat"
 		            android:summary="@string/notify_sum"
 		            android:persistent="false"

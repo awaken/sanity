@@ -21,6 +21,12 @@
 	                  android:key="enable_delay"
 	                  android:entries="@array/enable_delay_labels"
 	                  android:entryValues="@array/enable_delay_values" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/screen_cat">
+    <CheckBoxPreference android:title="@string/admin_title"
+                        android:summary="@string/admin_sum"
+                        android:persistent="false"
+                        android:key="admin" />
 	  <CheckBoxPreference android:title="@string/screen_off_title"
 	                      android:summary="@string/screen_off_sum"
 	                      android:key="screen_off" />

@@ -22,5 +22,9 @@
                 android:summary="@string/paypal_sum"
 	              android:persistent="false"
                 android:key="paypal" />
+		<Preference android:title="@string/uninstall_title"
+	  	          android:summary="@string/uninstall_sum"
+	  	          android:persistent="false"
+	  	          android:key="uninstall" />
 	</PreferenceCategory>
 </PreferenceScreen>

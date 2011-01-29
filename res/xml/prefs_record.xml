@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<Preference android:key="logo" />
+  <PreferenceCategory android:title="@string/rec_cat">
+      <Preference android:title="@string/rec_warn_title"
+                  android:summary="@string/rec_warn_sum"
+                  android:persistent="false"
+                  android:enabled="false" />
+	    <CheckBoxPreference android:title="@string/rec_enable_title"
+	                        android:summary="@string/rec_enable_sum"
+	                        android:key="rec" />
+	    <!--
+	    <ListPreference android:title="@string/rec_src_title"
+	                    android:summary="@string/rec_src_sum"
+	                    android:dependency="rec"
+	                    android:entries="@array/rec_src_labels"
+	                    android:entryValues="@array/rec_src_values"
+	                    android:key="rec_fmt" />
+	    -->
+	    <ListPreference android:title="@string/rec_fmt_title"
+	                    android:summary="@string/rec_fmt_sum"
+	                    android:dependency="rec"
+	                    android:entries="@array/rec_fmt_labels"
+	                    android:entryValues="@array/rec_fmt_values"
+	                    android:key="rec_fmt" />
+			<Preference android:title="@string/rec_browse_title"
+			            android:summary="@string/rec_browse_sum"
+			            android:persistent="false"
+			            android:key="rec_browse" />
+			<Preference android:title="@string/rec_info_title"
+			            android:summary="@string/rec_info_sum"
+			            android:persistent="false"
+			            android:enabled="false" />
+  </PreferenceCategory>
+</PreferenceScreen>

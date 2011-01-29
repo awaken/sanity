@@ -30,7 +30,7 @@ public class ScreenVolume extends ActivityScreen
   		av[i] = Integer.toString(i);
   		ae[i] = lev + av[i];
   	}
-  	for(String k : new String[]{ P.VOL_PHONE, P.VOL_WIRED, P.VOL_BT }) {
+  	for(String k : new String[]{ K.VOL_PHONE, K.VOL_WIRED, K.VOL_BT }) {
   		final ListPreference lp = (ListPreference)findPref(k);
   		lp.setEntries    (ae);
   		lp.setEntryValues(av);
