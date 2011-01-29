@@ -178,6 +178,8 @@
   <string name="changelog_title">Modifiche recenti</string>
   <string name="changelog_sum">Visualizza le modifiche recenti implementate nelle ultime versioni di Sanity.</string>
   <string name="changelog_body">
+  	Versione 1.7:\n
+  	- Fix: la registrazione delle telefonate non viene più arrestata subito dopo averla avviata.\n
   	Versione 1.6\n
   	- Nuovo: opzione per permettere/negare la scansione multimediale dei file audio registrati.\n
   	- Fix: l\'applicazione è mostrata nel pannello \"Amministratore Dispositivo\" delle impostazioni globali di Android.\n

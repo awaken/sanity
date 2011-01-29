@@ -12,12 +12,13 @@ import android.os.IBinder;
 
 public class RecService extends Service
 {
-	private static final int NID = 666;
+	private static final int NID   = 666;
 	private static boolean running = false;
-	private static boolean full = false;
+	private static boolean full    = false;
+	private static long    ts      = 0;
 	private static Rec rec;
 	private static Notification notif;
-	private static PendingIntent pendingIntent;
+	private static PendingIntent notifIntent;
 	private static Timer timer;
 	private static TimerTask taskLimit;
 
@@ -43,6 +44,9 @@ public class RecService extends Service
 			rec.release();
 			rec = null;
 		}
+		taskLimit   = null;
+		notif       = null;
+		notifIntent = null;
 		A.notifyCanc(NID);
 	}
 
@@ -56,6 +60,9 @@ public class RecService extends Service
 	{
 		if(timer == null) return START_NOT_STICKY;
 		running = true;
+		final long now = A.now();
+		if(now-ts < Conf.REC_MIN_TIME) return START_STICKY;
+		ts = now;
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
@@ -91,30 +98,29 @@ public class RecService extends Service
 	{
 		final Context ctx = A.app();
 		if(notif == null) {
-			final Intent i = new Intent(ctx, RecService.class);
-			i.setFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
-			pendingIntent = PendingIntent.getService(ctx, 0, i, 0);
-			notif = new Notification();
-			notif.flags = Notification.FLAG_ONGOING_EVENT;
+			notifIntent = PendingIntent.getService(ctx, 0, new Intent(ctx, RecService.class), 0);
+			notif       = new Notification();
+			notif.flags = Notification.FLAG_ONGOING_EVENT|Notification.FLAG_NO_CLEAR;
 		}
 		final boolean started = rec!=null && rec.isStarted();
 		notif.icon = started? R.drawable.ic_rec : R.drawable.ic_bar;
 		notif.when = A.now();
-		notif.setLatestEventInfo(ctx, A.tr(R.string.msg_rec_title), A.tr(started? R.string.msg_rec_stop : R.string.msg_rec_start), pendingIntent);
+		notif.setLatestEventInfo(ctx, A.tr(R.string.msg_rec_title), A.tr(started? R.string.msg_rec_stop : R.string.msg_rec_start), notifIntent);
 		A.notifyCanc();
 		A.notifMan().notify(NID, notif);
 	}
 	
 	private static void setupLimit()
 	{
-		if(full) return;
 		breakLimit();
+		if(full) return;
 		taskLimit = new TimerTask(){ public void run(){
 			if(rec==null || !rec.isStarted()) return;
 			rec.stop();
 			A.notify(A.tr(R.string.msg_rec_free_limit));
 			A.notifyCanc();
 			notifyStatus();
+			taskLimit = null;
 		}};
 		timer.schedule(taskLimit, Conf.REC_FREE_TIMEOUT);
 	}

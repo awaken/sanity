@@ -185,7 +185,9 @@
   <string name="changelog_title">Recent changes</string>
   <string name="changelog_sum">Show recent changes implemented in the last Sanity versions.</string>
   <string name="changelog_body">
-  	Version 1.6\n
+  	Version 1.7:\n
+  	- Fix: call recording isn\'t stopped anymore just after starting it.\n
+  	\nVersion 1.6\n
   	- New: option to allow/disable multimedia scanning of recorded audio files.\n
   	- Fix: application is shown in \"Device Administrator\" panel of global Android settings.\n
   	- Fix: random crash when resuming application.\n

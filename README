@@ -18,6 +18,9 @@ An Android application for managing volume and for reducing electromagnetic wave
   Change log
 -------------------
 
+* version 1.7  (29/01/2010)
+- Fix: call recording isn't stopped anymore just after starting it.
+
 * version 1.6  (29/01/2010)
 - New: option to allow/disable multimedia scanning of recorded audio files.
 - Fix: application is shown in "Device Administrator" panel of global Android settings.
