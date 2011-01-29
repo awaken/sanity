@@ -10,17 +10,21 @@ public class ScreenProximity extends ActivityScreen
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		final Preference p = findPref(K.ADMIN);
+		final Preference p = pref(K.ADMIN);
 		if(A.SDK < 8) {
 			p.setEnabled(false);
 			p.setSummary(R.string.msg_require_froyo);
 		}
 		else {
 			on(p, new Change(){ boolean on(){
-				final boolean admin = (Boolean)value;
-				if(admin) Admin.request(ScreenProximity.this);
-				else      Admin.remove();
-				return admin == Admin.isActive();
+				if((Boolean)value) Admin.request(ScreenProximity.this);
+				else A.alert(A.tr(R.string.admin_disable), new A.Click() {
+					void on() {
+						Admin.remove();
+						adminCheck();
+					}
+				}, null, A.ALERT_OKCANC);
+				return false;
 			}});
 		}
 	}
@@ -28,8 +32,10 @@ public class ScreenProximity extends ActivityScreen
 	@Override
 	public void onStart()
 	{
-		setChecked(K.ADMIN, Admin.isActive());		
+		adminCheck();
 		super.onStart();
 	}
+	
+	private void adminCheck() { setChecked(K.ADMIN, Admin.isActive()); }
 
 }

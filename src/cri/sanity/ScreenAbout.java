@@ -25,7 +25,7 @@ public class ScreenAbout extends ActivityScreen
 		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		i.setType("text/html");
 		i.putExtra(Intent.EXTRA_EMAIL  , new String[]{ Conf.AUTHOR_EMAIL });
-		i.putExtra(Intent.EXTRA_SUBJECT, getAppFullName());
+		i.putExtra(Intent.EXTRA_SUBJECT, A.fullName());
 		i.putExtra(Intent.EXTRA_TEXT   , Html.fromHtml(A.tr(R.string.msg_email_body)+"<br />"));
 		startActivity(Intent.createChooser(i, A.tr(R.string.msg_email_choose)));
 		return true;

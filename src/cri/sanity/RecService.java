@@ -67,7 +67,7 @@ public class RecService extends Service
 					final PhoneListener pl = PhoneListener.getActiveInstance();
 					if(pl != null) {
 						final String s = pl.callNumber();
-						if(!A.empty(s)) rec.suffix = '_' + s.replace("+", "00").replace("*", "").replace("#", "");
+						if(!A.empty(s)) rec.suffix = '_' + A.cleanFn(s);
 					}
 					rec.start();
 					setupLimit();
@@ -91,9 +91,9 @@ public class RecService extends Service
 	{
 		final Context ctx = A.app();
 		if(notif == null) {
-			final Intent i = new Intent(ctx, RecActivity.class);
-			i.setFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING|Intent.FLAG_ACTIVITY_NEW_TASK);
-			pendingIntent = PendingIntent.getActivity(ctx, 0, i, 0);
+			final Intent i = new Intent(ctx, RecService.class);
+			i.setFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING);
+			pendingIntent = PendingIntent.getService(ctx, 0, i, 0);
 			notif = new Notification();
 			notif.flags = Notification.FLAG_ONGOING_EVENT;
 		}

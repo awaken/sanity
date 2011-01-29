@@ -24,7 +24,7 @@ public class ScreenGeneral extends ActivityScreen
 			return false;
 		}});
 
-		final Preference p = findPref(K.REVERSE_PROXIMITY);
+		final Preference p = pref(K.REVERSE_PROXIMITY);
 		p.setEnabled(p.isEnabled() && Dev.sensorProxim()!=null);
 		on(p, new Change(){ boolean on(){
 			if(!(Boolean)value) return true;

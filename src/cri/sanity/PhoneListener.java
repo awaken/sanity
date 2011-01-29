@@ -24,13 +24,12 @@ public final class PhoneListener extends PhoneStateListener
 	public int btCount;
 
 	private String  callNumber;
-	private int     calls;
+	private int     calls, lastCallState;
 	private boolean outgoing, shutdown, notifyEnable, notifyDisable;
 	private boolean proximRegistered, proximReverse, proximDisable, proximEnable;
 	private boolean skipHeadset, autoSpeaker, loudSpeaker, speakerCall, headsetOn, wiredHeadsetOn;
 	private boolean mobdataAuto, wifiAuto, gpsAuto, btAuto, skipBtConn, screenOff, screenOn, admin, rec;
 	private boolean lastFar;
-	private int     lastCallState;
 	private int     disableDelay, enableDelay, speakerDelay;
 	private int     volRestore, volPhone, volWired, volBt;
 	private boolean volSolo;
@@ -52,16 +51,15 @@ public final class PhoneListener extends PhoneStateListener
 			if(shutdown) return;
 			final float   val = evt.values[0];
 			final boolean far = proximReverse? val<0.1f : val>0.1f;
-			//final boolean far = proximReverse? val<=proximMax+0.0001 : val>=proximMax-0.0001;
+			//final boolean far = proximReverse? val<=proximMax+0.001 : val>=proximMax-0.001;
 			//A.logd("proximity sensor value = "+val);
 			if(far == lastFar) return;
-			if(!headsetOn || !skipHeadset) {
+			if((!headsetOn || !skipHeadset) && (outgoing || isOffhook())) {
 				if(autoSpeaker)
 					deferAutoSpeaker(far);
 				if(proximDisable && (!far || proximEnable))
 					deferEnableDevs(far);
-				if(outgoing || !isRinging())
-					screenOff(!far);
+				screenOff(!far);
 			}
 			lastFar = far;
 		}
@@ -80,7 +78,7 @@ public final class PhoneListener extends PhoneStateListener
 	//---- static methods
 
 	public static final PhoneListener getActiveInstance() { return activeInst; }
-	public static final boolean isRunning()               { return activeInst != null; }
+	public static final boolean       isRunning()         { return activeInst != null; }
 
 	//---- methods
 
@@ -178,7 +176,7 @@ public final class PhoneListener extends PhoneStateListener
 
 	private void onRinging(String number)
 	{
-		A.logd("onRinging");
+		//A.logd("onRinging");
 		outgoing = false;
 		if(!A.empty(number)) callNumber = number;
 	}
@@ -186,15 +184,15 @@ public final class PhoneListener extends PhoneStateListener
 	// we have a call!
 	private void onOffhook(String number)
 	{
-		A.logd("onOffhook");
+		//A.logd("onOffhook");
 		outgoing = !isRinging();
 		if(!A.empty(number))
 			callNumber = number;
-		else if(!outgoing || OutgoingReceiver.number==null)
+		else if(!outgoing || PhoneReceiver.number==null)
 			callNumber = null;
 		else {
-			callNumber = OutgoingReceiver.number;
-			OutgoingReceiver.number = null;
+			callNumber = PhoneReceiver.number;
+			PhoneReceiver.number = null;
 		}
 		if(headsetOn)
 			setCallVolume(true, wiredHeadsetOn? volWired : volBt);
@@ -209,7 +207,7 @@ public final class PhoneListener extends PhoneStateListener
 	// call completed: restore & shutdown
 	private void onIdle()
 	{
-		A.logd("onIdle");
+		//A.logd("onIdle");
 		shutdown = true;
 		unregProximity();
 		unregHeadset();
@@ -396,14 +394,14 @@ public final class PhoneListener extends PhoneStateListener
 	public void onCallForwardingIndicatorChanged(boolean cfi)
 	{
 		//A.logd("onCallForwardingIndicatorChanged: "+cfi);
-		if(!headsetOn && isCallSpeaker() && isOffhook()) forceAutoSpeakerOn();
+		if(outgoing && !headsetOn && isCallSpeaker() && isOffhook()) forceAutoSpeakerOn();
 	}
 
 	@Override
 	public void onCallStateChanged(int state, String incomingNumber)
 	{
 		// check against "calls" counter to skip multiple/concurrent phone calls
-		A.logd("onCallStateChanged: "+state+" (calls="+calls+")");
+		//A.logd("onCallStateChanged: "+state+" (calls="+calls+")");
 		switch(state) {
 			case TelephonyManager.CALL_STATE_RINGING:
 				if(isIdle()) onRinging(incomingNumber);

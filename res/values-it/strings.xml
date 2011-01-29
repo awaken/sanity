@@ -100,6 +100,8 @@
 	<string name="rec_fmt_sum">Scegli il formato file utilizzato per salvare le registrazioni audio.</string>
 	<string name="rec_browse_title">Naviga file registrati</string>
 	<string name="rec_browse_sum">Mostra la lista dei file audio delle registrazioni effettuate con Sanity.</string>
+	<string name="rec_scan_title">Scansione multimediale</string>
+	<string name="rec_scan_sum">Permetti alla scansione multimediale di sistema di mantenere traccia dei file audio registrati da Sanity.</string>
 	<string name="rec_info_title">Note importanti</string>
 	<string name="rec_info_sum">Il sistema di registrazione di Android è molto limitato: attualmente puoi registrare le chiamate solo quando il VIVAVOCE È ACCESO!</string>
 
@@ -136,7 +138,7 @@
 
 	<string name="admin_title">Amministratore</string>
 	<string name="admin_sum">Usa i privilegi amministrativi per spegnere lo schermo quando avvicini il telefono all\'orecchio durante una chiamata.</string>
-	<string name="admin_disable">Sanity necessita dei privilegi amministrativi solo per poter spegnere lo schermo durante una telefonata. Senza questi privilegi, Sanity non può spegnere lo schermo quando avvicini il telefono all\'orecchio durante una telefonata.</string>
+	<string name="admin_disable">Sanity necessita dei privilegi amministrativi solo per poter spegnere lo schermo durante una telefonata. Senza questi privilegi, Sanity non può spegnere lo schermo quando avvicini il telefono all\'orecchio durante una telefonata.\n\nTuttavia disattivare questa funzione è necessaria per poter disinstallare Sanity.\n\nSei sicuro di voler togliere i privilegi amministrativi a Sanity?</string>
 	<string name="admin_explanation">Conferma questa richiesta per permettere a Sanity di spegnere lo schermo durante le telefonate.\n\nRICORDA di disattivare l\'opzione \"Amministratore\" di Sanity per poter disinstallare l\'applicazione! Fintantoché Sanity è un amministratore del dispositivo, non potrai disinstallarlo.</string>
 
   <string name="msg_dir_err">Sanity errore: impossibile creare la cartella sulla sdcard per salvare le registrazioni audio!</string>
@@ -145,7 +147,8 @@
   <string name="msg_rec_start">Tocca qui per AVVIARE la registrazione</string>
   <string name="msg_rec_stop">Tocca qui per ARRESTARE la registrazione</string>
   <string name="msg_rec_free_limit">Sanity: limite di 2 minuti raggiunto, la registrazione è arrestata.</string>
-	<string name="msg_require_froyo">Qui è necessario almeno Android versione 2.2 (Froyo). Spiacente, il tuo telefono monta Android 2.1 (Eclair).</string>
+  <string name="msg_rec_scan_err">Errore durante la modifica delle proprietà di scansione: permesso negato sul file \"$FN\"</string>
+	<string name="msg_require_froyo">Questa opzione richiede almeno Android versione 2.2 (Froyo). Spiacente, il tuo telefono monta Android 2.1 (Eclair).</string>
 	<string name="msg_uninstall">Per disinstallare Sanity, è necessario disattivare l\'opzione \"Amministratore\" nella sezione \"Disabilita in prossimità\".\n\nFintantoché l\'opzione \"Amministratore\" è attivata, non sarà consentito disinstallare Sanity!\n\nSolo se questa opzione risulta disattivata, il processo di disinstallazione di Sanity avrà successo.</string>
   <string name="msg_devs_enabled">Sanity: dispositivi accesi</string>
   <string name="msg_devs_disabled">Sanity: dispositivi spenti</string>
@@ -175,7 +178,12 @@
   <string name="changelog_title">Modifiche recenti</string>
   <string name="changelog_sum">Visualizza le modifiche recenti implementate nelle ultime versioni di Sanity.</string>
   <string name="changelog_body">
-  	Versione 1.5\n
+  	Versione 1.6\n
+  	- Nuovo: opzione per permettere/negare la scansione multimediale dei file audio registrati.\n
+  	- Fix: l\'applicazione è mostrata nel pannello \"Amministratore Dispositivo\" delle impostazioni globali di Android.\n
+  	- Fix: crash sporadici durante il ripristino dell\'applicatione.\n
+  	- Modifica: le azioni di spegnimento automatico non vengono più attuate quando il telefono squilla durante una chiamata ricevuta.\n
+  	\nVersione 1.5\n
   	- Nuovo: registratore vocale delle telefonate (nell\'edizione gratuita è limitato a massimo 2 minuti di registrazione per file audio; senza limiti nell\'edizione donazione).\n
   	- Fix: ora le preferenze vengono correttamente salvate e possono essere modificate.\n
   	- Fix: lo schermo non viene più spento automaticamente quando il telefono squilla.\n

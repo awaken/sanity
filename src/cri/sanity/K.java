@@ -43,6 +43,7 @@ public final class K
 	public static final String REC_FMT    = "rec_fmt";
 	public static final String REC_SRC    = "rec_src";
 	public static final String REC_BROWSE = "rec_browse";			// non persistent
+	public static final String REC_SCAN   = "rec_scan";				// non persistent
 	// notification
 	public static final String NOTIFY_ENABLE   = "notify_enable";
 	public static final String NOTIFY_DISABLE  = "notify_disable";

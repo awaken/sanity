@@ -25,8 +25,14 @@
 	                    android:key="rec_fmt" />
 			<Preference android:title="@string/rec_browse_title"
 			            android:summary="@string/rec_browse_sum"
+                  android:dependency="rec"
 			            android:persistent="false"
 			            android:key="rec_browse" />
+	    <CheckBoxPreference android:title="@string/rec_scan_title"
+	                        android:summary="@string/rec_scan_sum"
+			                    android:dependency="rec"
+			                    android:persistent="false"
+	                        android:key="rec_scan" />
 			<Preference android:title="@string/rec_info_title"
 			            android:summary="@string/rec_info_sum"
 			            android:persistent="false"

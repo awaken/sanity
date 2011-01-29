@@ -8,6 +8,10 @@ import android.content.Intent;
 
 public final class Admin
 {
+	private static ComponentName compName;
+
+	//---- inner classes
+	
 	public static class Receiver extends DeviceAdminReceiver {
 		@Override
 	  public CharSequence onDisableRequested(Context ctx, Intent i) { return A.tr(R.string.admin_disable); }
@@ -15,7 +19,10 @@ public final class Admin
 
   //---- static methods
 
-	public static final ComponentName compName() { return new ComponentName(A.app(), Receiver.class); }
+	public static final ComponentName compName() {
+		if(compName == null) compName = new ComponentName(A.app(), Receiver.class);
+		return compName;
+	}
 	
   public static final boolean isActive() { return A.SDK>=8 && A.devpolMan().isAdminActive(compName()); }
 

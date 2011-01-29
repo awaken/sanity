@@ -77,6 +77,8 @@ public final class A extends Application
 	private static PackageInfo              pkgInfo;
 	private static SharedPreferences        prefs;
 	private static SharedPreferences.Editor edit;
+	private static Notification             notif;
+	private static PendingIntent            notifIntent;
 
 	private static NotificationManager      notifMan;
 	private static AudioManager             audioMan;
@@ -128,6 +130,7 @@ public final class A extends Application
 	public static final ContentResolver        ctnRes() { if(ctxRes==null) ctxRes=a.getContentResolver(); return ctxRes; }
 	public static final PackageInfo           pkgInfo() { return pkgInfo; }
 	public static final String                    ver() { return pkgInfo.versionName; }
+	public static final String               fullName() { return name + "  v" + ver(); }
 
 	// log
 	//public static final int logd(Object o, String method)
@@ -175,15 +178,15 @@ public final class A extends Application
 	}
 	
 	public static final String sdcardDir() {
-		String dir = Environment.getExternalStorageDirectory().getAbsolutePath() + '/' + A.name();
-		File file  = new File(dir);
-		if(!file.exists()) {
-			if(!file.mkdir()) return null;
-			//File nom = new File(dir + "/.nomedia");
-			//try { nom.createNewFile(); }
-			//catch(Exception e) {}
-		}
-		return dir;
+		final String dir = Environment.getExternalStorageDirectory().getAbsolutePath() + '/' + A.name();
+		final File  file = new File(dir);
+		return !file.exists()&&!file.mkdir() ? null : dir;
+	}
+	
+	public static final String cleanFn(String fn) {
+		for(String s : new String[]{ "?", ":", "*", "\""})
+			fn = fn.replace(s, "");
+		return fn;
 	}
 	
 	// string conversion
@@ -214,10 +217,16 @@ public final class A extends Application
 	public static final void notify(String title, String msg, int id)    { notify(title, msg, id , now()); }
 	public static final void notify(String title, String msg, long when) { notify(title, msg, NID, when);  }
 	public static final void notify(String title, String msg, int id, long when) {
-		final Notification notif = new Notification(R.drawable.ic_bar, msg, when);
-		final Intent intent = new Intent(a, ACTIVITY_CLASS);
-		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		notif.setLatestEventInfo(a, title, msg, PendingIntent.getActivity(a, 0, intent, 0));
+		if(notif == null) {
+			notif = new Notification(R.drawable.ic_bar, msg, when);
+			final Intent i = new Intent(a, ACTIVITY_CLASS);
+			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			notifIntent = PendingIntent.getActivity(a, 0, i, 0);
+		}	else {
+			notif.tickerText = msg;
+			notif.when       = when;
+		}
+		notif.setLatestEventInfo(a, title, msg, notifIntent);
 		notifMan().notify(id, notif);
 	}
 	public static final void notifyCanc()       { notifMan().cancel(NID); }
