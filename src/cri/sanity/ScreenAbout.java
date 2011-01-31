@@ -21,7 +21,7 @@ public class ScreenAbout extends ActivityScreen
 
 	private boolean mailToDeveloper()
 	{
-		final Intent i = new Intent(android.content.Intent.ACTION_SEND);
+		final Intent i = new Intent(Intent.ACTION_SEND);
 		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		i.setType("text/html");
 		i.putExtra(Intent.EXTRA_EMAIL  , new String[]{ Conf.AUTHOR_EMAIL });

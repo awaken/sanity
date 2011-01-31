@@ -2,6 +2,7 @@ package cri.sanity;
 
 import java.io.File;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 
@@ -13,7 +14,11 @@ public class ScreenRecord extends ActivityScreen
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		on(K.REC_BROWSE, new Click(){ boolean on(){ A.alert(A.tr(R.string.msg_browse_beta)); return true; }});
+		//on(K.REC_BROWSE, new Click(){ boolean on(){ A.alert(A.tr(R.string.msg_browse_beta)); return true; }});
+		on(K.REC_BROWSE, new Click(){ boolean on(){
+			startActivity(new Intent(A.app(), ScreenBrowse.class));
+			return true;
+		}});
 		on(K.REC_SCAN,  new Change(){ boolean on(){
 			boolean res = (Boolean)value? scanEnable() : scanDisable();
 			if(!res) A.alert(A.tr(R.string.msg_rec_scan_err).replace("$FN", scanFn()));

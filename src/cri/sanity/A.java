@@ -180,7 +180,7 @@ public final class A extends Application
 	public static final String sdcardDir() {
 		final String dir = Environment.getExternalStorageDirectory().getAbsolutePath() + '/' + A.name();
 		final File  file = new File(dir);
-		return !file.exists()&&!file.mkdir() ? null : dir;
+		return file.isDirectory()||file.mkdir() ? dir : null;
 	}
 	
 	public static final String cleanFn(String fn) {

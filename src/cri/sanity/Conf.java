@@ -20,8 +20,10 @@ public final class Conf
 	public static final int FORCE_AUTOSPEAKER_DELAY = 3000;
 	public static final int CALL_SCREEN_TIMEOUT     = 300;
 
+	public static final String REC_SEP_MAIN     = "_";
 	public static final String REC_PREFIX       = "rec_";
-	public static final String REC_PATTERN      = "yyyy-MM-dd_kk.mm.ss";
+	public static final String REC_FILE_PATTERN = "yyyy-MM-dd_kk.mm.ss";
+	public static final String REC_SHOW_PATTERN = "dd/MM/yyyy, kk.mm.ss";
 	public static final int    REC_MIN_TIME     = 1000;
 	public static final int    REC_FREE_TIMEOUT = 120000;
 }

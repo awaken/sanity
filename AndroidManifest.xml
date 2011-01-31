@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 		      package="cri.sanity" android:installLocation="auto"
-		      android:versionCode="20" android:versionName="1.7">
+		      android:versionCode="21" android:versionName="1.8">
 
   <application android:icon="@drawable/ic_app"
                android:label="@string/app"
@@ -23,6 +23,7 @@
     <activity android:label="@string/app" android:theme="@style/Theme" android:name=".ScreenRecord" />
     <activity android:label="@string/app" android:theme="@style/Theme" android:name=".ScreenNotify" />
     <activity android:label="@string/app" android:theme="@style/Theme" android:name=".ScreenAbout" />
+    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".ScreenBrowse" />
 
 	  <service android:name=".MainService" />
 	  <service android:name=".RecService" />

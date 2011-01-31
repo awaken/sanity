@@ -60,8 +60,8 @@ public abstract class PrefActivity extends PreferenceActivity
 
 	//---- general api
 
-	public final boolean isMainActivity() { return   this        instanceof MainActivity;  }
-	public final boolean isRootActivity() { return !(getParent() instanceof PrefActivity); }
+	public boolean isMainActivity() { return   this        instanceof MainActivity;  }
+	public boolean isRootActivity() { return !(getParent() instanceof PrefActivity); }
 
 	//---- preference api
 

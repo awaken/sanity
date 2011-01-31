@@ -18,6 +18,12 @@ An Android application for managing volume and for reducing electromagnetic wave
   Change log
 -------------------
 
+* version 1.8  (31/01/2010)
+- New: simple file browser of recorded audio files.
+- Fix: now process properly exits when call ends without answer.
+- Fix: recored audio files were silent when "Conversation only" option was activated.
+- Fix: minor user interface bug.
+
 * version 1.7  (29/01/2010)
 - Fix: call recording isn't stopped anymore just after starting it.
 
@@ -91,3 +97,23 @@ An Android application for managing volume and for reducing electromagnetic wave
 
 * version 0.2  (04/01/2010)
 - First public release
+
+
+-------------------
+  TODO
+-------------------
+
+* vibrate at call end
+* flip silence
+* call log sync to gmail???
+* record rules:
+  + auto start rules:
+    - all calls
+    - all calls in contacts
+    - all calls not in contacts
+    - all anonymous calls
+    - white list
+    - black list
+  + auto stop rules:
+    - when you put phone close to your ear (requires auto speaker!)
+

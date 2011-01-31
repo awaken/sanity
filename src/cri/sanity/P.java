@@ -27,7 +27,8 @@ public final class P
 
 	public static final void setDefIfNew(String key) { if(!A.has(key)) setDef(key); }
 	
-	public static final void renameBool(String dst, String old) {
+	public static final void renameBool(String dst, String old)
+	{
 		if(A.has(old)) A.put(dst, A.is(old)).del(old);
 		else setDefIfNew(dst);
 	}
@@ -54,8 +55,13 @@ public final class P
 	}
 
 	private static float verNum(String v) {
-		try { return Float.parseFloat(v); }
-		catch(Exception e) { return 0; }
+		for(;;) {
+			if(A.empty(v)) return 0;
+			try { return Float.parseFloat(v); } catch(Exception e) {}
+			final int p = v.lastIndexOf('.');
+			if(p < 1) return 0;
+			v = v.substring(0, p);
+		}
 	}
 
 	private static void setVer() { A.putc(K.VER, A.ver()); }

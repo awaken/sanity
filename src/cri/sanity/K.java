@@ -133,9 +133,9 @@ public final class K
 		}
 		if(oldVer < 1.5) {
 			P.setDef(REC);
-			P.setDef(REC_SRC);
 			P.setDef(REC_FMT);
 		}
+		P.setDef(REC_SRC);
 	}
 
 	private K() { }

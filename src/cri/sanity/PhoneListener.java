@@ -188,8 +188,6 @@ public final class PhoneListener extends PhoneStateListener
 		outgoing = !isRinging();
 		if(!A.empty(number))
 			callNumber = number;
-		else if(!outgoing || PhoneReceiver.number==null)
-			callNumber = null;
 		else {
 			callNumber = PhoneReceiver.number;
 			PhoneReceiver.number = null;
@@ -345,8 +343,16 @@ public final class PhoneListener extends PhoneStateListener
 			if(!screenOff) return;
 			//Dev.setBrightness(0);
 			//Dev.dimScreen(true);
-			if(admin) A.devpolMan().lockNow();
-			else Dev.setScreenOffTimeout(Conf.CALL_SCREEN_TIMEOUT);
+			if(!admin)
+				Dev.setScreenOffTimeout(Conf.CALL_SCREEN_TIMEOUT);
+			else {
+				try {
+					A.devpolMan().lockNow();
+				} catch(Exception e) {
+					admin = false;
+					Dev.setScreenOffTimeout(Conf.CALL_SCREEN_TIMEOUT);
+				}
+			}
 			//A.logd("screenOff: set minimum screen timeout");
 		} else {
 			//Dev.dimScreen(false);
@@ -364,7 +370,7 @@ public final class PhoneListener extends PhoneStateListener
 		Dev.mute(Dev.VOL_ALARM , enable);
 		Dev.mute(Dev.VOL_NOTIFY, enable);
 		Dev.mute(Dev.VOL_DTMF  , enable);
-		Dev.mute(Dev.VOL_MEDIA , enable);
+		//Dev.mute(Dev.VOL_MEDIA , enable);		// if we mute media, we cannot record phone call!
 		//A.logd("set volume solo: "+enable);
 	}
 
@@ -410,8 +416,9 @@ public final class PhoneListener extends PhoneStateListener
 				if(++calls == 1) onOffhook(incomingNumber);
 				break;
 			case TelephonyManager.CALL_STATE_IDLE:
-				if( --calls  == 0) onIdle();
-				else if(calls < 0) calls = 0;
+				if(--calls > 0) break;
+				onIdle();
+				calls = 0;
 				break;
 		}
 		lastCallState = state;

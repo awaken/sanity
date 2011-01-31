@@ -8,20 +8,20 @@ import android.text.format.DateFormat;
 
 public class Rec
 {
-	public static final int SRC_MIC    = AudioSource.MIC;
-	public static final int SRC_CALL   = AudioSource.VOICE_CALL;
-	public static final int SRC_CAM    = AudioSource.CAMCORDER;
-	public static final int SRC_IN     = AudioSource.VOICE_UPLINK;
-	public static final int SRC_OUT    = AudioSource.VOICE_DOWNLINK;
-	public static final int SRC_RECOGN = AudioSource.VOICE_RECOGNITION;
-	public static final int FMT_MP4    = OutputFormat.MPEG_4;
-	public static final int FMT_3GP    = OutputFormat.THREE_GPP;
-	public static final int FMT_AMR    = OutputFormat.RAW_AMR;
-	public static final int DEF_SRC    = SRC_MIC;
-	public static final int DEF_FMT    = FMT_MP4;
+	public static final int    SRC_MIC      = AudioSource.MIC;
+	public static final int    SRC_CALL     = AudioSource.VOICE_CALL;
+	public static final int    SRC_CAM      = AudioSource.CAMCORDER;
+	public static final int    SRC_IN       = AudioSource.VOICE_UPLINK;
+	public static final int    SRC_OUT      = AudioSource.VOICE_DOWNLINK;
+	public static final int    SRC_RECOGN   = AudioSource.VOICE_RECOGNITION;
+	public static final int    FMT_MP4      = OutputFormat.MPEG_4;
+	public static final int    FMT_3GP      = OutputFormat.THREE_GPP;
+	public static final int    FMT_AMR      = OutputFormat.RAW_AMR;
+	public static final int    DEF_SRC      = SRC_MIC;
+	public static final int    DEF_FMT      = FMT_MP4;
 	public static final String DEF_PREFIX   = Conf.REC_PREFIX;
 	public static final String DEF_SUFFIX   = "";
-	public static final String FILE_PATTERN = Conf.REC_PATTERN;
+	public static final String FILE_PATTERN = Conf.REC_FILE_PATTERN;
 
 	public int    src, fmt;
 	public String prefix, suffix;
@@ -42,6 +42,7 @@ public class Rec
 		if(fmt    >= 0   ) this.fmt    = fmt;
 		if(prefix != null) this.prefix = prefix;
 		if(suffix != null) this.suffix = suffix;
+		//A.logd("rec { src="+this.src+", fmt="+this.fmt+", prefix=\""+this.prefix+"\", suffix=\""+this.suffix+"\" }");
 	}
 
 	public final boolean isStarted() { return started; }
@@ -61,16 +62,18 @@ public class Rec
 
 	public final void stop()
 	{
-		if(mediaRec == null) return;
-		started = false;
-		try { mediaRec.stop(); }
-		catch(Exception e) {}
+		if(!started || mediaRec==null) return;
+		try {
+			mediaRec.stop();
+			started = false;
+		} catch(Exception e) {}
 		mediaRec.reset();
 	}
 	
 	public final void release()
 	{
 		if(mediaRec == null) return;
+		if(started) stop();
 		mediaRec.release();
 	}
 

@@ -12,6 +12,8 @@
 	<string name="max">Massimo</string>
 	<string name="level">Livello</string>
 	<string name="nochange">Non modificare</string>
+	<string name="err">Errore</string>
+	<string name="empty">Vuoto</string>
 
   <string name="groups_cat">Preferenze</string>
   <string name="misc_cat">Varie</string>
@@ -104,6 +106,7 @@
 	<string name="rec_scan_sum">Permetti alla scansione multimediale di sistema di mantenere traccia dei file audio registrati da Sanity.</string>
 	<string name="rec_info_title">Note importanti</string>
 	<string name="rec_info_sum">Il sistema di registrazione di Android è molto limitato: attualmente puoi registrare le chiamate solo quando il VIVAVOCE È ACCESO!</string>
+	<string name="browse_unknown_title">Data sconosciuta</string>
 
   <string name="notify_cat">Notifica</string>
   <string name="notify_sum">Scegli quali notifiche visualizzare.</string>
@@ -148,6 +151,7 @@
   <string name="msg_rec_stop">Tocca qui per ARRESTARE la registrazione</string>
   <string name="msg_rec_free_limit">Sanity: limite di 2 minuti raggiunto, la registrazione è arrestata.</string>
   <string name="msg_rec_scan_err">Errore durante la modifica delle proprietà di scansione: permesso negato sul file \"$FN\"</string>
+  <string name="msg_rec_empty">Non esistono file audio delle registrazione. Avvia la registrazione durante una telefonata per mostrare qui il file audio.</string>
 	<string name="msg_require_froyo">Questa opzione richiede almeno Android versione 2.2 (Froyo). Spiacente, il tuo telefono monta Android 2.1 (Eclair).</string>
 	<string name="msg_uninstall">Per disinstallare Sanity, è necessario disattivare l\'opzione \"Amministratore\" nella sezione \"Disabilita in prossimità\".\n\nFintantoché l\'opzione \"Amministratore\" è attivata, non sarà consentito disinstallare Sanity!\n\nSolo se questa opzione risulta disattivata, il processo di disinstallazione di Sanity avrà successo.</string>
   <string name="msg_devs_enabled">Sanity: dispositivi accesi</string>
@@ -178,12 +182,17 @@
   <string name="changelog_title">Modifiche recenti</string>
   <string name="changelog_sum">Visualizza le modifiche recenti implementate nelle ultime versioni di Sanity.</string>
   <string name="changelog_body">
-  	Versione 1.7:\n
+  	Versione 1.8:\n
+  	- Nuovo: semplice file browser dei file audio registrati (verrà migliorato nelle prossime versioni).\n
+  	- Fix: ora il processo viene chiuso correttamente nel caso di chiamata senza risposta.
+  	- Fix: le registrazioni audio erano silenziose quando l\'opzione \"Solo conversazione\" era attivata.\n
+  	- Fix: bug minore nell\'interfaccia utente.\n
+  	\nVersione 1.7:\n
   	- Fix: la registrazione delle telefonate non viene più arrestata subito dopo averla avviata.\n
   	Versione 1.6\n
   	- Nuovo: opzione per permettere/negare la scansione multimediale dei file audio registrati.\n
   	- Fix: l\'applicazione è mostrata nel pannello \"Amministratore Dispositivo\" delle impostazioni globali di Android.\n
-  	- Fix: crash sporadici durante il ripristino dell\'applicatione.\n
+  	- Fix: crash sporadici durante il ripristino dell\'applicazione.\n
   	- Modifica: le azioni di spegnimento automatico non vengono più attuate quando il telefono squilla durante una chiamata ricevuta.\n
   	\nVersione 1.5\n
   	- Nuovo: registratore vocale delle telefonate (nell\'edizione gratuita è limitato a massimo 2 minuti di registrazione per file audio; senza limiti nell\'edizione donazione).\n

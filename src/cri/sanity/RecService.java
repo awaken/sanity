@@ -15,7 +15,7 @@ public class RecService extends Service
 	private static final int NID   = 666;
 	private static boolean running = false;
 	private static boolean full    = false;
-	private static long    ts      = 0;
+	private static long ts         = 0;
 	private static Rec rec;
 	private static Notification notif;
 	private static PendingIntent notifIntent;
@@ -25,25 +25,26 @@ public class RecService extends Service
 	//---- static api
 
 	public static final boolean isRunning() { return running; }
+	public static final boolean isRecord () { return rec!=null && rec.isStarted(); }
 
 	public static final void start()
 	{
 		if(running) return;
 		timer = new Timer();
 		full  = A.isFull();
-		A.app().startService(new Intent(A.app(), RecService.class));
+		A.audioMan().setMicrophoneMute(false);
+		startService();
 	}
+	
+	public static final void recStart() { if(rec!=null && !rec.isStarted()) startService(); }
+	public static final void recStop ()	{ if(rec!=null &&  rec.isStarted()) startService(); }
 
 	public static final void stop()
 	{
 		if(!running) return;
 		A.app().stopService(new Intent(A.app(), RecService.class));
 		if(timer != null) { timer.cancel(); timer = null; }
-		if(rec != null) {
-			if(rec.isStarted()) rec.stop();
-			rec.release();
-			rec = null;
-		}
+		if(rec   != null) { rec.release();  rec   = null; }
 		taskLimit   = null;
 		notif       = null;
 		notifIntent = null;
@@ -74,7 +75,7 @@ public class RecService extends Service
 					final PhoneListener pl = PhoneListener.getActiveInstance();
 					if(pl != null) {
 						final String s = pl.callNumber();
-						if(!A.empty(s)) rec.suffix = '_' + A.cleanFn(s);
+						if(!A.empty(s)) rec.suffix = Conf.REC_SEP_MAIN + A.cleanFn(s);
 					}
 					rec.start();
 					setupLimit();
@@ -94,6 +95,8 @@ public class RecService extends Service
 
 	//---- private api
 
+	private static void startService() { A.app().startService(new Intent(A.app(), RecService.class)); }
+	
 	private static void notifyStatus()
 	{
 		final Context ctx = A.app();

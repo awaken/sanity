@@ -38,14 +38,15 @@ public class MainActivity extends ActivityScreen
 	private void setupDonate()
 	{
 		Preference p = pref("donate");
-    if(!A.isFull() && !startDonateApp())
+    if(!A.isFull() && !startDonateApp()) {
    		on(p, new Click(){ boolean on(){ return A.gotoMarketDetails(Conf.DONATE_PKG); }});
+			p = pref(K.SCREEN_RECORD);
+			p.setSummary(p.getSummary()+" "+A.tr(R.string.rec_sum_free));
+    }
     else {
 	  	p.setEnabled(false);
 	   	p.setTitle(A.FULL? R.string.full_title : R.string.donated_title);
 	   	p.setSummary(A.FULL? R.string.full_sum : R.string.donated_sum);
-			p = pref(K.SCREEN_RECORD);
-			p.setSummary(p.getSummary()+" "+A.tr(R.string.rec_sum_free));
     }
 	}
 
