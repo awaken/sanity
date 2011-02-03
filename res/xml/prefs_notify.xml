@@ -14,5 +14,11 @@
 	  <CheckBoxPreference android:title="@string/notify_volume_title"
 	                      android:summary="@string/notify_volume_sum"
 	                      android:key="notify_volume" />
+	  <CheckBoxPreference android:title="@string/notify_rec_stop_title"
+	                      android:summary="@string/notify_rec_stop_sum"
+	                      android:key="notify_rec_stop" />
+	  <CheckBoxPreference android:title="@string/vibrate_end_title"
+	                      android:summary="@string/vibrate_end_sum"
+	                      android:key="vibrate_end" />
 	</PreferenceCategory>
 </PreferenceScreen>

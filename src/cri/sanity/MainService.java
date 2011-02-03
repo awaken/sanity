@@ -8,8 +8,7 @@ import android.telephony.TelephonyManager;
 
 public final class MainService extends Service
 {
-	private static final int START  = START_STICKY;
-	private static boolean running  = false;
+	private static boolean running = false;
 
 	private static PhoneListener phoneListener;
 
@@ -28,9 +27,10 @@ public final class MainService extends Service
 	@Override
 	public int onStartCommand(Intent intent, int flags, int id)
 	{
-		if(PhoneListener.isRunning()) return START;
+		if(PhoneListener.isRunning()) return START_STICKY;
 		final int state = A.telMan().getCallState();
 		if(state == TelephonyManager.CALL_STATE_IDLE) { stopSelf(); return START_NOT_STICKY; }
+		if(running) return START_STICKY;
 		running = true;
 		P.upgrade();
 		if(phoneListener == null) phoneListener = new PhoneListener();
@@ -38,7 +38,7 @@ public final class MainService extends Service
 		A.telMan().listen(phoneListener, PhoneListener.LISTEN);
 		if(A.is(K.NOTIFY_ACTIVITY)) A.notify(A.tr(R.string.msg_running));
 		//A.logd("MainService started");
-		return START;
+		return START_STICKY;
 	}
 
 	@Override

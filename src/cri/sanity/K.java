@@ -3,6 +3,7 @@ package cri.sanity;
 import java.util.HashMap;
 import java.util.Map;
 
+
 // tool class: all preference keys; the default values; the upgrade phase.
 public final class K
 {
@@ -38,17 +39,27 @@ public final class K
 	public static final String VOL_WIRED = "vol_wired";
 	public static final String VOL_BT    = "vol_bt";
 	public static final String VOL_SOLO  = "vol_solo";
-	// call recorder
-	public static final String REC        = "rec";
-	public static final String REC_FMT    = "rec_fmt";
-	public static final String REC_SRC    = "rec_src";
-	public static final String REC_BROWSE = "rec_browse";			// non persistent
-	public static final String REC_SCAN   = "rec_scan";				// non persistent
 	// notification
 	public static final String NOTIFY_ENABLE   = "notify_enable";
 	public static final String NOTIFY_DISABLE  = "notify_disable";
 	public static final String NOTIFY_ACTIVITY = "notify_activity";
 	public static final String NOTIFY_VOLUME   = "notify_volume";
+	public static final String NOTIFY_REC_STOP = "notify_rec_stop";
+	public static final String VIBRATE_END     = "vibrate_end";
+	// call recorder
+	public static final String REC               = "rec";
+	public static final String REC_FMT           = "rec_fmt";
+	public static final String REC_SRC           = "rec_src";
+	public static final String REC_BROWSE        = "rec_browse";			// non persistent
+	public static final String REC_SCAN          = "rec_scan";				// non persistent
+	public static final String REC_START         = "rec_start";
+	public static final String REC_STOP          = "rec_stop";
+	//public static final String REC_START_ALL     = "rec_start_all";
+	public static final String REC_START_DELAY   = "rec_start_delay";
+	public static final String REC_STOP_DELAY    = "rec_stop_delay";
+	public static final String REC_START_SPEAKER = "rec_start_speaker";
+	public static final String REC_STOP_SPEAKER  = "rec_stop_speaker";
+	public static final String REC_STOP_LIMIT    = "rec_stop_limit";
 
 	// internals (hidden to user)
 	public static final String FULL     = "full";
@@ -106,13 +117,22 @@ public final class K
 		m.put(VOL_WIRED        , "0");
 		m.put(VOL_BT           , "0");
 		m.put(VOL_SOLO         , false);
-		m.put(REC              , false);		// call recorder
-		m.put(REC_SRC          , Rec.DEF_SRC+"");
-		m.put(REC_FMT          , Rec.DEF_FMT+"");
 		m.put(NOTIFY_ENABLE    , true);			// notify
 		m.put(NOTIFY_DISABLE   , true);
 		m.put(NOTIFY_ACTIVITY  , true);
 		m.put(NOTIFY_VOLUME    , false);
+		m.put(NOTIFY_REC_STOP  , true);
+		m.put(VIBRATE_END      , false);
+		m.put(REC              , false);		// call recorder
+		m.put(REC_SRC          , Rec.DEF_SRC+"");
+		m.put(REC_FMT          , Rec.DEF_FMT+"");
+		m.put(REC_START        , false);
+		m.put(REC_STOP         , false);
+		m.put(REC_START_DELAY  , "3000");
+		m.put(REC_STOP_DELAY   , "3000");
+		m.put(REC_START_SPEAKER, true);
+		m.put(REC_STOP_SPEAKER , true);
+		m.put(REC_STOP_LIMIT   , "0");
 		return m;
 	}
 
@@ -124,18 +144,12 @@ public final class K
 			P.renameBool( ENABLE_PROXIMITY, "restore_far");
 		}
 		if(oldVer < 1.2) {
-			P.setDef(SKIP_BT);
-			P.setDef(SKIP_HOTSPOT);
-			P.setDef(SKIP_TETHER);
-			P.setDefIfNew(NOTIFY_ACTIVITY);
-			P.setDefIfNew(SCREEN_OFF);
-			P.setDefIfNew(SCREEN_ON);
+			P.setDef(SKIP_BT, SKIP_HOTSPOT, SKIP_TETHER);
+			P.setDefIfNew(NOTIFY_ACTIVITY, SCREEN_OFF, SCREEN_ON);
 		}
-		if(oldVer < 1.5) {
-			P.setDef(REC);
-			P.setDef(REC_FMT);
-		}
-		P.setDef(REC_SRC);
+		if(oldVer < 1.5) P.setDef(REC, REC_FMT);
+		if(oldVer < 1.8) P.setDef(REC_SRC);
+		if(oldVer < 1.9) P.setDef(NOTIFY_REC_STOP, VIBRATE_END, REC_START, REC_STOP, REC_START_DELAY, REC_STOP_DELAY, REC_START_SPEAKER, REC_STOP_SPEAKER, REC_STOP_LIMIT);
 	}
 
 	private K() { }

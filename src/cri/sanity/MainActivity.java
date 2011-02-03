@@ -27,6 +27,9 @@ public class MainActivity extends ActivityScreen
 		super.onStart();
 	}
 
+	@Override
+	public boolean isMainActivity() { return true; }
+
 	//---- private api
 
 	private void setupProximity()
@@ -45,6 +48,7 @@ public class MainActivity extends ActivityScreen
     }
     else {
 	  	p.setEnabled(false);
+	  	p.setSelectable(false);
 	   	p.setTitle(A.FULL? R.string.full_title : R.string.donated_title);
 	   	p.setSummary(A.FULL? R.string.full_sum : R.string.donated_sum);
     }

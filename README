@@ -18,6 +18,14 @@ An Android application for managing volume and for reducing electromagnetic wave
   Change log
 -------------------
 
+* version 1.9  (03/02/2010)
+- New: options for automatic call recording.
+- New: option to vibrate when phone call ends (in the "Notification" section).
+- New: spanish translation by LuiSKdT&AnA from Mallorca-Spain.
+- Fix: incoming phone number is properly saved when recording.
+- Change: improved audio file browser.
+- Change: improved user interface.
+
 * version 1.8  (31/01/2010)
 - New: simple file browser of recorded audio files.
 - Fix: now process properly exits when call ends without answer.
@@ -103,17 +111,33 @@ An Android application for managing volume and for reducing electromagnetic wave
   TODO
 -------------------
 
-* vibrate at call end
 * flip silence
 * call log sync to gmail???
+
 * record rules:
   + auto start rules:
     - all calls
     - all calls in contacts
     - all calls not in contacts
     - all anonymous calls
-    - white list
-    - black list
+    - contacts whitelist
+    - contacts blacklist
   + auto stop rules:
     - when you put phone close to your ear (requires auto speaker!)
 
+* auto answer (incoming calls)
+  + only if headsets
+  + always on
+  + all calls
+  + all calls in contacts
+  + all calls not in contacts
+  + all anonymous calls
+  + contacts whitelist
+  + contacts blacklist
+
+* auto reject calls
+  + all calls
+  + on if headsets
+  + contacts whitelist
+  + contacts blacklist
+  + all anonymous call

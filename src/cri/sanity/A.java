@@ -30,6 +30,7 @@ import android.net.wifi.WifiManager;
 import android.util.Log;
 import android.os.Environment;
 import android.os.PowerManager;
+import android.os.Vibrator;
 import android.net.ConnectivityManager;
 import android.app.KeyguardManager;
 import android.app.admin.DevicePolicyManager;
@@ -42,7 +43,7 @@ public final class A extends Application
 	public static final boolean  DEBUG  = Conf.DEBUG;
 	public static final boolean  FULL   = Conf.FULL;
 	public static final String   AUTHOR = Conf.AUTHOR;
-	public static final Class<?> ACTIVITY_CLASS = Conf.ACTIVITY_CLASS;
+	public static final long     VIBRATE_TIME   = Conf.VIBRATE_TIME;
 	public static final boolean  DEF_CANCELABLE = true;
 	public static final int      SDK = android.os.Build.VERSION.SDK_INT;
 	public static final int      PRI = 1;
@@ -51,11 +52,14 @@ public final class A extends Application
 	public static final int      ALERT_OKCANC    = 1;
 	public static final int      ALERT_YESNO     = 2;
 	public static final int      ALERT_YESNOCANC = 3;
+	public static final int      ALERT_OPENDEL   = 4;
 	public static final int      DEF_ALERT       = ALERT_OKCANC;
 	public static final int      LAB_OK   = R.string.ok;
 	public static final int      LAB_CANC = R.string.canc;
 	public static final int      LAB_YES  = R.string.yes;
 	public static final int      LAB_NO   = R.string.no;
+	public static final int      LAB_OPEN = R.string.open;
+	public static final int      LAB_DEL  = R.string.del;
 	public static final String   DEF_STRING  = "";
 	public static final boolean  DEF_BOOL    = false;
 	public static final int      DEF_INT     = 0;
@@ -127,7 +131,7 @@ public final class A extends Application
 	public static final SharedPreferences.Editor edit() { return edit;  }
 	public static final String                    pkg() { return pkgInfo.packageName; }
 	public static final Resources           resources() { if(resources==null) resources=a.getResources(); return resources; }
-	public static final ContentResolver        ctnRes() { if(ctxRes==null) ctxRes=a.getContentResolver(); return ctxRes; }
+	public static final ContentResolver        resolver() { if(ctxRes==null) ctxRes=a.getContentResolver(); return ctxRes; }
 	public static final PackageInfo           pkgInfo() { return pkgInfo; }
 	public static final String                    ver() { return pkgInfo.versionName; }
 	public static final String               fullName() { return name + "  v" + ver(); }
@@ -219,7 +223,7 @@ public final class A extends Application
 	public static final void notify(String title, String msg, int id, long when) {
 		if(notif == null) {
 			notif = new Notification(R.drawable.ic_bar, msg, when);
-			final Intent i = new Intent(a, ACTIVITY_CLASS);
+			final Intent i = new Intent(a, MainActivity.class);
 			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			notifIntent = PendingIntent.getActivity(a, 0, i, 0);
 		}	else {
@@ -254,10 +258,11 @@ public final class A extends Application
   public static final AlertDialog alert(String title, String msg, Click pos, Click neg, Click neu, int type, boolean cancelable) {
   	int idPos=0, idNeg=0, idNeu=0;
   	switch(type) {
-  		case ALERT_SIMPLE:    idPos = LAB_OK ;                                     break;
-  		case ALERT_OKCANC:    idPos = LAB_OK ; idNeg = LAB_CANC;                   break;
-  		case ALERT_YESNO:     idPos = LAB_YES; idNeg = LAB_NO  ;                   break;
-  		case ALERT_YESNOCANC: idPos = LAB_YES; idNeg = LAB_NO  ; idNeu = LAB_CANC; break;
+  		case ALERT_SIMPLE:    idPos = LAB_OK  ;                                     break;
+  		case ALERT_OKCANC:    idPos = LAB_OK  ; idNeg = LAB_CANC;                   break;
+  		case ALERT_YESNO:     idPos = LAB_YES ; idNeg = LAB_NO  ;                   break;
+  		case ALERT_YESNOCANC: idPos = LAB_YES ; idNeg = LAB_NO  ; idNeu = LAB_CANC; break;
+  		case ALERT_OPENDEL:   idPos = LAB_OPEN; idNeg = LAB_DEL ;                   break;
   	}
 		final AlertDialog.Builder adb = new AlertDialog.Builder(activity==null? a : activity);
 		adb.setIcon(R.drawable.ic_bar);
@@ -386,6 +391,9 @@ public final class A extends Application
 	public static final BluetoothAdapter btAdapter() {
 		if(btAdapter == null) btAdapter = BluetoothAdapter.getDefaultAdapter();
 		return btAdapter;
+	}
+	public static final void vibrate() {
+		((Vibrator)A.app().getSystemService(VIBRATOR_SERVICE)).vibrate(VIBRATE_TIME);
 	}
 
 	//---- private api

@@ -11,24 +11,23 @@ public final class P
 	public static final Map<String,Object> getDefaults() { return defsBuild(); }
 	public static final void               setDefaults() { A.putAll(defsBuild()); setVer(); }
 
-	public static final boolean upgrade()
-	{
+	public static final boolean upgrade() {
 		final String ver = A.gets(K.VER);
 		if(A.ver().equals(ver)) return false;
 		upgrade(verNum(ver));
 		return true;
 	}
 
-	public static final void setDef(String key)
-	{
+	public static final void setDef(String ... keys) { for(final String k : keys) setDef(k); }
+	public static final void setDef(String key) {
 		final Object val = defs.get(key);
 		if(val != null) A.put(key, val);
 	}
 
-	public static final void setDefIfNew(String key) { if(!A.has(key)) setDef(key); }
+	public static final void setDefIfNew(String ... keys) { for(final String k : keys) setDefIfNew(k); }
+	public static final void setDefIfNew(String key)      { if(!A.has(key)) setDef(key); }
 	
-	public static final void renameBool(String dst, String old)
-	{
+	public static final void renameBool(String dst, String old) {
 		if(A.has(old)) A.put(dst, A.is(old)).del(old);
 		else setDefIfNew(dst);
 	}
@@ -37,14 +36,12 @@ public final class P
 
 	private P() { }
 
-	private static Map<String,Object> defsBuild()
-	{
+	private static Map<String,Object> defsBuild() {
 		if(defs == null) defs = K.getDefaults();
 		return defs;
 	}
 
-	private static void upgrade(float oldVer)
-	{
+	private static void upgrade(float oldVer) {
 		if(oldVer < 0.1)
 			setDefaults();
 		else {

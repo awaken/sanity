@@ -30,7 +30,7 @@ public class ActivityScreen extends PrefActivity
 		final Preference p = pref(K.LOGO);
 		if(p != null) {
 			p.setTitle(A.fullName());
-			p.setSummary(R.string.app_desc);
+			p.setSummary(A.tr(R.string.app_desc)+"\n"+A.tr(R.string.app_copy));
 			p.setPersistent(false);
 			on(p, clickLogo);
 		}

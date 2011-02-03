@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string-array name="disable_delay_labels">
+		<item>Inmediatamente</item>
+		<item>1 segundo</item>
+		<item>2 segundos</item>
+		<item>3 segundos</item>
+		<item>4 segundos</item>
+		<item>5 segundos</item>
+		<item>6 segundos</item>
+		<item>7 segundos</item>
+		<item>8 segundos</item>
+		<item>9 segundos</item>
+		<item>10 segundos</item>
+	</string-array>
+
+	<string-array name="enable_delay_labels">
+		<item>Como \"Apagar en\"</item>
+		<item>Inmediatamente</item>
+		<item>1 segundo</item>
+		<item>2 segundos</item>
+		<item>3 segundos</item>
+		<item>4 segundos</item>
+		<item>5 segundos</item>
+		<item>6 segundos</item>
+		<item>7 segundos</item>
+		<item>8 segundos</item>
+		<item>9 segundos</item>
+		<item>10 segundos</item>
+	</string-array>
+
+	<string-array name="delay_speaker_labels">
+		<item>Inmediatamente</item>
+		<item>1 segundo</item>
+		<item>2 segundos</item>
+		<item>3 segundos</item>
+		<item>4 segundos</item>
+		<item>5 segundos</item>
+		<item>6 segundos</item>
+		<item>7 segundos</item>
+		<item>8 segundos</item>
+	</string-array>
+
+	<string-array name="rec_src_labels">
+		<item>Micrófono</item>
+		<item>Audio de la llamada</item>
+		<item>Reconocimiento de Voz</item>
+		<item>Audio y cámara</item>
+	</string-array>
+
+	<string-array name="rec_stop_limit_labels">
+		<item>2 minutos</item>
+		<item>5 minutos</item>
+		<item>10 minutos</item>
+		<item>15 minutos</item>
+		<item>20 minutos</item>
+		<item>30 minutos</item>
+		<item>45 minutos</item>
+		<item>1 hora</item>
+		<item>1 hora y media</item>
+		<item>2 horas</item>
+		<item>Ilimitado</item>
+	</string-array>
+
+</resources>

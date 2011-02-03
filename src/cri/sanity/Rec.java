@@ -21,7 +21,7 @@ public class Rec
 	public static final int    DEF_FMT      = FMT_MP4;
 	public static final String DEF_PREFIX   = Conf.REC_PREFIX;
 	public static final String DEF_SUFFIX   = "";
-	public static final String FILE_PATTERN = Conf.REC_FILE_PATTERN;
+	public static final String FILE_PATTERN = Conf.REC_DATE_PATTERN+Conf.REC_SEP+Conf.REC_TIME_PATTERN;
 
 	public int    src, fmt;
 	public String prefix, suffix;
@@ -54,6 +54,7 @@ public class Rec
 			mediaRec.prepare();
 			mediaRec.start();
 			started = true;
+			//A.logd("rec started");
 		} catch(Exception e) {
 			A.notify(A.tr(R.string.msg_rec_err));
 			//A.logd(e);
@@ -66,6 +67,7 @@ public class Rec
 		try {
 			mediaRec.stop();
 			started = false;
+			//A.logd("rec stopped");
 		} catch(Exception e) {}
 		mediaRec.reset();
 	}
@@ -75,6 +77,7 @@ public class Rec
 		if(mediaRec == null) return;
 		if(started) stop();
 		mediaRec.release();
+		mediaRec = null;
 	}
 
 	//---- private api

@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_desc">
-    Software di gestione audio e per ridurre le onde elettromagnetiche durante le telefonate.
-    \nCopyright (C) 2010 - Cristiano Tagliamonte.
-  </string>
+
+  <string name="app_desc">Software di gestione audio e per ridurre le onde elettromagnetiche durante le telefonate.</string>
 
 	<string name="canc">Annulla</string>
 	<string name="yes">Sì</string>
-
 	<string name="min">Minimo</string>
 	<string name="max">Massimo</string>
 	<string name="level">Livello</string>
 	<string name="nochange">Non modificare</string>
 	<string name="err">Errore</string>
 	<string name="empty">Vuoto</string>
+	<string name="open">Apri</string>
+	<string name="del">Elimina</string>
+	<string name="selall">Seleziona tutti</string>
+	<string name="selnone">Deseleziona tutti</string>
+	<string name="full_only">Disponibile solo nella versione Donazione</string>
 
   <string name="groups_cat">Preferenze</string>
   <string name="misc_cat">Varie</string>
@@ -92,21 +94,41 @@
 	<string name="rec_cat">Registratore</string>
 	<string name="rec_sum">Opzioni per registrare l\'audio della telefonata sulla memory card.</string>
 	<string name="rec_sum_free">Questa versione gratuita è limitata a 2 minuti per ogni registrazione.</string>
-	<string name="rec_warn_title">Avviso</string>
+	<string name="rec_warn_title">Note legali</string>
 	<string name="rec_warn_sum">Attenzione: in alcuni paesi la registrazione delle telefonate è proibita dalle leggi del governo. L\'autore dissente ogni uso illegale di Sanity. Sii consapevole, usalo a tuo rischio!</string>
 	<string name="rec_enable_title">Abilita la registrazione</string>
 	<string name="rec_enable_sum">Mette una notifica di registrazione nella barra di stato durante le telefonate: tocca quella notifica per avviare/arrestare la registrazione.</string>
 	<string name="rec_src_title">Sorgente audio</string>
-	<string name="rec_src_sum">Scegli il dispositivo usato per registrare l\'audio.</string>
-	<string name="rec_fmt_title">Formato file audio</string>
+	<string name="rec_src_sum">Scegli il dispositivo usato per registrare l\'audio. ATTENZIONE: su molti telefoni funziona soltanto la sorgente \"Microfono\"!!</string>
+	<string name="rec_fmt_title">Formato audio</string>
 	<string name="rec_fmt_sum">Scegli il formato file utilizzato per salvare le registrazioni audio.</string>
-	<string name="rec_browse_title">Naviga file registrati</string>
-	<string name="rec_browse_sum">Mostra la lista dei file audio delle registrazioni effettuate con Sanity.</string>
+	<string name="rec_browse_title">Archivio registrazioni</string>
+	<string name="rec_browse_sum">Mostra la lista dei file audio delle registrazioni effettuate con Sanity (si trovano nella cartella \"Sanity\" della memory card).</string>
 	<string name="rec_scan_title">Scansione multimediale</string>
 	<string name="rec_scan_sum">Permetti alla scansione multimediale di sistema di mantenere traccia dei file audio registrati da Sanity.</string>
 	<string name="rec_info_title">Note importanti</string>
 	<string name="rec_info_sum">Il sistema di registrazione di Android è molto limitato: attualmente puoi registrare le chiamate solo quando il VIVAVOCE È ACCESO!</string>
 	<string name="browse_unknown_title">Data sconosciuta</string>
+	<string name="rec_start_cat">Regole di avvio automatico</string>
+	<string name="rec_start_title">Avvio automatico</string>
+	<string name="rec_start_sum">Abilita l\'AVVIO automatico di registrazione. Se disabilitato, Sanity non avvierà automaticamente le registrazioni.</string>
+	<string name="rec_start_delay_title">Ritardo di avvio</string>
+	<string name="rec_start_delay_sum">Quanto tempo aspettare prima di avviare automaticamente una registrazione.</string>
+	<string name="rec_start_speaker_title">Vivavoce acceso</string>
+	<string name="rec_start_speaker_sum">Avvia automaticamente la registrazione audio SOLO quando il vivavoce viene acceso da Sanity.</string>
+	<string name="rec_stop_cat">Regole di arresto automatico</string>
+	<string name="rec_stop_title">Arresto automatico</string>
+	<string name="rec_stop_sum">Abilita l\'ARRESTO automatico di registrazione. Se disabilitato, Sanity non arresterà automaticamente le registrazioni.</string>
+	<string name="rec_stop_delay_title">Ritardo di arresto</string>
+	<string name="rec_stop_delay_sum">Quanto tempo aspettare prima di arrestare automaticamente una registrazione.</string>
+	<string name="rec_stop_speaker_title">Vivavoce spento</string>
+	<string name="rec_stop_speaker_sum">Arresta automaticamente la registrazione audio quando il vivavoce viene spento da Sanity.</string>
+	<string name="rec_stop_limit_title">Limite di tempo</string>
+	<string name="rec_stop_limit_sum">Scegli la massima durata per una singola registrazione audio. Sanity arresterà la registrazione quando raggiunge questa durata.</string>
+	<!--
+	<string name="rec_start_all_title">Tutte le chiamate</string>
+	<string name="rec_start_all_sum">Avvia automaticamente la registrazione audio per tutte le telefonate.</string>
+	-->
 
   <string name="notify_cat">Notifica</string>
   <string name="notify_sum">Scegli quali notifiche visualizzare.</string>
@@ -118,6 +140,10 @@
   <string name="notify_activity_sum">Notifica se Sanity è in esecuzione quando inizia una telefonata.</string>
   <string name="notify_volume_title">Notifica volume</string>
   <string name="notify_volume_sum">Notifica quando il volume viene automaticamente modificato da Sanity.</string>
+  <string name="notify_rec_stop_title">Notifica registrazione</string>
+  <string name="notify_rec_stop_sum">Notifica quando la registrazione audio viene arrestata da Sanity.</string>
+  <string name="vibrate_end_title">Vibrazione</string>
+  <string name="vibrate_end_sum">Vibra il telefono al termine della telefonata.</string>
 
   <string name="about_cat">Info e contatti</string>
   <string name="about_sum">Informazioni su questa applicazione e strumenti per contattare lo sviluppatore.</string>
@@ -149,9 +175,15 @@
   <string name="msg_rec_title">Sanity - Registratore</string>
   <string name="msg_rec_start">Tocca qui per AVVIARE la registrazione</string>
   <string name="msg_rec_stop">Tocca qui per ARRESTARE la registrazione</string>
+  <string name="msg_rec_limit">Sanity: arresto della registrazione.</string>
   <string name="msg_rec_free_limit">Sanity: limite di 2 minuti raggiunto, la registrazione è arrestata.</string>
   <string name="msg_rec_scan_err">Errore durante la modifica delle proprietà di scansione: permesso negato sul file \"$FN\"</string>
-  <string name="msg_rec_empty">Non esistono file audio delle registrazione. Avvia la registrazione durante una telefonata per mostrare qui il file audio.</string>
+  <string name="msg_rec_empty">Non esistono file audio delle registrazioni. Avvia la registrazione durante una telefonata per mostrare qui i relativi file audio.</string>
+  <string name="msg_rec_file">Scegli cosa fare con questo file audio.</string>
+  <string name="msg_confirm_del_one">Sei sicuro di voler ELIMINARE il file selezionato?</string>
+  <string name="msg_confirm_del_all">Sei sicuro di voler ELIMINARE tutti i $N file selezionati?</string>
+  <string name="msg_del_err">Errore: cancellazione fallita su $N file!</string>
+  <string name="msg_selected_all">$N file selezionati</string>
 	<string name="msg_require_froyo">Questa opzione richiede almeno Android versione 2.2 (Froyo). Spiacente, il tuo telefono monta Android 2.1 (Eclair).</string>
 	<string name="msg_uninstall">Per disinstallare Sanity, è necessario disattivare l\'opzione \"Amministratore\" nella sezione \"Disabilita in prossimità\".\n\nFintantoché l\'opzione \"Amministratore\" è attivata, non sarà consentito disinstallare Sanity!\n\nSolo se questa opzione risulta disattivata, il processo di disinstallazione di Sanity avrà successo.</string>
   <string name="msg_devs_enabled">Sanity: dispositivi accesi</string>
@@ -164,17 +196,14 @@
   <string name="msg_email_choose">Scegli come inviare l\'email</string>
   <string name="msg_email_body">Ciao Cristiano!</string>
 	<string name="msg_donate">Grazie per aver installato Sanity. Questa è la versione libera e gratuita.\n\nSe Sanity ti piace, puoi effettuare una donazione per supportarlo. Una volta completata la donazione, questa finestra verrà soppressa e il limite di 2 minuti del registratore verrà rimosso.\n\nVuoi aprire ora il Market per la donazione?</string>
-	<string name="msg_browse_beta">Il registratore delle telefonate è sperimentale, è una versione beta in stato di testing.\n\nNella prossima versione Sanity integrerà un navigatore dei file audio registrati.\n\nComunque tutti i file registrati si trovano nella cartella \"Sanity\" dentro la tua memory card (puoi accedervi usando un file browser).</string>
 
   <string name="msg_eula_title">Contratto di licenza software</string>
-  <string name="msg_eula">
-  	Questa applicazione è software libero: puoi ridistribuirla e/o modificarla nei termini della GNU General Public License come
+  <string name="msg_eula">Questa applicazione è software libero: puoi ridistribuirla e/o modificarla nei termini della GNU General Public License come
   	pubblicato dalla Free Software Foundation, sia nella versione 3 della licenza, sia (a tua opinione) in qualsiasi
   	altra versione successiva.
   	\nQuesto programma è distribuito nella speranza che risulterà utile, ma SENZA NESSUNA GARANZIA; neppure la garanzia
-  	implicita di COMMERCIABILITA\' o IDONEITA\' PER UN PARTICOLARE SCOPO. Leggi la GNU General Public License versione 3 per maggiori
-  	dettagli, puoi trovarne una copia su http://www.gnu.org/licenses/.
-  	\n
+  	implicita di COMMERCIABILITÀ o IDONEITÀ PER UN PARTICOLARE SCOPO. Leggi la GNU General Public License versione 3 per maggiori
+  	dettagli, puoi trovarne una copia su http://www.gnu.org/licenses/.\n
   	\nScegli \"Ok\" per accettare la GNU General Public License versione 3.
   	\nScegli \"Annulla\" per rifiutarla.
   </string>
@@ -182,8 +211,15 @@
   <string name="changelog_title">Modifiche recenti</string>
   <string name="changelog_sum">Visualizza le modifiche recenti implementate nelle ultime versioni di Sanity.</string>
   <string name="changelog_body">
-  	Versione 1.8:\n
-  	- Nuovo: semplice file browser dei file audio registrati (verrà migliorato nelle prossime versioni).\n
+  	Version 1.9\n
+  	- Nuovo: opzioni per la registrazione automatica delle telefonate.\n
+  	- Nuovo: opzione per la vibrazione al termine della chiamata (nella sezione \"Notifica\").\n
+  	- Nuovo: traduzione in spagnolo di LuiSKdT&amp;AnA da Mallorca-Spagna.\n
+  	- Fix: il numero di telefono dell\'interlocutore viene salvato correttamente nelle registrazioni.\n
+  	- Modifica: migliorie all\'archivio delle registrazioni.\n
+  	- Modifica: migliorie all\'interfaccia utente.\n
+  	\nVersione 1.8:\n
+  	- Nuovo: semplice archivio dei file audio registrati.\n
   	- Fix: ora il processo viene chiuso correttamente nel caso di chiamata senza risposta.
   	- Fix: le registrazioni audio erano silenziose quando l\'opzione \"Solo conversazione\" era attivata.\n
   	- Fix: bug minore nell\'interfaccia utente.\n

@@ -1,7 +1,6 @@
 package cri.sanity;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import cri.sanity.ghost.*;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
@@ -14,12 +13,10 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.location.LocationManager;
 import android.media.AudioManager;
-import android.net.ConnectivityManager;
+import android.app.KeyguardManager.KeyguardLock;
 import android.net.Uri;
-import android.net.wifi.WifiManager;
 //import android.net.wifi.WifiConfiguration;
 //import android.content.ContentResolver;
-import android.app.KeyguardManager.KeyguardLock;
 
 
 public final class Dev
@@ -32,24 +29,21 @@ public final class Dev
 	public static final int VOL_DTMF   = AudioManager.STREAM_DTMF;
 	public static final int VOL_SYS    = AudioManager.STREAM_SYSTEM;
 	public static final int VOL_DEF    = AudioManager.USE_DEFAULT_STREAM_TYPE;
-	public static final int FLAG_VOL_SHOW     = AudioManager.FLAG_SHOW_UI;
-	public static final int FLAG_VOL_PLAY     = AudioManager.FLAG_PLAY_SOUND;
-	public static final int FLAG_VOL_VIBRATE  = AudioManager.FLAG_VIBRATE;
-	public static final int FLAG_VOL_RING     = AudioManager.FLAG_ALLOW_RINGER_MODES;
-	public static final int FLAG_VOL_REMOVE   = AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE;
-	public static final int HOTSPOT_DISABLING = 0;
-	public static final int HOTSPOT_DISABLED  = 1;
-	public static final int HOTSPOT_ENABLING  = 2;
-	public static final int HOTSPOT_ENABLED   = 3;
-	public static final int HOTSPOT_FAILED    = 4;
+	public static final int FLAG_VOL_SHOW    = AudioManager.FLAG_SHOW_UI;
+	public static final int FLAG_VOL_PLAY    = AudioManager.FLAG_PLAY_SOUND;
+	public static final int FLAG_VOL_VIBRATE = AudioManager.FLAG_VIBRATE;
+	public static final int FLAG_VOL_RING    = AudioManager.FLAG_ALLOW_RINGER_MODES;
+	public static final int FLAG_VOL_REMOVE  = AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE;
 
 	private static final Uri URI_GPS = Uri.parse("3");
 
 	public static int defVolFlags = 0;
 
-	private static Object iTelMan;
-	private static int    screenTimeoutBak = -1;
-	//private static int    brightnessBak    = -1;
+	private static TelMan  gTel;
+	private static WifiMan gWifi;
+	private static ConnMan gConn;
+	private static int screenTimeoutBak = -1;
+	//private static int brightnessBak = -1;
 	//private static PowerManager.WakeLock wakeCpuLock;
 	private static PowerManager.WakeLock wakeScreenLock;
 	private static KeyguardLock keyguardLock;
@@ -82,6 +76,21 @@ public final class Dev
 
 	//public static final boolean allowMobData() { return Settings.Secure.getInt(A.ctxRes(), "mobile_data", 1) == 1; }
 
+	//---- get ghost manager
+
+	public static final TelMan gTel() {
+		if(gTel == null) gTel = new TelMan();
+		return gTel;
+	}
+	public static final WifiMan gWifi() {
+		if(gWifi == null) gWifi = new WifiMan();
+		return gWifi;
+	}
+	public static final ConnMan gConn() {
+		if(gConn == null) gConn = new ConnMan();
+		return gConn;
+	}
+
 	//---- check on/off device state
 	
 	public static final boolean isSpeakerOn() { return A.audioMan().isSpeakerphoneOn(); }
@@ -91,7 +100,7 @@ public final class Dev
 	}
 
 	public static final boolean isMobDataOn() {
-    if(Settings.Secure.getInt(A.ctnRes(), "mobile_data",1) != 1) return false;
+    if(Settings.Secure.getInt(A.resolver(), "mobile_data",1) != 1) return false;
 		final int ds = A.telMan().getDataState();
 		return ds==TelephonyManager.DATA_CONNECTED || ds==TelephonyManager.DATA_CONNECTING;
 	}
@@ -101,35 +110,16 @@ public final class Dev
 	
 	//public static final boolean isScreenOn() { return A.powerMan().isScreenOn(); }
 
-	public static final boolean isHotspotOn() {
-		try                { return _isHotspotOn(); }
-		catch(Exception e) { return false;          }
-	}
-	public static final boolean isHotspotSupported() {
-		try                { _isHotspotOn(); return true;  }
-		catch(Exception e) {                 return false; }
-	}
-	public static final boolean isTetheringOn() {
-		try                { return _isTetheringOn(); }
-		catch(Exception e) { return false;            }
-	}
-	public static final boolean isTetheringSupported() {
-		try                { _isTetheringOn(); return true;  }
-		catch(Exception e) {                   return false; }
-	}
+	public static final boolean isHotspotOn()        { return gWifi().isHotspotOn(); }
+	public static final boolean isHotspotSupported() { return gWifi().callable("getWifiApState"); }
+
+	public static final boolean isTetheringOn()        { return gConn().isTetheringOn(); }
+	public static final boolean isTetheringSupported() { return gConn().callable("getTetheredIfaces", "getTetherableUsbRegexs"); }
 
 	//---- enable/disable devices
 
 	public static final boolean enableMobData(boolean enable) {
-		try {
-			// use undocumented android api
-			final Object itm = iTelMan();
-			return (Boolean)itm.getClass().getMethod(enable ? "enableDataConnectivity" : "disableDataConnectivity").invoke(itm);
-		}
-		catch(Exception e) {
-			//A.logd("unable to "+(enable?"enable":"disable")+" mobile data: undocumented api failed ("+e+')');
-			return false;
-		}
+		return enable? gTel().enableDataConnectivity() : gTel().disableDataConnectivity();
 	}
 
 	public static final boolean enableWifi(boolean enable) {
@@ -170,13 +160,13 @@ public final class Dev
 
 	public static final int getSysInt(String key) {
 		try {
-			return System.getInt(A.ctnRes(), key);
+			return System.getInt(A.resolver(), key);
 		} catch(SettingNotFoundException e) {
 			return -1; 
 		}
 	}
 	public static final void setSysInt(String key, int val) {
-		final ContentResolver cr = A.ctnRes();
+		final ContentResolver cr = A.resolver();
 		System.putInt(cr, key, val);
 		System.putInt(cr, key, val);
 	}
@@ -238,34 +228,6 @@ public final class Dev
 		if(keyguardLock == null) keyguardLock = A.keyguardMan().newKeyguardLock("Dev");
 		if(enable) keyguardLock.reenableKeyguard();
 		else       keyguardLock.disableKeyguard();
-	}
-
-	//---- undocumented android api
-
-	private static Object iTelMan() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-		if(iTelMan != null) return iTelMan;
-		final TelephonyManager tm = A.telMan();
-		final Method itm = tm.getClass().getDeclaredMethod("getITelephony");
-		if(!itm.isAccessible()) itm.setAccessible(true);
-		return iTelMan = itm.invoke(tm);
-	}
-
-	private static boolean _isHotspotOn() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-		// use undocumented android api
-		final WifiManager wm = A.wifiMan();
-		final int as = (Integer)wm.getClass().getMethod("getWifiApState").invoke(wm);
-		return as==HOTSPOT_ENABLED || as==HOTSPOT_ENABLING;
-	}
-
-	private static boolean _isTetheringOn() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
-		final ConnectivityManager cm = A.connMan();
-		final Class<?> cls = cm.getClass();
-    final String[] ifaces = (String[])cls.getMethod("getTetheredIfaces").invoke(cm);
-    final String[] regexs = (String[])cls.getMethod("getTetherableUsbRegexs").invoke(cm);
-    for(String iface : ifaces)
-    	for(String regex : regexs)
-    		if(iface.matches(regex)) return true;
-    return false;
 	}
 
 }

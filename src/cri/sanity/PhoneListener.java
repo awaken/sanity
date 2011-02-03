@@ -22,6 +22,7 @@ public final class PhoneListener extends PhoneStateListener
 	private static PhoneListener activeInst;
 
 	public int btCount;
+	public SpeakerListener speakerListener;
 
 	private String  callNumber;
 	private int     calls, lastCallState;
@@ -54,7 +55,7 @@ public final class PhoneListener extends PhoneStateListener
 			//final boolean far = proximReverse? val<=proximMax+0.001 : val>=proximMax-0.001;
 			//A.logd("proximity sensor value = "+val);
 			if(far == lastFar) return;
-			if((!headsetOn || !skipHeadset) && (outgoing || isOffhook())) {
+			if((!headsetOn || !skipHeadset) && isOffhook()) {
 				if(autoSpeaker)
 					deferAutoSpeaker(far);
 				if(proximDisable && (!far || proximEnable))
@@ -85,14 +86,16 @@ public final class PhoneListener extends PhoneStateListener
 	public final void startup()
 	{
 		//A.logd("PhoneListener.startup");
+		activeInst = this;
 		calls      = 0;
-		outgoing   = false;
+		outgoing   = true;
 		callNumber = null;
 		timer      = new Timer();
 		shutdown   = false;
 		lastFar    = true;
 		btCount    = Math.max(A.geti(K.BT_COUNT), 0);
 		admin      = Admin.isActive();
+		speakerListener = null;
 		lastCallState = TelephonyManager.CALL_STATE_IDLE;
 		skipHeadset   = A.is(K.SKIP_HEADSET);
 		skipBtConn    = A.is(K.SKIP_BT);
@@ -131,8 +134,6 @@ public final class PhoneListener extends PhoneStateListener
 		regHeadset();
 		regProximity();
 		Dev.enableLock(false);
-		// set current active instance of this class (used by BtReceiver and proximListener)
-		activeInst = this;
 	}
 
 	public final int     getState     () { return lastCallState; }
@@ -140,6 +141,7 @@ public final class PhoneListener extends PhoneStateListener
 	public final boolean isIdle       () { return lastCallState == TelephonyManager.CALL_STATE_IDLE   ; }
 	public final boolean isOffhook    () { return lastCallState == TelephonyManager.CALL_STATE_OFFHOOK; }
 	public final boolean isShutdown   () { return shutdown; }
+	public final boolean isOutgoing   () { return outgoing; }
 	public final boolean isCallSpeaker() { return speakerCall && lastFar; }
 	public final boolean hasAutoDev   () { return mobdataAuto || wifiAuto || btAuto || gpsAuto; }
 	public final String  callNumber   () { return callNumber; }
@@ -185,7 +187,6 @@ public final class PhoneListener extends PhoneStateListener
 	private void onOffhook(String number)
 	{
 		//A.logd("onOffhook");
-		outgoing = !isRinging();
 		if(!A.empty(number))
 			callNumber = number;
 		else {
@@ -195,8 +196,12 @@ public final class PhoneListener extends PhoneStateListener
 		if(headsetOn)
 			setCallVolume(true, wiredHeadsetOn? volWired : volBt);
 		else {
+			if(rec) RecService.checkAutoRec(this);
 			if(volPhone > 0) Dev.setVolume(Dev.VOL_CALL, volPhone);
-			if(isCallSpeaker()) forceAutoSpeakerOn();
+			if(isCallSpeaker()) {
+				if(outgoing) forceAutoSpeakerOn();
+				else         autoSpeaker(true);
+			}
 		}
 		if(!proximDisable) enableDevs(false);
 		//if(!screenOn) screenOff(true);
@@ -218,8 +223,9 @@ public final class PhoneListener extends PhoneStateListener
 		enableDevs(true);                            // restore all devices enabled before ringing
 		volSolo(false);                              // restore muted audio streams (if any)
 		screenOff(false);
-		Dev.enableLock(true);
 		RecService.stop();
+		if(A.is(K.VIBRATE_END)) A.vibrate();
+		Dev.enableLock(true);
 		callNumber = null;
 		activeInst = null;
 		MainService.stop();
@@ -324,11 +330,15 @@ public final class PhoneListener extends PhoneStateListener
 				//volRestore = 0;
 			}
 		}
+		if(speakerListener != null) speakerListener.onSpeakerChanged(far);
 	}
 	
 	private void forceAutoSpeakerOn()
 	{
+		final SpeakerListener sl = speakerListener;
+		speakerListener = null;
 		autoSpeaker(true);
+		speakerListener = sl;
 		// enable speaker again after a little delay (some phones auto-disable speaker on offhook)
 		cleanEnableTask();
 		// use enableTask so that any proximity changes will cancel this task

@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app">Sanity</string>
 
-  <string name="app_desc">
-    Software for managing volume and for reducing electromagnetic waves during calls.
-    \nCopyright (C) 2010 - Cristiano Tagliamonte.
-  </string>
+  <string name="app">Sanity</string>
+	<string name="app_copy">Copyright (C) 2011 - Cristiano Tagliamonte.</string>
+  <string name="app_desc">Software for managing volume and for reducing electromagnetic waves during calls.</string>
 
 	<string name="ok">Ok</string>
 	<string name="canc">Cancel</string>
@@ -18,6 +16,11 @@
 	<string name="nochange">Do not change</string>
 	<string name="err">Error</string>
 	<string name="empty">Empty</string>
+	<string name="open">Open</string>
+	<string name="del">Delete</string>
+	<string name="selall">Select all</string>
+	<string name="selnone">Deselect all</string>
+	<string name="full_only">Available only in the Donate version</string>
 
   <string name="groups_cat">Preferences</string>
   <string name="misc_cat">Miscellaneous</string>
@@ -60,11 +63,11 @@
   <string name="disable_proximity_title">Turn off in proximity</string>
   <string name="disable_proximity_sum">Turn OFF devices only when the phone is close to your ear. (If disabled, turn off when call start.)</string>
   <string name="disable_delay_title">Turn off delay</string>
-  <string name="disable_delay_sum">Delay for turning OFF devices when your ear is close to phone.</string>
+  <string name="disable_delay_sum">Delay time for turning OFF devices when your ear is close to phone.</string>
   <string name="enable_proximity_title">Turn on if far</string>
   <string name="enable_proximity_sum">Turn ON devices (turned off by Sanity) during a call when the phone is NOT close to your ear.</string>
   <string name="enable_delay_title">Restore delay</string>
-  <string name="enable_delay_sum">Delay for turning ON devices when the phone is NOT close to your ear.</string>
+  <string name="enable_delay_sum">Delay time for turning ON devices when the phone is NOT close to your ear.</string>
 	<string name="screen_cat">Screen</string>
   <string name="screen_off_title">Turn off screen</string>
   <string name="screen_off_sum">Force to turn OFF the screen during call when the phone is close to your ear.</string>
@@ -76,7 +79,7 @@
   <string name="auto_speaker_title">Automatic handsfree</string>
   <string name="auto_speaker_sum">Automatically enable/disable handsfree when the phone is far/close to your ear.</string>
   <string name="delay_speaker_title">Enable delay</string>
-  <string name="delay_speaker_sum">Delay for automatically turning ON handsfree when the phone is NOT close to your ear.</string>
+  <string name="delay_speaker_sum">Delay time for automatically turning ON handsfree when the phone is NOT close to your ear.</string>
   <string name="loud_speaker_title">Loud speaker</string>
   <string name="loud_speaker_sum">Set maximum volume when Sanity automatically enables handsfree.</string>
   <string name="speaker_call_title">Enable on call start</string>
@@ -96,21 +99,41 @@
 	<string name="rec_cat">Recorder</string>
 	<string name="rec_sum">Options for recording call audio on memory card.</string>
 	<string name="rec_sum_free">This free version is limited to 2 minutes for each recording.</string>
-	<string name="rec_warn_title">Warning</string>
+	<string name="rec_warn_title">Legal notes</string>
 	<string name="rec_warn_sum">Attention please: in some countries call recording is forbidden by government laws. The author disagrees every illegal use of Sanity. Be awareness, use it at your risk!</string>
 	<string name="rec_enable_title">Enable recording system</string>
 	<string name="rec_enable_sum">Put recording notification on statusbar during phone call: tap that notification to start/stop call recording.</string>
 	<string name="rec_src_title">Audio source</string>
-	<string name="rec_src_sum">Select the source device used for recording audio.</string>
-	<string name="rec_fmt_title">Audio file format</string>
+	<string name="rec_src_sum">Select the source device used for recording audio. ATTENTION: only \"Microphone\" source works on many phones!!</string>
+	<string name="rec_fmt_title">Audio format</string>
 	<string name="rec_fmt_sum">Select file format used to save audio file recordings.</string>
 	<string name="rec_browse_title">Browse recorded files</string>
-	<string name="rec_browse_sum">Show list of audio files recorded by Sanity.</string>
+	<string name="rec_browse_sum">Show list of audio files recorded by Sanity (stored in \"Sanity\" folder inside memory card).</string>
 	<string name="rec_scan_title">Multimedia scanner</string>
 	<string name="rec_scan_sum">Allow system multimedia scanner to track audio files recorded by Sanity.</string>
 	<string name="rec_info_title">Important notes</string>
 	<string name="rec_info_sum">Android recording system is very limited: actually you can record calls only when HANDSFREE IS TURNED ON!</string>
 	<string name="browse_unknown_title">Unknown date</string>
+	<string name="rec_start_cat">Automatic start rules</string>
+	<string name="rec_start_title">Automatic start</string>
+	<string name="rec_start_sum">Enable automatic START recording. If disabled, Sanity won\'t start recording automatically.</string>
+	<string name="rec_start_delay_title">Start delay</string>
+	<string name="rec_start_delay_sum">Delay time for starting audio recording automatically.</string>
+	<string name="rec_start_speaker_title">Handsfree ON</string>
+	<string name="rec_start_speaker_sum">Automatic start audio recording ONLY when handsfree is turned on by Sanity.</string>
+	<string name="rec_stop_cat">Automatic stop rules</string>
+	<string name="rec_stop_title">Automatic stop</string>
+	<string name="rec_stop_sum">Enable automatic STOP recording. If disabled, Sanity won\'t stop recording automatically.</string>
+	<string name="rec_stop_delay_title">Stop delay</string>
+	<string name="rec_stop_delay_sum">Delay for stopping audio recording automatically.</string>
+	<string name="rec_stop_speaker_title">Handsfree OFF</string>
+	<string name="rec_stop_speaker_sum">Automatic stop audio recording when handsfree is turned off by Sanity.</string>
+	<string name="rec_stop_limit_title">Time limit</string>
+	<string name="rec_stop_limit_sum">Choose the maximum duration of one audio recording. Sanity will stop the recording after this duration.</string>
+	<!-- 
+	<string name="rec_start_all_title">All calls</string>
+	<string name="rec_start_all_sum">Automatic start audio recording for every phone calls.</string>
+	-->
 
   <string name="notify_cat">Notification</string>
   <string name="notify_sum">Choose when Sanity should show notifications.</string>
@@ -122,8 +145,12 @@
   <string name="notify_activity_sum">Notify if Sanity is running when a phone call starts.</string>
   <string name="notify_volume_title">Notify volume</string>
   <string name="notify_volume_sum">Notify when volume is automatically changed by Sanity.</string>
+  <string name="notify_rec_stop_title">Notify recording</string>
+  <string name="notify_rec_stop_sum">Notify when audio recording is stopped by Sanity.</string>
+  <string name="vibrate_end_title">Vibrate</string>
+  <string name="vibrate_end_sum">Vibrate when phone call ends.</string>
 
-  <string name="about_cat">About and contact</string>
+  <string name="about_cat">About and contacts</string>
   <string name="about_sum">Information about this application and tools for contacting the developer.</string>
   <string name="uninstall_title">How to uninstall</string>
   <string name="uninstall_sum">Tap here to show instructions for uninstalling Sanity (useful only on Android Froyo 2.2 or greater).</string>
@@ -132,7 +159,7 @@
   <string name="comment_title">Leave a comment</string>
   <string name="comment_sum">You are invited to leave a comment about Sanity on Market. Tap here to open Market. Please don\'t report bugs in Market comments.</string>
   <string name="eula_title">License GNU GPL v3</string>
-  <string name="eula_sum">Tap here to open the ufficial web site of the GNU General Public License version 3.</string>
+  <string name="eula_sum">Tap here to open the official web site of the GNU General Public License version 3.</string>
   <string name="paypal_title">PayPal donate</string>
   <string name="paypal_sum">For supporting Sanity, you can donate the money amount you prefer using PayPal. Tap here to open PayPal site.</string>
 
@@ -153,9 +180,15 @@
   <string name="msg_rec_title">Sanity - Recorder</string>
   <string name="msg_rec_start">Tap here to START call recording</string>
   <string name="msg_rec_stop">Tap here to STOP call recording</string>
+  <string name="msg_rec_limit">Sanity: stop recording.</string>
   <string name="msg_rec_free_limit">Sanity: 2 minutes limit reached, recording is stopped.</string>
   <string name="msg_rec_scan_err">Error while changing scanner properties: permission denied on file \"$FN\"</string>
-  <string name="msg_rec_empty">There are no audio files of call records. Start a call record to see the audio file here.</string>
+  <string name="msg_rec_empty">There are no audio files of call records. Start a call record to see its audio file here.</string>
+  <string name="msg_rec_file">Choose what to do with this audio file.</string>
+  <string name="msg_confirm_del_one">Are you sure to DELETE the selected file?</string>
+  <string name="msg_confirm_del_all">Are you sure to DELETE all $N selected files?</string>
+  <string name="msg_del_err">Error: delete failed for $N files!</string>
+  <string name="msg_selected_all">$N files selected</string>
 	<string name="msg_require_froyo">This option requires at least Android version 2.2 (Froyo). Sorry, your phone has Android 2.1 (Eclair).</string>
 	<string name="msg_uninstall">For uninstalling Sanity, you need to uncheck the \"Administrator\" option inside the \"Proximity disabling\" section.\n\nWhile the \"Administrator\" option is checked, you can\'t uninstall Sanity!\n\nOnly if this option is unchecked, the uninstall process of Sanity will success.</string>
   <string name="msg_devs_enabled">Sanity: devices enabled</string>
@@ -168,20 +201,14 @@
   <string name="msg_email_choose">Choose how to send email</string>
   <string name="msg_email_body">Hello Cristiano!</string>
 	<string name="msg_donate">Thank you for using Sanity. This is the free version.\n\nIf you like Sanity, you can donate for supporting it. When donating, this dialog will be suppressed and the 2 minutes limit of the call recorder will be removed.\n\nWould you open Market now for donating?</string>
-	<string name="msg_browse_beta">The call recorder is experimental, it\'s just a beta version under testing.\n\nIn the next version Sanity will integrate a file browser of recorded audio files.\n\nAnyway, all recorded files are stored in the folder \"Sanity\" inside your memory card (you can use a file browser to reach them).</string>
 
   <string name="msg_eula_title">Software license agreement</string>
-  <string name="msg_eula">
-    This application is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-    \nThis program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-    GNU General Public License version 3 for more details,
-    you can find a copy on http://www.gnu.org/licenses/.
-		\n
+  <string name="msg_eula">This application is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by the Free Software Foundation,
+    either version 3 of the License, or (at your option) any later version.
+    \nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+    the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+    version 3 for more details, you can find a copy on http://www.gnu.org/licenses/.\n
 		\nChoose \"Ok\" button to agree this software license.
 		\nChoose \"Cancel" button to refuse it.
   </string>
@@ -189,8 +216,15 @@
   <string name="changelog_title">Recent changes</string>
   <string name="changelog_sum">Show recent changes implemented in the last Sanity versions.</string>
   <string name="changelog_body">
-  	Version 1.8:\n
-  	- New: simple file browser of recorded audio files (it will be improved in the next versions).\n
+  	Version 1.9\n
+  	- New: options for automatic call recording.\n
+  	- New: option to vibrate when phone call ends (in the \"Notification\" section).\n
+  	- New: spanish translation by LuiSKdT&amp;AnA from Mallorca-Spain.\n
+  	- Fix: incoming phone number is properly saved when recording.\n
+  	- Change: improved audio file browser.\n
+  	- Change: improved user interface.\n
+  	\nVersion 1.8:\n
+  	- New: simple file browser of recorded audio files.\n
   	- Fix: now process properly exits when call ends without answer.
   	- Fix: recored audio files were silent when \"Conversation only\" option was activated.\n
   	- Fix: minor user interface bug.\n

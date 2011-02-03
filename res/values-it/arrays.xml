@@ -45,6 +45,22 @@
 	<string-array name="rec_src_labels">
 		<item>Microfono</item>
 		<item>Audio telefonata</item>
+		<item>Riconoscimento vocale</item>
+		<item>Audio videocamera</item>
+	</string-array>
+
+	<string-array name="rec_stop_limit_labels">
+		<item>2 minuti</item>
+		<item>5 minuti</item>
+		<item>10 minuti</item>
+		<item>15 minuti</item>
+		<item>20 minuti</item>
+		<item>30 minuti</item>
+		<item>45 minuti</item>
+		<item>1 ora</item>
+		<item>1 ora e mezza</item>
+		<item>2 ore</item>
+		<item>Illimitato</item>
 	</string-array>
 
 </resources>

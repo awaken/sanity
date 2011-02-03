@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/browse_open" android:icon="@android:drawable/ic_media_play" android:title="@string/open" />
+	<item android:id="@+id/browse_del" android:icon="@android:drawable/ic_menu_delete" android:title="@string/del" />
+	<item android:id="@+id/browse_selall" android:icon="@android:drawable/ic_menu_add" android:title="@string/selall" />
+	<item android:id="@+id/browse_selnone" android:icon="@android:drawable/ic_menu_close_clear_cancel" android:title="@string/selnone" />
+</menu>

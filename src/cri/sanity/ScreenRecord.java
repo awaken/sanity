@@ -4,6 +4,7 @@ import java.io.File;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.Preference;
 
 
 public class ScreenRecord extends ActivityScreen
@@ -14,7 +15,6 @@ public class ScreenRecord extends ActivityScreen
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		//on(K.REC_BROWSE, new Click(){ boolean on(){ A.alert(A.tr(R.string.msg_browse_beta)); return true; }});
 		on(K.REC_BROWSE, new Click(){ boolean on(){
 			startActivity(new Intent(A.app(), ScreenBrowse.class));
 			return true;
@@ -24,6 +24,25 @@ public class ScreenRecord extends ActivityScreen
 			if(!res) A.alert(A.tr(R.string.msg_rec_scan_err).replace("$FN", scanFn()));
 			return res;
 		}});
+		setEnabled(K.REC_START_SPEAKER, A.is(K.REC_START) && (A.is(K.SPEAKER_AUTO)||A.is(K.SPEAKER_CALL)));
+		setEnabled(K.REC_STOP_SPEAKER , A.is(K.REC_STOP ) && (A.is(K.SPEAKER_AUTO)||A.is(K.SPEAKER_CALL)));
+		setEnabled(K.REC_STOP_LIMIT   , A.is(K.REC_STOP ) &&  A.isFull());
+		on(K.REC_START, new Change(){ boolean on(){
+			final boolean on = (Boolean)value;
+			setEnabled(K.REC_START_SPEAKER, on && (A.is(K.SPEAKER_AUTO) || A.is(K.SPEAKER_CALL)));
+			return true;
+		}});
+		on(K.REC_STOP, new Change(){ boolean on(){
+			final boolean on = (Boolean)value;
+			setEnabled(K.REC_STOP_SPEAKER, on && (A.is(K.SPEAKER_AUTO) || A.is(K.SPEAKER_CALL)));
+			setEnabled(K.REC_STOP_LIMIT  , on &&  A.isFull());
+			return true;
+		}});
+		if(!A.isFull()) {
+			final Preference p = pref(K.REC_STOP_LIMIT);
+			p.setEnabled(false);
+			p.setSummary(p.getSummary()+" ("+A.tr(R.string.full_only)+".)");
+		}
 	}
 
 	@Override
