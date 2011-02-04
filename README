@@ -18,6 +18,11 @@ An Android application for managing volume and for reducing electromagnetic wave
   Change log
 -------------------
 
+* version 1.91  (04/02/2010)
+- New: contact names are showed in file browser (when available).
+- Fix: minor user interface bug.
+- Change: now Sanity doesn't ask you to donate everytime you open application.
+
 * version 1.9  (03/02/2010)
 - New: options for automatic call recording.
 - New: option to vibrate when phone call ends (in the "Notification" section).

@@ -9,6 +9,7 @@ public final class Conf
 	public static final String AUTHOR        = "Cristiano Tagliamonte";
 	public static final String AUTHOR_EMAIL  = "cristiano@tagliamonte.net";
 
+	public static final int    NAG_TIMEOUT   = 4*3600*1000;
 	public static final String DONATE_PKG    = "cri.sanitydonate";
 	public static final String ACTION_DONATE = "cri.sanitydonate.DonateService";
 
@@ -26,5 +27,5 @@ public final class Conf
 	public static final String REC_TIME_PATTERN  = "kk.mm.ss";
 	public static final int    REC_OFFHOOK_DELAY = 1000;
 	public static final int    REC_MIN_SRV_RETRY = 1000;
-	public static final int    REC_FREE_LIMIT    = 120000;
+	public static final int    REC_FREE_LIMIT    = 120*1000;
 }

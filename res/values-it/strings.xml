@@ -211,7 +211,11 @@
   <string name="changelog_title">Modifiche recenti</string>
   <string name="changelog_sum">Visualizza le modifiche recenti implementate nelle ultime versioni di Sanity.</string>
   <string name="changelog_body">
-  	Version 1.9\n
+  	Versione 1.91\n
+  	- Nuovo: i nomi dei contatti sono visualizzati (se disponibili) nell\'archivio delle registrazioni.\n
+  	- Fix: malfunzionamento minore dell\'interfaccia utente.\n
+  	- Modifica: ora Sanity non chiede sempre di donare ogni volta che apri l\'applicazione.\n
+  	\nVersione 1.9\n
   	- Nuovo: opzioni per la registrazione automatica delle telefonate.\n
   	- Nuovo: opzione per la vibrazione al termine della chiamata (nella sezione \"Notifica\").\n
   	- Nuovo: traduzione in spagnolo di LuiSKdT&amp;AnA da Mallorca-Spagna.\n

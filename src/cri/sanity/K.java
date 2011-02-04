@@ -65,6 +65,7 @@ public final class K
 	public static final String FULL     = "full";
 	public static final String AGREE    = "agree";
 	public static final String VER      = "ver";
+	public static final String NAG      = "nag";
 	public static final String BT_COUNT = "bt_count";
 	// non persistent tool keys
 	public static final String LOGO        = "logo";

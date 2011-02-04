@@ -56,6 +56,9 @@ public class MainActivity extends ActivityScreen
 
 	private static void askDonate()
 	{
+		final long now = A.now();
+		if(now-A.getl(K.NAG) < Conf.NAG_TIMEOUT) return;
+		A.putc(K.NAG, now);
 		A.alert(
 			A.tr(R.string.msg_donate),
 			new A.Click(){ void on(){ A.gotoMarketDetails(Conf.DONATE_PKG); }},
@@ -67,7 +70,7 @@ public class MainActivity extends ActivityScreen
 	{
 		A.alert(
 		  A.tr(R.string.msg_eula_title),
-			A.fullName()+"\n\n"+A.tr(R.string.app_desc)+"\n\n"+A.tr(R.string.msg_eula),
+			A.fullName()+"\n\n"+A.tr(R.string.app_desc)+"\n"+A.tr(R.string.app_copy)+"\n\n"+A.tr(R.string.msg_eula),
 			new A.Click(){ void on(){ A.put(K.AGREE,true); P.setDefaults(); updateOptions(); }},
 			new A.Click(){ void on(){ finish(); }},
 			A.ALERT_OKCANC,

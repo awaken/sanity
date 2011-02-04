@@ -52,16 +52,25 @@ public abstract class PrefActivity extends PreferenceActivity
 	}
 
 	@Override
+	public void onResume()
+	{
+		A.activity = this;
+		super.onResume();
+	}
+
+	/*
+	@Override
 	public void onDestroy()
 	{
 		if(isRootActivity()) A.activity = null;
 		super.onDestroy();
 	}
+	*/
 
 	//---- general api
 
+	//public boolean isRootActivity() { return !(getParent() instanceof PrefActivity); }
 	public boolean isMainActivity() { return false; }
-	public boolean isRootActivity() { return !(getParent() instanceof PrefActivity); }
 
 	//---- preference api
 

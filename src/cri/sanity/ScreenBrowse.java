@@ -4,13 +4,16 @@ import java.io.File;
 import java.util.Comparator;
 import java.util.Stack;
 import java.util.Arrays;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceCategory;
 import android.preference.CheckBoxPreference;
+import android.provider.ContactsContract.PhoneLookup;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,6 +27,8 @@ public class ScreenBrowse extends ActivityScreen
 	private static final String SEP_DATE = Conf.REC_DATE_PATTERN.charAt(4)+"";
 	private static final String PREFIX   = Conf.REC_PREFIX;
 	private static final int  PREFIX_LEN = PREFIX.length();
+	private static final ContentResolver resolver = A.resolver();
+	private static final String[] projection = new String[]{ PhoneLookup.DISPLAY_NAME, PhoneLookup.PHOTO_ID };
 
 	private PreferenceCategory prefGroup;
 	private Stack<Pref> selected = new Stack<Pref>();
@@ -38,11 +43,7 @@ public class ScreenBrowse extends ActivityScreen
 		prefGroup = (PreferenceCategory)pref(K.REC_BROWSE);
 		dir = A.sdcardDir();
 		if(dir == null) {
-			final Preference p = new Preference(this);
-			p.setTitle(R.string.err);
-			p.setSummary(R.string.msg_dir_err);
-			prefGroup.addPreference(p);
-			empty = true;
+			empty(R.string.err, R.string.msg_dir_err);
 			return;
 		}
 		String[] recs = new File(dir).list();
@@ -88,11 +89,15 @@ public class ScreenBrowse extends ActivityScreen
 
 	//---- private api
 
-	private void empty()
+	private void empty() { empty(R.string.empty, R.string.msg_rec_empty); }
+
+	private void empty(int idTitle, int idSummary)
 	{
 		final Preference p = new Preference(this);
-		p.setTitle(R.string.empty);
-		p.setSummary(R.string.msg_rec_empty);
+		p.setPersistent(false);
+		p.setSelectable(false);
+		p.setTitle(idTitle);
+		p.setSummary(idSummary);
 		prefGroup.addPreference(p);
 		empty = true;
 	}
@@ -163,6 +168,7 @@ public class ScreenBrowse extends ActivityScreen
 			super(ScreenBrowse.this);
 			setPersistent(false);
 			this.fn = new String(fn);
+			// split filename + ext
 			fn = fn.substring(PREFIX_LEN);
 			String ext = "";
 			final int p = fn.lastIndexOf('.');
@@ -170,6 +176,7 @@ public class ScreenBrowse extends ActivityScreen
 				ext = fn.substring(p+1);
 				fn  = fn.substring(0,p);
 			}
+			// split each filename part separated by SEP_MAIN
 			final String[] fnSplit = fn.split(SEP_MAIN);
 			// set title
 			String date = fnSplit[0];
@@ -178,12 +185,25 @@ public class ScreenBrowse extends ActivityScreen
 			date = dSplit[2] + SEP_SHOW + dSplit[1] + SEP_SHOW + dSplit[0];
 			setTitle(date + ", " + time);
 			// set summary
+			if(     ext.equals("m4a")) ext = "MPEG4";
+			else if(ext.equals("3gp")) ext = "3GPP";
+			else if(ext.equals("amr")) ext = "AMR";
 			String sum;
-			if(     ext.equals("m4a")) sum = "MPEG4";
-			else if(ext.equals("3gp")) sum = "3GPP";
-			else if(ext.equals("amr")) sum = "AMR";
-			else                       sum = "";
-			if(fnSplit.length > 2) sum = sum.length()>0? sum+"  #  "+fnSplit[2] : fnSplit[2];
+			if(fnSplit.length<=2 || A.empty(fnSplit[2]))
+				sum = ext;
+			else {
+				String num = fnSplit[2];
+				sum = num+"  #  "+ext;
+				Cursor cur = resolver.query(Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI, Uri.encode(num)), projection, null, null, null);
+				if(cur.moveToNext()) {
+					String name = cur.getString(cur.getColumnIndex(PhoneLookup.DISPLAY_NAME));
+					if(!A.empty(name)) sum += '\n'+name;
+					String photo = cur.getString(cur.getColumnIndex(PhoneLookup.PHOTO_ID));
+					if(!A.empty(photo)) {
+						
+					}
+				}
+			}
 			setSummary(sum);
 			// set listener
 			setOnPreferenceChangeListener(this);

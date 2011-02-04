@@ -256,6 +256,9 @@ public final class A extends Application
   	return alert(name, msg, pos, neg, neu, type, cancelable);
   }
   public static final AlertDialog alert(String title, String msg, Click pos, Click neg, Click neu, int type, boolean cancelable) {
+  	return alert(title, msg, pos, neg, neu, type, cancelable, activity);
+  }
+  public static final AlertDialog alert(String title, String msg, Click pos, Click neg, Click neu, int type, boolean cancelable, Context ctx) {
   	int idPos=0, idNeg=0, idNeu=0;
   	switch(type) {
   		case ALERT_SIMPLE:    idPos = LAB_OK  ;                                     break;
@@ -264,7 +267,7 @@ public final class A extends Application
   		case ALERT_YESNOCANC: idPos = LAB_YES ; idNeg = LAB_NO  ; idNeu = LAB_CANC; break;
   		case ALERT_OPENDEL:   idPos = LAB_OPEN; idNeg = LAB_DEL ;                   break;
   	}
-		final AlertDialog.Builder adb = new AlertDialog.Builder(activity==null? a : activity);
+		final AlertDialog.Builder adb = new AlertDialog.Builder(ctx);
 		adb.setIcon(R.drawable.ic_bar);
 		adb.setTitle(title);
 		adb.setMessage(msg);
