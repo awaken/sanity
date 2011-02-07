@@ -16,6 +16,9 @@
 	<string name="selall">Seleccionar todo</string>
 	<string name="selnone">Deseleccionar todo</string>
 	<string name="full_only">Disponible sólo en la versión Donación</string>
+	<string name="call_in">entrante</string>
+	<string name="call_out">saliente</string>
+	<string name="unknown">desconocido</string>
 
 	<string name="groups_cat">Preferencias</string>
 	<string name="misc_cat">Varios</string>
@@ -130,6 +133,8 @@
 	<string name="rec_start_delay_sum">Tiempo de retardo para iniciar la grabación automatica.</string>
 	<string name="rec_start_speaker_title">Altavoz activado</string>
 	<string name="rec_start_speaker_sum">Iniciar la grabación automaticamente SÓLO cuando Sanity activa el altavoz (manos libres).</string>
+	<string name="rec_start_times_title">Límite de inicio</string>
+	<string name="rec_start_times_sum">El número máximo de veces que se inicie automáticamente la grabación cuando el altavoz esté encendido por Sanity durante una sola llamada.</string>
 	<string name="rec_stop_cat">Normas de desactivacion automatica</string>
 	<string name="rec_stop_title">Detener automatico</string>
 	<string name="rec_stop_sum">Activar DETENER la grabación automatica. Si la desactivadas, Sanity no podra detener la grabación automatica.</string>

@@ -20,7 +20,7 @@ public abstract class PrefActivity extends PreferenceActivity
 			this.pref = pref;
 			return on();
 		}
-		abstract boolean on();
+		public abstract boolean on();
 	}
 
 	public static abstract class Change implements OnPreferenceChangeListener
@@ -32,7 +32,7 @@ public abstract class PrefActivity extends PreferenceActivity
 			this.value = value;
 			return on();
 		}
-		abstract boolean on();
+		public abstract boolean on();
 	}
 
 	//---- Activity override

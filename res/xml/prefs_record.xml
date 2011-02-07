@@ -54,6 +54,12 @@
                         android:summary="@string/rec_start_speaker_sum"
                         android:dependency="rec_start"
                         android:key="rec_start_speaker" />
+    <ListPreference android:title="@string/rec_start_times_title"
+                    android:summary="@string/rec_start_times_sum"
+                    android:dependency="rec_start_speaker"
+                    android:entries="@array/rec_start_times_labels"
+	                  android:entryValues="@array/rec_start_times_values"
+                    android:key="rec_start_times" />
   </PreferenceCategory>
   <PreferenceCategory android:title="@string/rec_stop_cat">
     <CheckBoxPreference android:title="@string/rec_stop_title"

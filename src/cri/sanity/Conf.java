@@ -26,6 +26,6 @@ public final class Conf
 	public static final String REC_DATE_PATTERN  = "yyyy-MM-dd";
 	public static final String REC_TIME_PATTERN  = "kk.mm.ss";
 	public static final int    REC_OFFHOOK_DELAY = 1000;
-	public static final int    REC_MIN_SRV_RETRY = 1000;
+	public static final int    REC_MIN_SRV_RETRY = 2000;
 	public static final int    REC_FREE_LIMIT    = 120*1000;
 }

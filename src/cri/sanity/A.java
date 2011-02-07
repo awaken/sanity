@@ -108,7 +108,7 @@ public final class A extends Application
 			on();
 		}
 		// just override this method (default action is to close dialog)
-		void on() { dlg.cancel(); }
+		public void on() { dlg.cancel(); }
 	}
 
 	//---- methods

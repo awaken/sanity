@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 		      package="cri.sanity" android:installLocation="auto"
-		      android:versionCode="23" android:versionName="1.91">
+		      android:versionCode="25" android:versionName="1.93">
 
   <application android:icon="@drawable/ic_app"
                android:label="@string/app"
@@ -15,15 +15,15 @@
       </intent-filter>
     </activity>
 
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".ScreenGeneral" />
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".ScreenDevices" />
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".ScreenProximity" />
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".ScreenSpeaker" />
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".ScreenVolume" />
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".ScreenRecord" />
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".ScreenNotify" />
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".ScreenAbout" />
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".ScreenBrowse" />
+    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.GeneralScreen" />
+    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.DeviceScreen" />
+    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.ProximityScreen" />
+    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.SpeakerScreen" />
+    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.VolumeScreen" />
+    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.RecordScreen" />
+    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.NotifyScreen" />
+    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.AboutScreen" />
+    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.BrowseScreen" />
 
 	  <service android:name=".MainService" />
 	  <service android:name=".RecService" />

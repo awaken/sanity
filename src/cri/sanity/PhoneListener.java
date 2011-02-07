@@ -1,7 +1,5 @@
 package cri.sanity;
 
-import java.util.Timer;
-import java.util.TimerTask;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.content.BroadcastReceiver;
@@ -18,6 +16,8 @@ public final class PhoneListener extends PhoneStateListener
 {
 	public  static final int LISTEN = LISTEN_CALL_STATE|LISTEN_CALL_FORWARDING_INDICATOR;
 	private static final int FORCE_AUTOSPEAKER_DELAY = Conf.FORCE_AUTOSPEAKER_DELAY;
+	private static final int TASK_DEVS    = Task.idNew();
+	private static final int TASK_SPEAKER = Task.idNew();
 
 	private static PhoneListener activeInst;
 
@@ -31,11 +31,14 @@ public final class PhoneListener extends PhoneStateListener
 	private boolean skipHeadset, autoSpeaker, loudSpeaker, speakerCall, headsetOn, wiredHeadsetOn;
 	private boolean mobdataAuto, wifiAuto, gpsAuto, btAuto, skipBtConn, screenOff, screenOn, admin, rec;
 	private boolean lastFar;
-	private int     disableDelay, enableDelay, speakerDelay;
+	private long    disableDelay, enableDelay, speakerDelay;
 	private int     volRestore, volPhone, volWired, volBt;
 	private boolean volSolo;
-	private TimerTask enableTask, speakerTask;
-	private Timer     timer;
+
+	private final Task taskSpeakerOn  = new Task(){ public void run(){ autoSpeaker(true ); }};
+	private final Task taskSpeakerOff = new Task(){ public void run(){ autoSpeaker(false); }};
+	private final Task taskDevsOn     = new Task(){ public void run(){ enableDevs (true ); }};
+	private final Task taskDevsOff    = new Task(){ public void run(){ enableDevs (false); }};
 
 	private final Sensor proximSensor = Dev.sensorProxim();
 	//private final float proximMax = proximSensor==null ? 666 : proximSensor.getMaximumRange();
@@ -90,7 +93,7 @@ public final class PhoneListener extends PhoneStateListener
 		calls      = 0;
 		outgoing   = true;
 		callNumber = null;
-		timer      = new Timer();
+		//timer      = new Timer();
 		shutdown   = false;
 		lastFar    = true;
 		btCount    = Math.max(A.geti(K.BT_COUNT), 0);
@@ -129,6 +132,7 @@ public final class PhoneListener extends PhoneStateListener
 		headsetOn   = skipHeadset && (Dev.isHeadsetOn() || (btCount>0 && A.is(K.FORCE_BT_AUDIO)));
 		wiredHeadsetOn = skipHeadset && A.audioMan().isWiredHeadsetOn();
 		// start call recorder service if enabled
+		Task.start();
 		if(rec = A.is(K.REC)) RecService.start();
 		// register listeners
 		regHeadset();
@@ -214,8 +218,10 @@ public final class PhoneListener extends PhoneStateListener
 		shutdown = true;
 		unregProximity();
 		unregHeadset();
-		cleanAllTasks();
-		timer.cancel();
+		RecService.stop();
+		Task.stop();
+		//cleanAllTasks();
+		//timer.cancel();
 		//Dev.restoreBrightness();
 		Dev.restoreScreenTimeout();
 		if(volRestore > 0)
@@ -223,7 +229,6 @@ public final class PhoneListener extends PhoneStateListener
 		enableDevs(true);                            // restore all devices enabled before ringing
 		volSolo(false);                              // restore muted audio streams (if any)
 		screenOff(false);
-		RecService.stop();
 		if(A.is(K.VIBRATE_END)) A.vibrate();
 		Dev.enableLock(true);
 		callNumber = null;
@@ -232,6 +237,7 @@ public final class PhoneListener extends PhoneStateListener
 		System.gc();
 	}
 
+	/*
 	private void cleanEnableTask()
 	{
 		if(enableTask == null) return;
@@ -253,6 +259,7 @@ public final class PhoneListener extends PhoneStateListener
 		cleanEnableTask();
 		cleanSpeakerTask();
 	}
+	*/
 
 	private synchronized void enableDevs(boolean enable)
 	{
@@ -282,34 +289,22 @@ public final class PhoneListener extends PhoneStateListener
 
 	private void deferEnableDevs(boolean enable)
 	{
-		cleanEnableTask();
-		if(enable) {
-			if(enableDelay  <= 0) { enableDevs(true ); return; }
-			enableTask = new TimerTask(){ public void run(){ enableDevs(true ); }};
-	    timer.schedule(enableTask, enableDelay);
-		} else {
-			if(disableDelay <= 0) { enableDevs(false); return; }
-			enableTask = new TimerTask(){ public void run(){ enableDevs(false); }};
-	    timer.schedule(enableTask, disableDelay);
-		}
+		//cleanEnableTask();
+		if(enable) taskDevsOn .replace(TASK_DEVS,  enableDelay);
+		else 			 taskDevsOff.replace(TASK_DEVS, disableDelay);
 		//A.logd("defer "+(enable?"enable":"disable")+" devs");
 	}
 
 	private void deferAutoSpeaker(boolean far)
 	{
-		cleanSpeakerTask();
+		//cleanSpeakerTask();
 		if(headsetOn) return;
-		// do not defer when enabling speaker and when delay is zero!
-		if(!far || speakerDelay<=0) {
-			autoSpeaker(far);
-			return;
-		}
-		speakerTask = new TimerTask(){ public void run(){ autoSpeaker(true); }};
-    timer.schedule(speakerTask, speakerDelay);
+		if(far) taskSpeakerOn .replace(TASK_SPEAKER, speakerDelay);
+		else 		taskSpeakerOff.replace(TASK_SPEAKER, 0);
 		//A.logd("defer auto speaker on; delay="+speakerDelay);
 	}
 
-	private synchronized void autoSpeaker(boolean far)
+	private void autoSpeaker(boolean far)
 	{
 		if(headsetOn || far==Dev.isSpeakerOn()) return;
 		if(far && loudSpeaker && volRestore<=0) {
@@ -340,10 +335,7 @@ public final class PhoneListener extends PhoneStateListener
 		autoSpeaker(true);
 		speakerListener = sl;
 		// enable speaker again after a little delay (some phones auto-disable speaker on offhook)
-		cleanEnableTask();
-		// use enableTask so that any proximity changes will cancel this task
-		enableTask = new TimerTask(){ public void run(){ if(lastFar) autoSpeaker(true); }};
-    timer.schedule(enableTask, FORCE_AUTOSPEAKER_DELAY);
+		new Task(){ public void run(){ if(lastFar) autoSpeaker(true); }}.replace(TASK_SPEAKER, FORCE_AUTOSPEAKER_DELAY);
     //A.logd("force auto speaker on");
 	}
 

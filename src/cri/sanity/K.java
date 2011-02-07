@@ -60,6 +60,7 @@ public final class K
 	public static final String REC_START_SPEAKER = "rec_start_speaker";
 	public static final String REC_STOP_SPEAKER  = "rec_stop_speaker";
 	public static final String REC_STOP_LIMIT    = "rec_stop_limit";
+	public static final String REC_START_TIMES   = "rec_start_times";
 
 	// internals (hidden to user)
 	public static final String FULL     = "full";
@@ -134,6 +135,7 @@ public final class K
 		m.put(REC_START_SPEAKER, true);
 		m.put(REC_STOP_SPEAKER , true);
 		m.put(REC_STOP_LIMIT   , "0");
+		m.put(REC_START_TIMES  , "0");
 		return m;
 	}
 
@@ -151,6 +153,7 @@ public final class K
 		if(oldVer < 1.5) P.setDef(REC, REC_FMT);
 		if(oldVer < 1.8) P.setDef(REC_SRC);
 		if(oldVer < 1.9) P.setDef(NOTIFY_REC_STOP, VIBRATE_END, REC_START, REC_STOP, REC_START_DELAY, REC_STOP_DELAY, REC_START_SPEAKER, REC_STOP_SPEAKER, REC_STOP_LIMIT);
+		if(oldVer < 1.93) P.setDef(REC_START_TIMES);
 	}
 
 	private K() { }

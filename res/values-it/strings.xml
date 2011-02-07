@@ -16,6 +16,9 @@
 	<string name="selall">Seleziona tutti</string>
 	<string name="selnone">Deseleziona tutti</string>
 	<string name="full_only">Disponibile solo nella versione Donazione</string>
+	<string name="call_in">ricevuta</string>
+	<string name="call_out">effettuata</string>
+	<string name="unknown">sconosciuto</string>
 
   <string name="groups_cat">Preferenze</string>
   <string name="misc_cat">Varie</string>
@@ -116,6 +119,8 @@
 	<string name="rec_start_delay_sum">Quanto tempo aspettare prima di avviare automaticamente una registrazione.</string>
 	<string name="rec_start_speaker_title">Vivavoce acceso</string>
 	<string name="rec_start_speaker_sum">Avvia automaticamente la registrazione audio SOLO quando il vivavoce viene acceso da Sanity.</string>
+	<string name="rec_start_times_title">Limite di avvio</string>
+	<string name="rec_start_times_sum">Massimo numero di volte in cui avviare automaticamente la registrazione quando il vivavoce viene acceso da Sanity durante una singola chiamata.</string>
 	<string name="rec_stop_cat">Regole di arresto automatico</string>
 	<string name="rec_stop_title">Arresto automatico</string>
 	<string name="rec_stop_sum">Abilita l\'ARRESTO automatico di registrazione. Se disabilitato, Sanity non arresterà automaticamente le registrazioni.</string>
@@ -211,7 +216,14 @@
   <string name="changelog_title">Modifiche recenti</string>
   <string name="changelog_sum">Visualizza le modifiche recenti implementate nelle ultime versioni di Sanity.</string>
   <string name="changelog_body">
-  	Versione 1.91\n
+  	Versione 1.93\n
+  	- Nuovo: opzione per limitare il numero massimo di volte in cui avviare la registrazione automatica in una singola chiamata.\n
+  	- Fix: bug minori nel sistema di registrazione.\n
+  	- Modifica: ottimizzazione generale.\n
+  	\nVersione 1.92\n
+  	- Nuovo: nelle registrazioni audio viene indicato se si tratta di chiamate ricevute o effettuate.\n
+  	- Fix: bug nell\'avvio di una registrazione telefonica attraverso la barra di stato.\n
+  	\nVersione 1.91\n
   	- Nuovo: i nomi dei contatti sono visualizzati (se disponibili) nell\'archivio delle registrazioni.\n
   	- Fix: malfunzionamento minore dell\'interfaccia utente.\n
   	- Modifica: ora Sanity non chiede sempre di donare ogni volta che apri l\'applicazione.\n

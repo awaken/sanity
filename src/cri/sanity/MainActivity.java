@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 
 
-public class MainActivity extends ActivityScreen
+public class MainActivity extends ScreenActivity
 {
 	@Override
   public void onCreate(Bundle savedInstanceState)
@@ -42,7 +42,7 @@ public class MainActivity extends ActivityScreen
 	{
 		Preference p = pref("donate");
     if(!A.isFull() && !startDonateApp()) {
-   		on(p, new Click(){ boolean on(){ return A.gotoMarketDetails(Conf.DONATE_PKG); }});
+   		on(p, new Click(){ public boolean on(){ return A.gotoMarketDetails(Conf.DONATE_PKG); }});
 			p = pref(K.SCREEN_RECORD);
 			p.setSummary(p.getSummary()+" "+A.tr(R.string.rec_sum_free));
     }
@@ -61,7 +61,7 @@ public class MainActivity extends ActivityScreen
 		A.putc(K.NAG, now);
 		A.alert(
 			A.tr(R.string.msg_donate),
-			new A.Click(){ void on(){ A.gotoMarketDetails(Conf.DONATE_PKG); }},
+			new A.Click(){ public void on(){ A.gotoMarketDetails(Conf.DONATE_PKG); }},
 			null
 		);
 	}
@@ -71,8 +71,8 @@ public class MainActivity extends ActivityScreen
 		A.alert(
 		  A.tr(R.string.msg_eula_title),
 			A.fullName()+"\n\n"+A.tr(R.string.app_desc)+"\n"+A.tr(R.string.app_copy)+"\n\n"+A.tr(R.string.msg_eula),
-			new A.Click(){ void on(){ A.put(K.AGREE,true); P.setDefaults(); updateOptions(); }},
-			new A.Click(){ void on(){ finish(); }},
+			new A.Click(){ public void on(){ A.put(K.AGREE,true); P.setDefaults(); updateOptions(); }},
+			new A.Click(){ public void on(){ finish(); }},
 			A.ALERT_OKCANC,
 			false
 		);

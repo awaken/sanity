@@ -131,4 +131,27 @@
 		<item>0</item>
 	</string-array>
 
+	<string-array name="rec_start_times_labels">
+		<item>1 time</item>
+		<item>2 times</item>
+		<item>3 times</item>
+		<item>4 times</item>
+		<item>5 times</item>
+		<item>6 times</item>
+		<item>7 times</item>
+		<item>8 times</item>
+		<item>Unlimited</item>
+	</string-array>
+	<string-array name="rec_start_times_values">
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+		<item>6</item>
+		<item>7</item>
+		<item>8</item>
+		<item>0</item>
+	</string-array>
+
 </resources>

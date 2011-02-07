@@ -63,4 +63,16 @@
 		<item>Illimitato</item>
 	</string-array>
 
+	<string-array name="rec_start_times_labels">
+		<item>1 volta</item>
+		<item>2 volte</item>
+		<item>3 volte</item>
+		<item>4 volte</item>
+		<item>5 volte</item>
+		<item>6 volte</item>
+		<item>7 volte</item>
+		<item>8 volte</item>
+		<item>Illimitato</item>
+	</string-array>
+
 </resources>

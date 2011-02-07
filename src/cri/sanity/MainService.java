@@ -28,15 +28,14 @@ public final class MainService extends Service
 	public int onStartCommand(Intent intent, int flags, int id)
 	{
 		if(PhoneListener.isRunning()) return START_STICKY;
-		final int state = A.telMan().getCallState();
-		if(state == TelephonyManager.CALL_STATE_IDLE) { stopSelf(); return START_NOT_STICKY; }
+		if(A.telMan().getCallState() == TelephonyManager.CALL_STATE_IDLE) { stopSelf(); return START_NOT_STICKY; }
 		if(running) return START_STICKY;
 		running = true;
 		P.upgrade();
+		if(A.is(K.NOTIFY_ACTIVITY)) A.notify(A.tr(R.string.msg_running));
 		if(phoneListener == null) phoneListener = new PhoneListener();
 		phoneListener.startup();
 		A.telMan().listen(phoneListener, PhoneListener.LISTEN);
-		if(A.is(K.NOTIFY_ACTIVITY)) A.notify(A.tr(R.string.msg_running));
 		//A.logd("MainService started");
 		return START_STICKY;
 	}

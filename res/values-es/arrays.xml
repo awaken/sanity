@@ -63,4 +63,16 @@
 		<item>Ilimitado</item>
 	</string-array>
 
+	<string-array name="rec_start_times_labels">
+		<item>1 tiempo</item>
+		<item>2 tiempos</item>
+		<item>3 tiempos</item>
+		<item>4 tiempos</item>
+		<item>5 tiempos</item>
+		<item>6 tiempos</item>
+		<item>7 tiempos</item>
+		<item>8 tiempos</item>
+		<item>Ilimitado</item>
+	</string-array>
+
 </resources>
