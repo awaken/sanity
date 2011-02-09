@@ -18,6 +18,9 @@ An Android application for managing volume and for reducing electromagnetic wave
   Change log
 -------------------
 
+* version 1.94  (09/02/2011)
+- Fix: occasional crash in recording system.
+
 * version 1.93  (07/02/2011)
 - New: option to limit times for automatic recording during a single call.
 - Fix: minor bugs in recording system.
