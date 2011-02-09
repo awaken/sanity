@@ -16,18 +16,22 @@ public abstract class Task implements Runnable
 	//---- instance methods
 
 	public final void add() {
+		if(pool == null) return;
 		pool.execute(this);
 	}
 	public final void add(long delay) {
+		if(pool == null) return;
 		pool.schedule(this, delay, TimeUnit.MILLISECONDS);
 	}
 	public final void add(int id, long delay) {
+		if(pool == null) return;
 		map.put(id, pool.schedule(this, delay, TimeUnit.MILLISECONDS));
 	}
 	public final void replace(int id, long delay) {
 		//synchronized(map) {
 		final ScheduledFuture<?> sf = map.get(id);
 		if(sf != null) sf.cancel(false);
+		if(pool == null) return;
 		map.put(id, pool.schedule(this, delay, TimeUnit.MILLISECONDS));
 		//}
 	}
@@ -54,6 +58,7 @@ public abstract class Task implements Runnable
 		//}
 	}
 	public static final void stop(int ... ids) {
+		if(pool == null) return;
 		for(int id : ids)
 			stop(id);
 	}

@@ -24,7 +24,7 @@ public class Rec
 	public static final String FILE_PATTERN = Conf.REC_DATE_PATTERN+Conf.REC_SEP+Conf.REC_TIME_PATTERN;
 
 	public int    src, fmt;
-	public String prefix, suffix;
+	public String prefix, suffix, fn;
 
 	private boolean started = false;
 	private MediaRecorder mediaRec;
@@ -45,6 +45,7 @@ public class Rec
 		//A.logd("rec { src="+this.src+", fmt="+this.fmt+", prefix=\""+this.prefix+"\", suffix=\""+this.suffix+"\" }");
 	}
 
+	public final String  fn()        { return fn; }
 	public final boolean isStarted() { return started; }
 
 	public final void start()
@@ -68,16 +69,20 @@ public class Rec
 			mediaRec.stop();
 			started = false;
 			//A.logd("rec stopped");
-		} catch(Exception e) {}
-		mediaRec.reset();
+		} finally {
+			mediaRec.reset();
+		}
 	}
 	
 	public final void release()
 	{
 		if(mediaRec == null) return;
-		if(started) stop();
-		mediaRec.release();
-		mediaRec = null;
+		try {
+			if(started) stop();
+			mediaRec.release();
+		} finally {
+			mediaRec = null;
+		}
 	}
 
 	//---- private api
@@ -89,9 +94,10 @@ public class Rec
 		mediaRec.setOutputFormat(fmt);
 		mediaRec.setAudioEncoder(AudioEncoder.AMR_NB);
 		try {
-			mediaRec.setOutputFile(getAudioFn());
+			mediaRec.setOutputFile(fn = getAudioFn());
 			return true;
 		} catch(IOException e) {
+			fn = null;
 			return false;
 		}
 	}
