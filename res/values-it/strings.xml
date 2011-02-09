@@ -19,6 +19,7 @@
 	<string name="call_in">ricevuta</string>
 	<string name="call_out">effettuata</string>
 	<string name="unknown">sconosciuto</string>
+	<string name="help">Aiuto</string>
 
   <string name="groups_cat">Preferenze</string>
   <string name="misc_cat">Varie</string>
@@ -216,7 +217,9 @@
   <string name="changelog_title">Modifiche recenti</string>
   <string name="changelog_sum">Visualizza le modifiche recenti implementate nelle ultime versioni di Sanity.</string>
   <string name="changelog_body">
-  	Versione 1.93\n
+    Versione 1.94:\n
+    - Fix: crash occasionali del sistema di registrazione.\n
+  	\nVersione 1.93\n
   	- Nuovo: opzione per limitare il numero massimo di volte in cui avviare la registrazione automatica in una singola chiamata.\n
   	- Fix: bug minori nel sistema di registrazione.\n
   	- Modifica: ottimizzazione generale.\n

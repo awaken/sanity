@@ -19,6 +19,7 @@
 	<string name="call_in">entrante</string>
 	<string name="call_out">saliente</string>
 	<string name="unknown">desconocido</string>
+	<string name="help">Ayuda</string>
 
 	<string name="groups_cat">Preferencias</string>
 	<string name="misc_cat">Varios</string>

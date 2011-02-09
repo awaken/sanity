@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 		      package="cri.sanity" android:installLocation="auto"
-		      android:versionCode="25" android:versionName="1.93">
+		      android:versionCode="26" android:versionName="1.94">
 
   <application android:icon="@drawable/ic_app"
                android:label="@string/app"
@@ -15,15 +15,15 @@
       </intent-filter>
     </activity>
 
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.GeneralScreen" />
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.DeviceScreen" />
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.ProximityScreen" />
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.SpeakerScreen" />
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.VolumeScreen" />
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.RecordScreen" />
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.NotifyScreen" />
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.AboutScreen" />
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.BrowseScreen" />
+    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.GeneralActivity" />
+    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.DeviceActivity" />
+    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.ProximityActivity" />
+    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.SpeakerActivity" />
+    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.VolumeActivity" />
+    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.RecordActivity" />
+    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.NotifyActivity" />
+    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.AboutActivity" />
+    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.BrowseActivity" />
 
 	  <service android:name=".MainService" />
 	  <service android:name=".RecService" />

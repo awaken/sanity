@@ -61,7 +61,7 @@ public class RecService extends Service
 		if(running) return;
 		full = A.isFull();
 		rec  = new Rec(A.getsi(K.REC_SRC), A.getsi(K.REC_FMT));
-		if(A.is(K.NOTIFY_REC_STOP)) notifLimit = A.tr(full? R.string.msg_rec_limit : R.string.msg_rec_free_limit);
+		notifLimit = A.is(K.NOTIFY_REC_STOP) ? A.tr(full? R.string.msg_rec_limit : R.string.msg_rec_free_limit) : null;
 		if(rec.src == Rec.SRC_MIC) A.audioMan().setMicrophoneMute(false);
 		startService();
 		notifyStatus();
@@ -70,8 +70,7 @@ public class RecService extends Service
 		if(!running) return;
 		stopService();
 		Task.stop(TASK_LIMIT, TASK_EXEC);
-		rec.release();
-		rec         = null;
+		if(rec != null) { rec.release(); rec = null; }
 		notif       = null;
 		notifIntent = null;
 		notifLimit  = null;

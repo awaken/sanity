@@ -7,6 +7,7 @@ import java.util.Map;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.PreferenceGroup;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -46,6 +47,27 @@ public class ScreenActivity extends PrefActivity
     final Integer i = mapScreenMenu.get(getClass());
     if(i!=null && menu.findItem(i)!=null)
     	menu.removeItem(i);
+    MenuItem m = menu.add(R.string.help);
+    m.setIcon(android.R.drawable.ic_menu_help);
+    m.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				A.alert(A.tr(R.string.help), getGroupText(getPreferenceScreen(), false));
+				return true;
+			}
+			private String getGroupText(PreferenceGroup pg, boolean all) {
+				String msg = "";
+				final int n = pg.getPreferenceCount();
+				for(int i=0; i<n; i++) {
+					final Preference p = pg.getPreference(i);
+					if(p instanceof PreferenceGroup)
+						msg += "\n** "+p.getTitle().toString().toUpperCase()+"\n\n"+getGroupText((PreferenceGroup)p, true);
+					else if(all || !p.getKey().equals(K.LOGO))
+						msg += "- "+p.getTitle()+".\n"+p.getSummary()+"\n\n";
+				}
+				return msg;
+			}
+		});
     return true;
 	}
 	
@@ -88,14 +110,14 @@ public class ScreenActivity extends PrefActivity
 	protected final void screenerAll()
 	{
 		// all preferences screens
-  	screener(K.SCREEN_GENERAL  , GeneralScreen.class  , R.xml.prefs_general  , R.id.menu_general);
-  	screener(K.SCREEN_DEVICES  , DeviceScreen.class   , R.xml.prefs_devices  , R.id.menu_devices);
-  	screener(K.SCREEN_PROXIMITY, ProximityScreen.class, R.xml.prefs_proximity, R.id.menu_proximity);
-  	screener(K.SCREEN_SPEAKER  , SpeakerScreen.class  , R.xml.prefs_speaker  , R.id.menu_speaker);
-  	screener(K.SCREEN_VOLUME   , VolumeScreen.class   , R.xml.prefs_volume   , R.id.menu_vol);
-  	screener(K.SCREEN_RECORD   , RecordScreen.class   , R.xml.prefs_record   , R.id.menu_rec);
-  	screener(K.SCREEN_NOTIFY   , NotifyScreen.class   , R.xml.prefs_notify   , R.id.menu_notify);
-  	screener(K.SCREEN_ABOUT    , AboutScreen.class    , R.xml.prefs_about    , R.id.menu_about);
+  	screener(K.SCREEN_GENERAL  , GeneralActivity.class  , R.xml.prefs_general  , R.id.menu_general);
+  	screener(K.SCREEN_DEVICES  , DeviceActivity.class   , R.xml.prefs_devices  , R.id.menu_devices);
+  	screener(K.SCREEN_PROXIMITY, ProximityActivity.class, R.xml.prefs_proximity, R.id.menu_proximity);
+  	screener(K.SCREEN_SPEAKER  , SpeakerActivity.class  , R.xml.prefs_speaker  , R.id.menu_speaker);
+  	screener(K.SCREEN_VOLUME   , VolumeActivity.class   , R.xml.prefs_volume   , R.id.menu_vol);
+  	screener(K.SCREEN_RECORD   , RecordActivity.class   , R.xml.prefs_record   , R.id.menu_rec);
+  	screener(K.SCREEN_NOTIFY   , NotifyActivity.class   , R.xml.prefs_notify   , R.id.menu_notify);
+  	screener(K.SCREEN_ABOUT    , AboutActivity.class    , R.xml.prefs_about    , R.id.menu_about);
 	}
 
 }
