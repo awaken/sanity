@@ -65,28 +65,26 @@ public class Rec
 	public final void stop()
 	{
 		if(!started || mediaRec==null) return;
+		started = false;
 		try {
 			mediaRec.stop();
-			started = false;
-			//A.logd("rec stopped");
-		} finally {
 			mediaRec.reset();
-		}
+		} catch(Exception e) {}
+		//A.logd("rec stopped");
 	}
-	
+
 	public final void release()
 	{
 		if(mediaRec == null) return;
 		try {
 			if(started) stop();
 			mediaRec.release();
-		} finally {
-			mediaRec = null;
-		}
+		} catch(Exception e) {}
+		mediaRec = null;
 	}
 
 	//---- private api
-	
+
 	private boolean init()
 	{
 		if(mediaRec == null) mediaRec = new MediaRecorder();

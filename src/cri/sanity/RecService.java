@@ -9,89 +9,93 @@ import android.os.IBinder;
 
 
 public class RecService extends Service
-{	
-	private static final int NID        = 666;
+{
+	public static final int NID              = 666;
+	public static final int ACT_HEADSET_SKIP = 0;
+	public static final int ACT_HEADSET_ON   = 1;
+	//public static final int ACT_HEADSET_OFF  = 2;
+
 	private static final int TASK_EXEC  = Task.idNew();
 	private static final int TASK_LIMIT = Task.idNew();
-	private static boolean running      = false;
-	private static boolean full         = false;
-	private static long ts              = 0;
-	private static int autoStartDelay   = 0;
-	private static int autoStopDelay    = 0;
-	private static int autoStopLimit    = 0;
+
+	private static long ts         = 0;
+	private static boolean running = false;
+	private static boolean full    = false;
+	private static boolean autoStart  = false;
+	private static boolean autoStop   = false;
+	private static boolean autoStartSpeaker = false;
+	private static boolean autoStopSpeaker  = false;
+	private static int autoStartDelay = 0;
+	private static int autoStopDelay  = 0;
+	private static int autoStopLimit  = 0;
+	private static int autoStartTimes = 0;
+	private static boolean headsetStart   = false;
+	private static boolean headsetStop    = false;
+	private static boolean headsetOnStart = false;
+	private static boolean headsetOnStop  = false;
 	private static String notifLimit;
 	private static Rec rec;
 	private static Notification notif;
 	private static PendingIntent notifIntent;
+	private static PhoneListener pl;
+	private static Task taskRecStart, taskRecStop;
 
-	//---- inner classes
-
-	private static final Task taskRecStart = new Task(){
-		@Override
-		public void run() {
-			if(rec.isStarted()) return;
-			if(A.empty(rec.suffix)) {
-				final PhoneListener pl = PhoneListener.getActiveInstance();
-				if(pl == null) { stopService(); return; }
-				rec.suffix = Conf.REC_SEP + (pl.isOutgoing()? "out" : "in");
-				final String s = pl.callNumber();
-				if(!A.empty(s)) rec.suffix += Conf.REC_SEP + A.cleanFn(s);
-			}
-			rec.start();
-			applyLimit();
-			notifyStatus();
-		}
-	};
-
-	private static final Task taskRecStop = new Task() {
-		@Override
-		public void run() {
-			if(!rec.isStarted()) return;
-			rec.stop();
-			notifyStatus();
-		}
-	};
-
-	//---- static api
+	//---- public static api
 
 	public static final boolean isRunning() { return running; }
 	public static final boolean isRecord () { return rec!=null && rec.isStarted(); }
 
-	public static final void start() {
+	public static final void start(PhoneListener phoneListener) {
 		if(running) return;
+		pl   = phoneListener;
 		full = A.isFull();
 		rec  = new Rec(A.getsi(K.REC_SRC), A.getsi(K.REC_FMT));
 		notifLimit = A.is(K.NOTIFY_REC_STOP) ? A.tr(full? R.string.msg_rec_limit : R.string.msg_rec_free_limit) : null;
 		if(rec.src == Rec.SRC_MIC) A.audioMan().setMicrophoneMute(false);
+		buildTasks();
 		startService();
 		notifyStatus();
+		autoInit();
 	}
 	public static final void stop() {
 		if(!running) return;
 		stopService();
 		Task.stop(TASK_LIMIT, TASK_EXEC);
 		if(rec != null) { rec.release(); rec = null; }
+		pl          = null;
 		notif       = null;
 		notifIntent = null;
 		notifLimit  = null;
 		A.notifyCanc(NID);
 	}
 
-	public static final void recStart(long delay) { taskRecStart.replace(TASK_EXEC, delay); }
-	public static final void recStop (long delay) { taskRecStop .replace(TASK_EXEC, delay); }
+	public static final void recStart(long delay) { taskRecStart.exec(TASK_EXEC, delay); }
+	public static final void recStop (long delay) { taskRecStop .exec(TASK_EXEC, delay); }
 
-	public static final boolean checkAutoRec(PhoneListener pl) {
-		boolean accept = true;
-		// TODO: call number filter!
-		final boolean autoStart = accept && A.is(K.REC_START);
-		final boolean autoStop  = accept && A.is(K.REC_STOP);
-	  autoStopLimit  = !full? Conf.REC_FREE_LIMIT : (autoStop? A.getsi(K.REC_STOP_LIMIT)*60000 : 0);
-		autoStartDelay = autoStart? A.getsi(K.REC_START_DELAY) : 0;
-		autoStopDelay  = autoStop ? A.getsi(K.REC_STOP_DELAY ) : 0;
-		if(!setSpeakerListener(pl,autoStart,autoStop) && autoStart) recStartOffhook(pl);
+	public static final boolean checkAutoRec() {
+		// TODO: phone number filter!
+		if(autoStart) {
+			if(headsetStart) {
+				if(headsetOnStart == pl.isHeadsetOn())
+					recStartOffhook();
+			}
+			else if(!autoStartSpeaker)
+				recStartOffhook();
+		}
 		return true;
 	}
 	
+	public static final void updateHeadset(boolean on) {
+		if(rec == null) return;
+		if(rec.isStarted()) {
+			if(!headsetStop || on!=headsetOnStop) return;
+			recStopAuto();
+		} else {
+			if(!headsetStart || on!=headsetOnStart) return;
+			recStartAuto();
+		}
+	}
+
 	//---- public Service override
 
 	@Override
@@ -102,12 +106,10 @@ public class RecService extends Service
 		final long now = A.now();
 		if(now-ts < Conf.REC_MIN_SRV_RETRY) return START_STICKY;
 		ts = now;
-		if(!running)
-			running = true;
-		else if(rec.isStarted())
-			recStop(0);
-		else
-			recStart(0);
+		if(!running)             running = true;
+		else if(rec == null)   { A.notifyCanc(NID); stopSelf(); return START_NOT_STICKY; }
+		else if(rec.isStarted()) recStop(0);
+		else                     recStart(0);
 		return START_STICKY;
 	}
 
@@ -121,6 +123,16 @@ public class RecService extends Service
 
 	private static void startService() { A.app().startService(new Intent(A.app(), RecService.class)); }
 	private static void  stopService() { A.app(). stopService(new Intent(A.app(), RecService.class)); }
+
+	private static void recStartAuto() {
+		if(!autoStart) return;
+		recStart(autoStartDelay);
+		autoStart = --autoStartTimes != 0;
+	}
+	private static void recStopAuto() {
+		if(!autoStop) return;
+		recStop(autoStopDelay);
+	}
 	
 	private static void notifyStatus() {
 		final Context ctx = A.app();
@@ -146,36 +158,86 @@ public class RecService extends Service
 				rec.stop();
 				if(notifLimit != null) A.notify(notifLimit);
 				notifyStatus();
-		 }
-		}.replace(TASK_LIMIT, autoStopLimit);
+			}
+		}.exec(TASK_LIMIT, autoStopLimit);
 	}
 
-	private static void recStartOffhook(PhoneListener pl) {
+	private static void recStartOffhook() {
 		final long delay = (pl.isOutgoing() ? Conf.FORCE_AUTOSPEAKER_DELAY : 0) + Conf.REC_OFFHOOK_DELAY;
 		recStart(Math.max(autoStartDelay, delay));
 	}
 
-	private static boolean setSpeakerListener(PhoneListener pl, boolean autoStart, boolean autoStop) {
-		final boolean startSpeaker = autoStart && A.is(K.REC_START_SPEAKER);
-		final boolean stopSpeaker  = autoStop  && A.is(K.REC_STOP_SPEAKER);
-		if(!startSpeaker && !stopSpeaker) return false;
+	private static void setSpeakerListener() {
+		autoStartSpeaker = autoStart && A.is(K.REC_START_SPEAKER);
+		autoStopSpeaker  = autoStop  && A.is(K.REC_STOP_SPEAKER);
+		if(!autoStartSpeaker && !autoStopSpeaker) return;
 		pl.speakerListener = new SpeakerListener() {
-			private boolean start = startSpeaker;
-			private boolean stop  = stopSpeaker;
-			private int     times = A.getsi(K.REC_START_TIMES);
 			public void onSpeakerChanged(boolean enabled) {
-				if(enabled) {
-					if(start) {
-						recStart(autoStartDelay);
-						start = --times != 0;
-					}
-				} else {
-					if(stop)
-						recStop(autoStopDelay);
-				}
+				if(enabled) { if(autoStartSpeaker) recStartAuto(); } 
+				else        { if(autoStopSpeaker ) recStopAuto (); }
 			}
 		};
-		return startSpeaker;
+	}
+
+	private static void buildTasks() {
+		if(taskRecStart == null) {
+			taskRecStart = new Task() {
+				@Override
+				public void run() {
+					if(rec==null || rec.isStarted()) return;
+					if(A.empty(rec.suffix)) {
+						if(pl == null) { stopService(); return; }
+						rec.suffix = Conf.REC_SEP + (pl.isOutgoing()? "out" : "in");
+						final String s = pl.callNumber();
+						if(!A.empty(s)) rec.suffix += Conf.REC_SEP + A.cleanFn(s);
+					}
+					rec.start();
+					applyLimit();
+					notifyStatus();
+				}
+			};
+		}
+		if(taskRecStop == null) {
+			taskRecStop = new Task() {
+				@Override
+				public void run() {
+					if(rec==null || !rec.isStarted()) return;
+					rec.stop();
+					notifyStatus();
+				}
+			};
+		}
+	}
+
+	private static void autoInit()
+	{
+		autoStart     = A.is(K.REC_START);
+		autoStop      = A.is(K.REC_STOP);
+	  autoStopLimit = !full? Conf.REC_FREE_LIMIT : (autoStop? A.getsi(K.REC_STOP_LIMIT)*60000 : 0);
+	  // setup auto start
+		if(autoStart) {
+			autoStartDelay = A.getsi(K.REC_START_DELAY);
+			autoStartTimes = A.getsi(K.REC_START_TIMES);
+			final int act  = A.getsi(K.REC_START_HEADSET);
+			headsetStart   = act != ACT_HEADSET_SKIP;
+			headsetOnStart = act == ACT_HEADSET_ON;
+		} else {
+			autoStartDelay = 0;
+			autoStartTimes = 0;
+			headsetStart   = false;
+		}
+		// setup auto stop
+		if(autoStop) {
+			autoStopDelay = A.getsi(K.REC_STOP_DELAY);
+			final int act = A.getsi(K.REC_STOP_HEADSET);
+			headsetStop   = act != ACT_HEADSET_SKIP;
+			headsetOnStop = act == ACT_HEADSET_ON;
+		} else {
+			autoStopDelay = 0;
+			headsetStop   = false;
+		}
+		// setup auto start/stop when speaker is turned on/off
+		setSpeakerListener();
 	}
 
 }

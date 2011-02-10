@@ -19,16 +19,17 @@ public class VolumeActivity extends ScreenActivity
   	// setup volume ranges for ListPreferences
   	final String lev = A.tr(R.string.level) + ' ';
   	final int m = Dev.getVolumeMax(Dev.VOL_CALL);
-  	final CharSequence[] av = new CharSequence[m+1];
-  	final CharSequence[] ae = new CharSequence[m+1];
-  	av[0] = "0";
-  	av[1] = "1";
-  	av[m] = Integer.toString(m);
+  	final int n = m + 1;
+  	final CharSequence[] av = new CharSequence[n+1];
+  	final CharSequence[] ae = new CharSequence[n+1];
+  	av[0] = "-1";
+  	av[1] = "0";
+  	av[n] = Integer.toString(m);
   	ae[0] = A.tr(R.string.nochange);
   	ae[1] = lev + av[1] + " ("+A.tr(R.string.min)+')';
-  	ae[m] = lev + av[m] + " ("+A.tr(R.string.max)+')';
-  	for(int i=2; i<m; ++i) {
-  		av[i] = Integer.toString(i);
+  	ae[n] = lev + av[n] + " ("+A.tr(R.string.max)+')';
+  	for(int i=2; i<n; i++) {
+  		av[i] = Integer.toString(i-1);
   		ae[i] = lev + av[i];
   	}
   	for(String k : new String[]{ K.VOL_PHONE, K.VOL_WIRED, K.VOL_BT }) {

@@ -75,4 +75,15 @@
 		<item>Illimitato</item>
 	</string-array>
 
+	<string-array name="rec_start_headset_labels">
+		<item>Non intervenire</item>
+		<item>Avvia se le cuffie sono connesse</item>
+		<item>Avvia se le cuffie NON sono connesse</item>
+	</string-array>
+	<string-array name="rec_stop_headset_labels">
+		<item>Non intervenire</item>
+		<item>Arresta se le cuffie sono connesse</item>
+		<item>Arresta se le cuffie NON sono connesse</item>
+	</string-array>
+
 </resources>

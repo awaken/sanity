@@ -9,25 +9,23 @@ import java.util.Map;
 
 public abstract class Task implements Runnable
 {
+	private static final int POOL_SIZE = 16;
+
 	private static final Map<Integer,ScheduledFuture<?>> map = new HashMap<Integer,ScheduledFuture<?>>();
 	private static ScheduledThreadPoolExecutor pool;
 	private static int idCur = 0;
 
 	//---- instance methods
 
-	public final void add() {
+	public final void exec() {
 		if(pool == null) return;
 		pool.execute(this);
 	}
-	public final void add(long delay) {
+	public final void exec(long delay) {
 		if(pool == null) return;
 		pool.schedule(this, delay, TimeUnit.MILLISECONDS);
 	}
-	public final void add(int id, long delay) {
-		if(pool == null) return;
-		map.put(id, pool.schedule(this, delay, TimeUnit.MILLISECONDS));
-	}
-	public final void replace(int id, long delay) {
+	public final void exec(int id, long delay) {
 		//synchronized(map) {
 		final ScheduledFuture<?> sf = map.get(id);
 		if(sf != null) sf.cancel(false);
@@ -40,9 +38,10 @@ public abstract class Task implements Runnable
 
 	public static final void start() {
 		if(pool != null) return;
-		pool = new ScheduledThreadPoolExecutor(32);
+		pool = new ScheduledThreadPoolExecutor(POOL_SIZE);
 	}
 	
+	public static final int idCur() { return   idCur; }
 	public static final int idNew() { return ++idCur; }
 
 	public static final void stop() {

@@ -24,6 +24,7 @@
 	<string name="call_out">out</string>
 	<string name="unknown">unknown</string>
 	<string name="help">Help</string>
+	<string name="headset">Headsets</string>
 
   <string name="groups_cat">Preferences</string>
   <string name="misc_cat">Miscellaneous</string>
@@ -87,6 +88,10 @@
   <string name="loud_speaker_sum">Set maximum volume when Sanity automatically enables handsfree.</string>
   <string name="speaker_call_title">Enable on call start</string>
   <string name="speaker_call_sum">Enable handsfree when call begins.</string>
+  <string name="delay_speaker_call_title">Delay on start</string>
+  <string name="delay_speaker_call_sum">Delay time for automatically turning ON handsfree when call begins.</string>
+  <string name="silent_end_speaker_title">Silent end</string>
+  <string name="silent_end_speaker_sum">Turn off handsfree on call end, just before the call end sound is played.</string>
 
 	<string name="vol_cat">Volume</string>
 	<string name="vol_sum">Options for automatic volume setting during a call.</string>
@@ -123,7 +128,8 @@
 	<string name="rec_start_delay_title">Start delay</string>
 	<string name="rec_start_delay_sum">Delay time for starting audio recording automatically.</string>
 	<string name="rec_start_speaker_title">Handsfree ON</string>
-	<string name="rec_start_speaker_sum">Automatic start audio recording ONLY when handsfree is turned on by Sanity.</string>
+	<string name="rec_start_speaker_sum">Automatic start audio recording when handsfree is turned on by Sanity.</string>
+	<string name="rec_start_headset_sum">Headset rules about automatic start audio recording.</string>
 	<string name="rec_start_times_title">Max start times</string>
 	<string name="rec_start_times_sum">Maximum times to start automatic recording when handsfree is turned on by Sanity during a single call.</string>
 	<string name="rec_stop_cat">Automatic stop rules</string>
@@ -133,6 +139,7 @@
 	<string name="rec_stop_delay_sum">Delay for stopping audio recording automatically.</string>
 	<string name="rec_stop_speaker_title">Handsfree OFF</string>
 	<string name="rec_stop_speaker_sum">Automatic stop audio recording when handsfree is turned off by Sanity.</string>
+	<string name="rec_stop_headset_sum">Headset rules about automatic stop audio recording.</string>
 	<string name="rec_stop_limit_title">Time limit</string>
 	<string name="rec_stop_limit_sum">Choose the maximum duration of one audio recording. Sanity will stop the recording after this duration.</string>
 	<!-- 
@@ -221,7 +228,13 @@
   <string name="changelog_title">Recent changes</string>
   <string name="changelog_sum">Show recent changes implemented in the last Sanity versions.</string>
   <string name="changelog_body">
-    Version 1.94:\n
+    Version 1.95:\n
+    - New: options for automatic audio recording when headsets are plugged/unplugged.\n
+    - New: option to delay automatic handsfree enabling when call begins.\n
+    - New: option to silence end call sound by disabling handsfree.\n
+    - Fix: now automatic volume can be set to the real minimum level.\n
+    - Fix: other bugs.\n
+    \nVersion 1.94:\n
     - Fix: occasional crash in recording system.\n
   	\nVersion 1.93\n
   	- New: option to limit times for automatic recording during a single call.\n

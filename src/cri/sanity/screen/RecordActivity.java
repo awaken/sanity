@@ -24,9 +24,10 @@ public class RecordActivity extends ScreenActivity
 			if(!res) A.alert(A.tr(R.string.msg_rec_scan_err).replace("$FN", scanFn()));
 			return res;
 		}});
-		setEnabled(K.REC_START_SPEAKER, A.is(K.REC_START) && (A.is(K.SPEAKER_AUTO)||A.is(K.SPEAKER_CALL)));
-		setEnabled(K.REC_STOP_SPEAKER , A.is(K.REC_STOP ) && (A.is(K.SPEAKER_AUTO)||A.is(K.SPEAKER_CALL)));
+		setEnabled(K.REC_START_SPEAKER, A.is(K.REC_START) && (A.is(K.SPEAKER_AUTO) || A.is(K.SPEAKER_CALL)));
+		setEnabled(K.REC_STOP_SPEAKER , A.is(K.REC_STOP ) && (A.is(K.SPEAKER_AUTO) || A.is(K.SPEAKER_CALL)));
 		setEnabled(K.REC_STOP_LIMIT   , A.is(K.REC_STOP ) &&  A.isFull());
+		setEnabled(K.REC_START_TIMES  , A.is(K.REC_START_SPEAKER) || A.getsi(K.REC_START_HEADSET)!=RecService.ACT_HEADSET_SKIP);
 		on(K.REC_START, new Change(){ public boolean on(){
 			final boolean on = (Boolean)value;
 			setEnabled(K.REC_START_SPEAKER, on && (A.is(K.SPEAKER_AUTO) || A.is(K.SPEAKER_CALL)));
@@ -36,6 +37,14 @@ public class RecordActivity extends ScreenActivity
 			final boolean on = (Boolean)value;
 			setEnabled(K.REC_STOP_SPEAKER, on && (A.is(K.SPEAKER_AUTO) || A.is(K.SPEAKER_CALL)));
 			setEnabled(K.REC_STOP_LIMIT  , on &&  A.isFull());
+			return true;
+		}});
+		on(K.REC_START_SPEAKER, new Change(){ public boolean on(){
+			setEnabled(K.REC_START_TIMES, (Boolean)value || A.getsi(K.REC_START_HEADSET)!=RecService.ACT_HEADSET_SKIP);
+			return true;
+		}});
+		on(K.REC_START_HEADSET, new Change(){ public boolean on(){
+			setEnabled(K.REC_START_TIMES, !Integer.toString(RecService.ACT_HEADSET_SKIP).equals((String)value) || A.is(K.REC_START_SPEAKER));
 			return true;
 		}});
 		if(!A.isFull()) {

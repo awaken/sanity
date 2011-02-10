@@ -20,6 +20,7 @@
 	<string name="call_out">effettuata</string>
 	<string name="unknown">sconosciuto</string>
 	<string name="help">Aiuto</string>
+	<string name="headset">Cuffie</string>
 
   <string name="groups_cat">Preferenze</string>
   <string name="misc_cat">Varie</string>
@@ -83,6 +84,10 @@
   <string name="loud_speaker_sum">Alza il volume al massimo quando Sanity attiva automaticamente il vivavoce.</string>
   <string name="speaker_call_title">Abilita a inizio chiamata</string>
   <string name="speaker_call_sum">Abilita subito il vivavoce quando inizia la telefonata.</string>
+  <string name="delay_speaker_call_title">Ritardo di inizio</string>
+  <string name="delay_speaker_call_sum">Quanto tempo aspettare prima che il vivavoce venga automaticamente acceso quando inizia la telefonata.</string>
+  <string name="silent_end_speaker_title">Fine silenziosa</string>
+  <string name="silent_end_speaker_sum">Spegni il vivavoce a fine chiamata, poco prima che il suono di fine chiamata venga riprodotto.</string>
 
 	<string name="vol_cat">Volume</string>
 	<string name="vol_sum">Opzioni per la gestione automatica del volume durante una telefonata.</string>
@@ -119,7 +124,8 @@
 	<string name="rec_start_delay_title">Ritardo di avvio</string>
 	<string name="rec_start_delay_sum">Quanto tempo aspettare prima di avviare automaticamente una registrazione.</string>
 	<string name="rec_start_speaker_title">Vivavoce acceso</string>
-	<string name="rec_start_speaker_sum">Avvia automaticamente la registrazione audio SOLO quando il vivavoce viene acceso da Sanity.</string>
+	<string name="rec_start_speaker_sum">Avvia automaticamente la registrazione audio quando il vivavoce viene acceso da Sanity.</string>
+	<string name="rec_start_headset_sum">Regole per avviare automaticamente la registrazione tramite le cuffie.</string>
 	<string name="rec_start_times_title">Limite di avvio</string>
 	<string name="rec_start_times_sum">Massimo numero di volte in cui avviare automaticamente la registrazione quando il vivavoce viene acceso da Sanity durante una singola chiamata.</string>
 	<string name="rec_stop_cat">Regole di arresto automatico</string>
@@ -129,6 +135,7 @@
 	<string name="rec_stop_delay_sum">Quanto tempo aspettare prima di arrestare automaticamente una registrazione.</string>
 	<string name="rec_stop_speaker_title">Vivavoce spento</string>
 	<string name="rec_stop_speaker_sum">Arresta automaticamente la registrazione audio quando il vivavoce viene spento da Sanity.</string>
+	<string name="rec_stop_headset_sum">Regole per arrestare automaticamente la registrazione tramite le cuffie.</string>
 	<string name="rec_stop_limit_title">Limite di tempo</string>
 	<string name="rec_stop_limit_sum">Scegli la massima durata per una singola registrazione audio. Sanity arresterà la registrazione quando raggiunge questa durata.</string>
 	<!--
@@ -217,7 +224,13 @@
   <string name="changelog_title">Modifiche recenti</string>
   <string name="changelog_sum">Visualizza le modifiche recenti implementate nelle ultime versioni di Sanity.</string>
   <string name="changelog_body">
-    Versione 1.94:\n
+    Versione 1.95:\n
+    - Nuovo: opzioni per la registrazione automatica quando le cuffie sono collegate e non.\n
+    - Nuovo: opzione per ritardare l\'attivazione automatica del vivavoce a inizio chiamata.\n
+    - Nuovo: opzione per rendere silenzioso il suono di fine chiamata spegnendo il vivavoce.\n
+    - Fix: ora il volume automatico può essere impostato al livello minimo reale.\n
+    - Fix: altri bug.\n
+    \nVersione 1.94:\n
     - Fix: crash occasionali del sistema di registrazione.\n
   	\nVersione 1.93\n
   	- Nuovo: opzione per limitare il numero massimo di volte in cui avviare la registrazione automatica in una singola chiamata.\n

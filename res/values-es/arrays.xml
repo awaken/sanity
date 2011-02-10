@@ -75,4 +75,15 @@
 		<item>Ilimitado</item>
 	</string-array>
 
+	<string-array name="rec_start_headset_labels">
+		<item>No importa</item>
+		<item>Iniciar si auriculares están conectados</item>
+		<item>Iniciar si auriculares NO están conectados</item>
+	</string-array>
+	<string-array name="rec_stop_headset_labels">
+		<item>No importa</item>
+		<item>Detener si auriculares están conectados</item>
+		<item>Detener si auriculares NO están conectados</item>
+	</string-array>
+
 </resources>

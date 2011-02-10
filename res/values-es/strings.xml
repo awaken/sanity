@@ -20,6 +20,7 @@
 	<string name="call_out">saliente</string>
 	<string name="unknown">desconocido</string>
 	<string name="help">Ayuda</string>
+	<string name="headset">Auriculares</string>
 
 	<string name="groups_cat">Preferencias</string>
 	<string name="misc_cat">Varios</string>
@@ -73,24 +74,28 @@
 	<string name="screen_on_sum">Forzar el encendido de pantalla durante una llamada cuando el telefono esta lejos de tu oido.</string>
 
 	<string name="speaker_cat">Altavoz (manos libre)</string>
-	<string name="speaker_sum">Opciones para la activacion automatica del altavoz.</string>
+	<string name="speaker_sum">Opciones para la activación automatica del altavoz.</string>
 	<string name="auto_speaker_title">Altavoz automatico</string>
-	<string name="auto_speaker_sum">Activar/Desactivar automaticamente el altavoz cuando el telefono esta lejos/cerca de tu oido.</string>
-	<string name="delay_speaker_title">Activacion en</string>
-	<string name="delay_speaker_sum">Tiempo de espera para activar automaticamente el altavoz cuando NO esta cerca de tu oido.</string>
+	<string name="auto_speaker_sum">Activar/Desactivar automáticamente el altavoz cuando el telefono esta lejos/cerca de tu oido.</string>
+	<string name="delay_speaker_title">Retardo de activación</string>
+	<string name="delay_speaker_sum">Tiempo de espera para activar automáticamente el altavoz cuando NO esta cerca de tu oido.</string>
 	<string name="loud_speaker_title">Altavoz fuerte</string>
 	<string name="loud_speaker_sum">Ajusta el volumen cuando Sanity activa el altavoz (manos libres).</string>
 	<string name="speaker_call_title">Activar al inicio de la llamada</string>
 	<string name="speaker_call_sum">Activar pronto el altavoz (manos libres) cuando empiece la llamada.</string>
+  <string name="delay_speaker_call_title">Retardo de inicio</string>
+  <string name="delay_speaker_call_sum">Tiempo de espera para activar automáticamente el altavoz cuando empiece la llamada.</string>
+  <string name="silent_end_speaker_title">Calma fin</string>
+  <string name="silent_end_speaker_sum">Apague el altavoz (manos libres) en el extremo llamada, justo antes el sonido de extremo llamada se reproduce.</string>
 
 	<string name="vol_cat">Volumen</string>
 	<string name="vol_sum">Opciones para el ajuste automatico del volumen durante una llamada.</string>
 	<string name="vol_phone_title">Volumen del telefono</string>
-	<string name="vol_phone_sum">Ajustar automaticamente el volumen durante una llamada cuando no se ultilizan los auriculares.</string>
+	<string name="vol_phone_sum">Ajustar automáticamente el volumen durante una llamada cuando no se ultilizan los auriculares.</string>
 	<string name="vol_wired_title">Auriculares por cable</string>
-	<string name="vol_wired_sum">Ajustar automaticamente el volumen durante una llamada usando auriculares por cable.</string>
+	<string name="vol_wired_sum">Ajustar automáticamente el volumen durante una llamada usando auriculares por cable.</string>
 	<string name="vol_bt_title">Auriculares por Bluetooth</string>
-	<string name="vol_bt_sum">Ajustar automaticamente el volumen durante una llamada usando los auriculares por Bluetooth.</string>
+	<string name="vol_bt_sum">Ajustar automáticamente el volumen durante una llamada usando los auriculares por Bluetooth.</string>
 	<string name="vol_solo_title">Conversacion unicamente</string>
 	<string name="vol_solo_sum">Reproducir unicamente el audio de la conversacion, silenciando cualquier otra reproduccion durante las llamadas.</string>
 
@@ -103,7 +108,7 @@
 	<string name="notify_activity_title">Notificar actividad</string>
 	<string name="notify_activity_sum">Notificar si Sanity funciona cuando empiezas una llamada.</string>
 	<string name="notify_volume_title">Notificar el volumen</string>
-	<string name="notify_volume_sum">Notificar cuando el volumen es cambiado automaticamente por Sanity.</string>
+	<string name="notify_volume_sum">Notificar cuando el volumen es cambiado automáticamente por Sanity.</string>
   <string name="notify_rec_stop_title">Notificar la grabación</string>
   <string name="notify_rec_stop_sum">Notificar cuando la grabación del audio se detiene por Sanity.</string>
 	<string name="vibrate_end_title">Vibración</string>
@@ -129,11 +134,12 @@
 	<string name="browse_unknown_title">Fecha desconocida</string>
 	<string name="rec_start_cat">Normas de inicio automatico</string>
 	<string name="rec_start_title">Inicio automatico</string>
-	<string name="rec_start_sum">Activar GRABAR automaticamente, Si la desactivas, Sanity no podra iniciar la grabación.</string>
+	<string name="rec_start_sum">Activar GRABAR automáticamente, Si la desactivas, Sanity no podra iniciar la grabación.</string>
 	<string name="rec_start_delay_title">Retardo para grabar</string>
 	<string name="rec_start_delay_sum">Tiempo de retardo para iniciar la grabación automatica.</string>
 	<string name="rec_start_speaker_title">Altavoz activado</string>
-	<string name="rec_start_speaker_sum">Iniciar la grabación automaticamente SÓLO cuando Sanity activa el altavoz (manos libres).</string>
+	<string name="rec_start_speaker_sum">Iniciar la grabación automáticamente cuando Sanity activa el altavoz (manos libres).</string>
+	<string name="rec_start_headset_sum">Reglas para empezar a grabar automáticamente a través de auriculares.</string>
 	<string name="rec_start_times_title">Límite de inicio</string>
 	<string name="rec_start_times_sum">El número máximo de veces que se inicie automáticamente la grabación cuando el altavoz esté encendido por Sanity durante una sola llamada.</string>
 	<string name="rec_stop_cat">Normas de desactivacion automatica</string>
@@ -142,12 +148,13 @@
 	<string name="rec_stop_delay_title">Retardo para detener</string>
 	<string name="rec_stop_delay_sum">Tiempo de retardo para detener la grabación automatica.</string>
 	<string name="rec_stop_speaker_title">Altavoz desactivado</string>
-	<string name="rec_stop_speaker_sum">DETENER automaticamente la grabación cuando Sanity desactive el altavoz (manos libres).</string>
+	<string name="rec_stop_speaker_sum">DETENER automáticamente la grabación cuando Sanity desactive el altavoz (manos libres).</string>
+	<string name="rec_stop_headset_sum">Reglas para detener automáticamente la grabación con auriculares.</string>
 	<string name="rec_stop_limit_title">Tiempo límite</string>
 	<string name="rec_stop_limit_sum">Elija la duración máxima de una grabación de audio. Sanity va a detener la grabación después de esta duración.</string>
 	<!--
 	<string name="rec_start_all_title">Todas las llamadas</string>
-	<string name="rec_start_all_sum">Grabar automaticamente todas las llamadas.</string>
+	<string name="rec_start_all_sum">Grabar automáticamente todas las llamadas.</string>
 	-->
 
 	<string name="about_cat">Saber mas y contactar</string>

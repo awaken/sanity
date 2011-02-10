@@ -154,4 +154,20 @@
 		<item>0</item>
 	</string-array>
 
+	<string-array name="rec_start_headset_labels">
+		<item>Never mind</item>
+		<item>Start if headsets are plugged</item>
+		<item>Start if headsets are NOT plugged</item>
+	</string-array>
+	<string-array name="rec_stop_headset_labels">
+		<item>Never mind</item>
+		<item>Stop if headsets are plugged</item>
+		<item>Stop if headsets are NOT plugged</item>
+	</string-array>
+	<string-array name="rec_headset_values">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+
 </resources>
