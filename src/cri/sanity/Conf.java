@@ -4,7 +4,7 @@ package cri.sanity;
 public final class Conf
 {
 	public static final boolean DEBUG = false;
-	public static final boolean FULL  = false;
+	public static final boolean FULL  = true;
 
 	public static final String AUTHOR        = "Cristiano Tagliamonte";
 	public static final String AUTHOR_EMAIL  = "cristiano@tagliamonte.net";

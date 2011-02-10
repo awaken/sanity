@@ -18,6 +18,13 @@ An Android application for managing volume and for reducing electromagnetic wave
   Change log
 -------------------
 
+* version 1.95  (10/02/2011)
+- New: options for automatic audio recording when headsets are plugged/unplugged.
+- New: option to delay automatic handsfree enabling when call begins.
+- New: option to silence end call sound by disabling handsfree.
+- Fix: now automatic volume can be set to the real minimum level.
+- Fix: other bugs.
+
 * version 1.94  (09/02/2011)
 - Fix: occasional crash in recording system.
 
@@ -128,7 +135,8 @@ An Android application for managing volume and for reducing electromagnetic wave
   TODO
 -------------------
 
-* flip silence
+* auto airplane mode when headsets are plugged
+* flip silence?
 * call log sync to gmail???
 
 * record rules:
@@ -139,8 +147,6 @@ An Android application for managing volume and for reducing electromagnetic wave
     - all anonymous calls
     - contacts whitelist
     - contacts blacklist
-  + auto stop rules:
-    - when you put phone close to your ear (requires auto speaker!)
 
 * auto answer (incoming calls)
   + only if headsets
