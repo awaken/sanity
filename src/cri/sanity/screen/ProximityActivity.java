@@ -19,7 +19,7 @@ public class ProximityActivity extends ScreenActivity
 		else {
 			on(p, new Change(){ public boolean on(){
 				if((Boolean)value) Admin.request(ProximityActivity.this);
-				else A.alert(A.tr(R.string.admin_disable), new A.Click() {
+				else A.alert(A.tr(R.string.ask_admin), new A.Click() {
 					@Override
 					public void on() {
 						Admin.remove();

@@ -1,8 +1,6 @@
 package cri.sanity;
 
 import java.io.File;
-import java.util.Currency;
-import java.util.Locale;
 import java.util.Map;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -34,17 +32,14 @@ import android.os.Vibrator;
 import android.net.ConnectivityManager;
 import android.app.KeyguardManager;
 import android.app.admin.DevicePolicyManager;
+import android.widget.Toast;
 //import android.os.SystemClock;
-//import android.widget.Toast;
 
 
 public final class A extends Application
 {
-	public static final boolean  DEBUG  = Conf.DEBUG;
-	public static final boolean  FULL   = Conf.FULL;
-	public static final String   AUTHOR = Conf.AUTHOR;
-	public static final long     VIBRATE_TIME   = Conf.VIBRATE_TIME;
-	public static final boolean  DEF_CANCELABLE = true;
+	public static final boolean  DEBUG = Conf.DEBUG;
+	public static final boolean  FULL  = Conf.FULL;
 	public static final int      SDK = android.os.Build.VERSION.SDK_INT;
 	public static final int      PRI = 1;
 	public static final int      NID = 33;
@@ -53,6 +48,7 @@ public final class A extends Application
 	public static final int      ALERT_YESNO     = 2;
 	public static final int      ALERT_YESNOCANC = 3;
 	public static final int      ALERT_OPENDEL   = 4;
+	public static final int      ALERT_BAKRES    = 5;
 	public static final int      DEF_ALERT       = ALERT_OKCANC;
 	public static final int      LAB_OK   = R.string.ok;
 	public static final int      LAB_CANC = R.string.canc;
@@ -60,10 +56,13 @@ public final class A extends Application
 	public static final int      LAB_NO   = R.string.no;
 	public static final int      LAB_OPEN = R.string.open;
 	public static final int      LAB_DEL  = R.string.del;
+	public static final int      LAB_BAK  = R.string.backup;
+	public static final int      LAB_REST = R.string.restore;
+	public static final boolean  DEF_CANCELABLE = true;
 	public static final String   DEF_STRING  = "";
 	public static final boolean  DEF_BOOL    = false;
 	public static final int      DEF_INT     = 0;
-	public static final int      DEF_LONG    = DEF_INT;
+	public static final long     DEF_LONG    = DEF_INT;
 	public static final float    DEF_FLOAT   = DEF_INT;
 	public static final String   DEF_SBOOL   = Boolean.toString(DEF_BOOL);
 	public static final String   DEF_SINT    = Integer.toString(DEF_INT );
@@ -102,8 +101,8 @@ public final class A extends Application
 	{
 		public DialogInterface dlg;
 		public int id;
-		public void onClick(final DialogInterface dialog, final int id) {
-			this.dlg = dialog;
+		public void onClick(DialogInterface dlg, int id) {
+			this.dlg = dlg;
 			this.id  = id;
 			on();
 		}
@@ -131,7 +130,7 @@ public final class A extends Application
 	public static final SharedPreferences.Editor edit() { return edit;  }
 	public static final String                    pkg() { return pkgInfo.packageName; }
 	public static final Resources           resources() { if(resources==null) resources=a.getResources(); return resources; }
-	public static final ContentResolver        resolver() { if(ctxRes==null) ctxRes=a.getContentResolver(); return ctxRes; }
+	public static final ContentResolver      resolver() { if(ctxRes==null) ctxRes=a.getContentResolver(); return ctxRes; }
 	public static final PackageInfo           pkgInfo() { return pkgInfo; }
 	public static final String                    ver() { return pkgInfo.versionName; }
 	public static final String               fullName() { return name + "  v" + ver(); }
@@ -155,14 +154,9 @@ public final class A extends Application
 	public static final long now() { return System.currentTimeMillis(); }
 	//public static final long uptime() { return SystemClock.uptimeMillis(); }
 
-	public static final String donateUrl() {
-		return Conf.DONATE_URL.replace(Conf.CURRENCY_VAR, Currency.getInstance(Locale.getDefault()).getCurrencyCode());
-	}
-	public static boolean gotoDonateUrl() { return gotoUrl(donateUrl()); }
-
 	//public static final boolean gotoMarketPkg()             { return gotoMarketPkg(a.getPackageName()); }
 	//public static final boolean gotoMarketPkg(String pkg)   { return gotoMarketUrl("search?q=pname:\""+pkg+'"'); }
-	public static final boolean gotoMarketPub()               { return gotoMarketUrl("search?q=pub:\""+AUTHOR+'"'); }
+	public static final boolean gotoMarketPub()               { return gotoMarketUrl("search?q=pub:\""+Conf.AUTHOR+'"'); }
 	public static final boolean gotoMarketDetails()           { return gotoMarketDetails(a.getPackageName()); }
 	public static final boolean gotoMarketDetails(String pkg) { return gotoMarketUrl("details?id="+pkg); }
 	public static final boolean gotoMarketUrl(String query) {
@@ -186,7 +180,7 @@ public final class A extends Application
 		final File  file = new File(dir);
 		return file.isDirectory()||file.mkdir() ? dir : null;
 	}
-	
+
 	public static final String cleanFn(String fn) {
 		for(String s : new String[]{ "?", ":", "*", "\""})
 			fn = fn.replace(s, "");
@@ -195,23 +189,21 @@ public final class A extends Application
 	
 	// string conversion
 	/*
-	public int    s2i(String s) { return Integer.parseInt  (s); }
-	public long   s2l(String s) { return Long   .parseLong (s); }
-	public float  s2f(String s) { return Float  .parseFloat(s); }
-	public String i2s(int    n) { return Integer.toString  (n); }
-	public String l2s(long   n) { return Long   .toString  (n); }
-	public String f2s(float  n) { return Float  .toString  (n); }
+	public int    s2b(String  s) { return Boolean.parseBoolean(s); }
+	public int    s2i(String  s) { return Integer.parseInt    (s); }
+	public long   s2l(String  s) { return Long   .parseLong   (s); }
+	public float  s2f(String  s) { return Float  .parseFloat  (s); }
+	public String b2s(boolean b) { return Boolean.toString    (b); }
+	public String i2s(int     i) { return Integer.toString    (i); }
+	public String l2s(long    l) { return Long   .toString    (l); }
+	public String f2s(float   f) { return Float  .toString    (f); }
 	*/
 
 	// basic notification/interaction
-	/*
-	public static final void toast (String msg)           { Toast.makeText(a, msg  , Toast.LENGTH_LONG ).show(); }
-	public static final void toast (int  resid)           { Toast.makeText(a, resid, Toast.LENGTH_LONG ).show(); }
-	public static final void toast (String msg, int time) { Toast.makeText(a, msg  , time              ).show(); }
-	public static final void toast (int  resid, int time) { Toast.makeText(a, resid, time              ).show(); }
-	public static final void toastF(String msg)           { Toast.makeText(a, msg  , Toast.LENGTH_SHORT).show(); }
-	public static final void toastF(int  resid)           { Toast.makeText(a, resid, Toast.LENGTH_SHORT).show(); }
-	*/
+	public static final void toast(Context ctx, String msg) { Toast.makeText(ctx, msg  , Toast.LENGTH_SHORT).show(); }
+	public static final void toast(Context ctx, int  resId) { Toast.makeText(ctx, resId, Toast.LENGTH_SHORT).show(); }
+	public static final void toast(String msg)              { Toast.makeText(a  , msg  , Toast.LENGTH_SHORT).show(); }
+	public static final void toast(int  resId)              { Toast.makeText(a  , resId, Toast.LENGTH_SHORT).show(); }
 
 	public static final void notify(String msg)                          { notify(name , msg, NID, now()); }
 	public static final void notify(String msg, int id)                  { notify(name , msg, id , now()); }
@@ -264,8 +256,9 @@ public final class A extends Application
   		case ALERT_SIMPLE:    idPos = LAB_OK  ;                                     break;
   		case ALERT_OKCANC:    idPos = LAB_OK  ; idNeg = LAB_CANC;                   break;
   		case ALERT_YESNO:     idPos = LAB_YES ; idNeg = LAB_NO  ;                   break;
-  		case ALERT_YESNOCANC: idPos = LAB_YES ; idNeg = LAB_NO  ; idNeu = LAB_CANC; break;
+  		case ALERT_YESNOCANC: idPos = LAB_YES ; idNeu = LAB_NO  ; idNeg = LAB_CANC; break;
   		case ALERT_OPENDEL:   idPos = LAB_OPEN; idNeg = LAB_DEL ;                   break;
+  		case ALERT_BAKRES:    idPos = LAB_BAK ; idNeg = LAB_REST;                   break;
   	}
 		final AlertDialog.Builder adb = new AlertDialog.Builder(ctx);
 		adb.setIcon(R.drawable.ic_bar);
@@ -315,7 +308,7 @@ public final class A extends Application
 	public static final long    getsl(String key, String def) { return Long   .parseLong (prefs.getString(key, def       )); }
 	public static final float   getsf(String key)             { return Float  .parseFloat(prefs.getString(key, DEF_SFLOAT)); }
 	public static final float   getsf(String key, String def) { return Float  .parseFloat(prefs.getString(key, def       )); }
-	
+
 	public static final Map<String,?> allPrefs() { return prefs.getAll(); }
 	public static final boolean has (String key) { return prefs.contains(key); }
 	public static final A       del (String key) { edit.remove(key);          return a; }
@@ -396,7 +389,7 @@ public final class A extends Application
 		return btAdapter;
 	}
 	public static final void vibrate() {
-		((Vibrator)A.app().getSystemService(VIBRATOR_SERVICE)).vibrate(VIBRATE_TIME);
+		((Vibrator)A.app().getSystemService(VIBRATOR_SERVICE)).vibrate(Conf.VIBRATE_TIME);
 	}
 
 	//---- private api

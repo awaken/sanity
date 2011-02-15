@@ -5,6 +5,7 @@ import cri.sanity.screen.*;
 import java.util.HashMap;
 import java.util.Map;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceGroup;
@@ -13,13 +14,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 
-public class ScreenActivity extends PrefActivity
+public class ScreenActivity extends PrefActivity implements SharedPreferences.OnSharedPreferenceChangeListener
 {
 	private static final Click clickLogo = new Click(){ public boolean on(){ return A.gotoMarketPub(); }};
 	private static final Map<Class<?>,Integer> mapScreenPref = new HashMap<Class<?>,Integer>();
 	private static final Map<Class<?>,Integer> mapScreenMenu = new HashMap<Class<?>,Integer>();
 	private static final Map<Integer,Class<?>> mapMenuScreen = new HashMap<Integer,Class<?>>();
+	private static final Map<String,Object>    mapSkipKeys   = P.skipKeysMap();
 
+	protected boolean skipAllKeys = false;
+	
 	//---- Activity override
 
 	@Override
@@ -38,6 +42,20 @@ public class ScreenActivity extends PrefActivity
 			on(p, clickLogo);
 		}
   }
+
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		A.prefs().registerOnSharedPreferenceChangeListener(this);
+	}
+
+	@Override
+	public void onPause()
+	{
+		super.onPause();
+		A.prefs().unregisterOnSharedPreferenceChangeListener(this);
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
@@ -62,8 +80,12 @@ public class ScreenActivity extends PrefActivity
 					final Preference p = pg.getPreference(i);
 					if(p instanceof PreferenceGroup)
 						msg += "\n** "+p.getTitle().toString().toUpperCase()+"\n\n"+getGroupText((PreferenceGroup)p, true);
-					else if(all || !p.getKey().equals(K.LOGO))
-						msg += "- "+p.getTitle()+".\n"+p.getSummary()+"\n\n";
+					else if(all || !p.getKey().equals(K.LOGO)) {
+						msg += "- "+p.getTitle()+".\n"+p.getSummary()+'\n';
+						try { msg += A.tr(R.string.class.getDeclaredField("help_"+p.getKey()).getInt(R.string.class))+'\n'; }
+						catch(Exception e) {}
+						msg += '\n';
+					}
 				}
 				return msg;
 			}
@@ -81,7 +103,7 @@ public class ScreenActivity extends PrefActivity
 		startActivity(new Intent(A.app(), cls));
 		return true;
 	}
-	
+
 	//---- public api
 
 	public static final boolean alertChangeLog() {
@@ -118,6 +140,14 @@ public class ScreenActivity extends PrefActivity
   	screener(K.SCREEN_RECORD   , RecordActivity.class   , R.xml.prefs_record   , R.id.menu_rec);
   	screener(K.SCREEN_NOTIFY   , NotifyActivity.class   , R.xml.prefs_notify   , R.id.menu_notify);
   	screener(K.SCREEN_ABOUT    , AboutActivity.class    , R.xml.prefs_about    , R.id.menu_about);
+	}
+
+	//---- OnSharedPreferenceChangeListener implementation
+
+	public void onSharedPreferenceChanged(SharedPreferences prefs, String key)
+	{
+		if(skipAllKeys || mapSkipKeys.containsKey(key)) return;
+		if(A.has(K.PRF_LAB)) A.del(K.PRF_LAB).delc(K.PRF_FN);
 	}
 
 }

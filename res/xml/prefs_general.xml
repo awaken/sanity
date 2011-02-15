@@ -18,6 +18,11 @@
                         android:summary="@string/reverse_proximity_sum"
                         android:dependency="enabled"
                         android:key="reverse_proximity" />
+    <Preference android:title="@string/backup_prefs_title"
+                android:summary="@string/backup_prefs_sum"
+                android:widgetLayout="@layout/img_backup"
+                android:persistent="false"
+                android:key="backup_prefs" />
     <Preference android:title="@string/reset_prefs_title"
                 android:summary="@string/reset_prefs_sum"
                 android:persistent="false"

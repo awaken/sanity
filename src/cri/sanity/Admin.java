@@ -14,7 +14,7 @@ public final class Admin
 	
 	public static class Receiver extends DeviceAdminReceiver {
 		@Override
-	  public CharSequence onDisableRequested(Context ctx, Intent i) { return A.tr(R.string.admin_disable); }
+	  public CharSequence onDisableRequested(Context ctx, Intent i) { return A.tr(R.string.ask_admin); }
 	}
 
   //---- static methods

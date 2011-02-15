@@ -57,27 +57,50 @@
 		<item>10000</item>
 	</string-array>
 
-	<string-array name="delay_speaker_labels">
-		<item>Immediate</item>
-		<item>1 second</item>
-		<item>2 seconds</item>
-		<item>3 seconds</item>
-		<item>4 seconds</item>
-		<item>5 seconds</item>
-		<item>6 seconds</item>
-		<item>7 seconds</item>
-		<item>8 seconds</item>
+	<string-array name="speaker_call_labels">
+		<item>Never</item>
+		<item>Incoming calls only</item>
+		<item>Outgoing calls only</item>
+		<item>Always</item>
 	</string-array>
-	<string-array name="delay_speaker_values">
+	<string-array name="speaker_call_values">
 		<item>0</item>
-		<item>1000</item>
-		<item>2000</item>
-		<item>3000</item>
-		<item>4000</item>
-		<item>5000</item>
-		<item>6000</item>
-		<item>7000</item>
-		<item>8000</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+	</string-array>
+
+	<string-array name="speaker_count_labels">
+		<item>Never</item>
+		<item>1 time</item>
+		<item>2 times</item>
+		<item>3 times</item>
+		<item>4 times</item>
+		<item>5 times</item>
+		<item>6 times</item>
+		<item>7 times</item>
+		<item>8 times</item>
+		<item>9 times</item>
+		<item>10 times</item>
+		<item>15 times</item>
+		<item>20 times</item>
+		<item>Always</item>
+	</string-array>
+	<string-array name="speaker_count_values">
+		<item>-1</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+		<item>6</item>
+		<item>7</item>
+		<item>8</item>
+		<item>9</item>
+		<item>10</item>
+		<item>15</item>
+		<item>20</item>
+		<item>0</item>
 	</string-array>
 
 	<string-array name="rec_src_labels">
@@ -105,7 +128,9 @@
 	</string-array>
 
 	<string-array name="rec_stop_limit_labels">
+		<item>1 minute</item>
 		<item>2 minutes</item>
+		<item>3 minutes</item>
 		<item>5 minutes</item>
 		<item>10 minutes</item>
 		<item>15 minutes</item>
@@ -118,7 +143,9 @@
 		<item>Unlimited</item>
 	</string-array>
 	<string-array name="rec_stop_limit_values">
+		<item>1</item>
 		<item>2</item>
+		<item>3</item>
 		<item>5</item>
 		<item>10</item>
 		<item>15</item>
@@ -129,6 +156,17 @@
 		<item>90</item>
 		<item>120</item>
 		<item>0</item>
+	</string-array>
+
+	<string-array name="rec_start_dir_labels">
+		<item>All</item>
+		<item>Incoming calls only</item>
+		<item>Outgoing calls only</item>
+	</string-array>
+	<string-array name="rec_start_dir_values">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
 	</string-array>
 
 	<string-array name="rec_start_times_labels">

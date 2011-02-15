@@ -7,7 +7,6 @@ import android.provider.Settings.SettingNotFoundException;
 import android.provider.Settings.System;
 import android.telephony.TelephonyManager;
 import android.bluetooth.BluetoothAdapter;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -105,10 +104,11 @@ public final class Dev
 		return ds==TelephonyManager.DATA_CONNECTED || ds==TelephonyManager.DATA_CONNECTING;
 	}
 	public static final boolean isWifiOn() { return haveWifi() && A.wifiMan().isWifiEnabled(); }
-	public static final boolean isBtOn()   { return haveBt() && A.btAdapter().isEnabled(); }
-	public static final boolean isGpsOn()  { return haveLoc() && A.locMan().isProviderEnabled(LocationManager.GPS_PROVIDER); }
-	
+	public static final boolean isBtOn()   { return haveBt  () && A.btAdapter().isEnabled(); }
+	public static final boolean isGpsOn()  { return haveLoc () && A.locMan().isProviderEnabled(LocationManager.GPS_PROVIDER); }
+
 	//public static final boolean isScreenOn() { return A.powerMan().isScreenOn(); }
+	//public static final boolean isFlightModeOn() { return getSysInt(System.AIRPLANE_MODE_ON) == 1; }
 
 	public static final boolean isHotspotOn()        { return gWifi().isHotspotOn(); }
 	public static final boolean isHotspotSupported() { return gWifi().callable("getWifiApState"); }
@@ -131,6 +131,16 @@ public final class Dev
 		if(bt == null) return false;
 		return enable ? bt.enable() : bt.disable();
 	}
+
+	/*
+	public static final boolean enableFlightMode(boolean enable) {
+		if(!System.putInt(A.resolver(), System.AIRPLANE_MODE_ON, enable? 1 : 0)) return false;
+		final Intent i = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+		i.putExtra("state", enable);
+		A.app().sendBroadcast(i);
+		return true;
+	}
+	*/
 
 	public static final void toggleGps() {
 		// use undocumented android broadcast
@@ -165,10 +175,8 @@ public final class Dev
 			return -1; 
 		}
 	}
-	public static final void setSysInt(String key, int val) {
-		final ContentResolver cr = A.resolver();
-		System.putInt(cr, key, val);
-		System.putInt(cr, key, val);
+	public static final void putSysInt(String key, int val) {
+		System.putInt(A.resolver(), key, val);
 	}
 
 	public static final int getScreenOffTimeout() {
@@ -176,7 +184,7 @@ public final class Dev
 	}
 	public static final void setScreenOffTimeout(int timeout) {
 		if(screenTimeoutBak < 0) screenTimeoutBak = getScreenOffTimeout();
-		setSysInt(System.SCREEN_OFF_TIMEOUT, timeout);
+		putSysInt(System.SCREEN_OFF_TIMEOUT, timeout);
 	}
 	public static final void restoreScreenTimeout() {
 		if(screenTimeoutBak < 0) return;

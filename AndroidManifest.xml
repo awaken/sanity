@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 		      package="cri.sanity" android:installLocation="auto"
-		      android:versionCode="28" android:versionName="1.95">
+		      android:versionCode="30" android:versionName="1.97">
 
   <application android:icon="@drawable/ic_app"
                android:label="@string/app"
@@ -33,7 +33,6 @@
         <action android:name="android.intent.action.PHONE_STATE" />
       </intent-filter>
     </receiver>
-
 	  <receiver android:name=".OutgoingReceiver">
       <intent-filter>
         <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
@@ -44,6 +43,7 @@
       <intent-filter>
         <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
         <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
+				<!-- <action android:name="android.intent.action.MEDIA_BUTTON" />  -->
       </intent-filter>
     </receiver>
 

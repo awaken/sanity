@@ -25,14 +25,17 @@
 	<string name="unknown">unknown</string>
 	<string name="help">Help</string>
 	<string name="headset">Headsets</string>
+	<string name="backup">Backup</string>
+	<string name="restore">Restore</string>
 
   <string name="groups_cat">Preferences</string>
   <string name="misc_cat">Miscellaneous</string>
+  <string name="geek_cat">Under the Hood</string>
 
   <string name="general_cat">General</string>
   <string name="general_sum">Application main options.</string>
   <string name="enable_title">Enable Sanity</string>
-  <string name="enable_sum">Enable or disable whole Sanity sytem. If disabled, this application won\'t affect during phone calls.</string>
+  <string name="enable_sum">Enable or disable whole Sanity sytem. If disabled, this application won\'t affect phone calls.</string>
   <string name="skip_headset_title">Skip if headsets are used</string>
   <string name="skip_headset_sum">Disable automatic handling of devices and handsfree when headsets (wired or wireless) are connected.</string>
   <string name="force_bt_audio_title">Force BT audio</string>
@@ -40,7 +43,9 @@
   <string name="reverse_proximity_title">Reverse proximity</string>
   <string name="reverse_proximity_sum">Check this option only if Sanity enable/disable handsfree or devices in a wrong way when the phone is far/close to your ear.</string>
 	<string name="reset_prefs_title">Reset to default</string>
-	<string name="reset_prefs_sum">Set default values to all application preferences.</string>
+	<string name="reset_prefs_sum">Set default values for all application preferences.</string>
+	<string name="backup_prefs_title">Backup and Restore</string>
+	<string name="backup_prefs_sum">Tap here to backup/restore all current preferences to/from memory card.</string>
 
   <string name="devices_cat">Devices to disable</string>
   <string name="devices_sum">Which devices should be disabled for reducing electromagnetic waves during a call.</string>
@@ -90,8 +95,12 @@
   <string name="speaker_call_sum">Enable handsfree when call begins.</string>
   <string name="delay_speaker_call_title">Delay on start</string>
   <string name="delay_speaker_call_sum">Delay time for automatically turning ON handsfree when call begins.</string>
-  <string name="silent_end_speaker_title">Silent end</string>
+  <string name="silent_end_speaker_title">Silent call end</string>
   <string name="silent_end_speaker_sum">Turn off handsfree on call end, just before the call end sound is played.</string>
+  <string name="speaker_on_count_title">Limit to Enable</string>
+  <string name="speaker_on_count_sum">How many times up to automatically enable handsfree during one call when the phone is far from ear.</string>
+  <string name="speaker_off_count_title">Limit to Disable</string>
+  <string name="speaker_off_count_sum">How many times up to automatically disable handsfree during one call when the phone is close to ear.</string>
 
 	<string name="vol_cat">Volume</string>
 	<string name="vol_sum">Options for automatic volume setting during a call.</string>
@@ -108,11 +117,11 @@
 	<string name="rec_sum">Options for recording call audio on memory card.</string>
 	<string name="rec_sum_free">This free version is limited to 2 minutes for each recording.</string>
 	<string name="rec_warn_title">Legal notes</string>
-	<string name="rec_warn_sum">Attention please: in some countries call recording is forbidden by government laws. The author disagrees every illegal use of Sanity. Be awareness, use it at your risk!</string>
+	<string name="rec_warn_sum">Attention please: in some countries call recording is forbidden by government laws. The author disagrees every illegal use of Sanity. Be aware, use it at your risk!</string>
 	<string name="rec_enable_title">Enable recording system</string>
 	<string name="rec_enable_sum">Put recording notification on statusbar during phone call: tap that notification to start/stop call recording.</string>
 	<string name="rec_src_title">Audio source</string>
-	<string name="rec_src_sum">Select the source device used for recording audio. ATTENTION: only \"Microphone\" source works on many phones!!</string>
+	<string name="rec_src_sum">Select the source device used for recording audio. Attention: many phones are limited to "Microphone" as only working one!</string>
 	<string name="rec_fmt_title">Audio format</string>
 	<string name="rec_fmt_sum">Select file format used to save audio file recordings.</string>
 	<string name="rec_browse_title">Browse recorded files</string>
@@ -130,18 +139,20 @@
 	<string name="rec_start_speaker_title">Handsfree ON</string>
 	<string name="rec_start_speaker_sum">Automatic start audio recording when handsfree is turned on by Sanity.</string>
 	<string name="rec_start_headset_sum">Headset rules about automatic start audio recording.</string>
+	<string name="rec_start_dir_title">Call type</string>
+	<string name="rec_start_dir_sum">Choose call directions for starting audio recording.</string>
 	<string name="rec_start_times_title">Max start times</string>
-	<string name="rec_start_times_sum">Maximum times to start automatic recording when handsfree is turned on by Sanity during a single call.</string>
+	<string name="rec_start_times_sum">Maximum times to start automatic recording during a single call.</string>
 	<string name="rec_stop_cat">Automatic stop rules</string>
 	<string name="rec_stop_title">Automatic stop</string>
-	<string name="rec_stop_sum">Enable automatic STOP recording. If disabled, Sanity won\'t stop recording automatically.</string>
+	<string name="rec_stop_sum">Enable automatic STOP recording. If disabled, you\'ll have to stop manually.</string>
 	<string name="rec_stop_delay_title">Stop delay</string>
 	<string name="rec_stop_delay_sum">Delay for stopping audio recording automatically.</string>
 	<string name="rec_stop_speaker_title">Handsfree OFF</string>
 	<string name="rec_stop_speaker_sum">Automatic stop audio recording when handsfree is turned off by Sanity.</string>
 	<string name="rec_stop_headset_sum">Headset rules about automatic stop audio recording.</string>
 	<string name="rec_stop_limit_title">Time limit</string>
-	<string name="rec_stop_limit_sum">Choose the maximum duration of one audio recording. Sanity will stop the recording after this duration.</string>
+	<string name="rec_stop_limit_sum">Choose the maximum duration of one audio recording. Sanity will stop the recording after this time.</string>
 	<!-- 
 	<string name="rec_start_all_title">All calls</string>
 	<string name="rec_start_all_sum">Automatic start audio recording for every phone calls.</string>
@@ -184,8 +195,15 @@
 
 	<string name="admin_title">Administrator</string>
 	<string name="admin_sum">Use administrator privileges for turning off screen when you put the phone close to your ear during a call.</string>
-	<string name="admin_disable">Sanity requires administrator privileges just for turning off the screen during a phone call. Without such privileges, Sanity cannot turn off screen when you put the phone close to your ear during a call.\n\nAnyway, disabling administrator is required to uninstall Sanity.\n\nAre you sure to deny administrator privileges to Sanity?</string>
-	<string name="admin_explanation">Confirm this request to allow Sanity for turning off the screen during phone calls.\n\REMEMBER to disable \"Administrator\" option in Sanity for uninstalling the application! While Sanity is a device administrator, you cannot uninstall it.</string>
+	<string name="admin_explanation">Confirm this request to allow Sanity to turn off the screen during phone calls.\n\nREMEMBER to disable \"Administrator\" option in Sanity for uninstalling the application! While Sanity is a device administrator, you cannot uninstall it.</string>
+	<string name="ask_admin">Sanity requires administrator privileges just for turning off the screen during a phone call. Without such privileges, Sanity cannot turn off screen when you put the phone close to your ear during a call.\n\nAnyway, disabling administrator is required to uninstall Sanity.\n\nAre you sure to deny administrator privileges to Sanity?</string>
+  <string name="ask_force_bt_audio">WARNING: if your bluetooth audio already works well with Sanity, don\'t activate this option!\n\nThis option should be activated only if Sanity doesn\'t work well with your bluetooth audio.\n\nIf this option is activated, Sanity will enable/disable nothing while any bluetooth device is connected.\n\nAre you sure to activate this option to force bluetooth audio?</string>
+  <string name="ask_reverse_proximity">WARNING: if Sanity already works well on your phone, don\'t activate this option!\n\nThis option should be activated on those phones have a bugged proximity sensor.\n\nAre you sure to activate this option for reversing proximity?</string>
+  <string name="ask_reset_prefs">WARNING: this function will restore all default preference values.\n\nAll current application preferences will be lost.\n\nWould you really reset all preferences?</string>
+  <string name="ask_restore">Preferences backup file exists in memory card. Would you like to restore all preferences now?</string>
+  <string name="ask_del_one">Are you sure to DELETE the selected file?</string>
+  <string name="ask_del_all">Are you sure to DELETE all %s selected files?</string>
+	<string name="ask_donate">Thank you for using Sanity. This is the free version.\n\nIf you like Sanity, you can donate for supporting it. When donating, this dialog will be suppressed and the 2 minutes limit of the call recorder will be removed.\n\nWould you open Market now for donating?</string>
 
   <string name="msg_dir_err">Sanity error: unable to create directory on sdcard for saving audio recording!</string>
   <string name="msg_rec_err">Sanity error: unable to start audio recording!</string>
@@ -194,41 +212,41 @@
   <string name="msg_rec_stop">Tap here to STOP call recording</string>
   <string name="msg_rec_limit">Sanity: stop recording.</string>
   <string name="msg_rec_free_limit">Sanity: 2 minutes limit reached, recording is stopped.</string>
-  <string name="msg_rec_scan_err">Error while changing scanner properties: permission denied on file \"$FN\"</string>
+  <string name="msg_rec_scan_err">Error while changing scanner properties: permission denied on file \"%s\"</string>
   <string name="msg_rec_empty">There are no audio files of call records. Start a call record to see its audio file here.</string>
   <string name="msg_rec_file">Choose what to do with this audio file.</string>
-  <string name="msg_confirm_del_one">Are you sure to DELETE the selected file?</string>
-  <string name="msg_confirm_del_all">Are you sure to DELETE all $N selected files?</string>
-  <string name="msg_del_err">Error: delete failed for $N files!</string>
-  <string name="msg_selected_all">$N files selected</string>
+  <string name="msg_del_err">Error: delete failed for %s files!</string>
+  <string name="msg_selected_all">%s files selected</string>
 	<string name="msg_require_froyo">This option requires at least Android version 2.2 (Froyo). Sorry, your phone has Android 2.1 (Eclair).</string>
 	<string name="msg_uninstall">For uninstalling Sanity, you need to uncheck the \"Administrator\" option inside the \"Proximity disabling\" section.\n\nWhile the \"Administrator\" option is checked, you can\'t uninstall Sanity!\n\nOnly if this option is unchecked, the uninstall process of Sanity will success.</string>
   <string name="msg_devs_enabled">Sanity: devices enabled</string>
   <string name="msg_devs_disabled">Sanity: devices disabled</string>
   <string name="msg_running">Sanity is running</string>
-  <string name="msg_force_bt_audio">WARNING: if your bluetooth audio already works well with Sanity, don\'t activate this option!\n\nThis option should be activated only if Sanity doesn\'t work well with your bluetooth audio.\n\nIf this option is activated, Sanity will enable/disable nothing while any bluetooth device is connected.\n\nAre you sure to activate this option to force bluetooth audio?</string>
-  <string name="msg_reverse_proximity">WARNING: if Sanity already works well on your phone, don\'t activate this option!\n\nThis option should be activated on those phones have a bugged proximity sensor.\n\nAre you sure to activate this option for reversing proximity?</string>
-  <string name="msg_reset_prefs">WARNING: this function will restore all default preference values.\n\nAll current application preferences will be lost.\n\nWould you really reset all preferences?</string>
-  <string name="msg_market_err">Unable to open Market application! Check the Internet connection is properly working and Market is rightly installed.</string>
+  <string name="msg_backup_prefs">Choose to backup or restore all current preferences to memory card.</string>
+  <string name="msg_backup_no">No backup file exists on memory card! You have to make a backup before trying to restore.</string>
+  <string name="msg_backup_success">Successfully saved</string>
+  <string name="msg_backup_failed">Unable to save preferences!</string>
+  <string name="msg_restore_success">Successfully restored</string>
+  <string name="msg_restore_failed">Unable to restore preferences!</string>
+  <string name="msg_market_err">Unable to open Market! Check Market application is rightly installed.</string>
   <string name="msg_email_choose">Choose how to send email</string>
   <string name="msg_email_body">Hello Cristiano!</string>
-	<string name="msg_donate">Thank you for using Sanity. This is the free version.\n\nIf you like Sanity, you can donate for supporting it. When donating, this dialog will be suppressed and the 2 minutes limit of the call recorder will be removed.\n\nWould you open Market now for donating?</string>
-
   <string name="msg_eula_title">Software license agreement</string>
-  <string name="msg_eula">This application is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by the Free Software Foundation,
-    either version 3 of the License, or (at your option) any later version.
-    \nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
-    the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
-    version 3 for more details, you can find a copy on http://www.gnu.org/licenses/.\n
-		\nChoose \"Ok\" button to agree this software license.
-		\nChoose \"Cancel" button to refuse it.
-  </string>
+  <string name="msg_eula">This application is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more details, you can find a copy on http://www.gnu.org/licenses/.\n\nChoose \"Ok\" button to agree this software license.\nChoose \"Cancel" button to refuse it.</string>
 
   <string name="changelog_title">Recent changes</string>
-  <string name="changelog_sum">Show recent changes implemented in the last Sanity versions.</string>
+  <string name="changelog_sum">Show recent changes about last Sanity versions.</string>
   <string name="changelog_body">
-    Version 1.95:\n
+  	Version 1.97:\n
+  	- New: option to restrict automatic recording only on incoming or outgoing calls.\n
+  	- New: options to limit automatic handsfree.\n
+  	- Fix: bug in recorder options (introduced in version 1.96).\n
+  	- Change: minor improvements.\n
+    \nVersion 1.96:\n
+    - New: handsfree option \"Enable at call start\" can be filtered by incoming and outgoing calls.\n
+    - New: backup and restore preferences to memory card (in the \"General\" section).\n
+    - Change: minor user interface improvements.\n
+    \nVersion 1.95:\n
     - New: options for automatic audio recording when headsets are plugged/unplugged.\n
     - New: option to delay automatic handsfree enabling when call begins.\n
     - New: option to silence end call sound by disabling handsfree.\n

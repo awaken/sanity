@@ -11,6 +11,8 @@ import android.os.IBinder;
 public class RecService extends Service
 {
 	public static final int NID              = 666;
+	public static final int INCOMING         = 1;
+	public static final int OUTGOING         = 2;
 	public static final int ACT_HEADSET_SKIP = 0;
 	public static final int ACT_HEADSET_ON   = 1;
 	//public static final int ACT_HEADSET_OFF  = 2;
@@ -18,26 +20,26 @@ public class RecService extends Service
 	private static final int TASK_EXEC  = Task.idNew();
 	private static final int TASK_LIMIT = Task.idNew();
 
-	private static long ts         = 0;
+	private static long    ts      = 0;
 	private static boolean running = false;
 	private static boolean full    = false;
-	private static boolean autoStart  = false;
-	private static boolean autoStop   = false;
+	private static boolean autoStart = false;
+	private static boolean autoStop  = false;
 	private static boolean autoStartSpeaker = false;
 	private static boolean autoStopSpeaker  = false;
-	private static int autoStartDelay = 0;
-	private static int autoStopDelay  = 0;
-	private static int autoStopLimit  = 0;
-	private static int autoStartTimes = 0;
+	private static int     autoStartDelay = 0;
+	private static int     autoStopDelay  = 0;
+	private static int     autoStopLimit  = 0;
+	private static int     autoStartTimes = 0;
 	private static boolean headsetStart   = false;
 	private static boolean headsetStop    = false;
 	private static boolean headsetOnStart = false;
 	private static boolean headsetOnStop  = false;
-	private static String notifLimit;
+	private static PhoneListener pl;
 	private static Rec rec;
+	private static String notifLimit;
 	private static Notification notif;
 	private static PendingIntent notifIntent;
-	private static PhoneListener pl;
 	private static Task taskRecStart, taskRecStop;
 
 	//---- public static api
@@ -72,17 +74,21 @@ public class RecService extends Service
 	public static final void recStart(long delay) { taskRecStart.exec(TASK_EXEC, delay); }
 	public static final void recStop (long delay) { taskRecStop .exec(TASK_EXEC, delay); }
 
-	public static final boolean checkAutoRec() {
+	public static final void checkAutoRec() {
+		if(rec.isStarted()) return;
 		// TODO: phone number filter!
-		if(autoStart) {
-			if(headsetStart) {
-				if(headsetOnStart == pl.isHeadsetOn())
-					recStartOffhook();
-			}
-			else if(!autoStartSpeaker)
+		final int d = A.getsi(K.REC_START_DIR);
+		if(     d == INCOMING) { if( pl.isOutgoing()) autoStart = false; }
+		else if(d == OUTGOING) { if(!pl.isOutgoing()) autoStart = false; }
+		if(!autoStart)
+			noAutoStart();
+		else if(headsetStart) {
+			if(headsetOnStart == pl.isHeadsetOn())
 				recStartOffhook();
 		}
-		return true;
+		else if(!autoStartSpeaker)
+			recStartOffhook();
+		setSpeakerListener();
 	}
 	
 	public static final void updateHeadset(boolean on) {
@@ -104,7 +110,7 @@ public class RecService extends Service
 	@Override
 	public int onStartCommand(Intent intent, int flags, int id) {
 		final long now = A.now();
-		if(now-ts < Conf.REC_MIN_SRV_RETRY) return START_STICKY;
+		if(now-ts < Conf.SERVICE_TIMEOUT) return START_STICKY;
 		ts = now;
 		if(!running)             running = true;
 		else if(rec == null)   { A.notifyCanc(NID); stopSelf(); return START_NOT_STICKY; }
@@ -162,11 +168,13 @@ public class RecService extends Service
 		}.exec(TASK_LIMIT, autoStopLimit);
 	}
 
+	// for automatic start recording on offhook
 	private static void recStartOffhook() {
 		final long delay = (pl.isOutgoing() ? Conf.FORCE_AUTOSPEAKER_DELAY : 0) + Conf.REC_OFFHOOK_DELAY;
 		recStart(Math.max(autoStartDelay, delay));
 	}
 
+	// setup auto start/stop when speaker is turned on/off
 	private static void setSpeakerListener() {
 		autoStartSpeaker = autoStart && A.is(K.REC_START_SPEAKER);
 		autoStopSpeaker  = autoStop  && A.is(K.REC_STOP_SPEAKER);
@@ -209,22 +217,19 @@ public class RecService extends Service
 		}
 	}
 
-	private static void autoInit()
-	{
+	private static void autoInit() {
 		autoStart     = A.is(K.REC_START);
 		autoStop      = A.is(K.REC_STOP);
 	  autoStopLimit = !full? Conf.REC_FREE_LIMIT : (autoStop? A.getsi(K.REC_STOP_LIMIT)*60000 : 0);
 	  // setup auto start
-		if(autoStart) {
+		if(!autoStart)
+			noAutoStart();
+		else {
 			autoStartDelay = A.getsi(K.REC_START_DELAY);
 			autoStartTimes = A.getsi(K.REC_START_TIMES);
 			final int act  = A.getsi(K.REC_START_HEADSET);
 			headsetStart   = act != ACT_HEADSET_SKIP;
 			headsetOnStart = act == ACT_HEADSET_ON;
-		} else {
-			autoStartDelay = 0;
-			autoStartTimes = 0;
-			headsetStart   = false;
 		}
 		// setup auto stop
 		if(autoStop) {
@@ -236,8 +241,12 @@ public class RecService extends Service
 			autoStopDelay = 0;
 			headsetStop   = false;
 		}
-		// setup auto start/stop when speaker is turned on/off
-		setSpeakerListener();
+	}
+	
+	private static void noAutoStart() {
+		autoStartDelay = 0;
+		autoStartTimes = 0;
+		headsetStart   = false;
 	}
 
 }

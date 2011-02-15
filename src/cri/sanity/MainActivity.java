@@ -10,6 +10,7 @@ public class MainActivity extends ScreenActivity
 	@Override
   public void onCreate(Bundle savedInstanceState)
   {
+		skipAllKeys = true;
 		screener(MainActivity.class, R.xml.prefs);
     super.onCreate(savedInstanceState);
     screenerAll();
@@ -60,7 +61,7 @@ public class MainActivity extends ScreenActivity
 		if(now-A.getl(K.NAG) < Conf.NAG_TIMEOUT) return;
 		A.putc(K.NAG, now);
 		A.alert(
-			A.tr(R.string.msg_donate),
+			A.tr(R.string.ask_donate),
 			new A.Click(){ public void on(){ A.gotoMarketDetails(Conf.DONATE_PKG); }},
 			null
 		);
@@ -70,8 +71,24 @@ public class MainActivity extends ScreenActivity
 	{
 		A.alert(
 		  A.tr(R.string.msg_eula_title),
-			A.fullName()+"\n\n"+A.tr(R.string.app_desc)+"\n"+A.tr(R.string.app_copy)+"\n\n"+A.tr(R.string.msg_eula),
-			new A.Click(){ public void on(){ A.put(K.AGREE,true); P.setDefaults(); updateOptions(); }},
+			A.fullName()+"\n\n"+A.tr(R.string.app_desc)+'\n'+A.tr(R.string.app_copy)+"\n\n"+A.tr(R.string.msg_eula),
+			new A.Click(){ public void on(){
+				A.put(K.AGREE,true);
+				P.setDefaults();
+				updateOptions();
+				if(P.backupExists()) {
+					A.alert(
+						A.tr(R.string.ask_restore),
+						new A.Click(){ public void on(){
+							final boolean ok = P.restore();
+							A.toast(ok? R.string.msg_restore_success : R.string.msg_restore_failed);
+							if(ok) updateOptions();
+						}},
+						null,
+						A.ALERT_OKCANC
+					);
+				}
+			}},
 			new A.Click(){ public void on(){ finish(); }},
 			A.ALERT_OKCANC,
 			false

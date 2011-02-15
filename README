@@ -18,6 +18,17 @@ An Android application for managing volume and for reducing electromagnetic wave
   Change log
 -------------------
 
+* version 1.97  (15/02/2011)
+- New: option to restrict automatic recording only on incoming or outgoing calls.
+- New: options to limit automatic handsfree.
+- Fix: bug in recorder options (introduced in version 1.96).
+- Change: minor improvements.
+
+* version 1.96  (14/02/2011)
+- New: handsfree option "Enable at call start" can be filtered by incoming and outgoing calls.
+- New: backup and restore preferences to memory card (in the "General" section).
+- Change: minor user interface improvements.
+
 * version 1.95  (10/02/2011)
 - New: options for automatic audio recording when headsets are plugged/unplugged.
 - New: option to delay automatic handsfree enabling when call begins.
@@ -136,31 +147,46 @@ An Android application for managing volume and for reducing electromagnetic wave
 -------------------
 
 * auto airplane mode when headsets are plugged
+* integrated audio player?
 * flip silence?
 * call log sync to gmail???
+* ringing with increasing volume?
 
-* record rules:
-  + auto start rules:
-    - all calls
-    - all calls in contacts
-    - all calls not in contacts
-    - all anonymous calls
-    - contacts whitelist
-    - contacts blacklist
-
-* auto answer (incoming calls)
+* auto answer message (incoming calls)
   + only if headsets
   + always on
-  + all calls
-  + all calls in contacts
-  + all calls not in contacts
-  + all anonymous calls
-  + contacts whitelist
-  + contacts blacklist
+  + only if silence mode
 
-* auto reject calls
+* auto reject calls (call blocker)
   + all calls
   + on if headsets
   + contacts whitelist
   + contacts blacklist
   + all anonymous call
+  + silence instead of reject!
+
+* auto responder when silence mode
+  + record answer messages with archive
+  + call filter
+
+* call number filter
+  + all calls
+  + all calls in contacts
+  + all calls not in contacts
+  + all anonymous calls
+  + all non anonymous calls
+  + contacts whitelist
+  + contacts blacklist
+  + only incoming, only outgoing, both
+
+* text to speech (tts) on incoming calls
+  + only ring audio, only speech, both
+  + only if headsets
+  + call filter
+
+* missed calls notifier:
+  + play sound every X seconds after a missed call
+  + change lock screen!
+
+* auto turn off silce mode
+  + show dialog asking when turn off silence mode when turned on

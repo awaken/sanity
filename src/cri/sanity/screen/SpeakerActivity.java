@@ -15,24 +15,24 @@ public class SpeakerActivity extends ScreenActivity
 
 	private void setupProximity()
 	{
-  	// setup preferences when proximity sensor exists or not
   	if(Dev.sensorProxim() != null) {
   		// disable "loud_speaker" when both "auto_speaker" and "speaker_call" are unchecked
     	on(K.SPEAKER_AUTO, new Click(){ public boolean on(){
-    		pref(K.SPEAKER_LOUD).setEnabled(is(pref) || is(K.SPEAKER_CALL));
-    		return false;
-    	}});
-    	on(K.SPEAKER_CALL, new Click(){ public boolean on(){
-    		pref(K.SPEAKER_LOUD).setEnabled(is(pref) || is(K.SPEAKER_AUTO));
+    		pref(K.SPEAKER_LOUD).setEnabled(is(pref) || isSpeakerCall());
     		return false;
     	}});
   	}
   	else {
-  		// if no proximity sensor found: disable all proximity options
+  		// if no proximity sensor found, disable automatic speaker
+  		setChecked(K.SPEAKER_AUTO, false);
   		setEnabled(K.SPEAKER_AUTO, false);
-  		setChecked(K.SPEAKER_CALL, false);
-  		pref(K.SPEAKER_LOUD).setDependency(K.SPEAKER_CALL);
   	}
+  	on(K.SPEAKER_CALL, new Change(){ public boolean on(){
+  		pref(K.SPEAKER_LOUD).setEnabled(is(K.SPEAKER_AUTO) || isSpeakerCall());
+  		return true;
+  	}});
 	}
+
+	private boolean isSpeakerCall() { return A.getsi(K.SPEAKER_CALL) > 0; }
 
 }

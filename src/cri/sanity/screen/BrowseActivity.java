@@ -18,7 +18,6 @@ import android.provider.ContactsContract.PhoneLookup;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 
 public class BrowseActivity extends ScreenActivity
@@ -45,6 +44,7 @@ public class BrowseActivity extends ScreenActivity
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
+		skipAllKeys = true;
 		screener(BrowseActivity.class, R.xml.prefs_browse);
 		super.onCreate(savedInstanceState);
 		prefGroup = (PreferenceCategory)pref(K.REC_BROWSE);
@@ -62,7 +62,7 @@ public class BrowseActivity extends ScreenActivity
 			public int compare(String s1, String s2) { return s2.compareTo(s1); }
 		});
 		for(final String fn : recs) {
-			if(!fn.startsWith(PREFIX)) continue;
+			if(!fn.startsWith(PREFIX) || fn.endsWith(".txt") || fn.endsWith(".prf")) continue;
 			prefGroup.addPreference(new Pref(fn));
 		}
 		if(prefGroup.getPreferenceCount() <= 0) empty();
@@ -122,7 +122,7 @@ public class BrowseActivity extends ScreenActivity
 	{
 		final int n = selected.size();
 		if(n < 1) return;
-		A.alert(n>1? A.tr(R.string.msg_confirm_del_all).replace("$N", n+"") : A.tr(R.string.msg_confirm_del_one),
+		A.alert(n>1? String.format(A.tr(R.string.ask_del_all), n+"") : A.tr(R.string.ask_del_one),
 			new A.Click() {
 				@SuppressWarnings("unchecked")
 				public void on() {
@@ -135,7 +135,7 @@ public class BrowseActivity extends ScreenActivity
 							selected.remove(p);
 						}
 					}
-					if(err > 0) A.alert(A.tr(R.string.msg_del_err).replace("$N", err+""));
+					if(err > 0) A.alert(String.format(A.tr(R.string.msg_del_err), err+""));
 				}
 			},
 			null,
@@ -154,7 +154,7 @@ public class BrowseActivity extends ScreenActivity
 			selected.add(p);
 		}
 		if(n > 2)
-			Toast.makeText(this, A.tr(R.string.msg_selected_all).replace("$N",n+""), Toast.LENGTH_SHORT).show();
+			A.toast(String.format(A.tr(R.string.msg_selected_all), n+""));
 	}
 	
 	private void selnone()

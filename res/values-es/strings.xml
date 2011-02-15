@@ -21,14 +21,18 @@
 	<string name="unknown">desconocido</string>
 	<string name="help">Ayuda</string>
 	<string name="headset">Auriculares</string>
+	<string name="backup">Copia de seguridad</string>
+	<string name="restore">Restaurar</string>
 
 	<string name="groups_cat">Preferencias</string>
 	<string name="misc_cat">Varios</string>
+  <string name="geek_cat">Avanzadas</string>
+
 	<string name="general_cat">General</string>
 	<string name="general_sum">Opciones principales de aplicación.</string>
 	<string name="enable_title">Activar Sanity</string>
 	<string name="enable_sum">Activar o desactivar Sanity. Desactivado,la aplicación no funcionara durante las llamadas de teléfono.</string>
-	<string name="skip_headset_title">Ignorar si los auriculares estan conectados</string>
+	<string name="skip_headset_title">Ignorar si los auriculares están conectados</string>
 	<string name="skip_headset_sum">Desactivar el control automático de los dispositivos y manos libres cuando los auriculares están conectados (por cable o inalámbrica).</string>
 	<string name="force_bt_audio_title">Fuerza audio BT</string>
 	<string name="force_bt_audio_sum">Fuerza al dispositivo Bluetooth a ser controlado por Sanity.</string>
@@ -36,6 +40,8 @@
 	<string name="reverse_proximity_sum">Marque esta opción sólo si Sanity activa/desactiva el manos libres o dispositivos de una manera incorrecta cuando el teléfono está lejos/cerca de su oído.</string>
 	<string name="reset_prefs_title">Restablecer valores</string>
 	<string name="reset_prefs_sum">Establecer valores por defecto a todas las preferencias de Sanity.</string>
+	<string name="backup_prefs_title">Seguridad y Restaurar</string>
+	<string name="backup_prefs_sum">Pulse aquí para una copia de seguridad o restaurar las preferencias existentes en la tarjeta de memoria.</string>
 
 	<string name="devices_cat">Dispositivos a desactivar</string>
 	<string name="devices_sum">Qué dispositivos quiere deshabilitar para reducir las ondas electromagnéticas (EMG) durante una llamada.</string>
@@ -45,51 +51,55 @@
 	<string name="mobdata_title">Apagar trafico de 2G/3G</string>
 	<string name="mobdata_sum">Desactivar trafico de datos (2G/3G) durante una llamada (se activara tras finalizar). Funciona con varios modelos de movil, pero no todos.</string>
 	<string name="mobdata_skip_title">Ignorar 2G/3G si GPS</string>
-	<string name="mobdata_skip_sum">Ignorar la desactivacion automatica de 2G/3G durante una llamada cuando el GPS esta encendido.</string>
+	<string name="mobdata_skip_sum">Ignorar la desactivacion automatica de 2G/3G durante una llamada cuando el GPS está encendido.</string>
 	<string name="wifi_title">Apagar WiFi</string>
 	<string name="wifi_sum">Desactivar WiFi durante una llamada (se activara tras finalizar).</string>
 	<string name="bt_title">Apagar Bluetooth</string>
 	<string name="bt_sum">Desactivar Bluetooth durante una llamada (se activara tras finalizar).</string>
 	<string name="bt_skip_title">Ignorar BT si conectado</string>
-	<string name="bt_skip_sum">Ignorar la desactivacion automatica del Bluetooth durante una llamada si esta conectado algun dispositivo.</string>
+	<string name="bt_skip_sum">Ignorar la desactivacion automatica del Bluetooth durante una llamada si está conectado algun dispositivo.</string>
 	<string name="hotspot_skip_title">Ignorar si Tethering WiFi</string>
-	<string name="hotspot_skip_sum">Ignorar la desactivacion automatica de 2G/3G y WiFi durante una llamada si el movil esta siendo usado como Punto de acceso (Tethering WiFi).</string>
+	<string name="hotspot_skip_sum">Ignorar la desactivacion automatica de 2G/3G y WiFi durante una llamada si el movil está siendo usado como Punto de acceso (Tethering WiFi).</string>
 	<string name="tether_skip_title">Ignorar si Tethering USB</string>
-	<string name="tether_skip_sum">Ignorar la desactivacion automatica de datos (2G/3G) durante una llamada si Tethering mediante USB esta activada.</string>
+	<string name="tether_skip_sum">Ignorar la desactivacion automatica de datos (2G/3G) durante una llamada si Tethering mediante USB está activada.</string>
 
 	<string name="proximity_cat">Ajustes en proximidad</string>
 	<string name="proximity_sum">Opciones para activar o desactivar dispositivos durante una llamada usando el sensor de proximidad.</string>
 	<string name="disable_proximity_title">Apagar en proximidad</string>
-	<string name="disable_proximity_sum">Apaga los dispositivos del telefono cuando esta cerca de tu oido (si lo desactivas no apagara los dispositivos).</string>
+	<string name="disable_proximity_sum">Apaga los dispositivos del telefono cuando está cerca de tu oido (si lo desactivas no apagara los dispositivos).</string>
 	<string name="disable_delay_title">Apagar en</string>
-	<string name="disable_delay_sum">Tiempo de espera para apagar la pantalla cuando este cerca de tu oido.</string>
-	<string name="enable_proximity_title">Encender los dispositivos cuando este lejos de tu oido.</string>
-	<string name="enable_proximity_sum">Rennciende los dispositivos (apagados por Sanity) durante una llamada si el telefono esta lejos de tu oido.</string>
+	<string name="disable_delay_sum">Tiempo de espera para apagar la pantalla cuando este cerca de tu oído.</string>
+	<string name="enable_proximity_title">Encender los dispositivos cuando este lejos de tu oído.</string>
+	<string name="enable_proximity_sum">Rennciende los dispositivos (apagados por Sanity) durante una llamada si el telefono está lejos de tu oído.</string>
 	<string name="enable_delay_title">Ecender en</string>
-	<string name="enable_delay_sum">Tiempo de espera para encender los dispositivos cuando esta lejos de tu oido.</string>
+	<string name="enable_delay_sum">Tiempo de espera para encender los dispositivos cuando está lejos de tu oído.</string>
 	<string name="screen_cat">Pantalla</string>
 	<string name="screen_off_title">Apagar la pantalla</string>
-	<string name="screen_off_sum">Forzar el apagado de pantalla durante una llamada cuando el telefono esta cerca de tu oido.</string>
+	<string name="screen_off_sum">Forzar el apagado de pantalla durante una llamada cuando el telefono está cerca de tu oído.</string>
 	<string name="screen_on_title">Encender la pantalla</string>
-	<string name="screen_on_sum">Forzar el encendido de pantalla durante una llamada cuando el telefono esta lejos de tu oido.</string>
+	<string name="screen_on_sum">Forzar el encendido de pantalla durante una llamada cuando el telefono está lejos de tu oído.</string>
 
 	<string name="speaker_cat">Altavoz (manos libre)</string>
 	<string name="speaker_sum">Opciones para la activación automatica del altavoz.</string>
-	<string name="auto_speaker_title">Altavoz automatico</string>
-	<string name="auto_speaker_sum">Activar/Desactivar automáticamente el altavoz cuando el telefono esta lejos/cerca de tu oido.</string>
+	<string name="auto_speaker_title">Altavoz automático</string>
+	<string name="auto_speaker_sum">Activar/Desactivar automáticamente el altavoz cuando el telefono está lejos/cerca de tu oído.</string>
 	<string name="delay_speaker_title">Retardo de activación</string>
-	<string name="delay_speaker_sum">Tiempo de espera para activar automáticamente el altavoz cuando NO esta cerca de tu oido.</string>
+	<string name="delay_speaker_sum">Tiempo de espera para activar automáticamente el altavoz (manos libres) cuando NO está cerca de tu oído.</string>
 	<string name="loud_speaker_title">Altavoz fuerte</string>
 	<string name="loud_speaker_sum">Ajusta el volumen cuando Sanity activa el altavoz (manos libres).</string>
 	<string name="speaker_call_title">Activar al inicio de la llamada</string>
 	<string name="speaker_call_sum">Activar pronto el altavoz (manos libres) cuando empiece la llamada.</string>
   <string name="delay_speaker_call_title">Retardo de inicio</string>
   <string name="delay_speaker_call_sum">Tiempo de espera para activar automáticamente el altavoz cuando empiece la llamada.</string>
-  <string name="silent_end_speaker_title">Calma fin</string>
+  <string name="silent_end_speaker_title">Calma Fin</string>
   <string name="silent_end_speaker_sum">Apague el altavoz (manos libres) en el extremo llamada, justo antes el sonido de extremo llamada se reproduce.</string>
+  <string name="speaker_on_count_title">Límite de Activación</string>
+  <string name="speaker_on_count_sum">Cuántas veces hasta activar automáticamente el altavoz durante una llamada cuando está cerca de tu oído.</string>
+  <string name="speaker_off_count_title">Límite de Desactivación</string>
+  <string name="speaker_off_count_sum">Cuántas veces hasta desactivar automáticamente el altavoz durante una llamada cuando está lejos de tu oído.</string>
 
 	<string name="vol_cat">Volumen</string>
-	<string name="vol_sum">Opciones para el ajuste automatico del volumen durante una llamada.</string>
+	<string name="vol_sum">Opciones para el ajuste automático del volumen durante una llamada.</string>
 	<string name="vol_phone_title">Volumen del telefono</string>
 	<string name="vol_phone_sum">Ajustar automáticamente el volumen durante una llamada cuando no se ultilizan los auriculares.</string>
 	<string name="vol_wired_title">Auriculares por cable</string>
@@ -116,13 +126,13 @@
 
 	<string name="rec_cat">Grabadora</string>
 	<string name="rec_sum">Opciones para la grabación del audio de la llamada en la tarjeta de memoria.</string>
-	<string name="rec_sum_free">Esta version gratuita esta limitada a 2 minutos de grabación.</string>
+	<string name="rec_sum_free">Esta versión gratuita está limitada a 2 minutos de grabación.</string>
 	<string name="rec_warn_title">Aviso legal</string>
-	<string name="rec_warn_sum">Lealo atentamente: en algunos paises la grabación de llamadas esta prohibida por las leyes del gobierno. El autor no se hace responsable del mal uso de esta aplicacion. Uselo bajo su propio riesgo.</string>
+	<string name="rec_warn_sum">Lealo atentamente: en algunos paises la grabación de llamadas está prohibida por las leyes del gobierno. El autor no se hace responsable del mal uso de esta aplicación. Uselo bajo su propio riesgo.</string>
 	<string name="rec_enable_title">Activar la grabación</string>
 	<string name="rec_enable_sum">Mostrar una notificacion de grabación durante una llamada: pulse en la notificacion para iniciar/parar la grabación.</string>
 	<string name="rec_src_title">Origen de audio</string>
-	<string name="rec_src_sum">Seleccione el dispositivo de origen para la grabación del audio. ATENCIÓN: sólo el origen \"Micrófono\" obras en muchos teléfonos!</string>
+	<string name="rec_src_sum">Seleccione el dispositivo de origen para la grabación del audio. Atención: sólo el origen \"Micrófono\" obras en muchos teléfonos!</string>
 	<string name="rec_fmt_title">Formato de audio</string>
 	<string name="rec_fmt_sum">Seleccione el formato de audio para guardar las grabaciónes.</string>
 	<string name="rec_browse_title">Archivos de grabación</string>
@@ -130,20 +140,22 @@
 	<string name="rec_scan_title">Escaner multimedia</string>
 	<string name="rec_scan_sum">Permitir la reproduccion de los archivos grabados por Sanity a traves del propio sistema operativo.</string>
 	<string name="rec_info_title">Notas Importantes</string>
-	<string name="rec_info_sum">El sistema de grabación que usa Android es muy limitado: solo graba las llamadas cuando el ALTAVOZ (MANOS LIBRES) ESTA ACTIVADO!!</string>
+	<string name="rec_info_sum">El sistema de grabación que usa Android es muy limitado: solo graba las llamadas cuando el ALTAVOZ (MANOS LIBRES) ESTÁ ACTIVADO!!</string>
 	<string name="browse_unknown_title">Fecha desconocida</string>
-	<string name="rec_start_cat">Normas de inicio automatico</string>
-	<string name="rec_start_title">Inicio automatico</string>
+	<string name="rec_start_cat">Normas de inicio automático</string>
+	<string name="rec_start_title">Inicio automático</string>
 	<string name="rec_start_sum">Activar GRABAR automáticamente, Si la desactivas, Sanity no podra iniciar la grabación.</string>
 	<string name="rec_start_delay_title">Retardo para grabar</string>
 	<string name="rec_start_delay_sum">Tiempo de retardo para iniciar la grabación automatica.</string>
 	<string name="rec_start_speaker_title">Altavoz activado</string>
 	<string name="rec_start_speaker_sum">Iniciar la grabación automáticamente cuando Sanity activa el altavoz (manos libres).</string>
 	<string name="rec_start_headset_sum">Reglas para empezar a grabar automáticamente a través de auriculares.</string>
+	<string name="rec_start_dir_title">Tipo de llamada</string>
+	<string name="rec_start_dir_sum">Elija las direcciones de llamada para iniciar la grabación de audio.</string>
 	<string name="rec_start_times_title">Límite de inicio</string>
-	<string name="rec_start_times_sum">El número máximo de veces que se inicie automáticamente la grabación cuando el altavoz esté encendido por Sanity durante una sola llamada.</string>
+	<string name="rec_start_times_sum">El número máximo de veces que se inicie automáticamente la grabación durante una sola llamada.</string>
 	<string name="rec_stop_cat">Normas de desactivacion automatica</string>
-	<string name="rec_stop_title">Detener automatico</string>
+	<string name="rec_stop_title">Detener automático</string>
 	<string name="rec_stop_sum">Activar DETENER la grabación automatica. Si la desactivadas, Sanity no podra detener la grabación automatica.</string>
 	<string name="rec_stop_delay_title">Retardo para detener</string>
 	<string name="rec_stop_delay_sum">Tiempo de retardo para detener la grabación automatica.</string>
@@ -158,35 +170,37 @@
 	-->
 
 	<string name="about_cat">Saber mas y contactar</string>
-	<string name="about_sum">Informacion sobre esta aplicacion y maneras de contactar con el desarrollador.</string>
+	<string name="about_sum">Informacion sobre esta aplicación y maneras de contactar con el desarrollador.</string>
 	<string name="changelog_title">Cambios recientes</string>
-	<string name="changelog_sum">Revise los ultimos cambios de cada version de Sanity.</string>
+	<string name="changelog_sum">Revise los ultimos cambios de cada versión de Sanity.</string>
 	<string name="mail_title">Escribe al desarrollador</string>
 	<string name="mail_sum">Pulse aquie para escribir un e-mail al desarrollador (Preferentemente en Ingles). Puede usar esta direccion para reportar algun fallo o error y enviar sus sugerencias.</string>
 	<string name="comment_title">Dejanos un comentario</string>
-	<string name="comment_sum">Te invitamos a dejar un comentario en el Market y decirnos que te parece esta aplicacion. Porfavor los errores o fallos solamente por e-mail, no en el Market.</string>
+	<string name="comment_sum">Te invitamos a dejar un comentario en el Market y decirnos que te parece esta aplicación. Porfavor los errores o fallos solamente por e-mail, no en el Market.</string>
 	<string name="eula_title">Licencia GNU GPL v3</string>
-	<string name="eula_sum">Pulse aqui para abrir la web oficial de la GNU GPL version 3.</string>
+	<string name="eula_sum">Pulse aqui para abrir la web oficial de la GNU GPL versión 3.</string>
 	<string name="paypal_title">Donacion por PayPal</string>
 	<string name="paypal_sum">Para ayudar a Sanity, puedes hacer tu donacion a traves de PayPal. Pulsa aqui para acceder al portal de PayPal.</string>
 	<string name="donate_title">Donar</string>
-	<string name="donate_sum">Sanity es gratuito. Si te gusta esta aplicacion, apoya al desarrolador con una donación.</string>
+	<string name="donate_sum">Sanity es gratuito. Si te gusta esta aplicación, apoya al desarrolador con una donación.</string>
 	<string name="donated_title">Donacion realizada</string>
 	<string name="donated_sum">Gracias por apoyar Sanity. Gracias por tu donativo.</string>
 	<string name="uninstall_title">Como desinstalar</string>
 	<string name="uninstall_sum">Pulse aqui para ver las instrucciones de como desinstalar Sanity (solo funciona con Froyo 2.2 de Android o superior).</string>
-	<string name="full_title">Version completa</string>
-	<string name="full_sum">Esta es una version completa de Sanity.</string>
+	<string name="full_title">Versión completa</string>
+	<string name="full_sum">Esta es una versión completa de Sanity.</string>
 
 	<string name="admin_title">Administrador</string>
-	<string name="admin_sum">Se usan privilegios de administrador para apagar la pantalla cuando el telefono esta cerca de tu oido.</string>
-	<string name="admin_disable">Sanity necesita los permisos de administrador para poder apagar la pantalla durante una llamada. Sin estos privilegios, Sanity no podra apagar la pantalla de el telefono cuando este cerca de tu oido durante una llamada.\n
-		\nEn todo caso, debe deshabilitar esta función para desinstalar Sanity.\n
-		\nEsta Vd. seguro de negar los permisos de administrador a Sanity?
-	</string>
-	<string name="admin_explanation">Confirme esta opcion para que Sanity pueda apagar la pantalla durante las llamadas.\n
-		\nRECUERDE para desinstalar Sanity, tiene que revocar los permisos de \"Administrador\". Si no lo hace, no podra desinstalarlo.
-	</string>
+	<string name="admin_sum">Se usan privilegios de administrador para apagar la pantalla cuando el telefono está cerca de tu oido.</string>
+	<string name="admin_explanation">Confirme esta opcion para que Sanity pueda apagar la pantalla durante las llamadas.\n\nRECUERDE para desinstalar Sanity, tiene que revocar los permisos de \"Administrador\". Si no lo hace, no podra desinstalarlo.</string>
+	<string name="ask_admin">Sanity necesita los permisos de administrador para poder apagar la pantalla durante una llamada. Sin estos privilegios, Sanity no podra apagar la pantalla de el telefono cuando este cerca de tu oido durante una llamada.\n\nEn todo caso, debe deshabilitar esta función para desinstalar Sanity.\n\n¿Está Vd. seguro de negar los permisos de administrador a Sanity?</string>
+	<string name="ask_force_bt_audio">ADVERTENCIA: si su dispositivo de audio por Bluetooth funciona bien con Sanity, no active esta opcion!\n\nEsta opcion solo debe activarla si Sanity no funciona bien con su dispositivo de audio por Bluetooth.\n\nSi esta opcion está activada, Sanity no podra Activar/Desactivar nada mientras otro dispositivo Bluetooth este conectado.\n\n¿Está seguro de activar esta opcion para forzar el audio Bluetooth?</string>
+	<string name="ask_reverse_proximity">ADVERTENCIA: si Sanity funciona correctamente en su movil, no active esta opcion!\n\nEsta opcion solo debe activarse para aquellos moviles que cuentan con un sensor de proximidad cerca de los microfonos.\n\n¿Está seguro de activar esta opcion para la Proximidad al revés?</string>
+	<string name="ask_reset_prefs">ADVERTENCIA: esta funcion restaurara todos los valores de preferencias por defecto.\n\nTodas las preferencias actuales se perderan.\n\n¿Está seguro de restaurar todas las preferencias?</string>
+  <string name="ask_restore">He encontrado una copia de seguridad de las preferencias de su tarjeta de memoria. ¿Ahora todo lo que desea restaurar sus preferencias?</string>
+  <string name="ask_del_one">¿Está seguro de ELIMINAR este archivo?</string>
+  <string name="ask_del_all">¿Estás seguro de ELIMINAR los %s archivos seleccionados?</string>
+	<string name="ask_donate">Muchas Gracias por usar Sanity. Esta es la versión gratuita.\n\nSi te gusta Sanity, apoya al desarrollador con una donación. Cuando hayas donado, este mensaje sera borrado y asi tambien el limite de los 2 minutos de grabación de las llamadas.\n\n¿Quieres abrir el Market para hacer una donacion?</string>
 
 	<string name="msg_dir_err">Error en Sanity: no se puede crear el directorio para guardar las grabaciónes de audio!</string>
 	<string name="msg_rec_err">Error en Sanity: no se puede iniciar la grabación de audio!</string>
@@ -195,47 +209,24 @@
 	<string name="msg_rec_stop">Pulse aqui para DETENER la grabación de llamada</string>
   <string name="msg_rec_limit">Sanity: detener la grabación.</string>
 	<string name="msg_rec_free_limit">Sanity: se han alcanzado los dos minutos de limite, se detiene la grabación.</string>
-	<string name="msg_rec_scan_err">Error mientras se cambiaban las propiedades de Escanner: se deniega el permiso en el archivo \"$FN\"</string>
+	<string name="msg_rec_scan_err">Error mientras se cambiaban las propiedades de Escanner: se deniega el permiso en el archivo \"%s\"</string>
 	<string name="msg_rec_empty">No hay archivos de grabación de llamadas. Inicie una grabación de llamada para ver el archivo aqui.</string>
 	<string name="msg_rec_file">Elija que hacer con este archivo de audio.</string>
-	<string name="msg_confirm_del">Esta seguro de ELIMINAR este archivo?</string>
-	<string name="msg_require_froyo">Esta opcion requiere de la ultima version de Android 2.2 (Froyo). Lamentablemente, su movil tienela version Android 2.1 (Eclair).</string>
-	<string name="msg_uninstall">Para desinstalar Sanity, Vd. tiene que deseleccionar el permiso de \"Administrador\" dentro de la seccion de \"Sensor de proximidad\".\n
-		\nMientras la opcion de \"Administrador\" este seleccionada, Vd. no puede desinstalar Sanity!\n
-		\nUnicamente se puede desinstalar despues de revocar todos los permisos a Sanity.
-	</string>
+  <string name="msg_del_err">Error: la eliminación de %s archivos no!</string>
+	<string name="msg_require_froyo">Esta opcion requiere de la ultima versión de Android 2.2 (Froyo). Lamentablemente, su movil tienela versión Android 2.1 (Eclair).</string>
+	<string name="msg_uninstall">Para desinstalar Sanity, Vd. tiene que deseleccionar el permiso de \"Administrador\" dentro de la seccion de \"Sensor de proximidad\".\n\nMientras la opcion de \"Administrador\" este seleccionada, Vd. no puede desinstalar Sanity!\n\nUnicamente se puede desinstalar despues de revocar todos los permisos a Sanity.</string>
 	<string name="msg_devs_enabled">Sanity: dispositivos activos</string>
 	<string name="msg_devs_disabled">Sanity: dispositivos desactivados</string>
-	<string name="msg_running">Sanity esta en funcionamiento</string>
-	<string name="msg_force_bt_audio">ADVERTENCIA: Si su dispositivo de audio por Bluetooth funciona bien con Sanity, no active esta opcion!\n
-		\nEsta opcion solo debe activarla si Sanity no funciona bien con su dispositivo de audio por Bluetooth.\n
-		\nSi esta opcion esta activada, Sanity no podra Activar/Desactivar nada mientras otro dispositivo Bluetooth este conectado.\n
-		\nEsta seguro de activar esta opcion para forzar el audio Bluetooth?
-	</string>
-	<string name="msg_reverse_proximity">ADVERTENCIA: Si Sanity funciona correctamente en su movil, no active esta opcion!\n
-		\nEsta opcionsolo debe activarse para aquellos moviles que cuentan con un sensor de proximidad cerca de los microfonos.\n
-		\nEsta seguro de activar esta opcion para la Proximidad al revés?
-	</string>
-	<string name="msg_reset_prefs">ADVERTENCIA: esta funcion restaurara todos los valores de preferencias por defecto.\n
-		\nTodas las preferencias actuales se perderan.\n
-		\nEsta seguro de restaurar todas las preferencias?
-	</string>
-	<string name="msg_market_err">No se puede abrir el Market! Compruebe que su conexion a internet este configurada correctamente y la aplicacion Market este instalada correctamente.</string>
+	<string name="msg_running">Sanity está en funcionamiento</string>
+  <string name="msg_backup_prefs">Elija una copia de seguridad o restauración de todas las preferencias actuales de la tarjeta de memoria.</string>
+  <string name="msg_backup_no">No hay copias de seguridad en la tarjeta de memoria! Debemos crear una copia de seguridad antes de poder restaurar.</string>
+  <string name="msg_backup_success">Guardado con éxito</string>
+  <string name="msg_backup_failed">No se puede guardar las preferencias!</string>
+  <string name="msg_restore_success">Restaurado con éxito</string>
+  <string name="msg_restore_failed">No se puede restaurar las preferencias!</string>
+	<string name="msg_market_err">No se puede abrir el Market! Compruebe la aplicación Market este instalada correctamente.</string>
 	<string name="msg_email_choose">Elige como enviar el e-mail</string>
-	<string name="msg_donate">Muchas Gracias por usar Sanity. Esta es la versión gratuita.\n
-		\nSi te gusta Sanity, apoya al desarrollador con una donación. Cuando hayas donado, este mensaje sera borrado y asi tambien el limite de los 2 minutos de grabación de las llamadas.\n
-		\nQuieres abrir el Market para hacer una donacion?
-	</string>
 	<string name="msg_eula_title">Acuerdo de Licencia de Software</string>
-	<string name="msg_eula">Este es software libre: usted puede redistribuirlo y/o modificarlo bajo los términos
-		de la Licencia Pública General GNU publicada por la Fundación para el Software Libre, ya sea la versión 3 
-		de la Licencia, o (a su elección) cualquier versión posterior.
-		\nEste programa se distribuye con la esperanza de que sea útil, pero  SIN GARANTÍA ALGUNA; ni siquiera la garantía
-		implícita MERCANTIL o de APTITUD PARA UN PROPÓSITO DETERMINADO.
-		Consulte los detalles de la Licencia Pública General GNU para obtener una información más detallada, consulte
-		http://www.gnu.org/licenses/.\n
-		\nSeleccione \"Ok\" si esta de acuerdo con esta licencia.
-		\nSeleccione \"Cancelar\" para rechazarla.
-	</string>
+	<string name="msg_eula">Este es software libre: usted puede redistribuirlo y/o modificarlo bajo los términos de la Licencia Pública General GNU publicada por la Fundación para el Software Libre, ya sea la versión 3 de la Licencia, o (a su elección) cualquier versión posterior.\nEste programa se distribuye con la esperanza de que sea útil, pero  SIN GARANTÍA ALGUNA; ni siquiera la garantía implícita MERCANTIL o de APTITUD PARA UN PROPÓSITO DETERMINADO. Consulte los detalles de la Licencia Pública General GNU para obtener una información más detallada, consulte http://www.gnu.org/licenses/.\n\nSeleccione \"Ok\" si está de acuerdo con esta licencia.\nSeleccione \"Cancelar\" para rechazarla.</string>
 
 </resources>

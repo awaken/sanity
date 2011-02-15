@@ -30,16 +30,28 @@
 		<item>10 secondi</item>
 	</string-array>
 
-	<string-array name="delay_speaker_labels">
-		<item>Immediato</item>
-		<item>1 secondo</item>
-		<item>2 secondi</item>
-		<item>3 secondi</item>
-		<item>4 secondi</item>
-		<item>5 secondi</item>
-		<item>6 secondi</item>
-		<item>7 secondi</item>
-		<item>8 secondi</item>
+	<string-array name="speaker_call_labels">
+		<item>Mai</item>
+		<item>Solo chiamate ricevute</item>
+		<item>Solo chiamate effettuate</item>
+		<item>Sempre</item>
+	</string-array>
+
+	<string-array name="speaker_count_labels">
+		<item>Mai</item>
+		<item>1 volta</item>
+		<item>2 volte</item>
+		<item>3 volte</item>
+		<item>4 volte</item>
+		<item>5 volte</item>
+		<item>6 volte</item>
+		<item>7 volte</item>
+		<item>8 volte</item>
+		<item>9 volte</item>
+		<item>10 volte</item>
+		<item>15 volte</item>
+		<item>20 volte</item>
+		<item>Sempre</item>
 	</string-array>
 
 	<string-array name="rec_src_labels">
@@ -50,7 +62,9 @@
 	</string-array>
 
 	<string-array name="rec_stop_limit_labels">
+		<item>1 minuto</item>
 		<item>2 minuti</item>
+		<item>3 minuti</item>
 		<item>5 minuti</item>
 		<item>10 minuti</item>
 		<item>15 minuti</item>
@@ -61,6 +75,12 @@
 		<item>1 ora e mezza</item>
 		<item>2 ore</item>
 		<item>Illimitato</item>
+	</string-array>
+
+	<string-array name="rec_start_dir_labels">
+		<item>Tutte</item>
+		<item>Solo chiamate ricevute</item>
+		<item>Solo chiamate effettuate</item>
 	</string-array>
 
 	<string-array name="rec_start_times_labels">

@@ -12,6 +12,8 @@ public final class K
 	public static final String SKIP_HEADSET      = "skip_headset";
 	public static final String FORCE_BT_AUDIO    = "force_bt_audio";
 	public static final String REVERSE_PROXIMITY = "reverse_proximity";
+	public static final String BACKUP_PREFS      = "backup_prefs";			// non persistent
+	public static final String RESET_PREFS       = "reset_prefs";				// non persistent
 	// devices
 	public static final String AUTO_MOBDATA = "mobdata";
 	public static final String AUTO_WIFI    = "wifi";
@@ -36,6 +38,8 @@ public final class K
 	public static final String SPEAKER_CALL       = "speaker_call";
 	public static final String SPEAKER_CALL_DELAY = "delay_speaker_call";
 	public static final String SPEAKER_SILENT_END = "silent_end_speaker";
+	public static final String SPEAKER_ON_COUNT   = "speaker_on_count";
+	public static final String SPEAKER_OFF_COUNT  = "speaker_off_count";
 	// volume
 	public static final String VOL_PHONE = "vol_phone";
 	public static final String VOL_WIRED = "vol_wired";
@@ -64,6 +68,7 @@ public final class K
 	public static final String REC_STOP_HEADSET  = "rec_stop_headset";
 	public static final String REC_START_TIMES   = "rec_start_times";
 	public static final String REC_STOP_LIMIT    = "rec_stop_limit";
+	public static final String REC_START_DIR     = "rec_start_dir";
 	//public static final String REC_START_ALL     = "rec_start_all";
 
 	// internals (hidden to user)
@@ -72,6 +77,8 @@ public final class K
 	public static final String VER      = "ver";
 	public static final String NAG      = "nag";
 	public static final String BT_COUNT = "bt_count";
+	public static final String PRF_LAB  = "prf_lab";
+	public static final String PRF_FN   = "prf_fn";
 	// non persistent tool keys
 	public static final String LOGO        = "logo";
 	public static final String EULA        = "eula";
@@ -80,7 +87,6 @@ public final class K
 	public static final String COMMENT     = "comment";
 	public static final String CHANGELOG   = "changelog";
 	public static final String UNINSTALL   = "uninstall";
-	public static final String RESET_PREFS = "reset_prefs";
 	// screen activities (non persistent)
 	public static final String SCREEN_GENERAL   = "screen_general";
 	public static final String SCREEN_DEVICES   = "screen_devices";
@@ -92,7 +98,12 @@ public final class K
 	public static final String SCREEN_ABOUT     = "screen_about";
 
 	//--- methods: only class P should call these methods!
-	
+
+	static final String[] skipKeys()
+	{
+		return new String[]{ BT_COUNT, NAG, PRF_LAB, PRF_FN };
+	}
+
 	static final Map<String,Object> getDefaults()
 	{
 		final Map<String,Object> m = new HashMap<String,Object>();
@@ -118,9 +129,11 @@ public final class K
 		m.put(SPEAKER_AUTO      , true);			// speaker
 		m.put(SPEAKER_DELAY     ,  "0");
 		m.put(SPEAKER_LOUD      , true);
-		m.put(SPEAKER_CALL      , false);
+		m.put(SPEAKER_CALL      ,  "0");
 		m.put(SPEAKER_CALL_DELAY,  "0");
 		m.put(SPEAKER_SILENT_END, true);
+		m.put(SPEAKER_ON_COUNT  ,  "0");
+		m.put(SPEAKER_OFF_COUNT ,  "0");
 		m.put(VOL_PHONE         , "-1");			// volume
 		m.put(VOL_WIRED         , "-1");
 		m.put(VOL_BT            , "-1");
@@ -144,6 +157,7 @@ public final class K
 		m.put(REC_STOP_HEADSET  ,  "0");
 		m.put(REC_STOP_LIMIT    ,  "0");
 		m.put(REC_START_TIMES   ,  "0");
+		m.put(REC_START_DIR     ,  "0");
 		return m;
 	}
 
@@ -164,13 +178,15 @@ public final class K
 		if(oldVer < 1.93) P.setDef(REC_START_TIMES);
 		if(oldVer < 1.95) {
 			P.setDef(SPEAKER_CALL_DELAY, SPEAKER_SILENT_END, REC_START_HEADSET, REC_STOP_HEADSET);
-			for(final String k : new String[]{ VOL_PHONE, VOL_WIRED, VOL_BT }) {
+			for(String k : new String[]{ VOL_PHONE, VOL_WIRED, VOL_BT }) {
 				switch(A.getsi(k)) {
 					case 0: P.setDef(k);   break;
 					case 1: A.put(k, "0"); break;
 				}
 			}
 		}
+		if(oldVer < 1.96) A.put(SPEAKER_CALL, A.is(SPEAKER_CALL)? "3" : "0");
+		if(oldVer < 1.97) P.setDef(SPEAKER_ON_COUNT, SPEAKER_OFF_COUNT, REC_START_DIR);
 	}
 
 	private K() { }

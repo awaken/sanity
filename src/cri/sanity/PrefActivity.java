@@ -85,7 +85,8 @@ public abstract class PrefActivity extends PreferenceActivity
 		if(     p instanceof CheckBoxPreference) ((CheckBoxPreference)p).setChecked(A.is(key));
 		else if(p instanceof ListPreference    ) ((ListPreference)p).setValue(A.gets(key));
 	}
-	public final void updatePref(String key) { updatePref(key, true); }
+	public final void updatePref (String     key ) { updatePref(key, true); }
+	public final void updatePrefs(String ... keys) { for(final String k : keys) updatePref(k, true); }
 
 	public final boolean is(String key)   { return ((CheckBoxPreference)pref(key)).isChecked(); }
 	public final boolean is(Preference p) { return ((CheckBoxPreference)p        ).isChecked(); }

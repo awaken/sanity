@@ -2,7 +2,6 @@ package cri.sanity.screen;
 
 import cri.sanity.*;
 import android.os.Bundle;
-import android.preference.ListPreference;
 
 
 public class VolumeActivity extends ScreenActivity
@@ -33,9 +32,10 @@ public class VolumeActivity extends ScreenActivity
   		ae[i] = lev + av[i];
   	}
   	for(String k : new String[]{ K.VOL_PHONE, K.VOL_WIRED, K.VOL_BT }) {
-  		final ListPreference lp = (ListPreference)pref(k);
-  		lp.setEntries    (ae);
-  		lp.setEntryValues(av);
+  		final PrefList p = (PrefList)pref(k);
+  		p.setEntries    (ae);
+  		p.setEntryValues(av);
+  		p.update();
   	}
 	}
 	
