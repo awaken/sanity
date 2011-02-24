@@ -10,12 +10,13 @@ import android.preference.Preference.OnPreferenceClickListener;
 
 
 public abstract class PrefActivity extends PreferenceActivity
-{	
+{
 	//---- inner classes
 
 	public static abstract class Click implements OnPreferenceClickListener
 	{
 		protected Preference pref;
+		@Override
 		public boolean onPreferenceClick(Preference pref) {
 			this.pref = pref;
 			return on();
@@ -27,6 +28,7 @@ public abstract class PrefActivity extends PreferenceActivity
 	{
 		protected Preference pref;
 		protected Object     value;
+		@Override
 		public boolean onPreferenceChange(Preference pref, Object value) {
 			this.pref  = pref;
 			this.value = value;
@@ -45,31 +47,14 @@ public abstract class PrefActivity extends PreferenceActivity
 	}
 
 	@Override
-	public void onStart()
-	{
-		A.activity = this;
-		super.onStart();
-	}
-
-	@Override
 	public void onResume()
 	{
 		A.activity = this;
 		super.onResume();
 	}
 
-	/*
-	@Override
-	public void onDestroy()
-	{
-		if(isRootActivity()) A.activity = null;
-		super.onDestroy();
-	}
-	*/
-
 	//---- general api
 
-	//public boolean isRootActivity() { return !(getParent() instanceof PrefActivity); }
 	public boolean isMainActivity() { return false; }
 
 	//---- preference api

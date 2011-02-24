@@ -51,7 +51,7 @@
 		<item>10 volte</item>
 		<item>15 volte</item>
 		<item>20 volte</item>
-		<item>Sempre</item>
+		<item>Illimitato</item>
 	</string-array>
 
 	<string-array name="rec_src_labels">

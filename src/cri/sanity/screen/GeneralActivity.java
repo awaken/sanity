@@ -1,8 +1,9 @@
 package cri.sanity.screen;
 
-import cri.sanity.*;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
+import cri.sanity.*;
 
 
 public class GeneralActivity extends ScreenActivity
@@ -15,7 +16,7 @@ public class GeneralActivity extends ScreenActivity
 		on(K.FORCE_BT_AUDIO, new Change(){ public boolean on(){
 			if(!(Boolean)value) return true;
 			A.alert(
-				A.tr(R.string.ask_force_bt_audio),
+				A.rawstr(R.raw.force_bt),
 				new A.Click(){ public void on(){ setChecked(pref, true); }},
 				null,
 				A.ALERT_YESNO,
@@ -29,7 +30,7 @@ public class GeneralActivity extends ScreenActivity
 		on(p, new Change(){ public boolean on(){
 			if(!(Boolean)value) return true;
 			A.alert(
-				A.tr(R.string.ask_reverse_proximity),
+				A.rawstr(R.raw.reverse_proximity),
 				new A.Click(){ public void on(){ setChecked(pref, true); }},
 				null,
 				A.ALERT_YESNO,
@@ -40,7 +41,7 @@ public class GeneralActivity extends ScreenActivity
 
 		on(K.RESET_PREFS, new Click(){ public boolean on(){
 			A.alert(
-				A.tr(R.string.ask_reset_prefs),
+				A.rawstr(R.raw.reset),
 				new A.Click(){ public void on(){
 					final boolean agree = A.is(K.AGREE);
 					final String    ver = A.gets(K.VER);
@@ -56,20 +57,27 @@ public class GeneralActivity extends ScreenActivity
 			return true;
 		}});
 
+		on(K.PRF, new Click(){ public boolean on(){
+			startActivity(new Intent(A.app(), ProfileActivity.class));
+			return true;
+		}});
+
 		on(K.BACKUP_PREFS, new Click(){ public boolean on(){
 			A.alert(
-				A.tr(R.string.msg_backup_prefs),
+				A.s(R.string.msg_backup_prefs),
 				new A.Click(){ public void on(){
 					final boolean ok = P.backup();
 					A.toast(ok? R.string.msg_backup_success : R.string.msg_backup_failed);
 				}},
 				new A.Click(){ public void on(){
 					if(!P.backupExists())
-						A.alert(A.tr(R.string.msg_backup_no));
+						A.alert(A.s(R.string.msg_backup_no));
 					else {
+						skipAllKeys = true;
 						final boolean ok = P.restore();
 						A.toast(ok? R.string.msg_restore_success : R.string.msg_restore_failed);
 						if(ok) updateScreenPrefs();
+						skipAllKeys = false;
 					}
 				}},
 				A.ALERT_BAKRES

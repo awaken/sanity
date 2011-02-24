@@ -29,7 +29,7 @@ public class AboutActivity extends ScreenActivity
   	on(K.MAIL     , new Click(){ public boolean on(){ return mailToDeveloper();      }});
   	on(K.PAYPAL   , new Click(){ public boolean on(){ return A.gotoUrl(donateUrl()); }});
   	if(A.SDK < 8) setEnabled(K.UNINSTALL, false);
-  	else on(K.UNINSTALL, new Click(){ public boolean on(){ A.alert(A.tr(R.string.msg_uninstall)); return true; }});
+  	else on(K.UNINSTALL, new Click(){ public boolean on(){ A.alert(A.rawstr(R.raw.uninstall)); return true; }});
   }
 
 	private boolean mailToDeveloper()
@@ -39,14 +39,14 @@ public class AboutActivity extends ScreenActivity
 		i.setType("text/html");
 		i.putExtra(Intent.EXTRA_EMAIL  , new String[]{ Conf.AUTHOR_EMAIL });
 		i.putExtra(Intent.EXTRA_SUBJECT, appName());
-		i.putExtra(Intent.EXTRA_TEXT   , Html.fromHtml(A.tr(R.string.msg_email_body)+"<br />"));
-		startActivity(Intent.createChooser(i, A.tr(R.string.msg_email_choose)));
+		i.putExtra(Intent.EXTRA_TEXT   , Html.fromHtml(A.s(R.string.msg_email_body)+"<br />"));
+		startActivity(Intent.createChooser(i, A.s(R.string.msg_email_choose)));
 		return true;
 	}
 	
 	private static final String appName() {
 		String name = A.fullName();
-		String full = A.isFull()? A.FULL? "Full" : "Donate" : "";
+		String full = A.isFull()? Conf.FULL? "Full" : "Donate" : "";
 		if(full.length() > 0) name += " ("+full+')';
 		return name;
 	}

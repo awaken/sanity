@@ -1,0 +1,7 @@
+WARNING: if your bluetooth audio already works well with Sanity, don't activate this option!
+
+This option should be activated only if Sanity doesn't work well with your bluetooth audio.
+
+If this option is activated, Sanity won't enable and disable devices while any bluetooth device is connected.
+
+Are you sure to activate this option to force bluetooth audio?

@@ -1,0 +1,3 @@
+Confirm this request to allow Sanity to turn off the screen during phone calls.
+
+REMEMBER to disable "Administrator" option in Sanity for uninstalling the application! While Sanity is a device administrator, you cannot uninstall it.

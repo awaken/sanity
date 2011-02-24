@@ -1,0 +1,126 @@
+Versione 1.98:
+- Nuovo: puoi creare le scelte rapide di Sanity nello schermo Home.
+- Nuovo: sistema di profili (nella sezione "Generale") per cambiare velocemente le preferenze.
+- Fix: vari bug.
+- Modifica: migliorie minori all'interfaccia utente.
+
+Versione 1.97:
+- Nuovo: opzione per limitare le registrazioni automatiche solo su chiamate ricevute o effettuate.
+- Nuovo: opzioni per limitare il vivavoce automatico.
+- Fix: bug nelle opzioni del registratore (introdotto nella versione 1.96).
+- Modifica: migliorie minori.
+
+Versione 1.96:
+- Nuovo: l'opzione del vivavoce "Abilita a inizio chiamata" può essere filtrata per chiamate ricevute ed effettuate.
+- Nuovo: backup e ripristino delle preferenze nella memory card (nella sezione "Generale").
+- Modifica: migliorie minori all'interfaccia utente.
+ 
+Versione 1.95:
+- Nuovo: opzioni per la registrazione automatica quando le cuffie sono collegate e non.
+- Nuovo: opzione per ritardare l'attivazione automatica del vivavoce a inizio chiamata.
+- Nuovo: opzione per rendere silenzioso il suono di fine chiamata spegnendo il vivavoce.
+- Fix: ora il volume automatico può essere impostato al livello minimo reale.
+- Fix: altri bug.
+ 
+Versione 1.94:
+- Fix: crash occasionali del sistema di registrazione.
+
+Versione 1.93
+- Nuovo: opzione per limitare il numero massimo di volte in cui avviare la registrazione automatica in una singola chiamata.
+- Fix: bug minori nel sistema di registrazione.
+- Modifica: ottimizzazione generale.
+
+Versione 1.92
+- Nuovo: nelle registrazioni audio viene indicato se si tratta di chiamate ricevute o effettuate.
+- Fix: bug nell'avvio di una registrazione telefonica attraverso la barra di stato.
+
+Versione 1.91
+- Nuovo: i nomi dei contatti sono visualizzati (se disponibili) nell'archivio delle registrazioni.
+- Fix: malfunzionamento minore dell'interfaccia utente.
+- Modifica: ora Sanity non chiede sempre di donare ogni volta che apri l'applicazione.
+
+Versione 1.9
+- Nuovo: opzioni per la registrazione automatica delle telefonate.
+- Nuovo: opzione per la vibrazione al termine della chiamata (nella sezione "Notifica").
+- Nuovo: traduzione in spagnolo di LuiSKdT&AnA da Mallorca-Spagna.
+- Fix: il numero di telefono dell'interlocutore viene salvato correttamente nelle registrazioni.
+- Modifica: migliorie all'archivio delle registrazioni.
+- Modifica: migliorie all'interfaccia utente.
+
+Versione 1.8:
+- Nuovo: semplice archivio dei file audio registrati.
+- Fix: ora il processo viene chiuso correttamente nel caso di chiamata senza risposta.- Fix: le registrazioni audio erano silenziose quando l'opzione "Solo conversazione" era attivata.
+- Fix: bug minore nell'interfaccia utente.
+
+Versione 1.7:
+- Fix: la registrazione delle telefonate non viene più arrestata subito dopo averla avviata.
+
+Versione 1.6
+- Nuovo: opzione per permettere/negare la scansione multimediale dei file audio registrati.
+- Fix: l'applicazione è mostrata nel pannello "Amministratore Dispositivo" delle impostazioni globali di Android.
+- Fix: crash sporadici durante il ripristino dell'applicazione.
+- Modifica: le azioni di spegnimento automatico non vengono più attuate quando il telefono squilla durante una chiamata ricevuta.
+
+Versione 1.5
+- Nuovo: registratore vocale delle telefonate (nell'edizione gratuita è limitato a massimo 2 minuti di registrazione per file audio; senza limiti nell'edizione donazione).
+- Fix: ora le preferenze vengono correttamente salvate e possono essere modificate.
+- Fix: lo schermo non viene più spento automaticamente quando il telefono squilla.
+- Fix: comportamenti anomali durante chiamate multiple contemporanee.
+- Fix: malfunzionamenti minori.
+- Modifica: migliorie minori all'interfaccia utente.
+
+Versione 1.4
+- Fix: chiusura forzata su Android 2.1 (Eclair), invece ora funziona.
+- Fix: bug minori.
+
+Versione 1.3
+- Nuovo: opzione come amministratore dispositivo per spegnere lo schermo (va abilita l'opzione "Amministratore"); solo per Android 2.2+.
+- Fix: chiusura forzata durante il primo avvio senza aggiornamento.
+- Fix: malfunzionamenti minori.
+
+Versione 1.2
+- Nuovo: opzione per evitare lo spegnimento automatico del Wifi e della Connessione Dati quando l'Hotspot Wifi è attivo.
+- Nuovo: opzione per evitare lo spegnimento automatico della Connessione Dati quando il Tethering USB è attivo.
+
+Versione 1.1
+- Nuovo: opzione per forzare l'accensione dello schermo quando il telefono è lontano dall'orecchio.
+
+Versione 1.0
+- Nuovo: opzione di volume per rendere silenziosi tutti i flussi audio eccetto quello di conversazione (durante una chiamata).
+- Nuovo: opzione di notifica per mostrare i cambi automatici di volume.
+- Fix: l'attivazione ritardata del vivavoce ora funziona.
+- Fix: bug minore nella gestione automatica del volume.
+
+Versione 0.9
+- Nuovo: opzione per supportare quei telefoni che montano i sensori di prossimità invertiti.
+- Nuovo: opzione per supportare i dispositivi audio bluetooth non riconosciuti.
+- Fix: in certi casi i dispositivi non venivano rispristinati subito dopo uno squillo senza risposta.
+- Fix: altri bug minori.
+- Modifica: migliorie secondarie dell'interfaccia utente.
+
+Versione 0.8
+- Fix: malfunzionamenti nell'interfaccia utente.
+
+Versione 0.7
+- Nuovo: opzione per evitare di spegnere automaticamente la Connessione Dati quando il GPS è acceso.
+
+Versione 0.6
+- Nuovo: opzione per accendere/spegnere automaticamente il GPS durante le telefonate.
+- Modifica: interfaccia utente migliorata.
+
+Versione 0.5
+- Nuovo: opzione per evitare di disattivare automaticamente il bluetooth quando ci sono dei dispositivi bluetooth connessi.
+- Nuovo: opzione per ritardare l'attivazione automatica del vivavoce.
+- Fix: vengono riconosciute più periferiche audio bluetooth durante la telefonata.
+- Fix: bug minore che causava crash sporadici al termine della telefonata.
+- Nuovo: strumenti per contattare lo sviluppatore.
+
+Versione 0.4
+- Fix: ora le cuffie bluetooth vengono gestite correttamente.
+- Modifiche: notifica l'attività solo a inizio telefonata.
+
+Versione 0.3
+- Nuovo: opzione per forzare lo spegnimento dello schermo quando è vicino all'orecchio.
+
+Versione 0.2
+- Prima versione pubblicata.

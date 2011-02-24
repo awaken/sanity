@@ -18,24 +18,25 @@ public class ProximityActivity extends ScreenActivity
 		}
 		else {
 			on(p, new Change(){ public boolean on(){
-				if((Boolean)value) Admin.request(ProximityActivity.this);
-				else A.alert(A.tr(R.string.ask_admin), new A.Click() {
-					@Override
-					public void on() {
-						Admin.remove();
-						adminCheck();
-					}
-				}, null, A.ALERT_OKCANC);
+				if((Boolean)value)
+					Admin.request(ProximityActivity.this);
+				else
+					A.alert(
+						A.rawstr(R.raw.admin_ask),
+						new A.Click(){ public void on(){ Admin.remove(); adminCheck(); }},
+						null,
+						A.ALERT_OKCANC
+					);
 				return false;
 			}});
 		}
 	}
-	
+
 	@Override
-	public void onStart()
+	public void onResume()
 	{
 		adminCheck();
-		super.onStart();
+		super.onResume();
 	}
 	
 	private void adminCheck() { setChecked(K.ADMIN, Admin.isActive()); }

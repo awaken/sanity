@@ -3,6 +3,8 @@ package cri.sanity;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.util.Pair;
+
 
 // tool class: all preference keys; the default values; the upgrade phase.
 public final class K
@@ -12,6 +14,7 @@ public final class K
 	public static final String SKIP_HEADSET      = "skip_headset";
 	public static final String FORCE_BT_AUDIO    = "force_bt_audio";
 	public static final String REVERSE_PROXIMITY = "reverse_proximity";
+	public static final String PRF               = "profile";           // non persistent
 	public static final String BACKUP_PREFS      = "backup_prefs";			// non persistent
 	public static final String RESET_PREFS       = "reset_prefs";				// non persistent
 	// devices
@@ -77,8 +80,7 @@ public final class K
 	public static final String VER      = "ver";
 	public static final String NAG      = "nag";
 	public static final String BT_COUNT = "bt_count";
-	public static final String PRF_LAB  = "prf_lab";
-	public static final String PRF_FN   = "prf_fn";
+	public static final String PRF_NAME = "prf_name";
 	// non persistent tool keys
 	public static final String LOGO        = "logo";
 	public static final String EULA        = "eula";
@@ -97,15 +99,59 @@ public final class K
 	public static final String SCREEN_NOTIFY    = "screen_notify";
 	public static final String SCREEN_ABOUT     = "screen_about";
 
+	public static final String WS = "_s";		// wrap suffix for string values of integer keys
+
 	//--- methods: only class P should call these methods!
 
-	static final String[] skipKeys()
-	{
-		return new String[]{ BT_COUNT, NAG, PRF_LAB, PRF_FN };
+	static final String[] skipKeys() {
+		return new String[]{ BT_COUNT, NAG };
 	}
 
-	static final Map<String,Object> getDefaults()
-	{
+	static final String[] wrapIntKeys() {
+		return new String[]{
+			DISABLE_DELAY, ENABLE_DELAY, SPEAKER_DELAY, SPEAKER_CALL, SPEAKER_CALL_DELAY, SPEAKER_ON_COUNT, SPEAKER_OFF_COUNT,
+			VOL_PHONE, VOL_WIRED, VOL_BT, REC_SRC, REC_FMT, REC_START_DELAY, REC_STOP_DELAY, REC_START_HEADSET, REC_STOP_HEADSET,
+			REC_STOP_LIMIT, REC_START_TIMES, REC_START_DIR
+		};
+	}
+
+	public static final Map<String,Pair<Integer,Integer>> intLabVals() {
+		Map<String,Pair<Integer,Integer>> m = new HashMap<String,Pair<Integer,Integer>>();
+		Pair<Integer,Integer> pd  = p(R.array.disable_delay_labels, R.array.disable_delay_values);
+		Pair<Integer,Integer> psc = p(R.array.speaker_count_labels, R.array.speaker_count_values);
+		m.put(DISABLE_DELAY     , pd);
+		m.put(ENABLE_DELAY      , p(R.array.enable_delay_labels, R.array.enable_delay_values));
+		m.put(SPEAKER_DELAY     , pd);
+		m.put(SPEAKER_CALL      , p(R.array.speaker_call_labels, R.array.speaker_call_values));
+		m.put(SPEAKER_CALL_DELAY, pd);
+		m.put(SPEAKER_ON_COUNT  , psc);
+		m.put(SPEAKER_OFF_COUNT , psc);
+		m.put(REC_FMT           , p(R.array.rec_fmt_labels, R.array.rec_fmt_values));
+		m.put(REC_SRC           , p(R.array.rec_src_labels, R.array.rec_src_values));
+		m.put(REC_START_DELAY   , pd);
+		m.put(REC_STOP_DELAY    , pd);
+		m.put(REC_START_HEADSET , p(R.array.rec_start_headset_labels, R.array.rec_headset_values));
+		m.put(REC_STOP_HEADSET  , p(R.array.rec_stop_headset_labels , R.array.rec_headset_values));
+		m.put(REC_STOP_LIMIT    , p(R.array.rec_stop_limit_labels   , R.array.rec_stop_limit_values));
+		m.put(REC_START_TIMES   , p(R.array.rec_start_times_labels  , R.array.rec_start_times_values));
+		m.put(REC_START_DIR     , p(R.array.rec_start_dir_labels    , R.array.rec_start_times_values));
+		return m;
+	}
+	private static Pair<Integer,Integer> p(int lab, int val) { return new Pair<Integer,Integer>(lab, val); }
+	
+	public static final String[][] sections() {
+		return new String[][]{
+			new String[]{ "general_cat", ENABLED, SKIP_HEADSET, FORCE_BT_AUDIO, REVERSE_PROXIMITY },
+			new String[]{ "devices_cat", AUTO_MOBDATA, AUTO_WIFI, AUTO_GPS, AUTO_BT, SKIP_BT, SKIP_MOBDATA, SKIP_HOTSPOT, SKIP_TETHER },
+			new String[]{ "proximity_cat", DISABLE_PROXIMITY, DISABLE_DELAY, ENABLE_PROXIMITY, ENABLE_DELAY, SCREEN_OFF, SCREEN_ON },
+			new String[]{ "speaker_cat", SPEAKER_AUTO, SPEAKER_DELAY, SPEAKER_LOUD, SPEAKER_CALL, SPEAKER_CALL_DELAY, SPEAKER_SILENT_END, SPEAKER_ON_COUNT, SPEAKER_OFF_COUNT },
+			new String[]{ "vol_cat", VOL_PHONE, VOL_WIRED, VOL_BT, VOL_SOLO },
+			new String[]{ "notify_cat", NOTIFY_ENABLE, NOTIFY_DISABLE, NOTIFY_ACTIVITY, NOTIFY_VOLUME, NOTIFY_REC_STOP, VIBRATE_END },
+			new String[]{ "rec_cat", REC, REC_FMT, REC_SRC, REC_START, REC_START_DELAY, REC_START_SPEAKER, REC_START_HEADSET, REC_START_DIR, REC_START_TIMES, REC_STOP, REC_STOP_DELAY, REC_STOP_SPEAKER, REC_STOP_HEADSET, REC_STOP_LIMIT }
+		};
+	}
+
+	static final Map<String,Object> getDefaults() {
 		final Map<String,Object> m = new HashMap<String,Object>();
 		// all preferences default values
 		m.put(ENABLED           , true);			// main
@@ -121,22 +167,22 @@ public final class K
 		m.put(SKIP_HOTSPOT      , true);
 		m.put(SKIP_TETHER       , true);
 		m.put(DISABLE_PROXIMITY , true);			// proximity
-		m.put(DISABLE_DELAY     , "2000");
-		m.put(ENABLE_DELAY      , "4000");
+		m.put(DISABLE_DELAY     , 2000);
+		m.put(ENABLE_DELAY      , 4000);
 		m.put(ENABLE_PROXIMITY  , true);
 		m.put(SCREEN_OFF        , true);
 		m.put(SCREEN_ON         , true);
 		m.put(SPEAKER_AUTO      , true);			// speaker
-		m.put(SPEAKER_DELAY     ,  "0");
+		m.put(SPEAKER_DELAY     , 0);
 		m.put(SPEAKER_LOUD      , true);
-		m.put(SPEAKER_CALL      ,  "0");
-		m.put(SPEAKER_CALL_DELAY,  "0");
+		m.put(SPEAKER_CALL      , 0);
+		m.put(SPEAKER_CALL_DELAY, 0);
 		m.put(SPEAKER_SILENT_END, true);
-		m.put(SPEAKER_ON_COUNT  ,  "0");
-		m.put(SPEAKER_OFF_COUNT ,  "0");
-		m.put(VOL_PHONE         , "-1");			// volume
-		m.put(VOL_WIRED         , "-1");
-		m.put(VOL_BT            , "-1");
+		m.put(SPEAKER_ON_COUNT  , 0);
+		m.put(SPEAKER_OFF_COUNT , 0);
+		m.put(VOL_PHONE         , -1);			// volume
+		m.put(VOL_WIRED         , -1);
+		m.put(VOL_BT            , -1);
 		m.put(VOL_SOLO          , false);
 		m.put(NOTIFY_ENABLE     , true);			// notify
 		m.put(NOTIFY_DISABLE    , true);
@@ -145,24 +191,23 @@ public final class K
 		m.put(NOTIFY_REC_STOP   , true);
 		m.put(VIBRATE_END       , false);
 		m.put(REC               , false);		// call recorder
-		m.put(REC_SRC           , Rec.DEF_SRC+"");
-		m.put(REC_FMT           , Rec.DEF_FMT+"");
+		m.put(REC_SRC           , Rec.DEF_SRC);
+		m.put(REC_FMT           , Rec.DEF_FMT);
 		m.put(REC_START         , false);
 		m.put(REC_STOP          , false);
-		m.put(REC_START_DELAY   , "3000");
-		m.put(REC_STOP_DELAY    , "3000");
+		m.put(REC_START_DELAY   , 3000);
+		m.put(REC_STOP_DELAY    , 3000);
 		m.put(REC_START_SPEAKER , true);
 		m.put(REC_STOP_SPEAKER  , true);
-		m.put(REC_START_HEADSET ,  "0");
-		m.put(REC_STOP_HEADSET  ,  "0");
-		m.put(REC_STOP_LIMIT    ,  "0");
-		m.put(REC_START_TIMES   ,  "0");
-		m.put(REC_START_DIR     ,  "0");
+		m.put(REC_START_HEADSET , 0);
+		m.put(REC_STOP_HEADSET  , 0);
+		m.put(REC_STOP_LIMIT    , 0);
+		m.put(REC_START_TIMES   , 0);
+		m.put(REC_START_DIR     , 0);
 		return m;
 	}
 
-	static final void upgrade(float oldVer)
-	{
+	static final void upgrade(float oldVer) {
 		// upgrade current preferences from an older existing version
 		if(oldVer < 0.9) {
 			P.renameBool(DISABLE_PROXIMITY, "proximty");
@@ -180,12 +225,12 @@ public final class K
 			P.setDef(SPEAKER_CALL_DELAY, SPEAKER_SILENT_END, REC_START_HEADSET, REC_STOP_HEADSET);
 			for(String k : new String[]{ VOL_PHONE, VOL_WIRED, VOL_BT }) {
 				switch(A.getsi(k)) {
-					case 0: P.setDef(k);   break;
-					case 1: A.put(k, "0"); break;
+					case 0: P.setDef(k); break;
+					case 1: A.put(k, 0); break;
 				}
 			}
 		}
-		if(oldVer < 1.96) A.put(SPEAKER_CALL, A.is(SPEAKER_CALL)? "3" : "0");
+		if(oldVer < 1.96) A.put(SPEAKER_CALL, A.is(SPEAKER_CALL)? 3 : 0);
 		if(oldVer < 1.97) P.setDef(SPEAKER_ON_COUNT, SPEAKER_OFF_COUNT, REC_START_DIR);
 	}
 

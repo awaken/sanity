@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 
+
 public final class Admin
 {
 	private static ComponentName compName;
@@ -14,7 +15,7 @@ public final class Admin
 	
 	public static class Receiver extends DeviceAdminReceiver {
 		@Override
-	  public CharSequence onDisableRequested(Context ctx, Intent i) { return A.tr(R.string.ask_admin); }
+	  public CharSequence onDisableRequested(Context ctx, Intent i) { return A.rawstr(R.raw.admin_ask); }
 	}
 
   //---- static methods
@@ -31,7 +32,7 @@ public final class Admin
   	if(A.SDK < 8) return;
     final Intent i = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
     i.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, compName());
-    i.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, A.tr(R.string.admin_explanation));
+    i.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, A.rawstr(R.raw.admin_explanation));
     ctx.startActivity(i);
   }
 

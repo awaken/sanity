@@ -1,0 +1,17 @@
+A profile is just a backup of all your preferences that you can quickly restore (by activating the profile). Through profiles you can change all the Sanity preferences in one fell swoop.
+
+You can also create a shortcut in the Home screen to activate a profile on the fly (by long pressing your finger in the Home screen).
+
+Use the menu to manage your profiles:
+
+- New: create a new profile by choosing the name you like, the profile will contain all current preferences.
+
+- Activate: restore all preferences of the selected profile (all current preferences will be lost).
+
+- Save: save all current preferences to the selected profile (all previous preferences contained in the profile will be lost).
+
+- Rename: change the name of the selected profile.
+
+- Delete: remove the selected profile (it will be definitely lost).
+
+- Show: display all preferences of the selected profile.

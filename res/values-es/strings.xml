@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<string name="app_desc">Software para gestionar el volumen y reducción de las ondas electromagnéticas (EMG) durante las llamadas.</string>
+	<string name="app_desc">Asistente personal durante las llamadas.</string>
+  <string name="app_shortcut">Sanity - Atajos</string>
 
 	<string name="canc">Cancelar</string>
 	<string name="yes">Si</string>
@@ -11,8 +12,13 @@
 	<string name="nochange">No Ajustar</string>
 	<string name="err">Error</string>
 	<string name="empty">Vacío</string>
+	<string name="activate">Activar</string>
+	<string name="active_prf">Perfil ACTIVO</string>
+	<string name="addnew">Nuevo</string>
+	<string name="rename">Renombrar</string>
 	<string name="open">Abrir</string>
-	<string name="del">Borrar</string>
+	<string name="saveas">Guardar</string>
+	<string name="del">Eliminar</string>
 	<string name="selall">Seleccionar todo</string>
 	<string name="selnone">Deseleccionar todo</string>
 	<string name="full_only">Disponible sólo en la versión Donación</string>
@@ -20,9 +26,11 @@
 	<string name="call_out">saliente</string>
 	<string name="unknown">desconocido</string>
 	<string name="help">Ayuda</string>
-	<string name="headset">Auriculares</string>
 	<string name="backup">Copia de seguridad</string>
 	<string name="restore">Restaurar</string>
+	<string name="show">Muestra</string>
+	<string name="active">Habilitado</string>
+	<string name="disactive">Off</string>
 
 	<string name="groups_cat">Preferencias</string>
 	<string name="misc_cat">Varios</string>
@@ -30,8 +38,8 @@
 
 	<string name="general_cat">General</string>
 	<string name="general_sum">Opciones principales de aplicación.</string>
-	<string name="enable_title">Activar Sanity</string>
-	<string name="enable_sum">Activar o desactivar Sanity. Desactivado,la aplicación no funcionara durante las llamadas de teléfono.</string>
+	<string name="enabled_title">Activar Sanity</string>
+	<string name="enabled_sum">Activar o desactivar Sanity. Desactivado,la aplicación no funcionara durante las llamadas de teléfono.</string>
 	<string name="skip_headset_title">Ignorar si los auriculares están conectados</string>
 	<string name="skip_headset_sum">Desactivar el control automático de los dispositivos y manos libres cuando los auriculares están conectados (por cable o inalámbrica).</string>
 	<string name="force_bt_audio_title">Fuerza audio BT</string>
@@ -42,6 +50,9 @@
 	<string name="reset_prefs_sum">Establecer valores por defecto a todas las preferencias de Sanity.</string>
 	<string name="backup_prefs_title">Seguridad y Restaurar</string>
 	<string name="backup_prefs_sum">Pulse aquí para una copia de seguridad o restaurar las preferencias existentes en la tarjeta de memoria.</string>
+	<string name="profile_cat">Perfiles</string>
+	<string name="profile_sum">Administración de perfiles de configuración para cambiar más rápidamente las preferencias de un solo golpe.</string>
+	<string name="profile_shortcut">Activar Perfil</string>
 
 	<string name="devices_cat">Dispositivos a desactivar</string>
 	<string name="devices_sum">Qué dispositivos quiere deshabilitar para reducir las ondas electromagnéticas (EMG) durante una llamada.</string>
@@ -125,8 +136,8 @@
 	<string name="vibrate_end_sum">Vibrar cuando terminas la llamada.</string>
 
 	<string name="rec_cat">Grabadora</string>
-	<string name="rec_sum">Opciones para la grabación del audio de la llamada en la tarjeta de memoria.</string>
-	<string name="rec_sum_free">Esta versión gratuita está limitada a 2 minutos de grabación.</string>
+	<string name="rec_cat_sum">Opciones para la grabación del audio de la llamada en la tarjeta de memoria.</string>
+	<string name="rec_cat_sum_free">Esta versión gratuita está limitada a 2 minutos de grabación.</string>
 	<string name="rec_warn_title">Aviso legal</string>
 	<string name="rec_warn_sum">Lealo atentamente: en algunos paises la grabación de llamadas está prohibida por las leyes del gobierno. El autor no se hace responsable del mal uso de esta aplicación. Uselo bajo su propio riesgo.</string>
 	<string name="rec_enable_title">Activar la grabación</string>
@@ -139,6 +150,8 @@
 	<string name="rec_browse_sum">Mostrar lista de archivos de audio grabados por Sanity.</string>
 	<string name="rec_scan_title">Escaner multimedia</string>
 	<string name="rec_scan_sum">Permitir la reproduccion de los archivos grabados por Sanity a traves del propio sistema operativo.</string>
+	<string name="rec_camera_title">Botón de Cámara</string>
+	<string name="rec_camera_sum">Seleccione si desea iniciar o detener la grabación cuando se presiona el botón de la cámara durante una llamada.</string>
 	<string name="rec_info_title">Notas Importantes</string>
 	<string name="rec_info_sum">El sistema de grabación que usa Android es muy limitado: solo graba las llamadas cuando el ALTAVOZ (MANOS LIBRES) ESTÁ ACTIVADO!!</string>
 	<string name="browse_unknown_title">Fecha desconocida</string>
@@ -149,6 +162,7 @@
 	<string name="rec_start_delay_sum">Tiempo de retardo para iniciar la grabación automatica.</string>
 	<string name="rec_start_speaker_title">Altavoz activado</string>
 	<string name="rec_start_speaker_sum">Iniciar la grabación automáticamente cuando Sanity activa el altavoz (manos libres).</string>
+	<string name="rec_start_headset_title">Auriculares (empzar)</string>
 	<string name="rec_start_headset_sum">Reglas para empezar a grabar automáticamente a través de auriculares.</string>
 	<string name="rec_start_dir_title">Tipo de llamada</string>
 	<string name="rec_start_dir_sum">Elija las direcciones de llamada para iniciar la grabación de audio.</string>
@@ -161,9 +175,11 @@
 	<string name="rec_stop_delay_sum">Tiempo de retardo para detener la grabación automatica.</string>
 	<string name="rec_stop_speaker_title">Altavoz desactivado</string>
 	<string name="rec_stop_speaker_sum">DETENER automáticamente la grabación cuando Sanity desactive el altavoz (manos libres).</string>
+	<string name="rec_stop_headset_title">Auriculares (detener)</string>
 	<string name="rec_stop_headset_sum">Reglas para detener automáticamente la grabación con auriculares.</string>
 	<string name="rec_stop_limit_title">Tiempo límite</string>
 	<string name="rec_stop_limit_sum">Elija la duración máxima de una grabación de audio. Sanity va a detener la grabación después de esta duración.</string>
+	<string name="rec_shortcut">Grabar Llamada</string>
 	<!--
 	<string name="rec_start_all_title">Todas las llamadas</string>
 	<string name="rec_start_all_sum">Grabar automáticamente todas las llamadas.</string>
@@ -179,11 +195,11 @@
 	<string name="comment_sum">Te invitamos a dejar un comentario en el Market y decirnos que te parece esta aplicación. Porfavor los errores o fallos solamente por e-mail, no en el Market.</string>
 	<string name="eula_title">Licencia GNU GPL v3</string>
 	<string name="eula_sum">Pulse aqui para abrir la web oficial de la GNU GPL versión 3.</string>
-	<string name="paypal_title">Donacion por PayPal</string>
-	<string name="paypal_sum">Para ayudar a Sanity, puedes hacer tu donacion a traves de PayPal. Pulsa aqui para acceder al portal de PayPal.</string>
+	<string name="paypal_title">Donación por PayPal</string>
+	<string name="paypal_sum">Para ayudar a Sanity, puedes hacer tu donación a traves de PayPal. Pulsa aqui para acceder al portal de PayPal.</string>
 	<string name="donate_title">Donar</string>
 	<string name="donate_sum">Sanity es gratuito. Si te gusta esta aplicación, apoya al desarrolador con una donación.</string>
-	<string name="donated_title">Donacion realizada</string>
+	<string name="donated_title">Donación realizada</string>
 	<string name="donated_sum">Gracias por apoyar Sanity. Gracias por tu donativo.</string>
 	<string name="uninstall_title">Como desinstalar</string>
 	<string name="uninstall_sum">Pulse aqui para ver las instrucciones de como desinstalar Sanity (solo funciona con Froyo 2.2 de Android o superior).</string>
@@ -192,41 +208,49 @@
 
 	<string name="admin_title">Administrador</string>
 	<string name="admin_sum">Se usan privilegios de administrador para apagar la pantalla cuando el telefono está cerca de tu oido.</string>
-	<string name="admin_explanation">Confirme esta opcion para que Sanity pueda apagar la pantalla durante las llamadas.\n\nRECUERDE para desinstalar Sanity, tiene que revocar los permisos de \"Administrador\". Si no lo hace, no podra desinstalarlo.</string>
-	<string name="ask_admin">Sanity necesita los permisos de administrador para poder apagar la pantalla durante una llamada. Sin estos privilegios, Sanity no podra apagar la pantalla de el telefono cuando este cerca de tu oido durante una llamada.\n\nEn todo caso, debe deshabilitar esta función para desinstalar Sanity.\n\n¿Está Vd. seguro de negar los permisos de administrador a Sanity?</string>
-	<string name="ask_force_bt_audio">ADVERTENCIA: si su dispositivo de audio por Bluetooth funciona bien con Sanity, no active esta opcion!\n\nEsta opcion solo debe activarla si Sanity no funciona bien con su dispositivo de audio por Bluetooth.\n\nSi esta opcion está activada, Sanity no podra Activar/Desactivar nada mientras otro dispositivo Bluetooth este conectado.\n\n¿Está seguro de activar esta opcion para forzar el audio Bluetooth?</string>
-	<string name="ask_reverse_proximity">ADVERTENCIA: si Sanity funciona correctamente en su movil, no active esta opcion!\n\nEsta opcion solo debe activarse para aquellos moviles que cuentan con un sensor de proximidad cerca de los microfonos.\n\n¿Está seguro de activar esta opcion para la Proximidad al revés?</string>
-	<string name="ask_reset_prefs">ADVERTENCIA: esta funcion restaurara todos los valores de preferencias por defecto.\n\nTodas las preferencias actuales se perderan.\n\n¿Está seguro de restaurar todas las preferencias?</string>
   <string name="ask_restore">He encontrado una copia de seguridad de las preferencias de su tarjeta de memoria. ¿Ahora todo lo que desea restaurar sus preferencias?</string>
+  <string name="ask_prf_activate">Si se activa el modo, perderá todas las preferencias actuales. Para evitar esto, agregar un nuevo perfil antes de activar.\n¿Está seguro que desea activar el perfil?</string>
+  <string name="ask_prf_addnew">Las preferencias actuales ya están guardados en el perfil activo.\n\n¿Estás seguro que crear un nuevo perfil?</string>
+  <string name="ask_prf_saveas">¿Está seguro de GUARDAR todas las preferencias actuales en el perfil \"%s\"? Todas las preferencias de perfil se sobrescribirá.</string>
+  <string name="ask_prf_delete">¿Está seguro de ELIMINAR el perfil \"%s\"?</string>
   <string name="ask_del_one">¿Está seguro de ELIMINAR este archivo?</string>
   <string name="ask_del_all">¿Estás seguro de ELIMINAR los %s archivos seleccionados?</string>
-	<string name="ask_donate">Muchas Gracias por usar Sanity. Esta es la versión gratuita.\n\nSi te gusta Sanity, apoya al desarrollador con una donación. Cuando hayas donado, este mensaje sera borrado y asi tambien el limite de los 2 minutos de grabación de las llamadas.\n\n¿Quieres abrir el Market para hacer una donacion?</string>
 
 	<string name="msg_dir_err">Error en Sanity: no se puede crear el directorio para guardar las grabaciónes de audio!</string>
 	<string name="msg_rec_err">Error en Sanity: no se puede iniciar la grabación de audio!</string>
 	<string name="msg_rec_title">Sanity - Grabadora</string>
 	<string name="msg_rec_start">Pulse aqui para INICIAR la grabación de llamada</string>
 	<string name="msg_rec_stop">Pulse aqui para DETENER la grabación de llamada</string>
+  <string name="msg_rec_go">Sanity: iniciar la grabación.</string>
   <string name="msg_rec_limit">Sanity: detener la grabación.</string>
 	<string name="msg_rec_free_limit">Sanity: se han alcanzado los dos minutos de limite, se detiene la grabación.</string>
 	<string name="msg_rec_scan_err">Error mientras se cambiaban las propiedades de Escanner: se deniega el permiso en el archivo \"%s\"</string>
 	<string name="msg_rec_empty">No hay archivos de grabación de llamadas. Inicie una grabación de llamada para ver el archivo aqui.</string>
+  <string name="msg_rec_no">Sanity: acción cancelada, el sistema de grabación no sese está ejecutando.</string>
 	<string name="msg_rec_file">Elija que hacer con este archivo de audio.</string>
   <string name="msg_del_err">Error: la eliminación de %s archivos no!</string>
 	<string name="msg_require_froyo">Esta opcion requiere de la ultima versión de Android 2.2 (Froyo). Lamentablemente, su movil tienela versión Android 2.1 (Eclair).</string>
-	<string name="msg_uninstall">Para desinstalar Sanity, Vd. tiene que deseleccionar el permiso de \"Administrador\" dentro de la seccion de \"Sensor de proximidad\".\n\nMientras la opcion de \"Administrador\" este seleccionada, Vd. no puede desinstalar Sanity!\n\nUnicamente se puede desinstalar despues de revocar todos los permisos a Sanity.</string>
 	<string name="msg_devs_enabled">Sanity: dispositivos activos</string>
 	<string name="msg_devs_disabled">Sanity: dispositivos desactivados</string>
 	<string name="msg_running">Sanity está en funcionamiento</string>
   <string name="msg_backup_prefs">Elija una copia de seguridad o restauración de todas las preferencias actuales de la tarjeta de memoria.</string>
   <string name="msg_backup_no">No hay copias de seguridad en la tarjeta de memoria! Debemos crear una copia de seguridad antes de poder restaurar.</string>
   <string name="msg_backup_success">Guardado con éxito</string>
-  <string name="msg_backup_failed">No se puede guardar las preferencias!</string>
+  <string name="msg_backup_failed">Error: no se puede guardar las preferencias!</string>
   <string name="msg_restore_success">Restaurado con éxito</string>
-  <string name="msg_restore_failed">No se puede restaurar las preferencias!</string>
+  <string name="msg_restore_failed">Error: no se puede restaurar las preferencias!</string>
+  <string name="msg_prf_empty">No hay perfiles. Use el menú para crear uno.</string>
+  <string name="msg_prf_addnew">Elija el nombre del nuevo perfil para crear</string>
+  <string name="msg_prf_rename">Cambie el nombre del perfil</string>
+  <string name="msg_prf_nosel">No se selecciona el perfil!</string>
+  <string name="msg_prf_restore_ok">Sanity: profilo \"%s\" attivato</string>
+  <string name="msg_prf_restore_err">Sanity: impossibile attivare il profilo \"%s\"!</string>
+  <string name="msg_err_name">Error: el nombre no válido!</string>
+  <string name="msg_err_rename">Error: no se puede cambiar el nombre de archivo!</string>
+  <string name="msg_last_modified">Última modificación</string>
+  <string name="msg_exists_err">Acción cancelada: \"%s\" ya existe</string>
 	<string name="msg_market_err">No se puede abrir el Market! Compruebe la aplicación Market este instalada correctamente.</string>
 	<string name="msg_email_choose">Elige como enviar el e-mail</string>
-	<string name="msg_eula_title">Acuerdo de Licencia de Software</string>
-	<string name="msg_eula">Este es software libre: usted puede redistribuirlo y/o modificarlo bajo los términos de la Licencia Pública General GNU publicada por la Fundación para el Software Libre, ya sea la versión 3 de la Licencia, o (a su elección) cualquier versión posterior.\nEste programa se distribuye con la esperanza de que sea útil, pero  SIN GARANTÍA ALGUNA; ni siquiera la garantía implícita MERCANTIL o de APTITUD PARA UN PROPÓSITO DETERMINADO. Consulte los detalles de la Licencia Pública General GNU para obtener una información más detallada, consulte http://www.gnu.org/licenses/.\n\nSeleccione \"Ok\" si está de acuerdo con esta licencia.\nSeleccione \"Cancelar\" para rechazarla.</string>
+	<string name="msg_eula_title">Acuerdo de licencia</string>
 
 </resources>

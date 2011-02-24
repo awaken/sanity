@@ -16,16 +16,17 @@ public class MainActivity extends ScreenActivity
     screenerAll();
   	setupProximity();
     setupDonate();
+		nag = false;
 		if(!A.is(K.AGREE))   askLicense();
 		else if(P.upgrade()) alertChangeLog();
-		else if(!A.isFull()) askDonate();
+		else if(!A.isFull()) nag = true;
   }
 
 	@Override
-	public void onStart()
+	public void onResume()
 	{
 		updateOptions();
-		super.onStart();
+		super.onResume();
 	}
 
 	@Override
@@ -45,40 +46,28 @@ public class MainActivity extends ScreenActivity
     if(!A.isFull() && !startDonateApp()) {
    		on(p, new Click(){ public boolean on(){ return A.gotoMarketDetails(Conf.DONATE_PKG); }});
 			p = pref(K.SCREEN_RECORD);
-			p.setSummary(p.getSummary()+" "+A.tr(R.string.rec_sum_free));
+			p.setSummary(p.getSummary()+" "+A.s(R.string.rec_cat_sum_free));
     }
     else {
 	  	p.setEnabled(false);
 	  	p.setSelectable(false);
-	   	p.setTitle(A.FULL? R.string.full_title : R.string.donated_title);
-	   	p.setSummary(A.FULL? R.string.full_sum : R.string.donated_sum);
+	  	if(Conf.FULL) { p.setTitle(R.string.full_title   ); p.setSummary(R.string.full_sum   ); }
+	  	else          { p.setTitle(R.string.donated_title); p.setSummary(R.string.donated_sum); }
     }
-	}
-
-	private static void askDonate()
-	{
-		final long now = A.now();
-		if(now-A.getl(K.NAG) < Conf.NAG_TIMEOUT) return;
-		A.putc(K.NAG, now);
-		A.alert(
-			A.tr(R.string.ask_donate),
-			new A.Click(){ public void on(){ A.gotoMarketDetails(Conf.DONATE_PKG); }},
-			null
-		);
 	}
 
 	private void askLicense()
 	{
 		A.alert(
-		  A.tr(R.string.msg_eula_title),
-			A.fullName()+"\n\n"+A.tr(R.string.app_desc)+'\n'+A.tr(R.string.app_copy)+"\n\n"+A.tr(R.string.msg_eula),
+		  A.s(R.string.msg_eula_title),
+			A.fullName()+"\n\n"+A.s(R.string.app_desc)+'\n'+A.s(R.string.app_copy)+"\n\n"+A.rawstr(R.raw.license),
 			new A.Click(){ public void on(){
 				A.put(K.AGREE,true);
 				P.setDefaults();
 				updateOptions();
 				if(P.backupExists()) {
 					A.alert(
-						A.tr(R.string.ask_restore),
+						A.s(R.string.ask_restore),
 						new A.Click(){ public void on(){
 							final boolean ok = P.restore();
 							A.toast(ok? R.string.msg_restore_success : R.string.msg_restore_failed);
@@ -103,6 +92,7 @@ public class MainActivity extends ScreenActivity
 		setEnabled(K.SCREEN_SPEAKER  , enabled);
 		setEnabled(K.SCREEN_VOLUME   , enabled);
 		setEnabled(K.SCREEN_NOTIFY   , enabled);
+		setEnabled(K.SCREEN_RECORD   , enabled);
 	}
 
 	private boolean startDonateApp()

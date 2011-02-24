@@ -8,7 +8,7 @@
 	  <cri.sanity.PrefList android:title="@string/delay_speaker_title"
 	                       android:summary="@string/delay_speaker_sum"
 	                       android:dependency="auto_speaker"
-	                       android:key="delay_speaker"
+	                       android:key="delay_speaker_s"
 	                       android:entries="@array/disable_delay_labels"
 	                       android:entryValues="@array/disable_delay_values" />
 	  <CheckBoxPreference android:title="@string/loud_speaker_title"
@@ -16,12 +16,12 @@
 	                      android:key="loud_speaker" />
 	  <cri.sanity.PrefList android:title="@string/speaker_call_title"
 	                       android:summary="@string/speaker_call_sum"
-	                       android:key="speaker_call"
+	                       android:key="speaker_call_s"
 	                       android:entries="@array/speaker_call_labels"
 	                       android:entryValues="@array/speaker_call_values" />
 	  <cri.sanity.PrefList android:title="@string/delay_speaker_call_title"
 	                       android:summary="@string/delay_speaker_call_sum"
-	                       android:key="delay_speaker_call"
+	                       android:key="delay_speaker_call_s"
 	                       android:entries="@array/disable_delay_labels"
 	                       android:entryValues="@array/disable_delay_values" />
 	  <CheckBoxPreference android:title="@string/silent_end_speaker_title"
@@ -32,13 +32,13 @@
 	  <cri.sanity.PrefList android:title="@string/speaker_on_count_title"
 	                       android:summary="@string/speaker_on_count_sum"
 	                       android:dependency="auto_speaker"
-	                       android:key="speaker_on_count"
+	                       android:key="speaker_on_count_s"
 	                       android:entries="@array/speaker_count_labels"
 	                       android:entryValues="@array/speaker_count_values" />
 	  <cri.sanity.PrefList android:title="@string/speaker_off_count_title"
 	                       android:summary="@string/speaker_off_count_sum"
 	                       android:dependency="auto_speaker"
-	                       android:key="speaker_off_count"
+	                       android:key="speaker_off_count_s"
 	                       android:entries="@array/speaker_count_labels"
 	                       android:entryValues="@array/speaker_count_values" />
 	</PreferenceCategory>

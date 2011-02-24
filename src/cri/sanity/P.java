@@ -14,16 +14,24 @@ public final class P
 {
 	//---- public api
 
-	public static final Map<String,Object> getDefaults() { return defsBuild(); }
-	public static final void               setDefaults() { A.putAll(defsBuild()); setVer(); }
+	public static final Map<String,Object> getDefaults() {
+		if(defs == null) defs = K.getDefaults();
+		return defs;
+	}
+	public static final void setDefaults() {
+		A.edit().clear();
+		A.putAll(getDefaults()).commit();
+		setWrapKeys();
+		setVer();
+	}
 
-	public static final void setDef(String ... keys) { for(final String k : keys) setDef(k); }
+	public static final void setDef(String ... keys) { for(String k : keys) setDef(k); }
 	public static final void setDef(String key) {
 		final Object val = defs.get(key);
 		if(val != null) A.put(key, val);
 	}
 
-	public static final void setDefIfNew(String ... keys) { for(final String k : keys) setDefIfNew(k); }
+	public static final void setDefIfNew(String ... keys) { for(String k : keys) setDefIfNew(k); }
 	public static final void setDefIfNew(String key)      { if(!A.has(key)) setDef(key); }
 	
 	public static final void renameBool(String dst, String old) {
@@ -34,7 +42,7 @@ public final class P
 	public static final boolean backupExists() {
 		final String dir = A.sdcardDir();
 		if(dir == null) return false;
-		return new File(dir+'/'+Conf.BACKUP_FN).exists();
+		return new File(dir, Conf.BACKUP_FN).exists();
 	}
 	
 	public static final Map<String,Object> skipKeysMap() {
@@ -61,11 +69,9 @@ public final class P
 				final String c = v.getClass().getName();
 				out.write(k+"=("+c.substring(c.lastIndexOf('.')+1)+')'+v+'\n');
 			}
-			out.flush();
 			out.close();
 			return true;
 		} catch(IOException e) {
-			//A.logd("error writing file \""+fn+"\":"+e.getMessage());
 			return false;
 		}
 	}
@@ -77,6 +83,15 @@ public final class P
 		return restore(dir+'/'+Conf.BACKUP_FN);
 	}
 	public static final boolean restore(String fn) {
+		Map<String,?> m = load(fn);
+		if(m == null) return false;
+		A.edit().clear();
+		A.putAll(m).commit();
+		upgrade();
+		return true;
+	}
+	public static final Map<String,?> load(String fn) {
+		Map<String,Object> m = new HashMap<String,Object>();
 		boolean read = false;
 		BufferedReader in = null;
 		try {
@@ -93,21 +108,18 @@ public final class P
 				q = elm.indexOf(')', p+1) + 1;
 				final String cls = elm.substring(p, q-p);
 				final String val = elm.substring(q).trim();
-				if(     cls.equals("String" )) A.put(key, val);
-				else if(cls.equals("Boolean")) A.put(key, Boolean.parseBoolean(val));
-				else if(cls.equals("Integer")) A.put(key, Integer.parseInt(val));
-				else if(cls.equals("Float"  )) A.put(key, Float.parseFloat(val));
-				else if(cls.equals("Long"   )) A.put(key, Long.parseLong(val));
+				if(     cls.equals("String" )) m.put(key, val);
+				else if(cls.equals("Boolean")) m.put(key, Boolean.parseBoolean(val));
+				else if(cls.equals("Integer")) m.put(key, Integer.parseInt(val));
+				else if(cls.equals("Float"  )) m.put(key, Float.parseFloat(val));
+				else if(cls.equals("Long"   )) m.put(key, Long.parseLong(val));
 				else continue;
 				read = true;
-				//A.logd("restore: "+key+"=("+cls+')'+val);
 			}
 		} catch(Exception e) {
 			try { if(in != null) in.close(); } catch(Exception e2) {}
-			//if(!read) A.logd("error reading file \""+fn+"\":"+e.getMessage());
+			return read? m : null;
 		}
-		if(read) { A.commit(); upgrade(); }
-		return read;
 	}
 
 	public static final boolean upgrade() {
@@ -121,29 +133,37 @@ public final class P
 
 	private P() { }
 
-	private static Map<String,Object> defsBuild() {
-		if(defs == null) defs = K.getDefaults();
-		return defs;
+	private static void setWrapKeys() {
+		for(String ki : K.wrapIntKeys()) {
+			final String ks = ki + K.WS;
+			try {
+				A.put(ks, Integer.toString(A.geti(ki)));
+			}	catch(Exception e) { try {
+				final String s = A.gets(ki);
+				A.put(ki, Integer.parseInt(s)).put(ks, s);
+			} catch(Exception e2) { try {
+				A.put(ki, A.getsi(ks));
+			} catch(Exception e3) {
+				final int v = (Integer)getDefaults().get(ki);
+				A.put(ki, v).put(ks, Integer.parseInt(ks));
+			}}}
+		}
 	}
 
 	private static void upgrade(float oldVer) {
 		if(oldVer < 0.1)
 			setDefaults();
 		else {
-			defsBuild();
+			getDefaults();
 			K.upgrade(oldVer);
+			setWrapKeys();
 			setVer();
 		}
 	}
 
 	private static float verNum(String v) {
-		for(;;) {
-			if(A.empty(v)) return 0;
-			try { return Float.parseFloat(v); } catch(Exception e) {}
-			final int p = v.lastIndexOf('.');
-			if(p < 1) return 0;
-			v = v.substring(0, p);
-		}
+		try { return Float.parseFloat(v); }
+		catch(Exception e) { return 0; }
 	}
 
 	private static void setVer() { A.putc(K.VER, A.ver()); }

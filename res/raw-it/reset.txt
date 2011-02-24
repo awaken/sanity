@@ -1,0 +1,5 @@
+ATTENZIONE: questa funzione ripristinerà tutti i valori predefiniti delle preferenze.
+
+Tutte le preferenze correnti verranno perse.
+
+Vuoi davvero ripristinare tutte le preferenze ai valori iniziali?

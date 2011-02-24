@@ -1,0 +1,7 @@
+ADVERTENCIA: si su dispositivo de audio por Bluetooth funciona bien con Sanity, no active esta opcion!
+
+Esta opcion solo debe activarla si Sanity no funciona bien con su dispositivo de audio por Bluetooth.
+
+Si esta opcion está activada, Sanity no podra Activar/Desactivar nada mientras otro dispositivo Bluetooth este conectado.
+
+¿Está seguro de activar esta opcion para forzar el audio Bluetooth?

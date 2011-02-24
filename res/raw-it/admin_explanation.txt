@@ -1,0 +1,3 @@
+Conferma questa richiesta per permettere a Sanity di spegnere lo schermo durante le telefonate.
+
+RICORDA di disattivare l'opzione "Amministratore" di Sanity per poter disinstallare l'applicazione! Fintantoché Sanity è un amministratore del dispositivo, non potrai disinstallarlo.

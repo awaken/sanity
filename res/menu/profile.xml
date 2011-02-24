@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/prf_addnew" android:icon="@android:drawable/ic_menu_add" android:title="@string/addnew" />
+	<item android:id="@+id/prf_activate" android:icon="@android:drawable/ic_media_play" android:title="@string/activate" />
+	<item android:id="@+id/prf_saveas" android:icon="@android:drawable/ic_menu_save" android:title="@string/saveas" />
+	<item android:id="@+id/prf_rename" android:icon="@android:drawable/ic_menu_rotate" android:title="@string/rename" />
+	<item android:id="@+id/prf_delete" android:icon="@android:drawable/ic_menu_delete" android:title="@string/del" />
+	<item android:id="@+id/prf_show" android:icon="@android:drawable/ic_menu_search" android:title="@string/show" />
+	<item android:id="@+id/prf_help" android:icon="@android:drawable/ic_menu_help" android:title="@string/help" />
+</menu>

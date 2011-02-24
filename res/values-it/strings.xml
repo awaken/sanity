@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <string name="app_desc">Software di gestione audio e per ridurre le onde elettromagnetiche durante le telefonate.</string>
+  <string name="app_desc">Assistente personale per le telefonate.</string>
+  <string name="app_shortcut">Sanity - Scorciatoie</string>
 
 	<string name="canc">Annulla</string>
 	<string name="yes">Sì</string>
@@ -11,7 +12,12 @@
 	<string name="nochange">Non modificare</string>
 	<string name="err">Errore</string>
 	<string name="empty">Vuoto</string>
+	<string name="activate">Attiva</string>
+  <string name="active_prf">Profilo ATTIVO</string>
+	<string name="addnew">Nuovo</string>
+	<string name="rename">Rinomina</string>
 	<string name="open">Apri</string>
+	<string name="saveas">Salva</string>
 	<string name="del">Elimina</string>
 	<string name="selall">Seleziona tutti</string>
 	<string name="selnone">Deseleziona tutti</string>
@@ -20,9 +26,11 @@
 	<string name="call_out">effettuata</string>
 	<string name="unknown">sconosciuto</string>
 	<string name="help">Aiuto</string>
-	<string name="headset">Cuffie</string>
 	<string name="backup">Backup</string>
 	<string name="restore">Ripristino</string>
+	<string name="show">Mostra</string>
+	<string name="active">Attivato</string>
+	<string name="disactive">Disattivato</string>
 
   <string name="groups_cat">Preferenze</string>
   <string name="misc_cat">Varie</string>
@@ -30,8 +38,8 @@
 
   <string name="general_cat">Generale</string>
   <string name="general_sum">Opzioni principali dell\'applicazione.</string>
-  <string name="enable_title">Abilita Sanity</string>
-  <string name="enable_sum">Abilita o disabilita il sistema Sanity. Se disabilitato, questa applicazione non avrà effetti durante le telefonate.</string>
+  <string name="enabled_title">Abilita Sanity</string>
+  <string name="enabled_sum">Abilita o disabilita il sistema Sanity. Se disabilitato, questa applicazione non avrà effetti durante le telefonate.</string>
   <string name="skip_headset_title">Evita se uso le cuffie</string>
   <string name="skip_headset_sum">Disabilita la gestione automatica dei dispositivi e del vivavoce quando le cuffie (con o senza fili) sono collegate.</string>
   <string name="force_bt_audio_title">Forza l\'audio BT</string>
@@ -42,6 +50,9 @@
 	<string name="reset_prefs_sum">Imposta tutte le preferenze dell\'applicazione ai valori iniziali predefiniti.</string>
 	<string name="backup_prefs_title">Backup e Ripristino</string>
 	<string name="backup_prefs_sum">Tocca qui per effettuare il backup/ripristino di tutte le preferenze attuali nella memory card.</string>
+	<string name="profile_cat">Profili</string>
+	<string name="profile_sum">Gestisci i profili delle impostazioni per cambiare velocemente più preferenze in un colpo solo.</string>
+	<string name="profile_shortcut">Attiva Profilo</string>
 
   <string name="devices_cat">Dispositivi da spegnere</string>
   <string name="devices_sum">Quali dispositivi spegnere per ridurre le onde elettromagnetiche durante la telefonata.</string>
@@ -110,12 +121,12 @@
 	<string name="vol_solo_sum">Ascolta solo l\'audio della conversazione, spegnendo ogni altro flusso audio durante la telefonata.</string>
 
 	<string name="rec_cat">Registratore</string>
-	<string name="rec_sum">Opzioni per registrare l\'audio della telefonata sulla memory card.</string>
-	<string name="rec_sum_free">Questa versione gratuita è limitata a 2 minuti per ogni registrazione.</string>
+	<string name="rec_cat_sum">Opzioni per registrare l\'audio della telefonata sulla memory card.</string>
+	<string name="rec_cat_sum_free">Questa versione gratuita è limitata a 2 minuti per ogni registrazione.</string>
 	<string name="rec_warn_title">Note legali</string>
 	<string name="rec_warn_sum">Attenzione: in alcuni paesi la registrazione delle telefonate è proibita dalle leggi del governo. L\'autore dissente ogni uso illegale di Sanity. Sii consapevole, usalo a tuo rischio!</string>
-	<string name="rec_enable_title">Abilita la registrazione</string>
-	<string name="rec_enable_sum">Mette una notifica di registrazione nella barra di stato durante le telefonate: tocca quella notifica per avviare/arrestare la registrazione.</string>
+	<string name="rec_title">Abilita la registrazione</string>
+	<string name="rec_sum">Mette una notifica di registrazione nella barra di stato durante le telefonate: tocca quella notifica per avviare/arrestare la registrazione.</string>
 	<string name="rec_src_title">Sorgente audio</string>
 	<string name="rec_src_sum">Scegli il dispositivo usato per registrare l\'audio. Attenzione: su molti telefoni funziona soltanto la sorgente \"Microfono\"!!</string>
 	<string name="rec_fmt_title">Formato audio</string>
@@ -124,6 +135,8 @@
 	<string name="rec_browse_sum">Mostra la lista dei file audio delle registrazioni effettuate con Sanity (si trovano nella cartella \"Sanity\" della memory card).</string>
 	<string name="rec_scan_title">Scansione multimediale</string>
 	<string name="rec_scan_sum">Permetti alla scansione multimediale di sistema di mantenere traccia dei file audio registrati da Sanity.</string>
+	<string name="rec_camera_title">Tasto Camera</string>
+	<string name="rec_camera_sum">Scegli se avviare o arrestare la registrazione quando premi il tasto camera durante una telefonata.</string>
 	<string name="rec_info_title">Note importanti</string>
 	<string name="rec_info_sum">Il sistema di registrazione di Android è molto limitato: attualmente puoi registrare le chiamate solo quando il VIVAVOCE È ACCESO!</string>
 	<string name="browse_unknown_title">Data sconosciuta</string>
@@ -134,6 +147,7 @@
 	<string name="rec_start_delay_sum">Quanto tempo aspettare prima di avviare automaticamente una registrazione.</string>
 	<string name="rec_start_speaker_title">Vivavoce acceso</string>
 	<string name="rec_start_speaker_sum">Avvia automaticamente la registrazione audio quando il vivavoce viene acceso da Sanity.</string>
+	<string name="rec_start_headset_title">Cuffie (avvio)</string>
 	<string name="rec_start_headset_sum">Regole per avviare automaticamente la registrazione tramite le cuffie.</string>
 	<string name="rec_start_dir_title">Tipo di chiamata</string>
 	<string name="rec_start_dir_sum">Scegli le direzioni di chiamata per avviare la registrazione audio.</string>
@@ -146,9 +160,11 @@
 	<string name="rec_stop_delay_sum">Quanto tempo aspettare prima di arrestare automaticamente una registrazione.</string>
 	<string name="rec_stop_speaker_title">Vivavoce spento</string>
 	<string name="rec_stop_speaker_sum">Arresta automaticamente la registrazione audio quando il vivavoce viene spento da Sanity.</string>
+	<string name="rec_stop_headset_title">Cuffie (arresto)</string>
 	<string name="rec_stop_headset_sum">Regole per arrestare automaticamente la registrazione tramite le cuffie.</string>
 	<string name="rec_stop_limit_title">Limite di tempo</string>
 	<string name="rec_stop_limit_sum">Scegli la massima durata per una singola registrazione audio. Sanity arresterà la registrazione quando raggiunge questa durata.</string>
+	<string name="rec_shortcut">Registra Chiamata</string>
 	<!--
 	<string name="rec_start_all_title">Tutte le chiamate</string>
 	<string name="rec_start_all_sum">Avvia automaticamente la registrazione audio per tutte le telefonate.</string>
@@ -171,6 +187,8 @@
 
   <string name="about_cat">Info e contatti</string>
   <string name="about_sum">Informazioni su questa applicazione e strumenti per contattare lo sviluppatore.</string>
+  <string name="changelog_title">Modifiche recenti</string>
+  <string name="changelog_sum">Visualizza le modifiche recenti implementate nelle ultime versioni di Sanity.</string>
   <string name="uninstall_title">Come disinstallare</string>
   <string name="uninstall_sum">Tocca qui per leggere le istruzioni su come disinstallare Sanity (utili solo su Android Froyo 2.2 o superiori).</string>
   <string name="mail_title">Scrivi allo sviluppatore</string>
@@ -191,145 +209,49 @@
 
 	<string name="admin_title">Amministratore</string>
 	<string name="admin_sum">Usa i privilegi amministrativi per spegnere lo schermo quando avvicini il telefono all\'orecchio durante una chiamata.</string>
-	<string name="admin_explanation">Conferma questa richiesta per permettere a Sanity di spegnere lo schermo durante le telefonate.\n\nRICORDA di disattivare l\'opzione \"Amministratore\" di Sanity per poter disinstallare l\'applicazione! Fintantoché Sanity è un amministratore del dispositivo, non potrai disinstallarlo.</string>
-	<string name="ask_admin">Sanity necessita dei privilegi amministrativi solo per poter spegnere lo schermo durante una telefonata. Senza questi privilegi, Sanity non può spegnere lo schermo quando avvicini il telefono all\'orecchio durante una telefonata.\n\nTuttavia disattivare questa funzione è necessaria per poter disinstallare Sanity.\n\nSei sicuro di voler togliere i privilegi amministrativi a Sanity?</string>
-  <string name="ask_force_bt_audio">ATTENZIONE: se la tua periferica audio bluetooth funziona già bene con Sanity, non attivare questa opzione!\n\nQuesta opzione dovrebbe essere attivata solo se Sanity non funziona a dover con la tua periferica audio bluetooth.\n\nSe questa opzione è attiva, Sanity non accenderà/spegnerà nulla quando una qualsiasi periferica bluetooth risulterà connessa.\n\nSei sicuro di voler attivare questa opzione per forzare l\'audio bluetooth?</string>
-  <string name="ask_reverse_proximity">ATTENZIONE: se Sanity funziona già bene sul tuo telefono, non attivare questa opzione!\n\nQuesta opzione va attivata su quei telefoni che montano un sensore di prossimità che funziona al contrario.\n\nSei sicuro di voler attivare questa opzione per invertire la prossimità?</string>
-  <string name="ask_reset_prefs">ATTENZIONE: questa funzione ripristinerà tutti i valori predefiniti delle preferenze.\n\nTutte le preferenze correnti verranno perse.\n\nVuoi davvero ripristinare tutte le preferenze ai valori iniziali?</string>
   <string name="ask_restore">Esiste un backup delle preferenze sulla memory card. Vuoi ripristinare ora tutte le preferenze?</string>
+  <string name="ask_prf_activate">Se attivi il profilo, perderai tutte le preferenze attuali. Per evitarlo, aggiungi un nuovo profilo prima di attivare.\nSei sicuro di voler attivare il profilo?</string>
+  <string name="ask_prf_addnew">Le preferenze correnti risultano già salvate nel profilo attivo.\n\nVuoi davvero creare un nuovo profilo?</string>
+  <string name="ask_prf_saveas">Vuoi SALVARE le preferenze correnti nel profilo \"%s\"? Tutte le preferenze di questo profilo verranno sovrascritte.</string>
+  <string name="ask_prf_delete">Vuoi davvero ELIMINARE il profilo \"%s\"?</string>
   <string name="ask_del_one">Sei sicuro di voler ELIMINARE il file selezionato?</string>
   <string name="ask_del_all">Sei sicuro di voler ELIMINARE tutti i %s file selezionati?</string>
-	<string name="ask_donate">Grazie per aver installato Sanity. Questa è la versione libera e gratuita.\n\nSe Sanity ti piace, puoi effettuare una donazione per supportarlo. Una volta completata la donazione, questa finestra verrà soppressa e il limite di 2 minuti del registratore verrà rimosso.\n\nVuoi aprire ora il Market per la donazione?</string>
 
   <string name="msg_dir_err">Sanity errore: impossibile creare la cartella sulla sdcard per salvare le registrazioni audio!</string>
   <string name="msg_rec_err">Sanity errore: impossibile avviare la registrazione audio!</string>
   <string name="msg_rec_title">Sanity - Registratore</string>
   <string name="msg_rec_start">Tocca qui per AVVIARE la registrazione</string>
   <string name="msg_rec_stop">Tocca qui per ARRESTARE la registrazione</string>
+  <string name="msg_rec_go">Sanity: avvio della registrazione.</string>
   <string name="msg_rec_limit">Sanity: arresto della registrazione.</string>
   <string name="msg_rec_free_limit">Sanity: limite di 2 minuti raggiunto, la registrazione è arrestata.</string>
   <string name="msg_rec_scan_err">Errore durante la modifica delle proprietà di scansione: permesso negato sul file \"%s\"</string>
   <string name="msg_rec_empty">Non esistono file audio delle registrazioni. Avvia la registrazione durante una telefonata per mostrare qui i relativi file audio.</string>
+  <string name="msg_rec_no">Sanity: azione annullata, il sistema di registrazione non è in esecuzione.</string>
   <string name="msg_rec_file">Scegli cosa fare con questo file audio.</string>
   <string name="msg_del_err">Errore: cancellazione fallita su %s file!</string>
   <string name="msg_selected_all">%s file selezionati</string>
 	<string name="msg_require_froyo">Questa opzione richiede almeno Android versione 2.2 (Froyo). Spiacente, il tuo telefono monta Android 2.1 (Eclair).</string>
-	<string name="msg_uninstall">Per disinstallare Sanity, è necessario disattivare l\'opzione \"Amministratore\" nella sezione \"Disabilita in prossimità\".\n\nFintantoché l\'opzione \"Amministratore\" è attivata, non sarà consentito disinstallare Sanity!\n\nSolo se questa opzione risulta disattivata, il processo di disinstallazione di Sanity avrà successo.</string>
   <string name="msg_devs_enabled">Sanity: dispositivi accesi</string>
   <string name="msg_devs_disabled">Sanity: dispositivi spenti</string>
   <string name="msg_running">Sanity è in esecuzione</string>
   <string name="msg_backup_prefs">Scegli se effettuare il backup o il ripristino di tutte le preferenze attuali nella memory card.</string>
   <string name="msg_backup_no">Non esistono file di backup sulla memory card! Bisogna creare un backup prima di poter effettuare il ripristino.</string>
   <string name="msg_backup_success">Salvataggio completato</string>
-  <string name="msg_backup_failed">Impossibile salvare le preferenze!</string>
+  <string name="msg_backup_failed">Errore: impossibile salvare le preferenze!</string>
   <string name="msg_restore_success">Ripristino completato</string>
-  <string name="msg_restore_failed">Impossibile ripristinare le preferenze!</string>
+  <string name="msg_restore_failed">Errore: impossibile ripristinare le preferenze!</string>
+  <string name="msg_prf_empty">Non esistono profili. Usa il menù per crearne uno.</string>
+  <string name="msg_prf_addnew">Scegli il nome del nuovo profilo da creare</string>
+  <string name="msg_prf_rename">Modifica il nome del profilo</string>
+  <string name="msg_prf_nosel">Nessun profilo risulta selezionato!</string>
+  <string name="msg_err_name">Errore: nome non valido!</string>
+  <string name="msg_err_rename">Errore: impossibile rinominare il file!</string>
+  <string name="msg_last_modified">Ultima modifica</string>
+  <string name="msg_exists_err">Azione annullata: \"%s\" già esiste</string>
   <string name="msg_market_err">Impossibile aprire il Market! Verifica che l\'applicazione Market sia correttamente installata.</string>
   <string name="msg_email_choose">Scegli come inviare l\'email</string>
   <string name="msg_email_body">Ciao Cristiano!</string>
   <string name="msg_eula_title">Contratto di licenza software</string>
-  <string name="msg_eula">Questa applicazione è software libero: puoi ridistribuirla e/o modificarla nei termini della GNU General Public License come pubblicato dalla Free Software Foundation, sia nella versione 3 della licenza, sia (a tua opinione) in qualsiasi altra versione successiva.\nQuesto programma è distribuito nella speranza che risulterà utile, ma SENZA NESSUNA GARANZIA; neppure la garanzia implicita di COMMERCIABILITÀ o IDONEITÀ PER UN PARTICOLARE SCOPO. Leggi la GNU General Public License versione 3 per maggiori dettagli, puoi trovarne una copia su http://www.gnu.org/licenses/.\n\nScegli \"Ok\" per accettare la GNU General Public License versione 3.\nScegli \"Annulla\" per rifiutarla.</string>
-
-  <string name="changelog_title">Modifiche recenti</string>
-  <string name="changelog_sum">Visualizza le modifiche recenti implementate nelle ultime versioni di Sanity.</string>
-  <string name="changelog_body">
-  	Versione 1.97:\n
-  	- Nuovo: opzione per limitare le registrazioni automatiche solo su chiamate ricevute o effettuate.\n
-  	- Nuovo: opzioni per limitare il vivavoce automatico.\n
-  	- Fix: bug nelle opzioni del registratore (introdotto nella versione 1.96).\n
-  	- Modifica: migliorie minori.\n
-    \nVersione 1.96:\n
-    - Nuovo: l\'opzione del vivavoce \"Abilita a inizio chiamata\" può essere filtrata per chiamate ricevute ed effettuate.\n
-    - Nuovo: backup e ripristino delle preferenze nella memory card (nella sezione \"Generale\").\n
-    - Modifica: migliorie minori all\'interfaccia utente.\n
-    \nVersione 1.95:\n
-    - Nuovo: opzioni per la registrazione automatica quando le cuffie sono collegate e non.\n
-    - Nuovo: opzione per ritardare l\'attivazione automatica del vivavoce a inizio chiamata.\n
-    - Nuovo: opzione per rendere silenzioso il suono di fine chiamata spegnendo il vivavoce.\n
-    - Fix: ora il volume automatico può essere impostato al livello minimo reale.\n
-    - Fix: altri bug.\n
-    \nVersione 1.94:\n
-    - Fix: crash occasionali del sistema di registrazione.\n
-  	\nVersione 1.93\n
-  	- Nuovo: opzione per limitare il numero massimo di volte in cui avviare la registrazione automatica in una singola chiamata.\n
-  	- Fix: bug minori nel sistema di registrazione.\n
-  	- Modifica: ottimizzazione generale.\n
-  	\nVersione 1.92\n
-  	- Nuovo: nelle registrazioni audio viene indicato se si tratta di chiamate ricevute o effettuate.\n
-  	- Fix: bug nell\'avvio di una registrazione telefonica attraverso la barra di stato.\n
-  	\nVersione 1.91\n
-  	- Nuovo: i nomi dei contatti sono visualizzati (se disponibili) nell\'archivio delle registrazioni.\n
-  	- Fix: malfunzionamento minore dell\'interfaccia utente.\n
-  	- Modifica: ora Sanity non chiede sempre di donare ogni volta che apri l\'applicazione.\n
-  	\nVersione 1.9\n
-  	- Nuovo: opzioni per la registrazione automatica delle telefonate.\n
-  	- Nuovo: opzione per la vibrazione al termine della chiamata (nella sezione \"Notifica\").\n
-  	- Nuovo: traduzione in spagnolo di LuiSKdT&amp;AnA da Mallorca-Spagna.\n
-  	- Fix: il numero di telefono dell\'interlocutore viene salvato correttamente nelle registrazioni.\n
-  	- Modifica: migliorie all\'archivio delle registrazioni.\n
-  	- Modifica: migliorie all\'interfaccia utente.\n
-  	\nVersione 1.8:\n
-  	- Nuovo: semplice archivio dei file audio registrati.\n
-  	- Fix: ora il processo viene chiuso correttamente nel caso di chiamata senza risposta.
-  	- Fix: le registrazioni audio erano silenziose quando l\'opzione \"Solo conversazione\" era attivata.\n
-  	- Fix: bug minore nell\'interfaccia utente.\n
-  	\nVersione 1.7:\n
-  	- Fix: la registrazione delle telefonate non viene più arrestata subito dopo averla avviata.\n
-  	Versione 1.6\n
-  	- Nuovo: opzione per permettere/negare la scansione multimediale dei file audio registrati.\n
-  	- Fix: l\'applicazione è mostrata nel pannello \"Amministratore Dispositivo\" delle impostazioni globali di Android.\n
-  	- Fix: crash sporadici durante il ripristino dell\'applicazione.\n
-  	- Modifica: le azioni di spegnimento automatico non vengono più attuate quando il telefono squilla durante una chiamata ricevuta.\n
-  	\nVersione 1.5\n
-  	- Nuovo: registratore vocale delle telefonate (nell\'edizione gratuita è limitato a massimo 2 minuti di registrazione per file audio; senza limiti nell\'edizione donazione).\n
-  	- Fix: ora le preferenze vengono correttamente salvate e possono essere modificate.\n
-  	- Fix: lo schermo non viene più spento automaticamente quando il telefono squilla.\n
-  	- Fix: comportamenti anomali durante chiamate multiple contemporanee.\n
-  	- Fix: malfunzionamenti minori.\n
-  	- Modifica: migliorie minori all\'interfaccia utente.\n
-  	\nVersione 1.4\n
-  	- Fix: chiusura forzata su Android 2.1 (Eclair), invece ora funziona.\n
-  	- Fix: bug minori.\n
-  	\nVersione 1.3\n
-  	- Nuovo: opzione come amministratore dispositivo per spegnere lo schermo (va abilita l\'opzione \"Amministratore\"); solo per Android 2.2+.\n
-  	- Fix: chiusura forzata durante il primo avvio senza aggiornamento.\n
-  	- Fix: malfunzionamenti minori.\n
-  	\nVersione 1.2\n
-  	- Nuovo: opzione per evitare lo spegnimento automatico del Wifi e della Connessione Dati quando l\'Hotspot Wifi è attivo.\n
-  	- Nuovo: opzione per evitare lo spegnimento automatico della Connessione Dati quando il Tethering USB è attivo.\n
-  	\nVersione 1.1\n
-  	- Nuovo: opzione per forzare l\'accensione dello schermo quando il telefono è lontano dall\'orecchio.\n
-  	\nVersione 1.0\n
-  	- Nuovo: opzione di volume per rendere silenziosi tutti i flussi audio eccetto quello di conversazione (durante una chiamata).\n
-  	- Nuovo: opzione di notifica per mostrare i cambi automatici di volume.\n
-  	- Fix: l\'attivazione ritardata del vivavoce ora funziona.\n
-  	- Fix: bug minore nella gestione automatica del volume.\n
-  	\nVersione 0.9\n
-  	- Nuovo: opzione per supportare quei telefoni che montano i sensori di prossimità invertiti.\n
-  	- Nuovo: opzione per supportare i dispositivi audio bluetooth non riconosciuti.\n
-  	- Fix: in certi casi i dispositivi non venivano rispristinati subito dopo uno squillo senza risposta.\n
-  	- Fix: altri bug minori.\n
-  	- Modifica: migliorie secondarie dell\'interfaccia utente.\n
-  	\nVersione 0.8\n
-  	- Fix: malfunzionamenti nell\'interfaccia utente.\n
-  	\nVersione 0.7\n
-  	- Nuovo: opzione per evitare di spegnere automaticamente la Connessione Dati quando il GPS è acceso.\n
-    \nVersione 0.6\n
-    - Nuovo: opzione per accendere/spegnere automaticamente il GPS durante le telefonate.\n
-    - Modifica: interfaccia utente migliorata.\n
-		\nVersione 0.5\n
-		- Nuovo: opzione per evitare di disattivare automaticamente il bluetooth quando ci sono dei dispositivi bluetooth connessi.\n
-		- Nuovo: opzione per ritardare l\'attivazione automatica del vivavoce.\n
-		- Fix: vengono riconosciute più periferiche audio bluetooth durante la telefonata.\n
-		- Fix: bug minore che causava crash sporadici al termine della telefonata.\n
-		- Nuovo: strumenti per contattare lo sviluppatore.\n
-		\nVersione 0.4\n
-		- Fix: ora le cuffie bluetooth vengono gestite correttamente.\n
-		- Modifiche: notifica l\'attività solo a inizio telefonata.\n
-		\nVersione 0.3\n
-		- Nuovo: opzione per forzare lo spegnimento dello schermo quando è vicino all\'orecchio.\n
-		\nVersione 0.2\n
-		- Prima versione pubblicata.\n
-  </string>
 
 </resources>

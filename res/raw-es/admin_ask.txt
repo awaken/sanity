@@ -1,0 +1,5 @@
+Sanity necesita los permisos de administrador para poder apagar la pantalla durante una llamada. Sin estos privilegios, Sanity no podra apagar la pantalla de el telefono cuando este cerca de tu oido durante una llamada.
+
+En todo caso, debe deshabilitar esta función para desinstalar Sanity.
+
+¿Está Vd. seguro de negar los permisos de administrador a Sanity?

@@ -1,0 +1,5 @@
+For uninstalling Sanity, you need to uncheck the "Administrator" option inside the "Proximity disabling" section.
+
+While the "Administrator" option is checked, you can't uninstall Sanity!
+
+Only if this option is unchecked, the uninstall process of Sanity will success.

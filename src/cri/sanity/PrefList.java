@@ -30,7 +30,7 @@ public class PrefList extends ListPreference implements OnPreferenceChangeListen
 	public void setValueIndex(int idx) { super.setValueIndex(idx); update(getEntryValues()[idx]); }
 
 	@Override
-	public void setSummary(int id) { super.setSummary(sum = A.tr(id)); }
+	public void setSummary(int id) { super.setSummary(sum = A.s(id)); }
 	@Override
 	public void setSummary(CharSequence text) { super.setSummary(sum = text); }
 
@@ -41,9 +41,12 @@ public class PrefList extends ListPreference implements OnPreferenceChangeListen
 
 	@Override
 	public boolean onPreferenceChange(Preference p, Object o) {
-		final boolean res = listener==null || listener.onPreferenceChange(p, o);
-		if(res) update(findEntry(o));
-		return res;
+		if(listener!=null && !listener.onPreferenceChange(p, o)) return false;
+		update(findEntry(o));
+		final String key = getKey();
+		if(key.endsWith(K.WS))																																	// is this key a wrap one?
+			A.putc(key.substring(0, key.length()-K.WS.length()), Integer.parseInt((String)o));		// wrap key found: convert to integer
+		return true;
 	}
 
 	//---- public api

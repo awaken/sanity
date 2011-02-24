@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 public class SpeakerActivity extends ScreenActivity
 {
+	private static final String SPEAKER_CALL = K.SPEAKER_CALL + K.WS;
+	
 	@Override
   public void onCreate(Bundle savedInstanceState)
   {
@@ -27,12 +29,12 @@ public class SpeakerActivity extends ScreenActivity
   		setChecked(K.SPEAKER_AUTO, false);
   		setEnabled(K.SPEAKER_AUTO, false);
   	}
-  	on(K.SPEAKER_CALL, new Change(){ public boolean on(){
+  	on(SPEAKER_CALL, new Change(){ public boolean on(){
   		pref(K.SPEAKER_LOUD).setEnabled(is(K.SPEAKER_AUTO) || isSpeakerCall());
   		return true;
   	}});
 	}
 
-	private boolean isSpeakerCall() { return A.getsi(K.SPEAKER_CALL) > 0; }
+	private boolean isSpeakerCall() { return A.getsi(SPEAKER_CALL) > 0; }
 
 }

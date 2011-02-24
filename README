@@ -18,6 +18,12 @@ An Android application for managing volume and for reducing electromagnetic wave
   Change log
 -------------------
 
+* version 1.98  (24/02/2011)
+- New: you can create Sanity shortcuts in the Home screen.
+- New: profiles system (in the "General" section) for fast changing preferences.
+- Fix: various bugs.
+- Change: minor user interface improvements.
+
 * version 1.97  (15/02/2011)
 - New: option to restrict automatic recording only on incoming or outgoing calls.
 - New: options to limit automatic handsfree.
@@ -150,7 +156,7 @@ An Android application for managing volume and for reducing electromagnetic wave
 * integrated audio player?
 * flip silence?
 * call log sync to gmail???
-* ringing with increasing volume?
+* hard keys (volume, camera, media) for starting recording
 
 * auto answer message (incoming calls)
   + only if headsets

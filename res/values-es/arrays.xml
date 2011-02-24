@@ -51,7 +51,7 @@
 		<item>10 tiempos</item>
 		<item>15 tiempos</item>
 		<item>20 tiempos</item>
-		<item>Siempre</item>
+		<item>Ilimitado</item>
 	</string-array>
 
 	<string-array name="rec_src_labels">

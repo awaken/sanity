@@ -1,0 +1,17 @@
+Un perfil es simplemente una copia de seguridad de todas las preferencias que usted puede restaurar rápidamente (activando el perfil). A través de perfiles que puede cambiar todas las preferencias de Sanidad de un solo golpe.
+
+También puede crear un acceso directo en la pantalla de inicio para activar un perfil sobre la marcha (con una presión prolongada el dedo en la pantalla de inicio).
+
+Use el menú para gestionar sus perfiles:
+
+- Nuevo: crear un nuevo perfil al elegir el nombre que desee, el perfil contendrá todas las preferencias actuales.
+
+- Activar: restaurar todas las preferencias del perfil seleccionado (todas las preferencias actuales se perderán).
+
+- Guardar: permite guardar todas las preferencias actuales para el perfil seleccionado (todas las preferencias anteriores que figuran en el perfil se perderán).
+
+- Renombrar: cambiar el nombre del perfil seleccionado.
+
+- Eliminar: eliminar el perfil seleccionado (que será definitivamente perdido).
+
+- Muestra: muestra todas las preferencias del perfil seleccionado. 

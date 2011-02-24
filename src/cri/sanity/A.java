@@ -1,6 +1,10 @@
 package cri.sanity;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Map;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -26,48 +30,30 @@ import android.hardware.SensorManager;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.os.Environment;
 import android.os.PowerManager;
 import android.os.Vibrator;
 import android.net.ConnectivityManager;
 import android.app.KeyguardManager;
 import android.app.admin.DevicePolicyManager;
+import android.widget.EditText;
 import android.widget.Toast;
 //import android.os.SystemClock;
 
 
 public final class A extends Application
 {
-	public static final boolean  DEBUG = Conf.DEBUG;
-	public static final boolean  FULL  = Conf.FULL;
-	public static final int      SDK = android.os.Build.VERSION.SDK_INT;
-	public static final int      PRI = 1;
-	public static final int      NID = 33;
-	public static final int      ALERT_SIMPLE    = 0;
-	public static final int      ALERT_OKCANC    = 1;
-	public static final int      ALERT_YESNO     = 2;
-	public static final int      ALERT_YESNOCANC = 3;
-	public static final int      ALERT_OPENDEL   = 4;
-	public static final int      ALERT_BAKRES    = 5;
-	public static final int      DEF_ALERT       = ALERT_OKCANC;
-	public static final int      LAB_OK   = R.string.ok;
-	public static final int      LAB_CANC = R.string.canc;
-	public static final int      LAB_YES  = R.string.yes;
-	public static final int      LAB_NO   = R.string.no;
-	public static final int      LAB_OPEN = R.string.open;
-	public static final int      LAB_DEL  = R.string.del;
-	public static final int      LAB_BAK  = R.string.backup;
-	public static final int      LAB_REST = R.string.restore;
-	public static final boolean  DEF_CANCELABLE = true;
-	public static final String   DEF_STRING  = "";
-	public static final boolean  DEF_BOOL    = false;
-	public static final int      DEF_INT     = 0;
-	public static final long     DEF_LONG    = DEF_INT;
-	public static final float    DEF_FLOAT   = DEF_INT;
-	public static final String   DEF_SBOOL   = Boolean.toString(DEF_BOOL);
-	public static final String   DEF_SINT    = Integer.toString(DEF_INT );
-	public static final String   DEF_SLONG   = DEF_SINT;
-	public static final String   DEF_SFLOAT  = DEF_SINT;
+	public  static final int SDK = android.os.Build.VERSION.SDK_INT;
+	public  static final int ALERT_SIMPLE    = 0;
+	public  static final int ALERT_OKCANC    = 1;
+	public  static final int ALERT_YESNO     = 2;
+	public  static final int ALERT_YESNOCANC = 3;
+	public  static final int ALERT_OPENDEL   = 4;
+	public  static final int ALERT_BAKRES    = 5;
+	private static final int DEF_ALERT       = ALERT_OKCANC;
+	private static final int NID             = 1;
 
 	//---- data
 
@@ -99,15 +85,25 @@ public final class A extends Application
 
 	public static class Click implements DialogInterface.OnClickListener
 	{
-		public DialogInterface dlg;
-		public int id;
+		protected DialogInterface dlg;
+		protected int id;
+		@Override
 		public void onClick(DialogInterface dlg, int id) {
 			this.dlg = dlg;
 			this.id  = id;
 			on();
 		}
+		protected final void dismiss(){ dlg.dismiss(); }
 		// just override this method (default action is to close dialog)
 		public void on() { dlg.cancel(); }
+	}
+
+	public static abstract class Edited
+	{
+		protected DialogInterface dlg;
+		protected final void dismiss(){ dlg.dismiss(); }
+		private void on(String text, DialogInterface dlg) { this.dlg = dlg; on(text); }
+		public abstract void on(String text);
 	}
 
 	//---- methods
@@ -115,7 +111,7 @@ public final class A extends Application
 	@Override
 	public void onCreate() {
 		a       = this;
-		name    = A.tr(R.string.app);
+		name    = A.s(R.string.app);
 		prefs   = PreferenceManager.getDefaultSharedPreferences(a);
 		edit    = prefs.edit();
 		pkgInfo = _pkgInfo();
@@ -136,20 +132,42 @@ public final class A extends Application
 	public static final String               fullName() { return name + "  v" + ver(); }
 
 	// log
-	//public static final int logd(Object o, String method)
-	//                                    { return !DEBUG? 0 : Log.d(name, o.getClass().getSimpleName()+'.'+method); }
-	//public static final int logd(Throwable t) { return !DEBUG? 0 : Log.wtf(name, t); }
-	public static final int logd(String msg)  { return !DEBUG? 0 : Log.d(name, msg); }
-	//public static final int logi(String msg)  { return !DEBUG? 0 : Log.i(name, msg); }
-	//public static final int logv(String msg)  { return !DEBUG? 0 : Log.v(name, msg); }
-	//public static final int logw(String msg)  { return !DEBUG? 0 : Log.w(name, msg); }
-	//public static final int loge(String msg)  { return !DEBUG? 0 : Log.e(name, msg); }
+	//public static final int logd(Object o, String method) { return Log.d(name, o.getClass().getSimpleName()+'.'+method); }
+	//public static final int logd(Throwable t) { return Log.wtf(name, t); }
+	public static final int logd(String msg) { return Log.d(name, msg); }
+	//public static final int logi(String msg) { return Log.i(name, msg); }
+	//public static final int logv(String msg) { return Log.v(name, msg); }
+	//public static final int logw(String msg) { return Log.w(name, msg); }
+	//public static final int loge(String msg) { return Log.e(name, msg); }
 
 	// misc
 	//public static final boolean isEmpty(String s) { return s==null || s.trim().length()<=0; }
 
-	public static final String tr(int id) { return (String)resources().getText(id); }
+	public static final String s(int id) { return (String)resources().getText(id); }
 	public static final boolean empty(String s) { return s==null || s.length()<=0; }
+
+	public static final int rstring(String field) throws IllegalAccessException, NoSuchFieldException {
+		return R.string.class.getDeclaredField(field).getInt(R.string.class);
+	}
+	//public static final int rarray(String field) throws IllegalAccessException, NoSuchFieldException {
+	//	return R.array.class.getDeclaredField(field).getInt(R.array.class);
+	//}
+
+	public static final String rawstr(int resId) {
+		try {
+			InputStream    is = resources().openRawResource(resId);
+			BufferedReader br = new BufferedReader(new InputStreamReader(is));
+			StringBuilder  s  = new StringBuilder();
+			String line;
+			while((line = br.readLine()) != null)
+				s.append(line).append('\n');
+			br.close();
+			is.close();
+			return s.toString();
+    } catch(IOException e) {
+    	return null;
+    }
+  }
 
 	public static final long now() { return System.currentTimeMillis(); }
 	//public static final long uptime() { return SystemClock.uptimeMillis(); }
@@ -161,7 +179,7 @@ public final class A extends Application
 	public static final boolean gotoMarketDetails(String pkg) { return gotoMarketUrl("details?id="+pkg); }
 	public static final boolean gotoMarketUrl(String query) {
 		final boolean res = gotoUrl("market://"+query);
-		if(!res) alert(A.tr(R.string.msg_market_err));
+		if(!res) alert(A.s(R.string.msg_market_err));
 		return res;
 	}
 	public static final boolean gotoUrl(String url) {
@@ -181,12 +199,15 @@ public final class A extends Application
 		return file.isDirectory()||file.mkdir() ? dir : null;
 	}
 
-	public static final String cleanFn(String fn) {
-		for(String s : new String[]{ "?", ":", "*", "\""})
+	public static final String cleanFn(String fn, boolean slashClean) {
+		for(String s : new String[]{ "?", ":", "*", "\"", "\\", ";", "&", "<", ">", "\r", "\n" })
 			fn = fn.replace(s, "");
-		return fn;
+		if(slashClean) fn = fn.replace("/", "");
+		return fn.trim();
 	}
-	
+
+	public static final View layout(int resId) { return LayoutInflater.from(a).inflate(resId, null); }
+
 	// string conversion
 	/*
 	public int    s2b(String  s) { return Boolean.parseBoolean(s); }
@@ -230,19 +251,19 @@ public final class A extends Application
 	public static final void notifyCancAll()    { notifMan().cancelAll(); }
 
 	public static final AlertDialog alert(String msg) {
-		return alert(name, msg, null, null, null, ALERT_SIMPLE, DEF_CANCELABLE);
+		return alert(name, msg, null, null, null, ALERT_SIMPLE, true);
 	}
 	public static final AlertDialog alert(String msg, Click pos, Click neg) {
-		return alert(name, msg, pos, neg, null, DEF_ALERT, DEF_CANCELABLE);
+		return alert(name, msg, pos, neg, null, DEF_ALERT, true);
 	}
 	public static final AlertDialog alert(String msg, Click pos, Click neg, int type) {
-		return alert(name, msg, pos, neg, null, type, DEF_CANCELABLE);
+		return alert(name, msg, pos, neg, null, type, true);
 	}
   public static final AlertDialog alert(String msg, Click pos, Click neg, int type, boolean cancelable) {
   	return alert(name, msg, pos, neg, null, type, cancelable);
   }
   public static final AlertDialog alert(String msg, Click pos, Click neg, Click neu, int type) {
-  	return alert(name, msg, pos, neg, neu, type, DEF_CANCELABLE);
+  	return alert(name, msg, pos, neg, neu, type, true);
   }
   public static final AlertDialog alert(String msg, Click pos, Click neg, Click neu, int type, boolean cancelable) {
   	return alert(name, msg, pos, neg, neu, type, cancelable);
@@ -253,12 +274,12 @@ public final class A extends Application
   public static final AlertDialog alert(String title, String msg, Click pos, Click neg, Click neu, int type, boolean cancelable, Context ctx) {
   	int idPos=0, idNeg=0, idNeu=0;
   	switch(type) {
-  		case ALERT_SIMPLE:    idPos = LAB_OK  ;                                     break;
-  		case ALERT_OKCANC:    idPos = LAB_OK  ; idNeg = LAB_CANC;                   break;
-  		case ALERT_YESNO:     idPos = LAB_YES ; idNeg = LAB_NO  ;                   break;
-  		case ALERT_YESNOCANC: idPos = LAB_YES ; idNeu = LAB_NO  ; idNeg = LAB_CANC; break;
-  		case ALERT_OPENDEL:   idPos = LAB_OPEN; idNeg = LAB_DEL ;                   break;
-  		case ALERT_BAKRES:    idPos = LAB_BAK ; idNeg = LAB_REST;                   break;
+  		case ALERT_SIMPLE:    idPos = R.string.ok    ;                                                  break;
+  		case ALERT_OKCANC:    idPos = R.string.ok    ; idNeg = R.string.canc   ;                        break;
+  		case ALERT_YESNO:     idPos = R.string.yes   ; idNeg = R.string.no     ;                        break;
+  		case ALERT_YESNOCANC: idPos = R.string.yes   ; idNeu = R.string.no     ; idNeg = R.string.canc; break;
+  		case ALERT_OPENDEL:   idPos = R.string.open  ; idNeg = R.string.del    ;                        break;
+  		case ALERT_BAKRES:    idPos = R.string.backup; idNeg = R.string.restore;                        break;
   	}
 		final AlertDialog.Builder adb = new AlertDialog.Builder(ctx);
 		adb.setIcon(R.drawable.ic_bar);
@@ -271,57 +292,99 @@ public final class A extends Application
 		return adb.show();
 	}
   public static final AlertDialog alert(String title, String msg, Click pos, Click neg, Click neu, int type) {
-  	return alert(title, msg, pos, neg, neu, type, DEF_CANCELABLE);
+  	return alert(title, msg, pos, neg, neu, type, true);
   }
   public static final AlertDialog alert(String title, String msg, Click pos, Click neg, int type, boolean cancelable) {
   	return alert(title, msg, pos, neg, null, type, cancelable);
   }
   public static final AlertDialog alert(String title, String msg, Click pos, Click neg, int type) {
-  	return alert(title, msg, pos, neg, null, type, DEF_CANCELABLE);
+  	return alert(title, msg, pos, neg, null, type, true);
   }
   public static final AlertDialog alert(String title, String msg, Click pos, Click neg) {
-  	return alert(title, msg, pos, neg, null, DEF_ALERT, DEF_CANCELABLE);
+  	return alert(title, msg, pos, neg, null, DEF_ALERT, true);
   }
   public static final AlertDialog alert(String title, String msg) {
-  	return alert(title, msg, null, null, null, ALERT_SIMPLE, DEF_CANCELABLE);
+  	return alert(title, msg, null, null, null, ALERT_SIMPLE, true);
+  }
+
+  public static final EditText alertText(String title, final Edited pos, Context ctx) {
+  	return alertText(title, pos, null, ctx);
+  }
+  public static final EditText alertText(String title, String text, final Edited pos, Context ctx) {
+  	return alertText(title, text, pos, null, ctx);
+  }
+  public static final EditText alertText(String title, String text, final Edited pos, final Edited neg, Context ctx) {
+  	EditText edit = alertText(title, pos, neg, ctx);
+		if(text != null) {
+			edit.setText(text);
+			edit.selectAll();
+		}
+		return edit;
+  }
+  public static final EditText alertText(String title, final Edited pos, final Edited neg, Context ctx) {
+		final View   layout = layout(R.layout.alert_text);
+    final EditText edit = (EditText)layout.findViewById(R.id.alert_text_edit);
+		final AlertDialog.Builder adb = new AlertDialog.Builder(ctx);
+		adb.setIcon(R.drawable.ic_bar);
+		adb.setTitle(title);
+		adb.setView(layout);
+		adb.setCancelable(true);
+		adb.setPositiveButton(R.string.ok  , pos==null? new Click() : new Click(){ public void on(){ pos.on(edit.getText().toString(),dlg); }});
+		adb.setNegativeButton(R.string.canc, neg==null? new Click() : new Click(){ public void on(){ neg.on(edit.getText().toString(),dlg); }});
+		adb.show();
+		return edit;
+	}
+  public static final EditText alertText(String title, String text, final Edited pos, final Edited neg) {
+  	return alertText(title, text, pos, neg, activity);
+  }
+  public static final EditText alertText(String title, final Edited pos, final Edited neg) {
+  	return alertText(title, pos, neg, activity);
+  }
+  public static final EditText alertText(String title, String text, final Edited pos) {
+  	return alertText(title, text, pos, null, activity);
+  }
+  public static final EditText alertText(String title, final Edited pos) {
+  	return alertText(title, pos, null, activity);
   }
 
   //---- preferences
 
 	public static final boolean isEnabled () { return prefs.getBoolean(K.ENABLED , false); }
-	public static final boolean isFull()     { return FULL || prefs.getBoolean(K.FULL, false); }
+	public static final boolean isFull()     { return Conf.FULL || prefs.getBoolean(K.FULL, false); }
 	public static final void    setFull()    { putc(K.FULL, true); }
 
-	public static final boolean is(String key)                { return prefs.getBoolean(key, DEF_BOOL  ); }
-	public static final boolean is(String key, boolean def)   { return prefs.getBoolean(key, def       ); }
-	public static final String  gets(String key)              { return prefs.getString (key, DEF_STRING); }
-	public static final String  gets(String key, String def)  { return prefs.getString (key, def       ); }
-	public static final int     geti(String key)              { return prefs.getInt    (key, DEF_INT   ); }
-	public static final int     geti(String key, int def)     { return prefs.getInt    (key, def       ); }
-	public static final long    getl(String key)              { return prefs.getLong   (key, DEF_LONG  ); }
-	public static final long    getl(String key, long def)    { return prefs.getLong   (key, def       ); }
-	public static final float   getf(String key)              { return prefs.getFloat  (key, DEF_FLOAT ); }
-	public static final float   getf(String key, float def)   { return prefs.getFloat  (key, def       ); }
-	public static final int     getsi(String key)             { return Integer.parseInt  (prefs.getString(key, DEF_SINT  )); }
-	public static final int     getsi(String key, String def) { return Integer.parseInt  (prefs.getString(key, def       )); }
-	public static final long    getsl(String key)             { return Long   .parseLong (prefs.getString(key, DEF_SLONG )); }
-	public static final long    getsl(String key, String def) { return Long   .parseLong (prefs.getString(key, def       )); }
-	public static final float   getsf(String key)             { return Float  .parseFloat(prefs.getString(key, DEF_SFLOAT)); }
-	public static final float   getsf(String key, String def) { return Float  .parseFloat(prefs.getString(key, def       )); }
+	public static final boolean is(String key)                { return prefs.getBoolean(key, false); }
+	//public static final boolean is(String key, boolean def)   { return prefs.getBoolean(key, def  ); }
+	public static final String  gets(String key)              { return prefs.getString (key, ""   ); }
+	//public static final String  gets(String key, String def)  { return prefs.getString (key, def  ); }
+	public static final int     geti(String key)              { return prefs.getInt    (key, 0    ); }
+	//public static final int     geti(String key, int def)     { return prefs.getInt    (key, def  ); }
+	public static final long    getl(String key)              { return prefs.getLong   (key, 0    ); }
+	//public static final long    getl(String key, long def)    { return prefs.getLong   (key, def  ); }
+	//public static final float   getf(String key)              { return prefs.getFloat  (key, 0    ); }
+	//public static final float   getf(String key, float def)   { return prefs.getFloat  (key, def  ); }
+	public static final int     getsi(String key)             { return Integer.parseInt  (prefs.getString(key, "0")); }
+	//public static final int     getsi(String key, String def) { return Integer.parseInt  (prefs.getString(key, def)); }
+	//public static final long    getsl(String key)             { return Long   .parseLong (prefs.getString(key, "0")); }
+	//public static final long    getsl(String key, String def) { return Long   .parseLong (prefs.getString(key, def)); }
+	//public static final float   getsf(String key)             { return Float  .parseFloat(prefs.getString(key, "0")); }
+	//public static final float   getsf(String key, String def) { return Float  .parseFloat(prefs.getString(key, def)); }
 
 	public static final Map<String,?> allPrefs() { return prefs.getAll(); }
 	public static final boolean has (String key) { return prefs.contains(key); }
 	public static final A       del (String key) { edit.remove(key);          return a; }
 	public static final A       delc(String key) { edit.remove(key).commit(); return a; }
 
-	public static final A put (String key, int    val) { edit.putInt   (key, val); return a; }
-	public static final A putc(String key, int    val) { edit.putInt   (key, val).commit(); return a; }
-	public static final A put (String key, long   val) { edit.putLong  (key, val); return a; }
-	public static final A putc(String key, long   val) { edit.putLong  (key, val).commit(); return a; }
-	public static final A put (String key, float  val) { edit.putFloat (key, val); return a; }
-	public static final A putc(String key, float  val) { edit.putFloat (key, val).commit(); return a; }
-	public static final A put (String key, String val) { edit.putString(key, val); return a; }
-	public static final A putc(String key, String val) { edit.putString(key, val).commit(); return a; }
+	public static final A put (String key, boolean val) { edit.putBoolean(key, val);          return a; }
+	public static final A putc(String key, boolean val) { edit.putBoolean(key, val).commit(); return a; }
+	public static final A put (String key, int     val) { edit.putInt    (key, val);          return a; }
+	public static final A putc(String key, int     val) { edit.putInt    (key, val).commit(); return a; }
+	public static final A put (String key, long    val) { edit.putLong   (key, val);          return a; }
+	public static final A putc(String key, long    val) { edit.putLong   (key, val).commit(); return a; }
+	public static final A put (String key, float   val) { edit.putFloat  (key, val);          return a; }
+	public static final A putc(String key, float   val) { edit.putFloat  (key, val).commit(); return a; }
+	public static final A put (String key, String  val) { edit.putString (key, val);          return a; }
+	public static final A putc(String key, String  val) { edit.putString (key, val).commit(); return a; }
 
 	public static final A putc(String key, Object val) { return put(key, val).commit(); }
 	public static final A put (String key, Object val) {
@@ -332,11 +395,10 @@ public final class A extends Application
 		else                            edit().putString (key, val.toString());
 		return a;
 	}
-	
-	public static final A putcAll(Map<String,?> map) { return putAll(map).commit(); }
+
 	public static final A putAll (Map<String,?> map) {
-		for(Map.Entry<String,?> entry : map.entrySet())
-			put(entry.getKey(), entry.getValue());
+		for(Map.Entry<String,?> e : map.entrySet())
+			put(e.getKey(), e.getValue());
 		return a; 
 	}
 

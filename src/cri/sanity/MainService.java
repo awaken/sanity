@@ -32,7 +32,7 @@ public final class MainService extends Service
 		if(running) return START_STICKY;
 		running = true;
 		P.upgrade();
-		if(A.is(K.NOTIFY_ACTIVITY)) A.notify(A.tr(R.string.msg_running));
+		if(A.is(K.NOTIFY_ACTIVITY)) A.notify(A.s(R.string.msg_running));
 		if(phoneListener == null) phoneListener = new PhoneListener();
 		phoneListener.startup();
 		A.telMan().listen(phoneListener, PhoneListener.LISTEN);
@@ -43,7 +43,9 @@ public final class MainService extends Service
 	@Override
 	public void onDestroy()
 	{
-		A.telMan().listen(phoneListener, PhoneListener.LISTEN_NONE);
+		try { A.telMan().listen(phoneListener, PhoneListener.LISTEN_NONE); }
+		catch(Exception e) {}
+		A.notifyCanc();
 		A.notifyCancAll();
 		//A.logd("MainService destroyed");
 		running = false;

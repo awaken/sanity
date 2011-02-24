@@ -57,7 +57,7 @@ public class Rec
 			started = true;
 			//A.logd("rec started");
 		} catch(Exception e) {
-			A.notify(A.tr(R.string.msg_rec_err));
+			A.notify(A.s(R.string.msg_rec_err));
 			//A.logd(e);
 		}
 	}
@@ -104,7 +104,7 @@ public class Rec
 	{
 		String fn = A.sdcardDir();
 		if(fn == null) {
-			A.notify(A.tr(R.string.msg_dir_err));
+			A.notify(A.s(R.string.msg_dir_err));
 			throw new IOException();
 		}
 		fn += '/' + prefix + DateFormat.format(FILE_PATTERN, A.now()) + suffix;

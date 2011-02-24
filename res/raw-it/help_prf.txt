@@ -1,0 +1,17 @@
+Un profilo consiste in una copia di backup di tutte le preferenze e che puoi velocemente ripristinare (attivando il profilo). Attraverso i profili puoi cambiare tutte le preferenze di Sanity in un colpo solo.
+
+Puoi anche creare una scelta rapida nello schermo Home per attivare un profilo al volo (basta tener premuto il dito sullo schermo Home).
+
+Usa ilmenù per gestire i tuoi profili:
+
+- Nuovo: crea un nuovo profilo scegliendo il nome che preferisci, il profilo conterrà tutte le preferenze correnti.
+
+- Attiva: ripristina tutte le preferenze del profilo selezionato (tutte le preferenze correnti verranno perse).
+
+- Salva: salva tutte le preferenze correnti nel profilo selezionate (tutte le precedenti preferenze contenute nel profilo verranno perse).
+
+- Rinomina: cambia il nome del profilo selezionato.
+
+- Elimina: rimuove il profilo selezionato (risulterà definitivamente perso).
+
+- Mostra: visualizza tutte le preferenze del profilo selezionato.

@@ -28,9 +28,9 @@ public class BrowseActivity extends ScreenActivity
 	private static final String SEP_DATE = Conf.REC_DATE_PATTERN.charAt(4)+"";
 	private static final String PREFIX   = Conf.REC_PREFIX;
 	private static final int  PREFIX_LEN = PREFIX.length();
-	private static final String IN       = " ("+A.tr(R.string.call_in)+')';
-	private static final String OUT      = " ("+A.tr(R.string.call_out)+')';
-	private static final String UNKNOWN  = A.tr(R.string.unknown);
+	private static final String IN       = " ("+A.s(R.string.call_in)+')';
+	private static final String OUT      = " ("+A.s(R.string.call_out)+')';
+	private static final String UNKNOWN  = A.s(R.string.unknown);
 	private static final ContentResolver resolver = A.resolver();
 	private static final String[] projection = new String[]{ PhoneLookup.DISPLAY_NAME };
 
@@ -45,7 +45,7 @@ public class BrowseActivity extends ScreenActivity
 	public void onCreate(Bundle savedInstanceState)
 	{
 		skipAllKeys = true;
-		screener(BrowseActivity.class, R.xml.prefs_browse);
+		screener(BrowseActivity.class, R.xml.prefs_browse, R.layout.img_browse);
 		super.onCreate(savedInstanceState);
 		prefGroup = (PreferenceCategory)pref(K.REC_BROWSE);
 		dir = A.sdcardDir();
@@ -61,7 +61,7 @@ public class BrowseActivity extends ScreenActivity
 		Arrays.sort(recs, 0, recs.length, new Comparator<String>() {
 			public int compare(String s1, String s2) { return s2.compareTo(s1); }
 		});
-		for(final String fn : recs) {
+		for(String fn : recs) {
 			if(!fn.startsWith(PREFIX) || fn.endsWith(".txt") || fn.endsWith(".prf")) continue;
 			prefGroup.addPreference(new Pref(fn));
 		}
@@ -122,7 +122,7 @@ public class BrowseActivity extends ScreenActivity
 	{
 		final int n = selected.size();
 		if(n < 1) return;
-		A.alert(n>1? String.format(A.tr(R.string.ask_del_all), n+"") : A.tr(R.string.ask_del_one),
+		A.alert(n>1? String.format(A.s(R.string.ask_del_all), n+"") : A.s(R.string.ask_del_one),
 			new A.Click() {
 				@SuppressWarnings("unchecked")
 				public void on() {
@@ -135,7 +135,7 @@ public class BrowseActivity extends ScreenActivity
 							selected.remove(p);
 						}
 					}
-					if(err > 0) A.alert(String.format(A.tr(R.string.msg_del_err), err+""));
+					if(err > 0) A.alert(String.format(A.s(R.string.msg_del_err), err+""));
 				}
 			},
 			null,
@@ -154,7 +154,7 @@ public class BrowseActivity extends ScreenActivity
 			selected.add(p);
 		}
 		if(n > 2)
-			A.toast(String.format(A.tr(R.string.msg_selected_all), n+""));
+			A.toast(String.format(A.s(R.string.msg_selected_all), n+""));
 	}
 	
 	private void selnone()

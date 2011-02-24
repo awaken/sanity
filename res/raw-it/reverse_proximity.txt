@@ -1,0 +1,5 @@
+ATTENZIONE: se Sanity funziona già bene sul tuo telefono, non attivare questa opzione!
+
+Questa opzione va attivata su quei telefoni che montano un sensore di prossimità che funziona al contrario.
+
+Sei sicuro di voler attivare questa opzione per invertire la prossimità?

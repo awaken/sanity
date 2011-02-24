@@ -1,0 +1,5 @@
+ADVERTENCIA: esta funcion restaurara todos los valores de preferencias por defecto.
+
+Todas las preferencias actuales se perderan.
+
+¿Está seguro de restaurar todas las preferencias?

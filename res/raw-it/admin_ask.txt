@@ -1,0 +1,5 @@
+Sanity necessita dei privilegi amministrativi solo per poter spegnere lo schermo durante una telefonata. Senza questi privilegi, Sanity non può spegnere lo schermo quando avvicini il telefono all'orecchio durante una telefonata.
+
+Tuttavia disattivare questa funzione è necessaria per poter disinstallare Sanity.
+
+Sei sicuro di voler togliere i privilegi amministrativi a Sanity?

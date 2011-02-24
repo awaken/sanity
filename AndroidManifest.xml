@@ -1,29 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 		      package="cri.sanity" android:installLocation="auto"
-		      android:versionCode="30" android:versionName="1.97">
+		      android:versionCode="33" android:versionName="1.98">
 
   <application android:icon="@drawable/ic_app"
                android:label="@string/app"
                android:debuggable="false"
                android:name=".A">
 
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".MainActivity">
+    <activity android:theme="@style/Theme" android:name=".MainActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
 
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.GeneralActivity" />
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.DeviceActivity" />
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.ProximityActivity" />
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.SpeakerActivity" />
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.VolumeActivity" />
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.RecordActivity" />
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.NotifyActivity" />
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.AboutActivity" />
-    <activity android:label="@string/app" android:theme="@style/Theme" android:name=".screen.BrowseActivity" />
+    <activity android:theme="@style/Theme" android:name=".screen.GeneralActivity" />
+    <activity android:theme="@style/Theme" android:name=".screen.DevicesActivity" />
+    <activity android:theme="@style/Theme" android:name=".screen.ProximityActivity" />
+    <activity android:theme="@style/Theme" android:name=".screen.SpeakerActivity" />
+    <activity android:theme="@style/Theme" android:name=".screen.VolumeActivity" />
+    <activity android:theme="@style/Theme" android:name=".screen.RecordActivity" />
+    <activity android:theme="@style/Theme" android:name=".screen.NotifyActivity" />
+    <activity android:theme="@style/Theme" android:name=".screen.AboutActivity" />
+    <activity android:theme="@style/Theme" android:name=".screen.BrowseActivity" />
+    <activity android:theme="@style/Theme" android:name=".screen.ProfileActivity" />
+    <activity android:theme="@style/Theme" android:name=".screen.CallFilterActivity" />
+
+    <activity android:theme="@android:style/Theme.Dialog" android:name=".ShortcutActivity" android:label="@string/app_shortcut">
+      <intent-filter>
+        <action android:name="android.intent.action.CREATE_SHORTCUT" />
+        <action android:name="android.intent.action.MAIN" />
+      </intent-filter>
+    </activity>
 
 	  <service android:name=".MainService" />
 	  <service android:name=".RecService" />
@@ -47,9 +56,7 @@
       </intent-filter>
     </receiver>
 
-		<receiver android:name=".Admin$Receiver"
-		          android:label="@string/app"
-		          android:permission="android.permission.BIND_DEVICE_ADMIN">
+		<receiver android:name=".Admin$Receiver" android:permission="android.permission.BIND_DEVICE_ADMIN">
 	    <meta-data android:name="android.app.device_admin" android:resource="@xml/admin" />
 	    <intent-filter>
 		    <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />

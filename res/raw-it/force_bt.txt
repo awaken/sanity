@@ -1,0 +1,7 @@
+ATTENZIONE: se la tua periferica audio bluetooth funziona già bene con Sanity, non attivare questa opzione!
+
+Questa opzione dovrebbe essere attivata solo se Sanity non funziona a dover con la tua periferica audio bluetooth.
+
+Se questa opzione è attiva, Sanity non accenderà e spegnerà nulla quando una qualsiasi periferica bluetooth risulterà connessa.
+
+Sei sicuro di voler attivare questa opzione per forzare l'audio bluetooth?

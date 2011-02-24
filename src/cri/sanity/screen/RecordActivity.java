@@ -9,6 +9,10 @@ import android.preference.Preference;
 
 public class RecordActivity extends ScreenActivity
 {
+	private static final String REC_START_HEADSET = K.REC_START_HEADSET + K.WS;
+	private static final String REC_STOP_LIMIT    = K.REC_STOP_LIMIT    + K.WS;
+	private static final String REC_START_TIMES   = K.REC_START_TIMES   + K.WS;
+	
 	private boolean speakerCall;
 	
 	//---- Activity override
@@ -24,7 +28,7 @@ public class RecordActivity extends ScreenActivity
 		}});
 		on(K.REC_SCAN, new Change(){ public boolean on(){
 			boolean res = (Boolean)value? scanEnable() : scanDisable();
-			if(!res) A.alert(A.tr(R.string.msg_rec_scan_err).replace("$FN", scanFn()));
+			if(!res) A.alert(String.format(A.s(R.string.msg_rec_scan_err), scanFn()));
 			return res;
 		}});
 		on(K.REC_START, new Change(){ public boolean on(){
@@ -35,21 +39,21 @@ public class RecordActivity extends ScreenActivity
 		on(K.REC_STOP, new Change(){ public boolean on(){
 			final boolean on = (Boolean)value;
 			setEnabled(K.REC_STOP_SPEAKER, on && (A.is(K.SPEAKER_AUTO) || speakerCall));
-			setEnabled(K.REC_STOP_LIMIT  , on &&  A.isFull());
+			setEnabled(  REC_STOP_LIMIT  , on &&  A.isFull());
 			return true;
 		}});
 		on(K.REC_START_SPEAKER, new Change(){ public boolean on(){
-			setEnabled(K.REC_START_TIMES, (Boolean)value || A.getsi(K.REC_START_HEADSET)!=RecService.ACT_HEADSET_SKIP);
+			setEnabled(REC_START_TIMES, (Boolean)value || A.getsi(REC_START_HEADSET)!=RecService.ACT_HEADSET_SKIP);
 			return true;
 		}});
-		on(K.REC_START_HEADSET, new Change(){ public boolean on(){
-			setEnabled(K.REC_START_TIMES, A.is(K.REC_START_SPEAKER) || !Integer.toString(RecService.ACT_HEADSET_SKIP).equals((String)value));
+		on(REC_START_HEADSET, new Change(){ public boolean on(){
+			setEnabled(REC_START_TIMES, A.is(K.REC_START_SPEAKER) || !Integer.toString(RecService.ACT_HEADSET_SKIP).equals((String)value));
 			return true;
 		}});
 		if(!A.isFull()) {
-			final Preference p = pref(K.REC_STOP_LIMIT);
+			final Preference p = pref(REC_STOP_LIMIT);
 			p.setEnabled(false);
-			p.setSummary(p.getSummary()+" "+A.tr(R.string.full_only)+'.');
+			p.setSummary(p.getSummary()+" "+A.s(R.string.full_only)+'.');
 		}
 	}
 
@@ -63,11 +67,11 @@ public class RecordActivity extends ScreenActivity
 	//---- private static api
 
 	private void updateEnabled() {
-		speakerCall = A.getsi(K.SPEAKER_CALL) != 0;
+		speakerCall = A.geti(K.SPEAKER_CALL) != 0;
 		setEnabled(K.REC_START_SPEAKER, A.is(K.REC_START) && (A.is(K.SPEAKER_AUTO) || speakerCall));
 		setEnabled(K.REC_STOP_SPEAKER , A.is(K.REC_STOP ) && (A.is(K.SPEAKER_AUTO) || speakerCall));
-		setEnabled(K.REC_STOP_LIMIT   , A.is(K.REC_STOP ) &&  A.isFull());
-		setEnabled(K.REC_START_TIMES  , A.is(K.REC_START_SPEAKER) || A.getsi(K.REC_START_HEADSET)!=RecService.ACT_HEADSET_SKIP);
+		setEnabled(  REC_STOP_LIMIT   , A.is(K.REC_STOP ) &&  A.isFull());
+		setEnabled(  REC_START_TIMES  , A.is(K.REC_START_SPEAKER) || A.getsi(REC_START_HEADSET)!=RecService.ACT_HEADSET_SKIP);
 		setChecked(K.REC_SCAN, scanAllowed());
 	}
 

@@ -1,0 +1,5 @@
+WARNING: if Sanity already works well on your phone, don't activate this option!
+
+This option should be activated on those phones have a bugged proximity sensor.
+
+Are you sure to activate this option for reversing proximity?

@@ -1,0 +1,5 @@
+ADVERTENCIA: si Sanity funciona correctamente en su movil, no active esta opcion!
+
+Esta opcion solo debe activarse para aquellos moviles que cuentan con un sensor de proximidad cerca de los microfonos.
+
+¿Está seguro de activar esta opcion para la Proximidad al revés?

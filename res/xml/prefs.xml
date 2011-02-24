@@ -29,7 +29,7 @@
 		            android:persistent="false"
 		            android:key="screen_volume" />
 		<Preference android:title="@string/rec_cat"
-		            android:summary="@string/rec_sum"
+		            android:summary="@string/rec_cat_sum"
 		            android:widgetLayout="@layout/img_rec"
 		            android:persistent="false"
 		            android:key="screen_record" />

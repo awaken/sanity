@@ -4,7 +4,7 @@ import cri.sanity.*;
 import android.os.Bundle;
 
 
-public class DeviceActivity extends ScreenActivity
+public class DevicesActivity extends ScreenActivity
 {
 	@Override
 	public void onCreate(Bundle savedInstanceState)

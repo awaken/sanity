@@ -3,8 +3,8 @@
   <Preference android:key="logo" />
 
 	<PreferenceCategory android:title="@string/general_cat">
-    <CheckBoxPreference android:title="@string/enable_title"
-                        android:summary="@string/enable_sum"
+    <CheckBoxPreference android:title="@string/enabled_title"
+                        android:summary="@string/enabled_sum"
                         android:key="enabled" />
     <CheckBoxPreference android:title="@string/skip_headset_title"
                         android:summary="@string/skip_headset_sum"
@@ -18,6 +18,11 @@
                         android:summary="@string/reverse_proximity_sum"
                         android:dependency="enabled"
                         android:key="reverse_proximity" />
+    <Preference android:title="@string/profile_cat"
+                android:summary="@string/profile_sum"
+                android:widgetLayout="@layout/img_profiles"
+                android:persistent="false"
+                android:key="profile" />
     <Preference android:title="@string/backup_prefs_title"
                 android:summary="@string/backup_prefs_sum"
                 android:widgetLayout="@layout/img_backup"

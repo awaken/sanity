@@ -1,0 +1,5 @@
+Questa applicazione è software libero: puoi ridistribuirla e/o modificarla nei termini della GNU General Public License come pubblicato dalla Free Software Foundation, sia nella versione 3 della licenza, sia (a tua opinione) in qualsiasi altra versione successiva.
+Questo programma è distribuito nella speranza che risulterà utile, ma SENZA NESSUNA GARANZIA; neppure la garanzia implicita di COMMERCIABILITÀ o IDONEITÀ PER UN PARTICOLARE SCOPO. Leggi la GNU General Public License versione 3 per maggiori dettagli, puoi trovarne una copia su http://www.gnu.org/licenses/.
+
+Scegli "Ok" per accettare la GNU General Public License versione 3.
+Scegli "Annulla" per rifiutarla.
