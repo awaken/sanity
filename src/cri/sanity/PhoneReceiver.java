@@ -15,12 +15,12 @@ public class PhoneReceiver extends BroadcastReceiver
 	{
 		if(MainService.isRunning() || !A.isEnabled()) return;
 		final String s = i.getStringExtra(TelephonyManager.EXTRA_STATE);
-		if(s.equals(TelephonyManager.EXTRA_STATE_IDLE)) {
-			number = null;
+		if(TelephonyManager.EXTRA_STATE_RINGING.equals(s))
+			number = i.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
+		else if(!TelephonyManager.EXTRA_STATE_OFFHOOK.equals(s)) {
+			number = i.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
 			return;
 		}
-		if(s.equals(TelephonyManager.EXTRA_STATE_RINGING))
-			number = i.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
 		MainService.start();
 	}
 

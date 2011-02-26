@@ -3,13 +3,11 @@ package cri.sanity;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.telephony.TelephonyManager;
 
 
 public final class MainService extends Service
 {
 	private static boolean running = false;
-
 	private static PhoneListener phoneListener;
 
 	//---- static methods
@@ -25,11 +23,9 @@ public final class MainService extends Service
 	public IBinder onBind(Intent intent) { return null; }
 
 	@Override
-	public int onStartCommand(Intent intent, int flags, int id)
+	public int onStartCommand(Intent i, int flags, int id)
 	{
-		if(PhoneListener.isRunning()) return START_STICKY;
-		if(A.telMan().getCallState() == TelephonyManager.CALL_STATE_IDLE) { stopSelf(); return START_NOT_STICKY; }
-		if(running) return START_STICKY;
+		if(running || PhoneListener.isRunning()) return START_STICKY;
 		running = true;
 		P.upgrade();
 		if(A.is(K.NOTIFY_ACTIVITY)) A.notify(A.s(R.string.msg_running));
@@ -43,8 +39,7 @@ public final class MainService extends Service
 	@Override
 	public void onDestroy()
 	{
-		try { A.telMan().listen(phoneListener, PhoneListener.LISTEN_NONE); }
-		catch(Exception e) {}
+		try { A.telMan().listen(phoneListener, PhoneListener.LISTEN_NONE); } catch(Exception e) {}
 		A.notifyCanc();
 		A.notifyCancAll();
 		//A.logd("MainService destroyed");

@@ -73,6 +73,10 @@
   <string name="hotspot_skip_sum">Evita di disabilitare automaticamente il Wifi e la Conn. Dati (2G/3G) durante la telefonata quando il telefono è configurato come Router Wifi.</string>
   <string name="tether_skip_title">Evita se Tethering USB</string>
   <string name="tether_skip_sum">Evita di disabilitare automaticamente la Connessione Dati (2G/3G) durante la telefonata quando il Tethering USB è abilitato.</string>
+	<string name="bt_reverse_title">Accendi Bluetooth</string>
+	<string name="bt_reverse_sum">Accendi il Bluetooth a inizio chiamata. Può essere utile per connettere automaticamente le cuffie Bluetooth.</string>
+	<string name="bt_reverse_timeout_title">Bluetooth Timeout</string>
+	<string name="bt_reverse_timeout_sum">Timeout per spegnere il Bluetooth se le cuffie non risultano collegate.</string>
 
 	<string name="proximity_cat">Disabilita in prossimità</string>
 	<string name="proximity_sum">Opzioni per abilitare e disabilitare i dispositivi durante una chiamata utilizzando il sensore di prossimità.</string>

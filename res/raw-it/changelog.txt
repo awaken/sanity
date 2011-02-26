@@ -1,3 +1,7 @@
+Versione 1.99:
+- Nuovo: opzione per accendere il bluetooth a inizio chiamata (utile per connettere automaticamente le cuffie bluetooth).
+- Fix: vari bug.
+
 Versione 1.98:
 - Nuovo: puoi creare le scelte rapide di Sanity nello schermo Home.
 - Nuovo: sistema di profili (nella sezione "Generale") per cambiare velocemente le preferenze.

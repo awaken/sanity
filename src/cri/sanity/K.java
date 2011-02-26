@@ -26,6 +26,8 @@ public final class K
 	public static final String SKIP_MOBDATA = "mobdata_skip";
 	public static final String SKIP_HOTSPOT = "hotspot_skip";
 	public static final String SKIP_TETHER  = "tether_skip";
+	public static final String REVERSE_BT   = "bt_reverse";
+	public static final String REVERSE_BT_TIMEOUT = "bt_reverse_timeout";
 	// proximity
 	public static final String DISABLE_PROXIMITY = "disable_proximity";
 	public static final String DISABLE_DELAY     = "disable_delay";
@@ -33,7 +35,7 @@ public final class K
 	public static final String ENABLE_DELAY      = "enable_delay";
 	public static final String SCREEN_OFF        = "screen_off";
 	public static final String SCREEN_ON         = "screen_on";
-	public static final String ADMIN             = "admin";					// non persistent
+	public static final String ADMIN             = "admin";							// non persistent
 	// speaker
 	public static final String SPEAKER_AUTO       = "auto_speaker";
 	public static final String SPEAKER_DELAY      = "delay_speaker";
@@ -101,6 +103,8 @@ public final class K
 
 	public static final String WS = "_s";		// wrap suffix for string values of integer keys
 
+	//--- inner class
+	
 	//--- methods: only class P should call these methods!
 
 	static final String[] skipKeys() {
@@ -111,7 +115,7 @@ public final class K
 		return new String[]{
 			DISABLE_DELAY, ENABLE_DELAY, SPEAKER_DELAY, SPEAKER_CALL, SPEAKER_CALL_DELAY, SPEAKER_ON_COUNT, SPEAKER_OFF_COUNT,
 			VOL_PHONE, VOL_WIRED, VOL_BT, REC_SRC, REC_FMT, REC_START_DELAY, REC_STOP_DELAY, REC_START_HEADSET, REC_STOP_HEADSET,
-			REC_STOP_LIMIT, REC_START_TIMES, REC_START_DIR
+			REC_STOP_LIMIT, REC_START_TIMES, REC_START_DIR, REVERSE_BT_TIMEOUT
 		};
 	}
 
@@ -130,11 +134,12 @@ public final class K
 		m.put(REC_SRC           , p(R.array.rec_src_labels, R.array.rec_src_values));
 		m.put(REC_START_DELAY   , pd);
 		m.put(REC_STOP_DELAY    , pd);
-		m.put(REC_START_HEADSET , p(R.array.rec_start_headset_labels, R.array.rec_headset_values));
-		m.put(REC_STOP_HEADSET  , p(R.array.rec_stop_headset_labels , R.array.rec_headset_values));
-		m.put(REC_STOP_LIMIT    , p(R.array.rec_stop_limit_labels   , R.array.rec_stop_limit_values));
-		m.put(REC_START_TIMES   , p(R.array.rec_start_times_labels  , R.array.rec_start_times_values));
-		m.put(REC_START_DIR     , p(R.array.rec_start_dir_labels    , R.array.rec_start_times_values));
+		m.put(REC_START_HEADSET , p(R.array.rec_start_headset_labels , R.array.rec_headset_values));
+		m.put(REC_STOP_HEADSET  , p(R.array.rec_stop_headset_labels  , R.array.rec_headset_values));
+		m.put(REC_STOP_LIMIT    , p(R.array.rec_stop_limit_labels    , R.array.rec_stop_limit_values));
+		m.put(REC_START_TIMES   , p(R.array.rec_start_times_labels   , R.array.rec_start_times_values));
+		m.put(REC_START_DIR     , p(R.array.rec_start_dir_labels     , R.array.rec_start_times_values));
+		m.put(REVERSE_BT_TIMEOUT, p(R.array.bt_reverse_timeout_labels, R.array.bt_reverse_timeout_values));
 		return m;
 	}
 	private static Pair<Integer,Integer> p(int lab, int val) { return new Pair<Integer,Integer>(lab, val); }
@@ -142,7 +147,7 @@ public final class K
 	public static final String[][] sections() {
 		return new String[][]{
 			new String[]{ "general_cat", ENABLED, SKIP_HEADSET, FORCE_BT_AUDIO, REVERSE_PROXIMITY },
-			new String[]{ "devices_cat", AUTO_MOBDATA, AUTO_WIFI, AUTO_GPS, AUTO_BT, SKIP_BT, SKIP_MOBDATA, SKIP_HOTSPOT, SKIP_TETHER },
+			new String[]{ "devices_cat", AUTO_MOBDATA, AUTO_WIFI, AUTO_GPS, AUTO_BT, SKIP_BT, SKIP_MOBDATA, SKIP_HOTSPOT, SKIP_TETHER, REVERSE_BT, REVERSE_BT_TIMEOUT },
 			new String[]{ "proximity_cat", DISABLE_PROXIMITY, DISABLE_DELAY, ENABLE_PROXIMITY, ENABLE_DELAY, SCREEN_OFF, SCREEN_ON },
 			new String[]{ "speaker_cat", SPEAKER_AUTO, SPEAKER_DELAY, SPEAKER_LOUD, SPEAKER_CALL, SPEAKER_CALL_DELAY, SPEAKER_SILENT_END, SPEAKER_ON_COUNT, SPEAKER_OFF_COUNT },
 			new String[]{ "vol_cat", VOL_PHONE, VOL_WIRED, VOL_BT, VOL_SOLO },
@@ -158,7 +163,7 @@ public final class K
 		m.put(SKIP_HEADSET      , true);
 		m.put(FORCE_BT_AUDIO    , false);
 		m.put(REVERSE_PROXIMITY , false);
-		m.put(AUTO_MOBDATA      , false);		// devices
+		m.put(AUTO_MOBDATA      , false);			// devices
 		m.put(AUTO_WIFI         , true);
 		m.put(AUTO_BT           , true);
 		m.put(AUTO_GPS          , false);
@@ -166,6 +171,8 @@ public final class K
 		m.put(SKIP_MOBDATA      , false);
 		m.put(SKIP_HOTSPOT      , true);
 		m.put(SKIP_TETHER       , true);
+		m.put(REVERSE_BT        , false);
+		m.put(REVERSE_BT_TIMEOUT, 30*1000);
 		m.put(DISABLE_PROXIMITY , true);			// proximity
 		m.put(DISABLE_DELAY     , 2000);
 		m.put(ENABLE_DELAY      , 4000);
@@ -180,7 +187,7 @@ public final class K
 		m.put(SPEAKER_SILENT_END, true);
 		m.put(SPEAKER_ON_COUNT  , 0);
 		m.put(SPEAKER_OFF_COUNT , 0);
-		m.put(VOL_PHONE         , -1);			// volume
+		m.put(VOL_PHONE         , -1);				// volume
 		m.put(VOL_WIRED         , -1);
 		m.put(VOL_BT            , -1);
 		m.put(VOL_SOLO          , false);
@@ -190,7 +197,7 @@ public final class K
 		m.put(NOTIFY_VOLUME     , false);
 		m.put(NOTIFY_REC_STOP   , true);
 		m.put(VIBRATE_END       , false);
-		m.put(REC               , false);		// call recorder
+		m.put(REC               , false);			// call recorder
 		m.put(REC_SRC           , Rec.DEF_SRC);
 		m.put(REC_FMT           , Rec.DEF_FMT);
 		m.put(REC_START         , false);
@@ -232,6 +239,7 @@ public final class K
 		}
 		if(oldVer < 1.96) A.put(SPEAKER_CALL, A.is(SPEAKER_CALL)? 3 : 0);
 		if(oldVer < 1.97) P.setDef(SPEAKER_ON_COUNT, SPEAKER_OFF_COUNT, REC_START_DIR);
+		if(oldVer < 1.99) P.setDef(REVERSE_BT, REVERSE_BT_TIMEOUT);
 	}
 
 	private K() { }

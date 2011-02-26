@@ -76,6 +76,10 @@
   <string name="hotspot_skip_sum">Skip automatic Mobile Data (2G/3G) and Wifi disabling during a call if phone is configured like Router Wifi.</string>
   <string name="tether_skip_title">Skip if Tethering USB</string>
   <string name="tether_skip_sum">Skip automatic Mobile Data disabling during a call if Tethering USB is enabled.</string>
+	<string name="bt_reverse_title">Turn on Bluetooth</string>
+	<string name="bt_reverse_sum">Turn on Bluetooth when call starts. This can be helpful for automatic Bluetooth headsets connection.</string>
+	<string name="bt_reverse_timeout_title">Bluetooth Timeout</string>
+	<string name="bt_reverse_timeout_sum">Timeout for turning off Bluetooth if no headsets were connected.</string>
 
 	<string name="proximity_cat">Proximity disabling</string>
 	<string name="proximity_sum">Options for enabling and disabling devices during a call by checking proximity sensor.</string>
@@ -203,8 +207,26 @@
   <string name="paypal_title">PayPal donate</string>
   <string name="paypal_sum">For supporting Sanity, you can donate the money amount you prefer using PayPal. Tap here to open PayPal site.</string>
 
-	<string name="callfilter_cat">Call Filter</string>
-	<string name="callfilter_sum">Filter allowed call numbers.</string>
+	<string name="callfilter_cat">Call number filter</string>
+	<string name="callfilter_sum">Choose the call numbers for applying the action.</string>
+	<string name="callfilter_enable_title">Enable filter</string>
+	<string name="callfilter_enable_sum">Enable call number filtering. If the filter is disabled, every call number will be included.</string>
+	<string name="callfilter_ord_title">Order of rules</string>
+	<string name="callfilter_ord_sum">Choose the order to apply rules for including and excluding numbers.</string>
+	<string name="callfilter_inc_cat">Include call numbers</string>
+	<string name="callfilter_exc_cat">Exclude call numbers</string>
+	<string name="callfilter_anonym_title">Anonymous</string>
+	<string name="callfilter_inc_anonym_sum">Include anonymous call numbers.</string>
+	<string name="callfilter_exc_anonym_sum">Exclude anonymous call numbers.</string>
+	<string name="callfilter_all_title">All numbers</string>
+	<string name="callfilter_inc_all_sum">Include all call numbers.</string>
+	<string name="callfilter_exc_all_sum">Exclude all call numbers.</string>
+	<string name="callfilter_allcontacts_title">All contacts</string>
+	<string name="callfilter_inc_allcontacts_sum">Include all phone contacts.</string>
+	<string name="callfilter_exc_allcontacts_sum">Exclude all phone contacts.</string>
+	<string name="callfilter_contacts_title">Contacts</string>
+	<string name="callfilter_inc_contacts_sum">Choose the phone contacts to include.</string>
+	<string name="callfilter_exc_contacts_sum">Choose the phone contacts to exclude.</string>
 
   <string name="donate_title">Donate</string>
   <string name="donate_sum">Sanity is free. If you like this application, support the development with a donation.</string>

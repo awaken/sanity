@@ -1,6 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<Preference android:key="logo" />
-	<PreferenceCategory android:key="callfilter">
+
+	<PreferenceCategory android:title="@string/callfilter_cat"
+	                    android:key="callfilter_cat">
+		<CheckBoxPreference android:title="@string/callfilter_enable_title"
+		                    android:summary="@string/callfilter_enable_sum"
+		                    android:persistent="false"
+		                    android:key="callfilter_enable" />
+		<cri.sanity.PrefList android:title="@string/callfilter_ord_title"
+		                     android:summary="@string/callfilter_ord_sum"
+		                     android:persistent="false"
+		                     android:key="callfilter_ord"
+		                     android:entries="@array/callfilter_ord_labels"
+		                     android:entryValues="@array/callfilter_ord_values"/>
 	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/callfilter_inc_cat">
+		<CheckBoxPreference android:title="@string/callfilter_all_title"
+		                    android:summary="@string/callfilter_inc_all_sum"
+		                    android:persistent="false"
+		                    android:dependency="callfilter_enable"
+		                    android:key="callfilter_inc_all" />
+		<CheckBoxPreference android:title="@string/callfilter_anonym_title"
+		                    android:summary="@string/callfilter_inc_anonym_sum"
+		                    android:persistent="false"
+		                    android:dependency="callfilter_enable"
+		                    android:key="callfilter_inc_anonym" />
+		<CheckBoxPreference android:title="@string/callfilter_allcontacts_title"
+		                    android:summary="@string/callfilter_inc_allcontacts_sum"
+		                    android:persistent="false"
+		                    android:dependency="callfilter_enable"
+		                    android:key="callfilter_inc_allcontacts" />
+		<Preference android:title="@string/callfilter_contacts_title"
+		            android:summary="@string/callfilter_inc_contacts_sum"
+		            android:dependency="callfilter_enable"
+		            android:key="callfilter_inc_contacts" />
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/callfilter_exc_cat">
+		<CheckBoxPreference android:title="@string/callfilter_all_title"
+		                    android:summary="@string/callfilter_exc_all_sum"
+		                    android:persistent="false"
+		                    android:dependency="callfilter_enable" 
+		                    android:key="callfilter_exc_all" />
+		<CheckBoxPreference android:title="@string/callfilter_anonym_title"
+		                    android:summary="@string/callfilter_exc_anonym_sum"
+		                    android:persistent="false"
+		                    android:dependency="callfilter_enable"
+		                    android:key="callfilter_exc_anonym" />
+		<CheckBoxPreference android:title="@string/callfilter_allcontacts_title"
+		                    android:summary="@string/callfilter_exc_allcontacts_sum"
+		                    android:persistent="false"
+		                    android:dependency="callfilter_enable"
+		                    android:key="callfilter_exc_allcontacts" />
+		<Preference android:title="@string/callfilter_contacts_title"
+		            android:summary="@string/callfilter_exc_contacts_sum"
+		            android:dependency="callfilter_enable"
+		            android:key="callfilter_exc_contacts" />
+	</PreferenceCategory>
+
 </PreferenceScreen>

@@ -9,7 +9,7 @@ import cri.sanity.screen.CallFilterActivity;
 
 public class PrefCall extends Preference implements Preference.OnPreferenceClickListener
 {
-	public String prefix;
+	public String id;
 
 	public PrefCall(Context ctx)                                { super(ctx);               init(); }
 	public PrefCall(Context ctx, AttributeSet attrs)            { super(ctx, attrs);        init(); }
@@ -25,10 +25,10 @@ public class PrefCall extends Preference implements Preference.OnPreferenceClick
 
 	@Override
 	public boolean onPreferenceClick(Preference p) {
-		if(A.empty(prefix)) return true;
+		if(A.empty(id)) return true;
 		Intent i = new Intent(A.app(), CallFilterActivity.class);
-		i.putExtra(CallFilterActivity.EXTRA_KEY_TITLE , getTitle());
-		i.putExtra(CallFilterActivity.EXTRA_KEY_PREFIX, prefix);
+		i.putExtra(CallFilterActivity.EXTRA_TITLE , getTitle());
+		i.putExtra(CallFilterActivity.EXTRA_ID    , id);
 		A.app().startActivity(i);
 		return true;
 	}

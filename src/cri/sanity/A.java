@@ -68,6 +68,7 @@ public final class A extends Application
 	private static SharedPreferences.Editor edit;
 	private static Notification             notif;
 	private static PendingIntent            notifIntent;
+	private static boolean                  full;
 
 	private static NotificationManager      notifMan;
 	private static AudioManager             audioMan;
@@ -115,6 +116,7 @@ public final class A extends Application
 		prefs   = PreferenceManager.getDefaultSharedPreferences(a);
 		edit    = prefs.edit();
 		pkgInfo = _pkgInfo();
+		full    = Conf.FULL || prefs.getBoolean(K.FULL, false);
 	}
 
 	//---- static methods
@@ -129,7 +131,7 @@ public final class A extends Application
 	public static final ContentResolver      resolver() { if(ctxRes==null) ctxRes=a.getContentResolver(); return ctxRes; }
 	public static final PackageInfo           pkgInfo() { return pkgInfo; }
 	public static final String                    ver() { return pkgInfo.versionName; }
-	public static final String               fullName() { return name + "  v" + ver(); }
+	public static final String               fullName() { return name + "  v" + ver() + (Conf.BETA? " beta" : ""); }
 
 	// log
 	//public static final int logd(Object o, String method) { return Log.d(name, o.getClass().getSimpleName()+'.'+method); }
@@ -349,9 +351,8 @@ public final class A extends Application
 
   //---- preferences
 
-	public static final boolean isEnabled () { return prefs.getBoolean(K.ENABLED , false); }
-	public static final boolean isFull()     { return Conf.FULL || prefs.getBoolean(K.FULL, false); }
-	public static final void    setFull()    { putc(K.FULL, true); }
+	public static final boolean isEnabled() { return prefs.getBoolean(K.ENABLED, false); }
+	public static final boolean isFull()    { return full; }
 
 	public static final boolean is(String key)                { return prefs.getBoolean(key, false); }
 	//public static final boolean is(String key, boolean def)   { return prefs.getBoolean(key, def  ); }

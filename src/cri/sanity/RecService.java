@@ -22,7 +22,6 @@ public class RecService extends Service
 
 	private static long    ts      = 0;
 	private static boolean running = false;
-	private static boolean full    = false;
 	private static boolean autoStart = false;
 	private static boolean autoStop  = false;
 	private static boolean autoStartSpeaker = false;
@@ -51,9 +50,8 @@ public class RecService extends Service
 		if(running) return;
 		ts   = 0;
 		pl   = phoneListener;
-		full = A.isFull();
 		rec  = new Rec(A.geti(K.REC_SRC), A.geti(K.REC_FMT));
-		notifLimit = A.is(K.NOTIFY_REC_STOP) ? A.s(full? R.string.msg_rec_limit : R.string.msg_rec_free_limit) : null;
+		notifLimit = A.is(K.NOTIFY_REC_STOP) ? A.s(A.isFull()? R.string.msg_rec_limit : R.string.msg_rec_free_limit) : null;
 		if(rec.src == Rec.SRC_MIC) A.audioMan().setMicrophoneMute(false);
 		autoInit();
 		buildTasks();
@@ -65,7 +63,7 @@ public class RecService extends Service
 		stopService();
 		Task.stop(TASK_LIMIT, TASK_EXEC);
 		if(rec != null) { rec.release(); rec = null; }
-		pl           = null;
+		if(pl  != null) {	pl.speakerListener = null; pl = null; }
 		notif        = null;
 		notifIntent  = null;
 		notifLimit   = null;
@@ -79,7 +77,7 @@ public class RecService extends Service
 	public static final void recStop (int delay) { taskRecStop .exec(TASK_EXEC, delay); }
 
 	public static final void checkAutoRec() {
-		if(rec!=null && rec.isStarted()) return;
+		if(rec==null || rec.isStarted()) return;
 		final int d = A.geti(K.REC_START_DIR);
 		if(     d == INCOMING) { if( pl.isOutgoing()) noAutoStart(); }
 		else if(d == OUTGOING) { if(!pl.isOutgoing()) noAutoStart(); }
@@ -90,7 +88,7 @@ public class RecService extends Service
 			if(headsetOnStart == pl.isHeadsetOn())
 				recStartOffhook();
 		}
-		else if(!autoStartSpeaker)
+		else if(!autoStartSpeaker || Dev.isSpeakerOn())
 			recStartOffhook();
 	}
 	
@@ -176,7 +174,7 @@ public class RecService extends Service
 		else
 			pl.speakerListener = new SpeakerListener() {
 				public void onSpeakerChanged(boolean enabled) {
-					if(enabled) { if(autoStartSpeaker) recStartAuto(); } 
+					if(enabled) { if(autoStartSpeaker) recStartAuto(); }
 					else        { if(autoStopSpeaker ) recStopAuto (); }
 				}
 			};
@@ -221,7 +219,7 @@ public class RecService extends Service
 	private static void autoInit() {
 		autoStart     = A.is(K.REC_START);
 		autoStop      = A.is(K.REC_STOP);
-	  autoStopLimit = !full? Conf.REC_FREE_LIMIT : (autoStop? A.geti(K.REC_STOP_LIMIT)*60000 : 0);
+	  autoStopLimit = !A.isFull()? Conf.REC_FREE_LIMIT : (autoStop? A.geti(K.REC_STOP_LIMIT)*60000 : 0);
 	  // setup auto start
 		if(!autoStart)
 			noAutoStart();

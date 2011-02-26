@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+	<string-array name="bt_reverse_timeout_labels">
+		<item>5 seconds</item>
+		<item>10 seconds</item>
+		<item>20 seconds</item>
+		<item>30 seconds</item>
+		<item>1 minute</item>
+		<item>2 minutes</item>
+		<item>3 minutes</item>
+		<item>4 minutes</item>
+		<item>5 minutes</item>
+		<item>Always ON</item>
+	</string-array>
+	<string-array name="bt_reverse_timeout_values">
+		<item>5000</item>
+		<item>10000</item>
+		<item>20000</item>
+		<item>30000</item>
+		<item>60000</item>
+		<item>120000</item>
+		<item>180000</item>
+		<item>240000</item>
+		<item>300000</item>
+		<item>0</item>
+	</string-array>
+
 	<string-array name="disable_delay_labels">
 		<item>Immediate</item>
 		<item>1 second</item>
@@ -206,6 +231,15 @@
 		<item>0</item>
 		<item>1</item>
 		<item>2</item>
+	</string-array>
+
+	<string-array name="callfilter_ord_labels">
+		<item>Include before, exclude after</item>
+		<item>Exclude before, include after</item>
+	</string-array>
+	<string-array name="callfilter_ord_values">
+		<item>0</item>
+		<item>1</item>
 	</string-array>
 
 </resources>

@@ -98,7 +98,7 @@ public class MainActivity extends ScreenActivity
 	private boolean startDonateApp()
 	{
 		final boolean done = startService(new Intent(Conf.ACTION_DONATE)) != null;
-		if(done) A.setFull();
+		if(done) A.putc(K.FULL, true);
 		return done;
 	}
 

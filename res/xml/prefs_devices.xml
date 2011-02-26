@@ -31,4 +31,15 @@
 	                      android:dependency="mobdata"
 	                      android:key="tether_skip" />
   </PreferenceCategory>
+  <PreferenceCategory android:title="@string/geek_cat">
+	  <CheckBoxPreference android:title="@string/bt_reverse_title"
+	                      android:summary="@string/bt_reverse_sum"
+	                      android:key="bt_reverse" />
+	  <cri.sanity.PrefList android:title="@string/bt_reverse_timeout_title"
+	                       android:summary="@string/bt_reverse_timeout_sum"
+	                       android:dependency="bt_reverse"
+	                       android:key="bt_reverse_timeout_s"
+	                       android:entries="@array/bt_reverse_timeout_labels"
+	                       android:entryValues="@array/bt_reverse_timeout_values" />
+  </PreferenceCategory>
 </PreferenceScreen>

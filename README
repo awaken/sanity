@@ -18,6 +18,10 @@ An Android application for managing volume and for reducing electromagnetic wave
   Change log
 -------------------
 
+* version 1.99  (26/02/2011)
+- New: option for turning on bluetooth when call starts (useful for automatic bluetooth headsets connection).
+- Fix: various bugs.
+
 * version 1.98  (24/02/2011)
 - New: you can create Sanity shortcuts in the Home screen.
 - New: profiles system (in the "General" section) for fast changing preferences.

@@ -73,6 +73,10 @@
 	<string name="hotspot_skip_sum">Ignorar la desactivacion automatica de 2G/3G y WiFi durante una llamada si el movil está siendo usado como Punto de acceso (Tethering WiFi).</string>
 	<string name="tether_skip_title">Ignorar si Tethering USB</string>
 	<string name="tether_skip_sum">Ignorar la desactivacion automatica de datos (2G/3G) durante una llamada si Tethering mediante USB está activada.</string>
+	<string name="bt_reverse_title">Encienda Bluetooth</string>
+	<string name="bt_reverse_sum">Encienda el Bluetooth cuando la llamada se inicia. Esto es útil sólo para la conexión automática de Bluetooth auriculares.</string>
+	<string name="bt_reverse_timeout_title">Tiempo de Bluetooth</string>
+	<string name="bt_reverse_timeout_sum">Tiempo de espera para apagar Bluetooth si no estaban conectados los auriculares.</string>
 
 	<string name="proximity_cat">Ajustes en proximidad</string>
 	<string name="proximity_sum">Opciones para activar o desactivar dispositivos durante una llamada usando el sensor de proximidad.</string>
