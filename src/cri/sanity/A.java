@@ -58,7 +58,7 @@ public final class A extends Application
 	//---- data
 
 	public  static Activity                 activity;
-	
+
 	private static A                        a;
 	private static String                   name;
 	private static Resources                resources;
@@ -126,12 +126,12 @@ public final class A extends Application
 	public static final String                   name() { return name;  }
 	public static final SharedPreferences       prefs() { return prefs; }
 	public static final SharedPreferences.Editor edit() { return edit;  }
-	public static final String                    pkg() { return pkgInfo.packageName; }
+	//public static final String                    pkg() { return pkgInfo.packageName; }
 	public static final Resources           resources() { if(resources==null) resources=a.getResources(); return resources; }
 	public static final ContentResolver      resolver() { if(ctxRes==null) ctxRes=a.getContentResolver(); return ctxRes; }
-	public static final PackageInfo           pkgInfo() { return pkgInfo; }
+	//public static final PackageInfo           pkgInfo() { return pkgInfo; }
 	public static final String                    ver() { return pkgInfo.versionName; }
-	public static final String               fullName() { return name + "  v" + ver() + (Conf.BETA? " beta" : ""); }
+	public static final String               fullName() { return name + "  v" + ver() + (isBeta()? " beta "+Conf.BETA : ""); }
 
 	// log
 	//public static final int logd(Object o, String method) { return Log.d(name, o.getClass().getSimpleName()+'.'+method); }
@@ -159,7 +159,7 @@ public final class A extends Application
 		try {
 			InputStream    is = resources().openRawResource(resId);
 			BufferedReader br = new BufferedReader(new InputStreamReader(is));
-			StringBuilder  s  = new StringBuilder();
+			StringBuilder  s  = new StringBuilder(1024);
 			String line;
 			while((line = br.readLine()) != null)
 				s.append(line).append('\n');
@@ -177,11 +177,11 @@ public final class A extends Application
 	//public static final boolean gotoMarketPkg()             { return gotoMarketPkg(a.getPackageName()); }
 	//public static final boolean gotoMarketPkg(String pkg)   { return gotoMarketUrl("search?q=pname:\""+pkg+'"'); }
 	public static final boolean gotoMarketPub()               { return gotoMarketUrl("search?q=pub:\""+Conf.AUTHOR+'"'); }
-	public static final boolean gotoMarketDetails()           { return gotoMarketDetails(a.getPackageName()); }
+	public static final boolean gotoMarketDetails()           { return gotoMarketDetails(pkgInfo.packageName); }
 	public static final boolean gotoMarketDetails(String pkg) { return gotoMarketUrl("details?id="+pkg); }
 	public static final boolean gotoMarketUrl(String query) {
 		final boolean res = gotoUrl("market://"+query);
-		if(!res) alert(A.s(R.string.msg_market_err));
+		if(!res) alert(A.s(R.string.err_market));
 		return res;
 	}
 	public static final boolean gotoUrl(String url) {
@@ -196,7 +196,7 @@ public final class A extends Application
 	}
 	
 	public static final String sdcardDir() {
-		final String dir = Environment.getExternalStorageDirectory().getAbsolutePath() + '/' + A.name();
+		final String dir = Environment.getExternalStorageDirectory().getAbsolutePath() + '/' + name;
 		final File  file = new File(dir);
 		return file.isDirectory()||file.mkdir() ? dir : null;
 	}
@@ -353,6 +353,7 @@ public final class A extends Application
 
 	public static final boolean isEnabled() { return prefs.getBoolean(K.ENABLED, false); }
 	public static final boolean isFull()    { return full; }
+	public static final boolean isBeta()    { return Conf.BETA > 0; }
 
 	public static final boolean is(String key)                { return prefs.getBoolean(key, false); }
 	//public static final boolean is(String key, boolean def)   { return prefs.getBoolean(key, def  ); }

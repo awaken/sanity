@@ -1,0 +1,7 @@
+Sanity requiere privilegios de administrador para apagar la pantalla cuando se pone el teléfono cerca de su oído durante una llamada. Sin estos privilegios, la pantalla no se puede apagar correctamente.
+
+Usted puede otorgar y revocar en cualquier momento los privilegios a través de el "Administrador" opción (en la "Proximidad" sección).
+
+Atención: para la desinstalación de Sanity debe revocar los privilegios (de lo contrario la desinstalación processo un error).
+
+Se le concede privilegios de administrador para Sanity ahora?

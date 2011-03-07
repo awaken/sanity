@@ -11,7 +11,7 @@ public class ProximityActivity extends ScreenActivity
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		final Preference p = pref(K.ADMIN);
+		final Preference p = pref("admin");
 		if(A.SDK < 8) {
 			p.setEnabled(false);
 			p.setSummary(R.string.msg_require_froyo);
@@ -22,7 +22,7 @@ public class ProximityActivity extends ScreenActivity
 					Admin.request(ProximityActivity.this);
 				else
 					A.alert(
-						A.rawstr(R.raw.admin_ask),
+						A.rawstr(R.raw.admin_ask_disable),
 						new A.Click(){ public void on(){ Admin.remove(); adminCheck(); }},
 						null,
 						A.ALERT_OKCANC
@@ -39,6 +39,6 @@ public class ProximityActivity extends ScreenActivity
 		super.onResume();
 	}
 	
-	private void adminCheck() { setChecked(K.ADMIN, Admin.isActive()); }
+	private void adminCheck() { setChecked("admin", Admin.isActive()); }
 
 }

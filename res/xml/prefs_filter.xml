@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<Preference android:key="logo" />
+
+	<PreferenceCategory android:title="@string/filter_cat"
+	                    android:key="filter">
+		<CheckBoxPreference android:title="@string/filter_enable_title"
+		                    android:summary="@string/filter_enable_sum"
+		                    android:persistent="false"
+		                    android:key="filter_enable" />
+		<cri.sanity.pref.PList android:title="@string/filter_mode_title"
+		                       android:summary="@string/filter_mode_sum"
+		                       android:persistent="false"
+		                       android:dependency="filter_enable"
+		                       android:key="filter_mode"
+		                       android:entries="@array/filter_mode_labels"
+		                       android:entryValues="@array/filter_mode_values"/>
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/filter_list_cat">
+		<CheckBoxPreference android:title="@string/filter_all_title"
+		                    android:summary="@string/filter_all_sum"
+		                    android:persistent="false"
+		                    android:dependency="filter_enable"
+		                    android:key="filter_all" />
+		<CheckBoxPreference android:title="@string/filter_anonym_title"
+		                    android:summary="@string/filter_anonym_sum"
+		                    android:persistent="false"
+		                    android:dependency="filter_enable"
+		                    android:key="filter_anonym" />
+		<CheckBoxPreference android:title="@string/filter_unknown_title"
+		                    android:summary="@string/filter_unknown_sum"
+		                    android:persistent="false"
+		                    android:dependency="filter_enable"
+		                    android:key="filter_unknown" />
+		<Preference android:title="@string/filter_nums_title"
+		            android:summary="@string/filter_nums_sum"
+                android:persistent="false"
+		            android:dependency="filter_enable"
+		            android:key="filter_nums"
+		            android:widgetLayout="@layout/img_list" />
+		<CheckBoxPreference android:title="@string/filter_allcontacts_title"
+		                    android:summary="@string/filter_allcontacts_sum"
+		                    android:persistent="false"
+		                    android:dependency="filter_enable"
+		                    android:key="filter_allcontacts" />
+		<CheckBoxPreference android:title="@string/filter_star_title"
+		                    android:summary="@string/filter_star_sum"
+		                    android:persistent="false"
+		                    android:widgetLayout="@layout/checkbox_star"
+		                    android:dependency="filter_enable"
+		                    android:key="filter_star" />
+		<Preference android:title="@string/filter_contacts_title"
+		            android:summary="@string/filter_contacts_sum"
+                android:persistent="false"
+		            android:dependency="filter_enable"
+		            android:key="filter_contacts"
+		            android:widgetLayout="@layout/img_contacts" />
+		<Preference android:title="@string/filter_groups_title"
+		            android:summary="@string/filter_groups_sum"
+                android:persistent="false"
+		            android:dependency="filter_enable"
+		            android:key="filter_groups"
+		            android:widgetLayout="@layout/img_groups" />
+	</PreferenceCategory>
+
+</PreferenceScreen>

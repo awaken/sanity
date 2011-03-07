@@ -123,15 +123,25 @@ public final class P
 	}
 
 	public static final boolean upgrade() {
-		final String ver = A.gets(K.VER);
-		if(A.ver().equals(ver)) return false;
-		upgrade(verNum(ver));
+		final String ver = A.gets(K.VER );
+		final int   beta = A.geti(K.BETA);
+		if(A.ver().equals(ver) && beta==Conf.BETA) return false;
+		upgrade(verNum(ver), beta);
 		return true;
 	}
 
-	//---- private api
+	/*
+	public static final Map<String,?> getAll(String prefix, String suffix) {
+		Map<String,?>      all = A.prefs().getAll();
+		Map<String,Object> map = new HashMap<String,Object>(all.size());
+		for(String key : all.keySet())
+			if((prefix==null || key.startsWith(prefix)) && (suffix==null || key.endsWith(suffix)))
+				map.put(key, all.get(key));
+		return map;
+	}
+	*/
 
-	private P() { }
+	//---- private api
 
 	private static void setWrapKeys() {
 		for(String ki : K.wrapIntKeys()) {
@@ -150,12 +160,13 @@ public final class P
 		}
 	}
 
-	private static void upgrade(float oldVer) {
-		if(oldVer < 0.1)
+	private static void upgrade(float oldVer, int beta) {
+		if(oldVer < 0.1f)
 			setDefaults();
 		else {
 			getDefaults();
-			K.upgrade(oldVer);
+			K.upgrade(oldVer, beta);
+			A.commit();
 			setWrapKeys();
 			setVer();
 		}
@@ -163,10 +174,10 @@ public final class P
 
 	private static float verNum(String v) {
 		try { return Float.parseFloat(v); }
-		catch(Exception e) { return 0; }
+		catch(Exception e) { return 0f; }
 	}
 
-	private static void setVer() { A.putc(K.VER, A.ver()); }
+	private static void setVer() { A.put(K.VER, A.ver()).putc(K.BETA, Conf.BETA); }
 
 	private static Map<String,Object> defs;
 

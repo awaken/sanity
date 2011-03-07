@@ -34,8 +34,6 @@ public final class Dev
 	public static final int FLAG_VOL_RING    = AudioManager.FLAG_ALLOW_RINGER_MODES;
 	public static final int FLAG_VOL_REMOVE  = AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE;
 
-	private static final Uri URI_GPS = Uri.parse("3");
-
 	public static int defVolFlags = 0;
 
 	private static TelMan  gTel;
@@ -43,11 +41,9 @@ public final class Dev
 	private static ConnMan gConn;
 	private static int screenTimeoutBak = -1;
 	//private static int brightnessBak = -1;
-	//private static PowerManager.WakeLock wakeCpuLock;
+	private static PowerManager.WakeLock wakeCpuLock;
 	private static PowerManager.WakeLock wakeScreenLock;
 	private static KeyguardLock keyguardLock;
-
-	private Dev() { }
 
 	//---- getting devices
 
@@ -92,18 +88,18 @@ public final class Dev
 
 	//---- check on/off device state
 	
-	public static final boolean isSpeakerOn() { return A.audioMan().isSpeakerphoneOn(); }
-	public static final boolean isHeadsetOn() {
-		final AudioManager am = A.audioMan();
-		return am!=null && (am.isWiredHeadsetOn() || am.isBluetoothA2dpOn() || am.isBluetoothScoOn());
-	}
+	//public static final boolean isSpeakerOn() { return A.audioMan().isSpeakerphoneOn(); }
+	//public static final boolean isHeadsetOn() {
+	//	final AudioManager am = A.audioMan();
+	//	return am.isWiredHeadsetOn() || am.isBluetoothA2dpOn() || am.isBluetoothScoOn();
+	//}
 
 	public static final boolean isMobDataOn() {
-    if(Settings.Secure.getInt(A.resolver(), "mobile_data",1) != 1) return false;
+    if(Settings.Secure.getInt(A.resolver(),"mobile_data",1) != 1) return false;
 		final int ds = A.telMan().getDataState();
 		return ds==TelephonyManager.DATA_CONNECTED || ds==TelephonyManager.DATA_CONNECTING;
 	}
-	public static final boolean isWifiOn() { return haveWifi() && A.wifiMan().isWifiEnabled(); }
+	//public static final boolean isWifiOn() { return haveWifi() && A.wifiMan().isWifiEnabled(); }
 	public static final boolean isBtOn()   { return haveBt  () && A.btAdapter().isEnabled(); }
 	public static final boolean isGpsOn()  { return haveLoc () && A.locMan().isProviderEnabled(LocationManager.GPS_PROVIDER); }
 
@@ -116,15 +112,19 @@ public final class Dev
 	public static final boolean isTetheringOn()        { return gConn().isTetheringOn(); }
 	public static final boolean isTetheringSupported() { return gConn().callable("getTetheredIfaces", "getTetherableUsbRegexs"); }
 
+	public static final boolean isRingOn() { return A.audioMan().getRingerMode() == AudioManager.RINGER_MODE_NORMAL; }
+
 	//---- enable/disable devices
 
 	public static final boolean enableMobData(boolean enable) {
 		return enable? gTel().enableDataConnectivity() : gTel().disableDataConnectivity();
 	}
 
+	/*
 	public static final boolean enableWifi(boolean enable) {
 		return A.wifiMan().setWifiEnabled(enable);
 	}
+	*/
 
 	public static final boolean enableBt(boolean enable) {
 		final BluetoothAdapter bt = A.btAdapter();
@@ -144,10 +144,10 @@ public final class Dev
 
 	public static final void toggleGps() {
 		// use undocumented android broadcast
-    final Intent i = new Intent();
+    Intent i = new Intent();
     i.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider");
     i.addCategory("android.intent.category.ALTERNATIVE");
-    i.setData(URI_GPS);
+    i.setData(Uri.parse("3"));
     A.app().sendBroadcast(i);
 	}
 
@@ -163,7 +163,7 @@ public final class Dev
 	public static final void setVolumeMax(int type)            { A.audioMan().setStreamVolume(type, getVolumeMax(type), defVolFlags); }
 	public static final void setVolumeMax(int type, int flags) { A.audioMan().setStreamVolume(type, getVolumeMax(type), flags); }
 
-	public static final void mute(int type, boolean enable) { A.audioMan().setStreamMute(type, enable); }
+	public static final void mute(int type, boolean muteOn) { A.audioMan().setStreamMute(type, muteOn); }
 	//public static final void solo(int type, boolean enable) { A.audioMan().setStreamSolo(type, enable); }
 
 	//---- managing system
@@ -207,17 +207,26 @@ public final class Dev
 	public static final void dimScreen(boolean dim) {
 		setSysInt(System.DIM_SCREEN, dim? 1 : 0);
 	}
-
-	public static final void wakeCpu() {
-		if(wakeCpuLock == null) wakeCpuLock = A.powerMan().newWakeLock(
-				PowerManager.PARTIAL_WAKE_LOCK|PowerManager.ON_AFTER_RELEASE|PowerManager.ACQUIRE_CAUSES_WAKEUP, "Dev");
-		wakeCpuLock.acquire();
-		wakeCpuLock.release();
-	}
 	*/
 
-	public static final boolean isWakeScreen() { return wakeScreenLock!=null && wakeScreenLock.isHeld(); }
-	public static final void wakeScreen()      { wakeScreen(true); }
+	//public static final boolean isWakeCpu() { return wakeCpuLock!=null && wakeCpuLock.isHeld(); }
+	public static final void wakeCpu() { wakeCpu(false); }
+	public static final void wakeCpu(boolean release) {
+		if(wakeCpuLock == null) {
+			wakeCpuLock = A.powerMan().newWakeLock(
+				PowerManager.PARTIAL_WAKE_LOCK|PowerManager.ON_AFTER_RELEASE|PowerManager.ACQUIRE_CAUSES_WAKEUP, "Dev");
+			wakeCpuLock.setReferenceCounted(false);
+		}
+		wakeCpuLock.acquire();
+		if(release) wakeCpuLock.release();
+	}
+	public static final void unwakeCpu() {
+		if(wakeCpuLock==null || !wakeCpuLock.isHeld()) return;
+		wakeCpuLock.release();
+	}
+
+	//public static final boolean isWakeScreen() { return wakeScreenLock!=null && wakeScreenLock.isHeld(); }
+	public static final void wakeScreen() { wakeScreen(true); }
 	public static final void wakeScreen(boolean release) {
 		if(wakeScreenLock == null) {
 			wakeScreenLock = A.powerMan().newWakeLock(

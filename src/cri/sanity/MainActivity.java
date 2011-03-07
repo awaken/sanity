@@ -8,8 +8,7 @@ import android.preference.Preference;
 public class MainActivity extends ScreenActivity
 {
 	@Override
-  public void onCreate(Bundle savedInstanceState)
-  {
+  public void onCreate(Bundle savedInstanceState) {
 		skipAllKeys = true;
 		screener(MainActivity.class, R.xml.prefs);
     super.onCreate(savedInstanceState);
@@ -17,14 +16,13 @@ public class MainActivity extends ScreenActivity
   	setupProximity();
     setupDonate();
 		nag = false;
-		if(!A.is(K.AGREE))   askLicense();
+		if(!A.is(K.AGREE))   firstRun();
 		else if(P.upgrade()) alertChangeLog();
 		else if(!A.isFull()) nag = true;
   }
 
 	@Override
-	public void onResume()
-	{
+	public void onResume() {
 		updateOptions();
 		super.onResume();
 	}
@@ -34,18 +32,16 @@ public class MainActivity extends ScreenActivity
 
 	//---- private api
 
-	private void setupProximity()
-	{
+	private void setupProximity() {
   	if(Dev.sensorProxim() == null)
-  		setEnabled(K.SCREEN_PROXIMITY, false);
+  		setEnabled("screen_proximity", false);
 	}
 
-	private void setupDonate()
-	{
+	private void setupDonate() {
 		Preference p = pref("donate");
     if(!A.isFull() && !startDonateApp()) {
    		on(p, new Click(){ public boolean on(){ return A.gotoMarketDetails(Conf.DONATE_PKG); }});
-			p = pref(K.SCREEN_RECORD);
+			p = pref("screen_record");
 			p.setSummary(p.getSummary()+" "+A.s(R.string.rec_cat_sum_free));
     }
     else {
@@ -56,8 +52,7 @@ public class MainActivity extends ScreenActivity
     }
 	}
 
-	private void askLicense()
-	{
+	private void firstRun() {
 		A.alert(
 		  A.s(R.string.msg_eula_title),
 			A.fullName()+"\n\n"+A.s(R.string.app_desc)+'\n'+A.s(R.string.app_copy)+"\n\n"+A.rawstr(R.raw.license),
@@ -65,38 +60,56 @@ public class MainActivity extends ScreenActivity
 				A.put(K.AGREE,true);
 				P.setDefaults();
 				updateOptions();
-				if(P.backupExists()) {
-					A.alert(
-						A.s(R.string.ask_restore),
-						new A.Click(){ public void on(){
-							final boolean ok = P.restore();
-							A.toast(ok? R.string.msg_restore_success : R.string.msg_restore_failed);
-							if(ok) updateOptions();
-						}},
-						null,
-						A.ALERT_OKCANC
-					);
-				}
+				dismiss();
+				if(P.backupExists()) askRestore();
+				else                 askAdmin();
 			}},
 			new A.Click(){ public void on(){ finish(); }},
 			A.ALERT_OKCANC,
 			false
 		);
 	}
-	
-	private void updateOptions()
-	{
-		final boolean enabled = A.isEnabled();
-		setEnabled(K.SCREEN_DEVICES  , enabled);
-		setEnabled(K.SCREEN_PROXIMITY, enabled);
-		setEnabled(K.SCREEN_SPEAKER  , enabled);
-		setEnabled(K.SCREEN_VOLUME   , enabled);
-		setEnabled(K.SCREEN_NOTIFY   , enabled);
-		setEnabled(K.SCREEN_RECORD   , enabled);
+
+	private void askRestore() {
+		A.alert(
+			A.s(R.string.ask_restore),
+			new A.Click(){ public void on(){
+				final boolean ok = P.restore();
+				A.toast(ok? R.string.msg_restore_success : R.string.msg_restore_failed);
+				if(ok) updateOptions();
+				dismiss();
+				askAdmin();
+			}},
+			new A.Click(){ public void on(){
+				dismiss();
+				askAdmin();
+			}},
+			A.ALERT_OKCANC
+		);
 	}
 
-	private boolean startDonateApp()
-	{
+	private void askAdmin() {
+		if(A.SDK<8 || Admin.isActive()) return;
+		A.alert(
+			A.rawstr(R.raw.admin_ask_enable),
+			new A.Click(){ public void on(){ Admin.request(MainActivity.this); }},
+			null,
+			A.ALERT_OKCANC
+		);
+	}
+	
+	private void updateOptions() {
+		final boolean enabled = A.isEnabled();
+		setEnabled("screen_devices"  , enabled);
+		setEnabled("screen_proximity", enabled);
+		setEnabled("screen_speaker"  , enabled);
+		setEnabled("screen_volume"   , enabled);
+		setEnabled("screen_notify"   , enabled);
+		setEnabled("screen_record"   , enabled);
+		setEnabled("screen_tts"      , enabled);
+	}
+
+	private boolean startDonateApp() {
 		final boolean done = startService(new Intent(Conf.ACTION_DONATE)) != null;
 		if(done) A.putc(K.FULL, true);
 		return done;

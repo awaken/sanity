@@ -18,19 +18,26 @@
 	<string name="rename">Rinomina</string>
 	<string name="open">Apri</string>
 	<string name="saveas">Salva</string>
+	<string name="change">Modifica</string>
 	<string name="del">Elimina</string>
 	<string name="selall">Seleziona tutti</string>
 	<string name="selnone">Deseleziona tutti</string>
 	<string name="full_only">Disponibile solo nella versione Donazione</string>
 	<string name="call_in">ricevuta</string>
 	<string name="call_out">effettuata</string>
-	<string name="unknown">sconosciuto</string>
+	<string name="unknown">Sconosciuto</string>
+	<string name="anonym">Anonimo</string>
 	<string name="help">Aiuto</string>
 	<string name="backup">Backup</string>
 	<string name="restore">Ripristino</string>
 	<string name="show">Mostra</string>
 	<string name="active">Attivato</string>
 	<string name="disactive">Disattivato</string>
+	<string name="prefix">Prefisso</string>
+	<string name="suffix">Suffisso</string>
+	<string name="starred">Preferito</string>
+	<string name="sysgroup">gruppo di sistema</string>
+  <string name="announce">Annuncio</string>
 
   <string name="groups_cat">Preferenze</string>
   <string name="misc_cat">Varie</string>
@@ -40,8 +47,6 @@
   <string name="general_sum">Opzioni principali dell\'applicazione.</string>
   <string name="enabled_title">Abilita Sanity</string>
   <string name="enabled_sum">Abilita o disabilita il sistema Sanity. Se disabilitato, questa applicazione non avrà effetti durante le telefonate.</string>
-  <string name="skip_headset_title">Evita se uso le cuffie</string>
-  <string name="skip_headset_sum">Disabilita la gestione automatica dei dispositivi e del vivavoce quando le cuffie (con o senza fili) sono collegate.</string>
   <string name="force_bt_audio_title">Forza l\'audio BT</string>
   <string name="force_bt_audio_sum">Forza le periferiche audio bluetooth affinché siano correttamente gestite da Sanity.</string>
   <string name="reverse_proximity_title">Inverti prossimità</string>
@@ -54,7 +59,7 @@
 	<string name="profile_sum">Gestisci i profili delle impostazioni per cambiare velocemente più preferenze in un colpo solo.</string>
 	<string name="profile_shortcut">Attiva Profilo</string>
 
-  <string name="devices_cat">Dispositivi da spegnere</string>
+  <string name="devices_cat">Dispositivi</string>
   <string name="devices_sum">Quali dispositivi spegnere per ridurre le onde elettromagnetiche durante la telefonata.</string>
   <string name="gps_title">Spegni GPS</string>
   <string name="gps_sum">Disabilita il GPS durante la telefonata (sarà ripristinato al termine della chiamata). Funziona su molti telefoni, ma non su tutti.</string>
@@ -77,8 +82,10 @@
 	<string name="bt_reverse_sum">Accendi il Bluetooth a inizio chiamata. Può essere utile per connettere automaticamente le cuffie Bluetooth.</string>
 	<string name="bt_reverse_timeout_title">Bluetooth Timeout</string>
 	<string name="bt_reverse_timeout_sum">Timeout per spegnere il Bluetooth se le cuffie non risultano collegate.</string>
+	<string name="bt_off_title">Spegni sempre BT</string>
+	<string name="bt_off_sum">In tutti i casi il Bluetooth verrà spento a fine chiamata.</string>
 
-	<string name="proximity_cat">Disabilita in prossimità</string>
+	<string name="proximity_cat">Prossimità</string>
 	<string name="proximity_sum">Opzioni per abilitare e disabilitare i dispositivi durante una chiamata utilizzando il sensore di prossimità.</string>
   <string name="disable_proximity_title">Spegni in prossimità</string>
   <string name="disable_proximity_sum">Spegni i dispositivi solo quando avvicini il telefono all\'orecchio durante una telefonata. (Se disabilitato, spegne a inizio chiamata.)</string>
@@ -168,11 +175,36 @@
 	<string name="rec_stop_headset_sum">Regole per arrestare automaticamente la registrazione tramite le cuffie.</string>
 	<string name="rec_stop_limit_title">Limite di tempo</string>
 	<string name="rec_stop_limit_sum">Scegli la massima durata per una singola registrazione audio. Sanity arresterà la registrazione quando raggiunge questa durata.</string>
+	<string name="rec_autoremove_title">Rimozione automatica</string>
+	<string name="rec_autoremove_sum">Cancella automaticamente le vecchie registrazioni. Scegli per quanto tempo conservare le registrazioni effettuate.</string>
 	<string name="rec_shortcut">Registra Chiamata</string>
-	<!--
-	<string name="rec_start_all_title">Tutte le chiamate</string>
-	<string name="rec_start_all_sum">Avvia automaticamente la registrazione audio per tutte le telefonate.</string>
-	-->
+
+	<string name="tts_cat">Annuncia chiamante</string>
+	<string name="tts_sum">Pronuncia il nome del chiamante quando si riceve una chiamata (mentre il telefono squilla).</string>
+	<string name="tts_enable_title">Attiva Annuncio</string>
+	<string name="tts_enable_sum">Pronuncia il nome del chiamante quando si riceve una chiamata (mentre il telefono squilla).</string>
+	<string name="tts_global_title">Impostazioni globali</string>
+	<string name="tts_global_sum">Tocca qui per aprire le impostazioni globali di Android relative al motore \"da testo a voce\".</string>
+	<string name="tts_audio_cat">Opzioni audio</string>
+	<string name="tts_headset_title">Solo in cuffia</string>
+	<string name="tts_headset_sum">Attiva l\'annuncio solo se le cuffie sono collegate.</string>
+	<string name="tts_solo_title">Interrompi suoneria</string>
+	<string name="tts_solo_sum">Interrompe la suoneria quando annuncia il nome del chiamante.</string>
+	<string name="tts_vol_sum">Scegli il livello del volume usato per annunciare.</string>
+	<string name="tts_tone_title">Tono di voce</string>
+	<string name="tts_tone_sum">Scegli il tono di voce per annunciare il chiamante.</string>
+	<string name="tts_how_cat">Ripeti e metti in pausa l\'annuncio</string>
+	<string name="tts_repeat_title">Ripeti</string>
+	<string name="tts_repeat_sum">Quante volte verrà pronunciato il nome del chiamante mentre squilla il telefono.</string>
+	<string name="tts_pause_title">Pausa tra le ripetizioni</string>
+	<string name="tts_pause_sum">Quanto tempo aspettare prima di pronunciare di nuovo il chiamante.</string>
+	<string name="tts_what_cat">Cosa annunciare</string>
+	<string name="tts_prefix_sum">Scegli cosa pronunciare PRIMA del nome del chiamante.</string>
+	<string name="tts_suffix_sum">Scegli cosa pronunciare DOPO il nome del chiamante.</string>
+	<string name="tts_anonym_sum">Scrivi la parola \"Anonimo\" nella tua lingua per annunciare le chiamate anonime.</string>
+	<string name="tts_unknown_sum">Scrivi la parola \"Sconosciuto\" nella tua lingua per annunciare un chiamante non in rubrica.</string>
+	<string name="tts_test_title">Prova</string>
+	<string name="tts_test_sum">Tocca qui per provare ad annunciare usando le opzioni attuali.</string>
 
   <string name="notify_cat">Notifica</string>
   <string name="notify_sum">Scegli quali notifiche visualizzare.</string>
@@ -204,6 +236,32 @@
   <string name="paypal_title">Donazione PayPal</string>
   <string name="paypal_sum">Per supportare Sanity, puoi donare l\'ammontare che preferisci usando PayPal. Tocca qui per aprire il sito di PayPal.</string>
 
+	<string name="filter_cat">Filtro chiamate</string>
+	<string name="filter_sum">Scegli i numeri di telefono per applicare l\'azione.</string>
+	<string name="filter_enable_title">Abilita filtro</string>
+	<string name="filter_enable_sum">Abilita il filtro dei numeri telefonici.</string>
+	<string name="filter_mode_title">Modalità filtro</string>
+	<string name="filter_mode_sum">Scegli se includere o escludere i numeri della lista seguente.</string>
+	<string name="filter_list_cat">Lista di numeri telefonici</string>
+	<string name="filter_all_title">Tutti i numeri</string>
+	<string name="filter_all_sum">Tutti i numeri telefonici.</string>
+	<string name="filter_anonym_title">Anonimi</string>
+	<string name="filter_anonym_sum">Tutti i numeri telefonici anonimi.</string>
+	<string name="filter_unknown_title">Sconosciuti</string>
+	<string name="filter_unknown_sum">Tutti i numeri non anonimi ma sconosciuti (non in rubrica).</string>
+	<string name="filter_nums_title">Lista esplicita</string>
+	<string name="filter_nums_sum">Lista di numeri telefonici non memorizzati in rubrica.</string>
+	<string name="filter_allcontacts_title">Tutti i contatti</string>
+	<string name="filter_allcontacts_sum">Tutti i numeri telefonici in rubrica.</string>
+	<string name="filter_contacts_title">Lista contatti</string>
+	<string name="filter_contacts_sum">Scegli i contatti in rubrica da mettere in lista.</string>
+	<string name="filter_star_title">Tutti i favoriti</string>
+	<string name="filter_star_sum">Tutti i contatti che hai contrassegnato come preferiti.</string>
+	<string name="filter_groups_title">Lista gruppi</string>
+	<string name="filter_groups_sum">Scegli i gruppi di contatti da mettere in lista.</string>
+	<string name="filter_shortcut_rec">Filtro chiamate - Registratore</string>
+	<string name="filter_shortcut_tts">Filtro chiamate - Annuncia chiamante</string>
+
   <string name="donate_title">Donazione</string>
   <string name="donate_sum">Sanity è gratuito. Se questa applicazione ti piace, supporta lo sviluppo con una donazione.</string>
   <string name="donated_title">Donazione completata</string>
@@ -218,23 +276,21 @@
   <string name="ask_prf_addnew">Le preferenze correnti risultano già salvate nel profilo attivo.\n\nVuoi davvero creare un nuovo profilo?</string>
   <string name="ask_prf_saveas">Vuoi SALVARE le preferenze correnti nel profilo \"%s\"? Tutte le preferenze di questo profilo verranno sovrascritte.</string>
   <string name="ask_prf_delete">Vuoi davvero ELIMINARE il profilo \"%s\"?</string>
-  <string name="ask_del_one">Sei sicuro di voler ELIMINARE il file selezionato?</string>
-  <string name="ask_del_all">Sei sicuro di voler ELIMINARE tutti i %s file selezionati?</string>
+  <string name="ask_del_one">Sei sicuro di voler ELIMINARE l\'elemento selezionato?</string>
+  <string name="ask_del_all">Sei sicuro di voler ELIMINARE tutti i %s elementi selezionati?</string>
+  <string name="ask_canc_all">Sei sicuro di voler ANNULLARE tutte le modifiche?</string>
 
-  <string name="msg_dir_err">Sanity errore: impossibile creare la cartella sulla sdcard per salvare le registrazioni audio!</string>
-  <string name="msg_rec_err">Sanity errore: impossibile avviare la registrazione audio!</string>
   <string name="msg_rec_title">Sanity - Registratore</string>
   <string name="msg_rec_start">Tocca qui per AVVIARE la registrazione</string>
   <string name="msg_rec_stop">Tocca qui per ARRESTARE la registrazione</string>
   <string name="msg_rec_go">Sanity: avvio della registrazione.</string>
   <string name="msg_rec_limit">Sanity: arresto della registrazione.</string>
   <string name="msg_rec_free_limit">Sanity: limite di 2 minuti raggiunto, la registrazione è arrestata.</string>
-  <string name="msg_rec_scan_err">Errore durante la modifica delle proprietà di scansione: permesso negato sul file \"%s\"</string>
   <string name="msg_rec_empty">Non esistono file audio delle registrazioni. Avvia la registrazione durante una telefonata per mostrare qui i relativi file audio.</string>
   <string name="msg_rec_no">Sanity: azione annullata, il sistema di registrazione non è in esecuzione.</string>
   <string name="msg_rec_file">Scegli cosa fare con questo file audio.</string>
-  <string name="msg_del_err">Errore: cancellazione fallita su %s file!</string>
-  <string name="msg_selected_all">%s file selezionati</string>
+  <string name="msg_selected_all">%s elementi selezionati</string>
+  <string name="msg_items">%s elementi</string>
 	<string name="msg_require_froyo">Questa opzione richiede almeno Android versione 2.2 (Froyo). Spiacente, il tuo telefono monta Android 2.1 (Eclair).</string>
   <string name="msg_devs_enabled">Sanity: dispositivi accesi</string>
   <string name="msg_devs_disabled">Sanity: dispositivi spenti</string>
@@ -249,13 +305,23 @@
   <string name="msg_prf_addnew">Scegli il nome del nuovo profilo da creare</string>
   <string name="msg_prf_rename">Modifica il nome del profilo</string>
   <string name="msg_prf_nosel">Nessun profilo risulta selezionato!</string>
-  <string name="msg_err_name">Errore: nome non valido!</string>
-  <string name="msg_err_rename">Errore: impossibile rinominare il file!</string>
+  <string name="msg_nums_edit">Numero telefonico</string>
+  <string name="msg_empty_list">Non esistono elementi in questa lista. Usa il menù per crearne di nuovi.</string>
   <string name="msg_last_modified">Ultima modifica</string>
-  <string name="msg_exists_err">Azione annullata: \"%s\" già esiste</string>
-  <string name="msg_market_err">Impossibile aprire il Market! Verifica che l\'applicazione Market sia correttamente installata.</string>
   <string name="msg_email_choose">Scegli come inviare l\'email</string>
   <string name="msg_email_body">Ciao Cristiano!</string>
   <string name="msg_eula_title">Contratto di licenza software</string>
+  <string name="msg_option_full">Spiacente, questa opzione è disponibile solo nella versione Donazione.</string>
+
+  <string name="err_dir">Sanity errore: impossibile creare la cartella sulla sdcard per salvare le registrazioni audio!</string>
+  <string name="err_rec">Sanity errore: impossibile avviare la registrazione audio!</string>
+  <string name="err_scan">Errore durante la modifica delle proprietà di scansione: permesso negato sul file \"%s\"</string>
+  <string name="err_name">Errore: nome non valido!</string>
+  <string name="err_rename">Errore: impossibile rinominare il file!</string>
+  <string name="err_del">Errore: cancellazione fallita su %s file!</string>
+  <string name="err_exists">Azione annullata: \"%s\" già esiste</string>
+  <string name="err_market">Impossibile aprire il Market! Verifica che l\'applicazione Market sia correttamente installata.</string>
+	<string name="err_tts_init">Sanity errore: impossibile inizializzare il motore TTS!</string>
+	<string name="err_tts_lang">Sanity errore: la tua lingua non è supportata dal motore TTS!</string>
 
 </resources>

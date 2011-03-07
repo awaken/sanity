@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<Preference android:key="logo" />
+	<PreferenceCategory android:title="@string/tts_cat">
+	  <CheckBoxPreference android:title="@string/tts_enable_title"
+	                      android:summary="@string/tts_enable_sum"
+	                      android:key="tts" />
+	  <Preference android:title="@string/tts_global_title"
+	              android:summary="@string/tts_global_sum"
+	              android:dependency="tts"
+	              android:persistent="false"
+	              android:key="tts_global" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/tts_audio_cat">
+	  <CheckBoxPreference android:title="@string/tts_headset_title"
+	                      android:summary="@string/tts_headset_sum"
+	                      android:dependency="tts"
+	                      android:key="tts_headset" />
+	  <CheckBoxPreference android:title="@string/tts_solo_title"
+	                      android:summary="@string/tts_solo_sum"
+	                      android:dependency="tts"
+	                      android:key="tts_solo" />
+	  <cri.sanity.pref.PList android:title="@string/vol_cat"
+	                         android:summary="@string/tts_vol_sum"
+	                         android:dependency="tts"
+	                         android:key="tts_vol_s" />
+	  <cri.sanity.pref.PList android:title="@string/tts_tone_title"
+	                         android:summary="@string/tts_tone_sum"
+	                         android:dependency="tts"
+	                         android:key="tts_tone_s"
+	                         android:entries="@array/tts_tone_labels"
+	                         android:entryValues="@array/tts_tone_values" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/tts_how_cat">
+	  <cri.sanity.pref.PList android:title="@string/tts_repeat_title"
+	                         android:summary="@string/tts_repeat_sum"
+	                         android:dependency="tts"
+	                         android:key="tts_repeat_s"
+	                         android:entries="@array/tts_repeat_labels"
+	                         android:entryValues="@array/tts_repeat_values" />
+	  <cri.sanity.pref.PList android:title="@string/tts_pause_title"
+	                         android:summary="@string/tts_pause_sum"
+	                         android:dependency="tts"
+	                         android:key="tts_pause_s"
+	                         android:entries="@array/tts_pause_labels"
+	                         android:entryValues="@array/tts_pause_values" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/tts_what_cat">
+	  <cri.sanity.pref.PEdit android:title="@string/prefix"
+	                         android:summary="@string/tts_prefix_sum"
+	                         android:dependency="tts"
+	                         android:key="tts_prefix"
+	                         android:singleLine="true"
+	                         suffix=" " />
+	  <cri.sanity.pref.PEdit android:title="@string/suffix"
+	                         android:summary="@string/tts_suffix_sum"
+	                         android:dependency="tts"
+	                         android:key="tts_suffix"
+	                         android:singleLine="true"
+	                         prefix=" " />
+	  <cri.sanity.pref.PEdit android:title="@string/anonym"
+	                         android:summary="@string/tts_anonym_sum"
+	                         android:dependency="tts"
+	                         android:key="tts_anonym" />
+	  <cri.sanity.pref.PEdit android:title="@string/unknown"
+	                         android:summary="@string/tts_unknown_sum"
+	                         android:dependency="tts"
+	                         android:key="tts_unknown" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/geek_cat">
+	  <Preference android:title="@string/tts_test_title"
+	              android:summary="@string/tts_test_sum"
+	              android:persistent="false"
+	              android:dependency="tts"
+	              android:key="tts_test"
+	              android:widgetLayout="@layout/img_speaker" />
+	  <cri.sanity.pref.PFilter android:dependency="tts"
+	                           android:key="filter_tts" />
+	</PreferenceCategory>
+</PreferenceScreen>

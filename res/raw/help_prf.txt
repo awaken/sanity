@@ -15,3 +15,5 @@ Use the menu to manage your profiles:
 - Delete: remove the selected profile (it will be definitely lost).
 
 - Show: display all preferences of the selected profile.
+
+Note: a profile contains all and only the preferences at the time it is created or saved. Any subsequent changes to the preferences (taken after you have created/saved a profile) do not affect this profile.

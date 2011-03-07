@@ -15,3 +15,5 @@ Use el menú para gestionar sus perfiles:
 - Eliminar: eliminar el perfil seleccionado (que será definitivamente perdido).
 
 - Muestra: muestra todas las preferencias del perfil seleccionado. 
+
+Nota: Un perfil contiene todas las preferencias y sólo en el momento que se crea o se guardan. Cualquier cambio posterior en las preferencias (tomada después de que haya creado o guardado un perfil) no afectan a este perfil.

@@ -1,22 +1,31 @@
+Version 2.00:
+- New: options to announce the caller's name when phone is ringing (text to speech).
+- New: start recording automatically filtering out the phone number.
+- New: option for turning Bluetooth off every time call ends.
+- Fix: bug when enabling and disabling devices.
+- Fix: bug when upgrading from older version.
+- Change: minor improvements.
+- Change: "Skip if headsets" option removed.
+
 Version 1.99:
 - New: option for turning on bluetooth when call starts (useful for automatic bluetooth headsets connection).
 - Fix: various bugs.
 
 Version 1.98:
 - New: you can create Sanity shortcuts in the Home screen.
-- New: profiles system (in the "General" section) for fast changing preferences.
+- New: profiles system for fast changing preferences.
 - Fix: various bugs.
 - Change: minor user interface improvements.
 
 Version 1.97:
 - New: option to restrict automatic recording only on incoming or outgoing calls.
 - New: options to limit automatic handsfree.
-- Fix: bug in recorder options (introduced in version 1.96).
+- Fix: bug in recorder options.
 - Change: minor improvements.
 
 Version 1.96:
 - New: handsfree option "Enable at call start" can be filtered by incoming and outgoing calls.
-- New: backup and restore preferences to memory card (in the "General" section).
+- New: backup and restore preferences to memory card.
 - Change: minor user interface improvements.
 
 Version 1.95:
@@ -45,7 +54,7 @@ Version 1.91
 
 Version 1.9
 - New: options for automatic call recording.
-- New: option to vibrate when phone call ends (in the "Notification" section).
+- New: option to vibrate when phone call ends.
 - New: spanish translation by LuiSKdT&AnA from Mallorca-Spain.
 - Fix: incoming phone number is properly saved when recording.
 - Change: improved audio file browser.

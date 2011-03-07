@@ -15,3 +15,5 @@ Usa ilmenù per gestire i tuoi profili:
 - Elimina: rimuove il profilo selezionato (risulterà definitivamente perso).
 
 - Mostra: visualizza tutte le preferenze del profilo selezionato.
+
+Attenzione: un profilo contiene tutte e sole le preferenze nel momento in cui viene creato o salvato. Tutte le successive modifiche alle preferenze (effettuate dopo aver creato/salvato un profilo) non intaccano quel profilo.

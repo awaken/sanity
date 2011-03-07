@@ -1,0 +1,7 @@
+Sanity requires administrator privileges for turning off the screen when you put the phone close to your ear during a call. Without such privileges, the screen cannot be turned off properly.
+
+You can grant and revoke at anytime such privileges through the "Administrator" option (in the "Proximity" section).
+
+Attention: for uninstalling Sanity you must revoke those privileges (otherwise the uninstall processo will fail).
+
+Would you grant administrator privileges to Sanity now?

@@ -33,6 +33,11 @@
 		            android:widgetLayout="@layout/img_rec"
 		            android:persistent="false"
 		            android:key="screen_record" />
+		<Preference android:title="@string/tts_cat"
+		            android:summary="@string/tts_sum"
+		            android:widgetLayout="@layout/img_tts"
+		            android:persistent="false"
+		            android:key="screen_tts" />
 		<Preference android:title="@string/notify_cat"
 		            android:summary="@string/notify_sum"
 		            android:widgetLayout="@layout/img_notify"

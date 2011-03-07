@@ -10,7 +10,7 @@ import java.util.Map;
 public abstract class Task implements Runnable
 {
 	public static class Pool extends ScheduledThreadPoolExecutor {
-		public Pool() { super(16); }
+		public Pool() { super(Conf.THREAD_POOL_SIZE); }
 	}
 	
 	private static final Map<Integer,ScheduledFuture<?>> map = new HashMap<Integer,ScheduledFuture<?>>();
@@ -42,6 +42,13 @@ public abstract class Task implements Runnable
 
 	public static final int idCur() { return   idCur; }
 	public static final int idNew() { return ++idCur; }
+
+	/*
+	public static final boolean has(int id) {
+		final ScheduledFuture<?> sf = map.get(id);
+		return sf!=null && !sf.isDone();
+	}
+	*/
 
 	public static final Pool shutdown() {
 		if(pool == null) return null;

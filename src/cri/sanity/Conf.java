@@ -4,7 +4,7 @@ package cri.sanity;
 public final class Conf
 {
 	public static final boolean FULL = false;
-	public static final boolean BETA = false;
+	public static final int     BETA = 0;
 
 	public static final String AUTHOR          = "Cristiano Tagliamonte";
 	public static final String AUTHOR_EMAIL    = "cristiano@tagliamonte.net";
@@ -17,8 +17,9 @@ public final class Conf
 	public static final int DEVS_MIN_RETRY          = 2000;
 	public static final int FORCE_AUTOSPEAKER_DELAY = 3000;
 	public static final int CALL_SCREEN_TIMEOUT     = 300;
-	public static final int VIBRATE_TIME            = 500;
+	public static final int VIBRATE_TIME            = 400;
 	public static final int TASK_WAIT_SHUTDOWN      = 10000;
+	public static final int THREAD_POOL_SIZE        = 16;
 
 	public static final char   REC_SEP           = '_';
 	public static final String REC_PREFIX        = "rec_";						// last char must be REC_SEP
@@ -27,7 +28,9 @@ public final class Conf
 	public static final int    REC_OFFHOOK_DELAY = 1000;
 	public static final int    REC_FREE_LIMIT    = 120*1000;
 
-	public static final String BACKUP_FN       = "sanity_backup.txt";
-	public static final String PRF_EXT         = ".prf";
-	public static final String PRF_DATE        = "dd/MM/yyyy, kk:mm";
+	public static final String BACKUP_FN = "sanity_backup.txt";
+	public static final String PRF_EXT   = ".prf";
+	public static final String PRF_DATE  = "dd/MM/yyyy, kk:mm";
+
+	public static final char FILTER_SEP = '§';
 }

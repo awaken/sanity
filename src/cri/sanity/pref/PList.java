@@ -1,26 +1,20 @@
-package cri.sanity;
+package cri.sanity.pref;
 
 import android.content.Context;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.util.AttributeSet;
+import cri.sanity.*;
 
 
-public class PrefList extends ListPreference implements OnPreferenceChangeListener
+public class PList extends ListPreference implements OnPreferenceChangeListener
 {
-	OnPreferenceChangeListener listener = null;
-	CharSequence sum = null;
+	private OnPreferenceChangeListener listener = null;
+	private CharSequence sum = null;
 
-	public PrefList(Context ctx) {
-		super(ctx);
-		init();
-	}
-	public PrefList(Context ctx, AttributeSet attrs) {
-		super(ctx, attrs);
-		init();
-		update();
-	}
+	public PList(Context ctx)                     { super(ctx);        init();           }
+	public PList(Context ctx, AttributeSet attrs) { super(ctx, attrs); init(); update(); }
 
 	//---- ListPreference override
 
@@ -64,9 +58,7 @@ public class PrefList extends ListPreference implements OnPreferenceChangeListen
 
 	//---- private api
 
-	private void init() {
-		super.setOnPreferenceChangeListener(this);
-	}
+	private void init() { super.setOnPreferenceChangeListener(this); }
 
 	private void update(Object entry) {
 		if(sum == null) sum = getSummary();

@@ -11,7 +11,7 @@
 		<item>3 minutes</item>
 		<item>4 minutes</item>
 		<item>5 minutes</item>
-		<item>Always ON</item>
+		<item>Turn off when call ends</item>
 	</string-array>
 	<string-array name="bt_reverse_timeout_values">
 		<item>5000</item>
@@ -232,14 +232,96 @@
 		<item>1</item>
 		<item>2</item>
 	</string-array>
-
-	<string-array name="callfilter_ord_labels">
-		<item>Include before, exclude after</item>
-		<item>Exclude before, include after</item>
+	
+	<string-array name="rec_autoremove_labels">
+		<item>Don\'t remove</item>
+		<item>1 day</item>
+		<item>2 days</item>
+		<item>3 days</item>
+		<item>7 days</item>
+		<item>14 days</item>
+		<item>30 days</item>
+		<item>60 days</item>
+		<item>90 days</item>
 	</string-array>
-	<string-array name="callfilter_ord_values">
+	<string-array name="rec_autoremove_values">
 		<item>0</item>
 		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>7</item>
+		<item>14</item>
+		<item>30</item>
+		<item>60</item>
+		<item>90</item>
+	</string-array>
+
+	<string-array name="filter_mode_labels">
+		<item>Include the list, exclude all other numbers</item>
+		<item>Exclude the list, include all other numbers</item>
+	</string-array>
+	<string-array name="filter_mode_values">
+		<item>0</item>
+		<item>1</item>
+	</string-array>
+
+	<string-array name="tts_tone_labels">
+		<item>Never mind</item>
+		<item>Higher</item>
+		<item>High</item>
+		<item>Medium</item>
+		<item>Low</item>
+		<item>Lower</item>
+	</string-array>
+	<string-array name="tts_tone_values">
+		<item>0</item>
+		<item>200</item>
+		<item>150</item>
+		<item>100</item>
+		<item>75</item>
+		<item>50</item>
+	</string-array>
+
+	<string-array name="tts_repeat_labels">
+		<item>1 time</item>
+		<item>2 times</item>
+		<item>3 times</item>
+		<item>4 times</item>
+		<item>5 times</item>
+		<item>6 times</item>
+		<item>7 times</item>
+		<item>8 times</item>
+		<item>9 times</item>
+		<item>10 times</item>
+		<item>Always</item>
+	</string-array>
+	<string-array name="tts_repeat_values">
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+		<item>6</item>
+		<item>7</item>
+		<item>8</item>
+		<item>9</item>
+		<item>10</item>
+		<item>1000</item>
+	</string-array>
+
+	<string-array name="tts_pause_labels">
+		<item>Shorter</item>
+		<item>Short</item>
+		<item>Medium</item>
+		<item>Long</item>
+		<item>Longer</item>
+	</string-array>
+	<string-array name="tts_pause_values">
+		<item>200</item>
+		<item>500</item>
+		<item>1000</item>
+		<item>1500</item>
+		<item>2000</item>
 	</string-array>
 
 </resources>

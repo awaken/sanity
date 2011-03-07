@@ -16,6 +16,7 @@ import cri.sanity.screen.*;
 public class ScreenActivity extends PrefActivity implements SharedPreferences.OnSharedPreferenceChangeListener
 {
 	private static final Click clickLogo = new Click(){ public boolean on(){ return A.gotoMarketPub(); }};
+	private static final String appDesc  = A.s(R.string.app_desc)+"\n"+A.s(R.string.app_copy);
 	private static final Map<Class<?>,Integer> mapScreenPref   = new HashMap<Class<?>,Integer>();
 	private static final Map<Class<?>,Integer> mapScreenWidget = new HashMap<Class<?>,Integer>();
 	private static final Map<Class<?>,Integer> mapScreenMenu   = new HashMap<Class<?>,Integer>();
@@ -37,10 +38,10 @@ public class ScreenActivity extends PrefActivity implements SharedPreferences.On
     final Integer i = mapScreenPref.get(getClass());
     if(i == null) return;
     addPreferencesFromResource(i);
-		final Preference p = pref(K.LOGO);
+		final Preference p = pref("logo");
 		if(p == null) return;
 		p.setTitle(A.fullName());
-		p.setSummary(A.s(R.string.app_desc)+"\n"+A.s(R.string.app_copy));
+		p.setSummary(appDesc);
 		p.setPersistent(false);
 		Integer w = mapScreenWidget.get(getClass());
 		if(w != null) p.setWidgetLayoutResource(w);
@@ -87,7 +88,7 @@ public class ScreenActivity extends PrefActivity implements SharedPreferences.On
 					final Preference p = pg.getPreference(i);
 					if(p instanceof PreferenceGroup)
 						msg += "\n** "+p.getTitle().toString().toUpperCase()+"\n\n"+getGroupText((PreferenceGroup)p, true);
-					else if(all || !p.getKey().equals(K.LOGO)) {
+					else if(all || !p.getKey().equals("logo")) {
 						msg += "- "+p.getTitle()+".\n"+p.getSummary()+'\n';
 						try { msg += A.s(A.rstring("help_"+p.getKey()))+'\n'; }
 						catch(Exception e) {}
@@ -154,14 +155,15 @@ public class ScreenActivity extends PrefActivity implements SharedPreferences.On
 	protected final void screenerAll()
 	{
 		// all preferences screens
-  	screener(K.SCREEN_GENERAL  , GeneralActivity.class  , R.xml.prefs_general  , R.id.menu_general  , R.layout.img_general);
-  	screener(K.SCREEN_DEVICES  , DevicesActivity.class  , R.xml.prefs_devices  , R.id.menu_devices  , R.layout.img_devices);
-  	screener(K.SCREEN_PROXIMITY, ProximityActivity.class, R.xml.prefs_proximity, R.id.menu_proximity, R.layout.img_proximity);
-  	screener(K.SCREEN_SPEAKER  , SpeakerActivity.class  , R.xml.prefs_speaker  , R.id.menu_speaker  , R.layout.img_speaker);
-  	screener(K.SCREEN_VOLUME   , VolumeActivity.class   , R.xml.prefs_volume   , R.id.menu_vol      , R.layout.img_vol);
-  	screener(K.SCREEN_RECORD   , RecordActivity.class   , R.xml.prefs_record   , R.id.menu_rec      , R.layout.img_rec);
-  	screener(K.SCREEN_NOTIFY   , NotifyActivity.class   , R.xml.prefs_notify   , R.id.menu_notify   , R.layout.img_notify);
-  	screener(K.SCREEN_ABOUT    , AboutActivity.class    , R.xml.prefs_about    , R.id.menu_about    , R.layout.img_about);
+  	screener("screen_general"  , GeneralActivity.class  , R.xml.prefs_general  , R.id.menu_general  , R.layout.img_general);
+  	screener("screen_devices"  , DevicesActivity.class  , R.xml.prefs_devices  , R.id.menu_devices  , R.layout.img_devices);
+  	screener("screen_proximity", ProximityActivity.class, R.xml.prefs_proximity, R.id.menu_proximity, R.layout.img_proximity);
+  	screener("screen_speaker"  , SpeakerActivity.class  , R.xml.prefs_speaker  , R.id.menu_speaker  , R.layout.img_speaker);
+  	screener("screen_volume"   , VolumeActivity.class   , R.xml.prefs_volume   , R.id.menu_vol      , R.layout.img_vol);
+  	screener("screen_record"   , RecordActivity.class   , R.xml.prefs_record   , R.id.menu_rec      , R.layout.img_rec);
+  	screener("screen_tts"      , TtsActivity.class      , R.xml.prefs_tts      , R.id.menu_tts      , R.layout.img_tts);
+  	screener("screen_notify"   , NotifyActivity.class   , R.xml.prefs_notify   , R.id.menu_notify   , R.layout.img_notify);
+  	screener("screen_about"    , AboutActivity.class    , R.xml.prefs_about    , R.id.menu_about    , R.layout.img_about);
 	}
 
 	protected void nag()

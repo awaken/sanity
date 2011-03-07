@@ -11,7 +11,7 @@
 		<item>3 minutos</item>
 		<item>4 minutos</item>
 		<item>5 minutos</item>
-		<item>Siempre encendido</item>
+		<item>Apague cuando la llamada termina</item>
 	</string-array>
 
 	<string-array name="disable_delay_labels">
@@ -117,6 +117,54 @@
 		<item>No importa</item>
 		<item>Detener si auriculares están conectados</item>
 		<item>Detener si auriculares NO están conectados</item>
+	</string-array>
+
+	<string-array name="rec_autoremove_labels">
+		<item>No elimine</item>
+		<item>1 día</item>
+		<item>2 días</item>
+		<item>3 días</item>
+		<item>7 días</item>
+		<item>14 días</item>
+		<item>30 días</item>
+		<item>60 días</item>
+		<item>90 días</item>
+	</string-array>
+
+	<string-array name="filter_mode_labels">
+		<item>Incluir la lista, excluir otros números</item>
+		<item>Excluir la lista, incluir otros números</item>
+	</string-array>
+
+	<string-array name="tts_tone_labels">
+		<item>No importa</item>
+		<item>Más alto</item>
+		<item>Alto</item>
+		<item>Medio</item>
+		<item>Bajo</item>
+		<item>Más bajo</item>
+	</string-array>
+
+	<string-array name="tts_repeat_labels">
+		<item>1 tiempo</item>
+		<item>2 tiempos</item>
+		<item>3 tiempos</item>
+		<item>4 tiempos</item>
+		<item>5 tiempos</item>
+		<item>6 tiempos</item>
+		<item>7 tiempos</item>
+		<item>8 tiempos</item>
+		<item>9 tiempos</item>
+		<item>10 tiempos</item>
+		<item>Siempre</item>
+	</string-array>
+
+	<string-array name="tts_pause_labels">
+		<item>Más corto</item>
+		<item>Corto</item>
+		<item>Medio</item>
+		<item>Largo</item>
+		<item>Más largo</item>
 	</string-array>
 
 </resources>

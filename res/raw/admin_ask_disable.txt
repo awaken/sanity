@@ -1,0 +1,5 @@
+Sanity requires administrator privileges just for turning the screen off during a phone call. Without such privileges, Sanity cannot turn off screen when you put the phone close to your ear during a call.
+
+Anyway, disabling administrator is required to uninstall Sanity.
+
+Are you sure to deny administrator privileges to Sanity?

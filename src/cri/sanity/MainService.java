@@ -23,13 +23,20 @@ public final class MainService extends Service
 	public IBinder onBind(Intent intent) { return null; }
 
 	@Override
+	public void onCreate()
+	{
+		if(phoneListener == null) phoneListener = new PhoneListener();
+		super.onCreate();
+	}
+
+	@Override
 	public int onStartCommand(Intent i, int flags, int id)
 	{
 		if(running || PhoneListener.isRunning()) return START_STICKY;
 		running = true;
 		P.upgrade();
 		if(A.is(K.NOTIFY_ACTIVITY)) A.notify(A.s(R.string.msg_running));
-		if(phoneListener == null) phoneListener = new PhoneListener();
+		//if(phoneListener == null) phoneListener = new PhoneListener();
 		phoneListener.startup();
 		A.telMan().listen(phoneListener, PhoneListener.LISTEN);
 		//A.logd("MainService started");

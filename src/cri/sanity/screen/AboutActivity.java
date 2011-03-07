@@ -23,13 +23,13 @@ public class AboutActivity extends ScreenActivity
   {
 		skipAllKeys = true;
     super.onCreate(savedInstanceState);
-  	on(K.EULA     , new Click(){ public boolean on(){ return A.gotoUrl(EULA_URL);    }});
-  	on(K.COMMENT  , new Click(){ public boolean on(){ return A.gotoMarketDetails();  }});
-  	on(K.CHANGELOG, new Click(){ public boolean on(){ return alertChangeLog();       }});
-  	on(K.MAIL     , new Click(){ public boolean on(){ return mailToDeveloper();      }});
-  	on(K.PAYPAL   , new Click(){ public boolean on(){ return A.gotoUrl(donateUrl()); }});
-  	if(A.SDK < 8) setEnabled(K.UNINSTALL, false);
-  	else on(K.UNINSTALL, new Click(){ public boolean on(){ A.alert(A.rawstr(R.raw.uninstall)); return true; }});
+  	on("eula"     , new Click(){ public boolean on(){ return A.gotoUrl(EULA_URL);    }});
+  	on("comment"  , new Click(){ public boolean on(){ return A.gotoMarketDetails();  }});
+  	on("changelog", new Click(){ public boolean on(){ return alertChangeLog();       }});
+  	on("mail"     , new Click(){ public boolean on(){ return mailToDeveloper();      }});
+  	on("paypal"   , new Click(){ public boolean on(){ return A.gotoUrl(donateUrl()); }});
+  	if(A.SDK < 8) setEnabled("uninstall", false);
+  	else on("uninstall", new Click(){ public boolean on(){ A.alert(A.rawstr(R.raw.uninstall)); return true; }});
   }
 
 	private boolean mailToDeveloper()

@@ -22,13 +22,13 @@ public class RecordActivity extends ScreenActivity
 	{
 		super.onCreate(savedInstanceState);
 		updateEnabled();
-		on(K.REC_BROWSE, new Click(){ public boolean on(){
+		on("rec_browse", new Click(){ public boolean on(){
 			startActivity(new Intent(A.app(), BrowseActivity.class));
 			return true;
 		}});
-		on(K.REC_SCAN, new Change(){ public boolean on(){
+		on("rec_scan", new Change(){ public boolean on(){
 			boolean res = (Boolean)value? scanEnable() : scanDisable();
-			if(!res) A.alert(String.format(A.s(R.string.msg_rec_scan_err), scanFn()));
+			if(!res) A.alert(String.format(A.s(R.string.err_scan), scanFn()));
 			return res;
 		}});
 		on(K.REC_START, new Change(){ public boolean on(){
@@ -72,7 +72,7 @@ public class RecordActivity extends ScreenActivity
 		setEnabled(K.REC_STOP_SPEAKER , A.is(K.REC_STOP ) && (A.is(K.SPEAKER_AUTO) || speakerCall));
 		setEnabled(  REC_STOP_LIMIT   , A.is(K.REC_STOP ) &&  A.isFull());
 		setEnabled(  REC_START_TIMES  , A.is(K.REC_START_SPEAKER) || A.getsi(REC_START_HEADSET)!=RecService.ACT_HEADSET_SKIP);
-		setChecked(K.REC_SCAN, scanAllowed());
+		setChecked( "rec_scan"        , scanAllowed());
 	}
 
 	private static boolean scanAllowed() { return !scanFile().exists(); }

@@ -1,5 +1,8 @@
 package cri.sanity;
 
+import java.io.File;
+import java.io.FileFilter;
+
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -20,8 +23,8 @@ public class RecService extends Service
 	private static final int TASK_EXEC  = Task.idNew();
 	private static final int TASK_LIMIT = Task.idNew();
 
-	private static long    ts      = 0;
-	private static boolean running = false;
+	private static long    ts        = 0;
+	private static boolean running   = false;
 	private static boolean autoStart = false;
 	private static boolean autoStop  = false;
 	private static boolean autoStartSpeaker = false;
@@ -36,7 +39,7 @@ public class RecService extends Service
 	private static boolean headsetOnStop  = false;
 	private static PhoneListener pl;
 	private static Rec rec;
-	private static String notifLimit;
+	private static String notifLimit, notifTitle;
 	private static Notification notif;
 	private static PendingIntent notifIntent;
 	private static Task taskRecStart, taskRecStop, taskRecLimit;
@@ -48,9 +51,9 @@ public class RecService extends Service
 
 	public static final void start(PhoneListener phoneListener) {
 		if(running) return;
-		ts   = 0;
-		pl   = phoneListener;
-		rec  = new Rec(A.geti(K.REC_SRC), A.geti(K.REC_FMT));
+		ts  = 0;
+		pl  = phoneListener;
+		rec = new Rec(A.geti(K.REC_SRC), A.geti(K.REC_FMT));
 		notifLimit = A.is(K.NOTIFY_REC_STOP) ? A.s(A.isFull()? R.string.msg_rec_limit : R.string.msg_rec_free_limit) : null;
 		if(rec.src == Rec.SRC_MIC) A.audioMan().setMicrophoneMute(false);
 		autoInit();
@@ -70,6 +73,7 @@ public class RecService extends Service
 		taskRecStart = null;
 		taskRecStop  = null;
 		taskRecLimit = null;
+		//running      = false;
 		A.notifyCanc(NID);
 	}
 
@@ -81,14 +85,14 @@ public class RecService extends Service
 		final int d = A.geti(K.REC_START_DIR);
 		if(     d == INCOMING) { if( pl.isOutgoing()) noAutoStart(); }
 		else if(d == OUTGOING) { if(!pl.isOutgoing()) noAutoStart(); }
-		// TODO: phone number filter!
+		if(autoStart && !CallFilter.includes(pl.phoneNumber(),"rec",true)) noAutoStart();
 		setSpeakerListener();
 		if(!autoStart) return;
 		if(headsetStart) {
 			if(headsetOnStart == pl.isHeadsetOn())
 				recStartOffhook();
 		}
-		else if(!autoStartSpeaker || Dev.isSpeakerOn())
+		else if(!autoStartSpeaker || A.audioMan().isSpeakerphoneOn())
 			recStartOffhook();
 	}
 	
@@ -101,6 +105,28 @@ public class RecService extends Service
 			if(!headsetStart || on!=headsetOnStart) return;
 			recStartAuto();
 		}
+	}
+	
+	public static final void cron() {
+		final int life = A.geti(K.REC_AUTOREMOVE);
+		if(life <= 0) return;
+		final long now     = ts>0 ? ts : A.now();
+		final long recheck = life>3 ? life>7 ? 86400000*3 : 86400000 : 86400000/2;
+		if(now-A.getl(K.CRON) < recheck) return;
+		final String dir = A.sdcardDir();
+		if(dir == null) return;
+		final String prefix  = Conf.REC_PREFIX;
+		final String extprf  = Conf.PRF_EXT;
+		final long threshold = now - ((long)life)*86400000;
+		File[] found = new File(dir).listFiles(new FileFilter() {
+			@Override
+			public boolean accept(File f) {
+				final String name = f.getName();
+				return name.startsWith(prefix) && !name.endsWith(extprf) && !name.endsWith(".txt") && f.lastModified()<threshold;
+			}
+		});
+		for(File f : found) f.delete();
+		A.putc(K.CRON, now);
 	}
 
 	//---- public Service override
@@ -147,11 +173,16 @@ public class RecService extends Service
 			notifIntent = PendingIntent.getService(ctx, 0, new Intent(ctx, RecService.class), 0);
 			notif       = new Notification();
 			notif.flags = Notification.FLAG_ONGOING_EVENT|Notification.FLAG_NO_CLEAR;
+			notifTitle  = A.s(R.string.msg_rec_title);
 		}
-		final boolean started = rec.isStarted();
-		notif.icon = started? R.drawable.ic_rec_bar : R.drawable.ic_bar;
+		if(rec.isStarted()) {
+			notif.icon = R.drawable.ic_rec_bar;
+			notif.setLatestEventInfo(ctx, notifTitle, A.s(R.string.msg_rec_stop), notifIntent);
+		} else {
+			notif.icon = R.drawable.ic_bar;
+			notif.setLatestEventInfo(ctx, notifTitle, A.s(R.string.msg_rec_start), notifIntent);
+		}
 		notif.when = A.now();
-		notif.setLatestEventInfo(ctx, A.s(R.string.msg_rec_title), A.s(started? R.string.msg_rec_stop : R.string.msg_rec_start), notifIntent);
 		A.notifyCanc();
 		A.notifMan().notify(NID, notif);
 	}
@@ -173,6 +204,7 @@ public class RecService extends Service
 			pl.speakerListener = null;
 		else
 			pl.speakerListener = new SpeakerListener() {
+				@Override
 				public void onSpeakerChanged(boolean enabled) {
 					if(enabled) { if(autoStartSpeaker) recStartAuto(); }
 					else        { if(autoStopSpeaker ) recStopAuto (); }
@@ -188,7 +220,7 @@ public class RecService extends Service
 				if(A.empty(rec.suffix)) {
 					if(pl == null) { stopService(); return; }
 					rec.suffix = Conf.REC_SEP + (pl.isOutgoing()? "out" : "in");
-					final String s = pl.callNumber();
+					final String s = pl.phoneNumber();
 					if(!A.empty(s)) rec.suffix += Conf.REC_SEP + A.cleanFn(s,true);
 				}
 				rec.start();
@@ -204,8 +236,7 @@ public class RecService extends Service
 				notifyStatus();
 			}
 		};
-		if(autoStopLimit <= 0) { taskRecLimit = null; return; }
-		taskRecLimit = new Task() {
+		taskRecLimit = autoStopLimit<=0? null : new Task(){
 			@Override
 			public void run() {
 				if(rec==null || !rec.isStarted()) return;
@@ -219,7 +250,7 @@ public class RecService extends Service
 	private static void autoInit() {
 		autoStart     = A.is(K.REC_START);
 		autoStop      = A.is(K.REC_STOP);
-	  autoStopLimit = !A.isFull()? Conf.REC_FREE_LIMIT : (autoStop? A.geti(K.REC_STOP_LIMIT)*60000 : 0);
+	  autoStopLimit = A.isFull()? autoStop? A.geti(K.REC_STOP_LIMIT)*60000 : 0 : Conf.REC_FREE_LIMIT;
 	  // setup auto start
 		if(!autoStart)
 			noAutoStart();

@@ -39,30 +39,12 @@ public class GeneralActivity extends ScreenActivity
 			return false;
 		}});
 
-		on(K.RESET_PREFS, new Click(){ public boolean on(){
-			A.alert(
-				A.rawstr(R.raw.reset),
-				new A.Click(){ public void on(){
-					final boolean agree = A.is(K.AGREE);
-					final String    ver = A.gets(K.VER);
-					final int   btcount = A.geti(K.BT_COUNT);
-					A.edit().clear();
-					P.setDefaults();
-					setChecked(K.ENABLED, A.isEnabled());
-					updateScreenPrefs();
-					A.put(K.AGREE,agree).put(K.VER,ver).putc(K.BT_COUNT,btcount);
-				}},
-				null
-			);
-			return true;
-		}});
-
-		on(K.PRF, new Click(){ public boolean on(){
+		on("profile", new Click(){ public boolean on(){
 			startActivity(new Intent(A.app(), ProfileActivity.class));
 			return true;
 		}});
 
-		on(K.BACKUP_PREFS, new Click(){ public boolean on(){
+		on("backup_prefs", new Click(){ public boolean on(){
 			A.alert(
 				A.s(R.string.msg_backup_prefs),
 				new A.Click(){ public void on(){
@@ -84,8 +66,26 @@ public class GeneralActivity extends ScreenActivity
 			);
 			return true;
 		}});
+
+		on("reset_prefs", new Click(){ public boolean on(){
+			A.alert(
+				A.rawstr(R.raw.reset),
+				new A.Click(){ public void on(){
+					final boolean agree = A.is(K.AGREE);
+					final String    ver = A.gets(K.VER);
+					final int   btcount = A.geti(K.BT_COUNT);
+					A.edit().clear();
+					P.setDefaults();
+					setChecked(K.ENABLED, A.isEnabled());
+					updateScreenPrefs();
+					A.put(K.AGREE,agree).put(K.VER,ver).putc(K.BT_COUNT,btcount);
+				}},
+				null
+			);
+			return true;
+		}});
 	}
 
-	private void updateScreenPrefs() { updatePrefs(K.SKIP_HEADSET, K.FORCE_BT_AUDIO, K.REVERSE_PROXIMITY); }
+	private void updateScreenPrefs() { updatePrefs(K.FORCE_BT_AUDIO, K.REVERSE_PROXIMITY); }
 
 }

@@ -35,11 +35,14 @@
 	  <CheckBoxPreference android:title="@string/bt_reverse_title"
 	                      android:summary="@string/bt_reverse_sum"
 	                      android:key="bt_reverse" />
-	  <cri.sanity.PrefList android:title="@string/bt_reverse_timeout_title"
-	                       android:summary="@string/bt_reverse_timeout_sum"
-	                       android:dependency="bt_reverse"
-	                       android:key="bt_reverse_timeout_s"
-	                       android:entries="@array/bt_reverse_timeout_labels"
-	                       android:entryValues="@array/bt_reverse_timeout_values" />
+	  <cri.sanity.pref.PList android:title="@string/bt_reverse_timeout_title"
+	                         android:summary="@string/bt_reverse_timeout_sum"
+	                         android:dependency="bt_reverse"
+	                         android:key="bt_reverse_timeout_s"
+	                         android:entries="@array/bt_reverse_timeout_labels"
+	                         android:entryValues="@array/bt_reverse_timeout_values" />
+	  <CheckBoxPreference android:title="@string/bt_off_title"
+	                      android:summary="@string/bt_off_sum"
+	                      android:key="bt_off" />
   </PreferenceCategory>
 </PreferenceScreen>

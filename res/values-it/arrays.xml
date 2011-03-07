@@ -11,7 +11,7 @@
 		<item>3 minuti</item>
 		<item>4 minuti</item>
 		<item>5 minuti</item>
-		<item>Sempre acceso</item>
+		<item>Spegni a fine chiamata</item>
 	</string-array>
 
 	<string-array name="disable_delay_labels">
@@ -117,6 +117,54 @@
 		<item>Non intervenire</item>
 		<item>Arresta se le cuffie sono connesse</item>
 		<item>Arresta se le cuffie NON sono connesse</item>
+	</string-array>
+
+	<string-array name="rec_autoremove_labels">
+		<item>Non rimuovere</item>
+		<item>1 giorno</item>
+		<item>2 giorni</item>
+		<item>3 giorni</item>
+		<item>7 giorni</item>
+		<item>14 giorni</item>
+		<item>30 giorni</item>
+		<item>60 giorni</item>
+		<item>90 giorni</item>
+	</string-array>
+
+	<string-array name="filter_mode_labels">
+		<item>Includi la lista, escludi gli altri numeri</item>
+		<item>Escludi la lista, includi gli altri numeri</item>
+	</string-array>
+
+	<string-array name="tts_tone_labels">
+		<item>Non intervenire</item>
+		<item>Altissimo</item>
+		<item>Alto</item>
+		<item>Medio</item>
+		<item>Basso</item>
+		<item>Bassissimo</item>
+	</string-array>
+
+	<string-array name="tts_repeat_labels">
+		<item>1 volta</item>
+		<item>2 volte</item>
+		<item>3 volte</item>
+		<item>4 volte</item>
+		<item>5 volte</item>
+		<item>6 volte</item>
+		<item>7 volte</item>
+		<item>8 volte</item>
+		<item>9 volte</item>
+		<item>10 volte</item>
+		<item>Sempre</item>
+	</string-array>
+
+	<string-array name="tts_pause_labels">
+		<item>Brevissima</item>
+		<item>Breve</item>
+		<item>Media</item>
+		<item>Lunga</item>
+		<item>Lunghissima</item>
 	</string-array>
 
 </resources>

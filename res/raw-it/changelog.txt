@@ -1,22 +1,31 @@
+Versione 2.00:
+- Nuovo: opzioni per annunciare il nome del chiamante quando il telefono squilla (text to speech).
+- Nuovo: avvia la registrazione automatica filtrando il numero di telefono.
+- Nuovo: opzione per spegnere sempre il Bluetooth a fine chiamata.
+- Fix: bug nell'accensione e spegnimento dei dispositivi.
+- Fix: bug nell'aggiornamento da una vecchia versione.
+- Modifica: migliorie minori.
+- Modifica: l'opzione "Evita se uso le cuffie" è stata rimossa.
+
 Versione 1.99:
 - Nuovo: opzione per accendere il bluetooth a inizio chiamata (utile per connettere automaticamente le cuffie bluetooth).
 - Fix: vari bug.
 
 Versione 1.98:
 - Nuovo: puoi creare le scelte rapide di Sanity nello schermo Home.
-- Nuovo: sistema di profili (nella sezione "Generale") per cambiare velocemente le preferenze.
+- Nuovo: sistema di profili per cambiare velocemente le preferenze.
 - Fix: vari bug.
 - Modifica: migliorie minori all'interfaccia utente.
 
 Versione 1.97:
 - Nuovo: opzione per limitare le registrazioni automatiche solo su chiamate ricevute o effettuate.
 - Nuovo: opzioni per limitare il vivavoce automatico.
-- Fix: bug nelle opzioni del registratore (introdotto nella versione 1.96).
+- Fix: bug nelle opzioni del registratore.
 - Modifica: migliorie minori.
 
 Versione 1.96:
 - Nuovo: l'opzione del vivavoce "Abilita a inizio chiamata" può essere filtrata per chiamate ricevute ed effettuate.
-- Nuovo: backup e ripristino delle preferenze nella memory card (nella sezione "Generale").
+- Nuovo: backup e ripristino delle preferenze nella memory card.
 - Modifica: migliorie minori all'interfaccia utente.
  
 Versione 1.95:
@@ -45,7 +54,7 @@ Versione 1.91
 
 Versione 1.9
 - Nuovo: opzioni per la registrazione automatica delle telefonate.
-- Nuovo: opzione per la vibrazione al termine della chiamata (nella sezione "Notifica").
+- Nuovo: opzione per la vibrazione al termine della chiamata.
 - Nuovo: traduzione in spagnolo di LuiSKdT&AnA da Mallorca-Spagna.
 - Fix: il numero di telefono dell'interlocutore viene salvato correttamente nelle registrazioni.
 - Modifica: migliorie all'archivio delle registrazioni.

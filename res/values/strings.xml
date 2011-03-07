@@ -21,19 +21,26 @@
 	<string name="addnew">New</string>
 	<string name="open">Open</string>
 	<string name="saveas">Save</string>
+	<string name="change">Modify</string>
 	<string name="del">Delete</string>
 	<string name="selall">Select all</string>
 	<string name="selnone">Deselect all</string>
 	<string name="full_only">Available only in the Donate version</string>
 	<string name="call_in">incoming</string>
 	<string name="call_out">outgoing</string>
-	<string name="unknown">unknown</string>
+	<string name="unknown">Unknown</string>
+	<string name="anonym">Anonymous</string>
 	<string name="help">Help</string>
 	<string name="backup">Backup</string>
 	<string name="restore">Restore</string>
 	<string name="show">Show</string>
 	<string name="active">Active</string>
 	<string name="disactive">Disactive</string>
+	<string name="prefix">Prefix</string>
+	<string name="suffix">Suffix</string>
+	<string name="starred">Favourite</string>
+	<string name="sysgroup">system group</string>
+  <string name="announce">Announcement</string>
 
   <string name="groups_cat">Preferences</string>
   <string name="misc_cat">Miscellaneous</string>
@@ -43,8 +50,6 @@
   <string name="general_sum">Application main options.</string>
   <string name="enabled_title">Enable Sanity</string>
   <string name="enabled_sum">Enable or disable whole Sanity sytem. If disabled, this application won\'t affect phone calls.</string>
-  <string name="skip_headset_title">Skip if headsets are used</string>
-  <string name="skip_headset_sum">Disable automatic handling of devices and handsfree when headsets (wired or wireless) are connected.</string>
   <string name="force_bt_audio_title">Force BT audio</string>
   <string name="force_bt_audio_sum">Force bluetooth audio device to be correctly handled by Sanity.</string>
   <string name="reverse_proximity_title">Reverse proximity</string>
@@ -57,7 +62,7 @@
 	<string name="profile_sum">Manage settings profiles to quickly change more preferences in one fell swoop.</string>
 	<string name="profile_shortcut">Activate Profile</string>
 
-  <string name="devices_cat">Devices to disable</string>
+  <string name="devices_cat">Devices</string>
   <string name="devices_sum">Which devices should be disabled for reducing electromagnetic waves during a call.</string>
   <string name="devices_rules_cat">Exceptions</string>
   <string name="gps_title">Turn off GPS</string>
@@ -80,8 +85,10 @@
 	<string name="bt_reverse_sum">Turn on Bluetooth when call starts. This can be helpful for automatic Bluetooth headsets connection.</string>
 	<string name="bt_reverse_timeout_title">Bluetooth Timeout</string>
 	<string name="bt_reverse_timeout_sum">Timeout for turning off Bluetooth if no headsets were connected.</string>
+	<string name="bt_off_title">Always turn BT off</string>
+	<string name="bt_off_sum">In all cases Bluetooth will be turned off when call ends.</string>
 
-	<string name="proximity_cat">Proximity disabling</string>
+	<string name="proximity_cat">Proximity</string>
 	<string name="proximity_sum">Options for enabling and disabling devices during a call by checking proximity sensor.</string>
   <string name="disable_proximity_title">Turn off in proximity</string>
   <string name="disable_proximity_sum">Turn OFF devices only when the phone is close to your ear. (If disabled, turn off when call start.)</string>
@@ -171,11 +178,36 @@
 	<string name="rec_stop_headset_sum">Headset rules about automatic stop audio recording.</string>
 	<string name="rec_stop_limit_title">Time limit</string>
 	<string name="rec_stop_limit_sum">Choose the maximum duration of one audio recording. Sanity will stop the recording after this time.</string>
+	<string name="rec_autoremove_title">Automatic removal</string>
+	<string name="rec_autoremove_sum">Automatically remove the old recordings. Choose how long to keep the recordings.</string>
 	<string name="rec_shortcut">Record Call</string>
-	<!-- 
-	<string name="rec_start_all_title">All calls</string>
-	<string name="rec_start_all_sum">Automatic start audio recording for every phone calls.</string>
-	-->
+
+	<string name="tts_cat">Announce caller</string>
+	<string name="tts_sum">Speak the name of the caller when receiving a call (while the phone is ringing).</string>
+	<string name="tts_enable_title">Enable Announce</string>
+	<string name="tts_enable_sum">Speak the caller\'s name when a call is received (while the phone rings).</string>
+	<string name="tts_global_title">Global settings</string>
+	<string name="tts_global_sum">Tap here to open the Android global settings about the \"text to speech\" engine.</string>
+	<string name="tts_audio_cat">Audio options</string>
+	<string name="tts_headset_title">Headset only</string>
+	<string name="tts_headset_sum">Enable announce only if the headsets are connected.</string>
+	<string name="tts_solo_title">Mute ringtone</string>
+	<string name="tts_solo_sum">Mute the ringtone when announcing the caller\'s name.</string>
+	<string name="tts_vol_sum">Choose the volume level used to announce.</string>
+	<string name="tts_tone_title">Voice tone</string>
+	<string name="tts_tone_sum">Choose the voice tone for announcing the caller\'s name.</string>
+	<string name="tts_how_cat">Repeat and pause the announce</string>
+	<string name="tts_repeat_title">Repeat</string>
+	<string name="tts_repeat_sum">How many times the caller\'s name will be spoken when ringing.</string>
+	<string name="tts_pause_title">Pause between repeats</string>
+	<string name="tts_pause_sum">How long to wait before announcing again the caller\'s name.</string>
+	<string name="tts_what_cat">What to announce</string>
+	<string name="tts_prefix_sum">Choose what to speak BEFORE the caller\'s name.</string>
+	<string name="tts_suffix_sum">Choose what to speak AFTER the caller\'s name.</string>
+	<string name="tts_anonym_sum">Type the word \"Anonymous\" in your language to announce anonymous calls.</string>
+	<string name="tts_unknown_sum">Type the word \"Unknown\" in your language to announce caller is not in contacts.</string>
+	<string name="tts_test_title">Test</string>
+	<string name="tts_test_sum">Tap here to try announcing using current options.</string>
 
   <string name="notify_cat">Notification</string>
   <string name="notify_sum">Choose when Sanity should show notifications.</string>
@@ -205,28 +237,33 @@
   <string name="eula_title">License GNU GPL v3</string>
   <string name="eula_sum">Tap here to open the official web site of the GNU General Public License version 3.</string>
   <string name="paypal_title">PayPal donate</string>
-  <string name="paypal_sum">For supporting Sanity, you can donate the money amount you prefer using PayPal. Tap here to open PayPal site.</string>
+  <string name="paypal_sum">For supporting Sanity, you can donate any amount of money using PayPal. Tap here to open PayPal site.</string>
 
-	<string name="callfilter_cat">Call number filter</string>
-	<string name="callfilter_sum">Choose the call numbers for applying the action.</string>
-	<string name="callfilter_enable_title">Enable filter</string>
-	<string name="callfilter_enable_sum">Enable call number filtering. If the filter is disabled, every call number will be included.</string>
-	<string name="callfilter_ord_title">Order of rules</string>
-	<string name="callfilter_ord_sum">Choose the order to apply rules for including and excluding numbers.</string>
-	<string name="callfilter_inc_cat">Include call numbers</string>
-	<string name="callfilter_exc_cat">Exclude call numbers</string>
-	<string name="callfilter_anonym_title">Anonymous</string>
-	<string name="callfilter_inc_anonym_sum">Include anonymous call numbers.</string>
-	<string name="callfilter_exc_anonym_sum">Exclude anonymous call numbers.</string>
-	<string name="callfilter_all_title">All numbers</string>
-	<string name="callfilter_inc_all_sum">Include all call numbers.</string>
-	<string name="callfilter_exc_all_sum">Exclude all call numbers.</string>
-	<string name="callfilter_allcontacts_title">All contacts</string>
-	<string name="callfilter_inc_allcontacts_sum">Include all phone contacts.</string>
-	<string name="callfilter_exc_allcontacts_sum">Exclude all phone contacts.</string>
-	<string name="callfilter_contacts_title">Contacts</string>
-	<string name="callfilter_inc_contacts_sum">Choose the phone contacts to include.</string>
-	<string name="callfilter_exc_contacts_sum">Choose the phone contacts to exclude.</string>
+	<string name="filter_cat">Call filter</string>
+	<string name="filter_sum">Choose the phone numbers for applying the action.</string>
+	<string name="filter_enable_title">Enable filtering</string>
+	<string name="filter_enable_sum">Enable phone number filtering.</string>
+	<string name="filter_mode_title">Filter mode</string>
+	<string name="filter_mode_sum">Choose to include or exclude the phone numbers in the following list.</string>
+	<string name="filter_list_cat">List of phone numbers</string>
+	<string name="filter_all_title">All numbers</string>
+	<string name="filter_all_sum">All phone numbers.</string>
+	<string name="filter_anonym_title">Anonymous</string>
+	<string name="filter_anonym_sum">All anonymous phone numbers.</string>
+	<string name="filter_unknown_title">All unknowns</string>
+	<string name="filter_unknown_sum">All non-anonymous unknown phone numbers (don\'t stored  in contacts).</string>
+	<string name="filter_nums_title">User list</string>
+	<string name="filter_nums_sum">List of phone numbers don\'t stored in contacts.</string>
+	<string name="filter_allcontacts_title">All contacts</string>
+	<string name="filter_allcontacts_sum">All phone numbers in contacts.</string>
+	<string name="filter_contacts_title">Contacts list</string>
+	<string name="filter_contacts_sum">Choose the phone contacts in this list.</string>
+	<string name="filter_star_title">All favourites</string>
+	<string name="filter_star_sum">All contacts you tagged as favourites.</string>
+	<string name="filter_groups_title">Groups list</string>
+	<string name="filter_groups_sum">Choose the groups of contacts in this list.</string>
+	<string name="filter_shortcut_rec">Call filter - Recorder</string>
+	<string name="filter_shortcut_tts">Call filter - Announce caller</string>
 
   <string name="donate_title">Donate</string>
   <string name="donate_sum">Sanity is free. If you like this application, support the development with a donation.</string>
@@ -242,23 +279,21 @@
   <string name="ask_prf_addnew">The current preferences are already saved in the active profile.\n\nWould you really create a new profile?</string>
   <string name="ask_prf_saveas">Would you SAVE all current preferences to the profile \"%s\"? All profile preferences will be overwritten.</string>
   <string name="ask_prf_delete">Would you really DELETE the profile \"%s\"?</string>
-  <string name="ask_del_one">Are you sure to DELETE the selected file?</string>
-  <string name="ask_del_all">Are you sure to DELETE all %s selected files?</string>
+  <string name="ask_del_one">Are you sure to DELETE the selected item?</string>
+  <string name="ask_del_all">Are you sure to DELETE all %s selected items?</string>
+  <string name="ask_canc_all">Are you sure to CANCEL all changes?</string>
 
-  <string name="msg_dir_err">Sanity error: unable to create directory on sdcard for saving audio recording!</string>
-  <string name="msg_rec_err">Sanity error: unable to start audio recording!</string>
   <string name="msg_rec_title">Sanity - Recorder</string>
   <string name="msg_rec_start">Tap here to START call recording</string>
   <string name="msg_rec_stop">Tap here to STOP call recording</string>
   <string name="msg_rec_go">Sanity: start recording.</string>
   <string name="msg_rec_limit">Sanity: stop recording.</string>
   <string name="msg_rec_free_limit">Sanity: 2 minutes limit reached, recording is stopped.</string>
-  <string name="msg_rec_scan_err">Error while changing scanner properties: permission denied on file \"%s\"</string>
   <string name="msg_rec_empty">There are no audio files of call records. Start a call record to see its audio file here.</string>
   <string name="msg_rec_no">Sanity: action canceled, the recording system is not running.</string>
   <string name="msg_rec_file">Choose what to do with this audio file.</string>
-  <string name="msg_del_err">Error: delete failed for %s files!</string>
-  <string name="msg_selected_all">%s files selected</string>
+  <string name="msg_selected_all">%s items selected</string>
+  <string name="msg_items">%s items</string>
 	<string name="msg_require_froyo">This option requires at least Android version 2.2 (Froyo). Sorry, your phone has Android 2.1 (Eclair).</string>
   <string name="msg_devs_enabled">Sanity: devices enabled</string>
   <string name="msg_devs_disabled">Sanity: devices disabled</string>
@@ -275,13 +310,23 @@
   <string name="msg_prf_nosel">No profile is selected!</string>
   <string name="msg_prf_restore_ok">Sanity: profile \"%s\" is active</string>
   <string name="msg_prf_restore_err">Sanity: unable to activate profile \"%s\"!</string>
-  <string name="msg_err_name">Error: invalid name!</string>
-  <string name="msg_err_rename">Error: unable to rename file!</string>
+  <string name="msg_nums_edit">Phone number</string>
+  <string name="msg_empty_list">There aren\'t entries in this list. Use menu to create new ones.</string>
   <string name="msg_last_modified">Last modified</string>
-  <string name="msg_exists_err">Action canceled: \"%s\" already exists</string>
-  <string name="msg_market_err">Unable to open Market! Check Market application is rightly installed.</string>
   <string name="msg_email_choose">Choose how to send email</string>
   <string name="msg_email_body">Hello Cristiano!</string>
   <string name="msg_eula_title">Software license agreement</string>
+  <string name="msg_option_full">Sorry, this option is available only in the Donate version.</string>
+
+  <string name="err_dir">Sanity error: unable to create directory on sdcard for saving audio recording!</string>
+  <string name="err_rec">Sanity error: unable to start audio recording!</string>
+  <string name="err_scan">Error while changing scanner properties: permission denied on file \"%s\"</string>
+  <string name="err_name">Error: invalid name!</string>
+  <string name="err_rename">Error: unable to rename file!</string>
+  <string name="err_del">Error: delete failed for %s files!</string>
+  <string name="err_exists">Action canceled: \"%s\" already exists</string>
+  <string name="err_market">Unable to open Market! Check Market application is rightly installed.</string>
+	<string name="err_tts_init">Sanity error: unable to initialize TTS engine!</string>
+	<string name="err_tts_lang">Sanity error: your language isn\'t supported by TTS engine!</string>
 
 </resources>

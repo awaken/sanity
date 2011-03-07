@@ -2,6 +2,7 @@ package cri.sanity.screen;
 
 import cri.sanity.*;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.util.Comparator;
 import java.util.Stack;
 import java.util.Arrays;
@@ -30,7 +31,7 @@ public class BrowseActivity extends ScreenActivity
 	private static final int  PREFIX_LEN = PREFIX.length();
 	private static final String IN       = " ("+A.s(R.string.call_in)+')';
 	private static final String OUT      = " ("+A.s(R.string.call_out)+')';
-	private static final String UNKNOWN  = A.s(R.string.unknown);
+	private static final String ANONYM   = A.s(R.string.anonym);
 	private static final ContentResolver resolver = A.resolver();
 	private static final String[] projection = new String[]{ PhoneLookup.DISPLAY_NAME };
 
@@ -47,25 +48,24 @@ public class BrowseActivity extends ScreenActivity
 		skipAllKeys = true;
 		screener(BrowseActivity.class, R.xml.prefs_browse, R.layout.img_browse);
 		super.onCreate(savedInstanceState);
-		prefGroup = (PreferenceCategory)pref(K.REC_BROWSE);
+		prefGroup = (PreferenceCategory)pref("rec_browse");
 		dir = A.sdcardDir();
 		if(dir == null) {
-			empty(R.string.err, R.string.msg_dir_err);
+			empty(R.string.err, R.string.err_dir);
 			return;
 		}
-		String[] recs = new File(dir).list();
-		if(recs.length <= 0) {
-			empty(); 
-			return; 
-		}
+		String[] recs = new File(dir).list(new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String fn) {
+				return fn.startsWith(PREFIX) && !fn.endsWith(".txt") && !fn.endsWith(Conf.PRF_EXT);
+			}
+		});
+		if(recs.length <= 0) { empty(); return; }
 		Arrays.sort(recs, 0, recs.length, new Comparator<String>() {
 			public int compare(String s1, String s2) { return s2.compareTo(s1); }
 		});
-		for(String fn : recs) {
-			if(!fn.startsWith(PREFIX) || fn.endsWith(".txt") || fn.endsWith(".prf")) continue;
+		for(String fn : recs)
 			prefGroup.addPreference(new Pref(fn));
-		}
-		if(prefGroup.getPreferenceCount() <= 0) empty();
 	}
 
 	@Override
@@ -82,10 +82,10 @@ public class BrowseActivity extends ScreenActivity
 	{
 		if(empty) return super.onOptionsItemSelected(item);
 		switch(item.getItemId()) {
-			case R.id.browse_open   : open();    break;
-			case R.id.browse_del    : delete();  break;
-			case R.id.browse_selall : selall();  break;
-			case R.id.browse_selnone: selnone(); break;
+			case R.id.open   : open();    break;
+			case R.id.del    : delete();  break;
+			case R.id.selall : selall();  break;
+			case R.id.selnone: selnone(); break;
 			default: return super.onOptionsItemSelected(item);
 		}
 		return true;
@@ -127,7 +127,7 @@ public class BrowseActivity extends ScreenActivity
 				@SuppressWarnings("unchecked")
 				public void on() {
 					int err = 0;
-					for(final Pref p : (Stack<Pref>)selected.clone()) {
+					for(Pref p : (Stack<Pref>)selected.clone()) {
 						if(!new File(dir,p.fn).delete())
 							++err;
 						else {
@@ -135,7 +135,7 @@ public class BrowseActivity extends ScreenActivity
 							selected.remove(p);
 						}
 					}
-					if(err > 0) A.alert(String.format(A.s(R.string.msg_del_err), err+""));
+					if(err > 0) A.alert(String.format(A.s(R.string.err_del), err+""));
 				}
 			},
 			null,
@@ -159,8 +159,7 @@ public class BrowseActivity extends ScreenActivity
 	
 	private void selnone()
 	{
-		for(final Pref p : selected)
-			p.setChecked(false);
+		for(Pref p : selected) p.setChecked(false);
 		selected.clear();
 	}
 
@@ -199,7 +198,7 @@ public class BrowseActivity extends ScreenActivity
 			String sum;
 			final int n = fnSplit.length;
 			if(n<=2 || A.empty(fnSplit[2]))
-				sum = UNKNOWN+SEP_SUM+ext;
+				sum = ANONYM+SEP_SUM+ext;
 			else {
 				String num;
 				if(n > 3) {
@@ -211,7 +210,7 @@ public class BrowseActivity extends ScreenActivity
 					if(!num.equals("in") && !num.equals("out"))
 						sum = new String(num);										// Sanity versions prior to 1.93 have no "in" or "out" in filename!
 					else {
-						sum = UNKNOWN + (num.equals("in") ? IN : OUT);
+						sum = ANONYM + (num.equals("in") ? IN : OUT);
 						num = "";
 					}
 				}
@@ -232,6 +231,7 @@ public class BrowseActivity extends ScreenActivity
 			setOnPreferenceChangeListener(this);
 		}
 
+		@Override
 		public boolean onPreferenceChange(Preference p, Object v) {
 			if((Boolean)v) selected.push(this);
 			else           selected.remove(this);

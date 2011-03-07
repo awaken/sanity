@@ -2,6 +2,7 @@ package cri.sanity;
 
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -97,6 +98,17 @@ public abstract class PrefActivity extends PreferenceActivity
 	public final void on(Preference p, Click click, Change change) {
 		p.setOnPreferenceClickListener(click);
 		p.setOnPreferenceChangeListener(change);
+	}
+
+	public final void fullOnly(Preference ... prefs) { for(Preference p : prefs) fullOnly(p); }
+	public final void fullOnly(String     ... keys ) { for(String     k : keys ) fullOnly(k); }
+	public final void fullOnly(String         key  ) { fullOnly(pref(key)); }
+	public final void fullOnly(Preference p) {
+		if(A.isFull()) return;
+		if(p instanceof CheckBoxPreference || p instanceof ListPreference || p instanceof EditTextPreference)
+			on(p, new Change(){ public boolean on(){ A.alert(A.s(R.string.msg_option_full)); return false; }});
+		else
+			on(p, new Click(){ public boolean on(){ A.alert(A.s(R.string.msg_option_full)); return true ; }});
 	}
 
 }
