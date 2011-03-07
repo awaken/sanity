@@ -92,7 +92,7 @@ public class TTS implements OnInitListener, OnUtteranceCompletedListener
 			tts.speak      (id   , TextToSpeech.QUEUE_ADD, pars);
 		}
 		else if(solo)
-			Dev.mute(Dev.VOL_RING, solo = false);
+			new Task(){ public void run(){ Dev.mute(Dev.VOL_RING, solo = false); }}.exec(100);
 	}
 
 }

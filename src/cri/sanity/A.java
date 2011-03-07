@@ -131,7 +131,11 @@ public final class A extends Application
 	public static final ContentResolver      resolver() { if(ctxRes==null) ctxRes=a.getContentResolver(); return ctxRes; }
 	//public static final PackageInfo           pkgInfo() { return pkgInfo; }
 	public static final String                    ver() { return pkgInfo.versionName; }
-	public static final String               fullName() { return name + "  v" + ver() + (isBeta()? " beta "+Conf.BETA : ""); }
+	public static final String               fullName() {
+		String v = name + "  v" + ver();
+		if(Conf.BETA > 0) { v += " beta "; if(Conf.BETA > 1) v += Conf.BETA; }
+		return v;
+	}
 
 	// log
 	//public static final int logd(Object o, String method) { return Log.d(name, o.getClass().getSimpleName()+'.'+method); }

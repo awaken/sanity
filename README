@@ -18,6 +18,9 @@ An Android application to assist during phone calls.
   Change log
 -------------------
 
+* version 2.01  (07/03/2011)
+- Fix: the caller was always announced.
+
 * version 2.00  (07/03/2011)
 - New: options to announce the caller's name when phone is ringing (text to speech).
 - New: start recording automatically filtering out the phone number.

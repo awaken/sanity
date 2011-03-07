@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 		      package="cri.sanity" android:installLocation="auto"
-		      android:versionCode="35" android:versionName="2.00">
+		      android:versionCode="37" android:versionName="2.01">
 
   <application android:icon="@drawable/ic_app"
                android:label="@string/app"

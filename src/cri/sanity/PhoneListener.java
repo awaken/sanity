@@ -180,9 +180,9 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 	private void onRinging()
 	{
 		//A.logd("onRinging");
-		outgoing = false;
+		outgoing    = false;
 		phoneNumber = PhoneReceiver.number;
-		if(headsetOn || (!A.is(K.TTS_HEADSET) && Dev.isRingOn()))
+		if(A.is(K.TTS) && (headsetOn || (!A.is(K.TTS_HEADSET) && Dev.isRingOn())))
 			tts = new TTS(phoneNumber, true);
 		btReverse();
 	}
@@ -219,6 +219,7 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 		if(offhook && !headsetOn && A.is(K.SPEAKER_SILENT_END)) Dev.enableSpeaker(false);
 		unregProximity();
 		unregHeadset();
+		if(tts != null) { tts.shutdown(); tts = null; }
 		if(rec) RecService.stop();
 		Task.stopAll();
 		//final Task.Pool pool = Task.shutdown();
@@ -231,7 +232,6 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 			if(A.is(K.VIBRATE_END)) A.vibrate();
 		}
 		if((btReverse || A.is(K.BT_OFF)) && Dev.isBtOn()) Dev.enableBt(false);
-		if(tts != null) { tts.shutdown(); tts = null; }
 		Dev.restoreScreenTimeout();
 		if(rec) RecService.cron();
 		CallFilter.shutdown();

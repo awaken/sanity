@@ -1,3 +1,6 @@
+Version 2.01:
+- Fix: il chiamante veniva sempre annunciato.
+
 Versione 2.00:
 - Nuovo: opzioni per annunciare il nome del chiamante quando il telefono squilla (text to speech).
 - Nuovo: avvia la registrazione automatica filtrando il numero di telefono.

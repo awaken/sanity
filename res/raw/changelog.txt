@@ -1,3 +1,6 @@
+Version 2.01:
+- Fix: the caller was always announced.
+ 
 Version 2.00:
 - New: options to announce the caller's name when phone is ringing (text to speech).
 - New: start recording automatically filtering out the phone number.
