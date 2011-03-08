@@ -167,4 +167,10 @@
 		<item>Más largo</item>
 	</string-array>
 
+	<string-array name="block_mode_labels">
+		<item>Colgar</item>
+		<item>Interrupción de la señal</item>
+		<item>Modo silencioso</item>
+	</string-array>
+
 </resources>

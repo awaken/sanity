@@ -177,17 +177,21 @@
 	<string name="rec_stop_limit_sum">Scegli la massima durata per una singola registrazione audio. Sanity arresterà la registrazione quando raggiunge questa durata.</string>
 	<string name="rec_autoremove_title">Rimozione automatica</string>
 	<string name="rec_autoremove_sum">Cancella automaticamente le vecchie registrazioni. Scegli per quanto tempo conservare le registrazioni effettuate.</string>
+	<string name="rec_callscreen_title">Schermo chiamata</string>
+	<string name="rec_callscreen_sum">Mostra lo schermo della chiamata subito dopo aver avviato o arrestato la registrazione manualmente.</string>
 	<string name="rec_shortcut">Registra Chiamata</string>
 
 	<string name="tts_cat">Annuncia chiamante</string>
-	<string name="tts_sum">Pronuncia il nome del chiamante quando si riceve una chiamata (mentre il telefono squilla).</string>
-	<string name="tts_enable_title">Attiva Annuncio</string>
+	<string name="tts_sum">Pronuncia il nome del chiamante quando si riceve una chiamata.</string>
+	<string name="tts_enable_title">Attiva annuncio</string>
 	<string name="tts_enable_sum">Pronuncia il nome del chiamante quando si riceve una chiamata (mentre il telefono squilla).</string>
 	<string name="tts_global_title">Impostazioni globali</string>
 	<string name="tts_global_sum">Tocca qui per aprire le impostazioni globali di Android relative al motore \"da testo a voce\".</string>
 	<string name="tts_audio_cat">Opzioni audio</string>
 	<string name="tts_headset_title">Solo in cuffia</string>
 	<string name="tts_headset_sum">Attiva l\'annuncio solo se le cuffie sono collegate.</string>
+	<string name="tts_skip_title">Evita se silenzioso</string>
+	<string name="tts_skip_sum">Non annunciare il chiamante quando il telefono è in modalità silenziosa.</string>
 	<string name="tts_solo_title">Interrompi suoneria</string>
 	<string name="tts_solo_sum">Interrompe la suoneria quando annuncia il nome del chiamante.</string>
 	<string name="tts_vol_sum">Scegli il livello del volume usato per annunciare.</string>
@@ -205,6 +209,15 @@
 	<string name="tts_unknown_sum">Scrivi la parola \"Sconosciuto\" nella tua lingua per annunciare un chiamante non in rubrica.</string>
 	<string name="tts_test_title">Prova</string>
 	<string name="tts_test_sum">Tocca qui per provare ad annunciare usando le opzioni attuali.</string>
+
+	<string name="block_cat">Blocco chiamate</string>
+	<string name="block_sum">Blocca le chiamate in arrivo filtrando il numero di telefono del chiamante.</string>
+	<string name="block_enable_title">Abilita blocco chiamate</string>
+	<string name="block_enable_sum">Abilita il sistema di blocco chiamate per rifiutare le telefonate ricevute.</string>
+	<string name="block_skip_title">Evita se silenzioso</string>
+	<string name="block_skip_sum">Non bloccare le chiamate quando il telefono è in modalità silenziosa.</string>
+	<string name="block_mode_title">Metodo di blocco</string>
+	<string name="block_mode_sum">Scegli come bloccare le chiamate ricevute.</string>
 
   <string name="notify_cat">Notifica</string>
   <string name="notify_sum">Scegli quali notifiche visualizzare.</string>
@@ -261,6 +274,7 @@
 	<string name="filter_groups_sum">Scegli i gruppi di contatti da mettere in lista.</string>
 	<string name="filter_shortcut_rec">Filtro chiamate - Registratore</string>
 	<string name="filter_shortcut_tts">Filtro chiamate - Annuncia chiamante</string>
+	<string name="filter_shortcut_block">Filtro chiamate - Blocco chiamate</string>
 
   <string name="donate_title">Donazione</string>
   <string name="donate_sum">Sanity è gratuito. Se questa applicazione ti piace, supporta lo sviluppo con una donazione.</string>

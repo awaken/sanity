@@ -31,7 +31,7 @@ public class FilterActivity extends ScreenActivity implements OnPreferenceChange
 		sect     = i.getStringExtra(EXTRA_SECT );
 		title    = i.getStringExtra(EXTRA_TITLE);
 		if(!A.empty(title)) {
-			final Preference p = pref("filter");
+			Preference p = pref("filter");
 			p.setTitle(p.getTitle()+"  -  "+title);
 		}
 		initCheckbox("filter_enable", "filter_all", "filter_anonym", "filter_unknown", "filter_allcontacts", "filter_star");
@@ -48,6 +48,7 @@ public class FilterActivity extends ScreenActivity implements OnPreferenceChange
 		sumGroups = p.getSummary().toString();
 		setSumGroups(A.geti(keySect("filter_groups_count")), p);
 		on(p, new Click(){ public boolean on(){ return startAct(GroupsActivity.class, CODE_GROUPS); }});
+		if(sect.equals("block")) pref("filter_enable").setSelectable(false);
 	}
 
 	@Override

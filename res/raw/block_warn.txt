@@ -1,0 +1,4 @@
+WARNING: the "hang up" method doesn't work always on Android 2.3 and newers!!
+
+You can try it on your phone.
+If it doesn't work, please choose the "interrupt signal" method to block the calls.

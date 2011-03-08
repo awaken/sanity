@@ -324,4 +324,15 @@
 		<item>2000</item>
 	</string-array>
 
+	<string-array name="block_mode_labels">
+		<item>Hang up</item>
+		<item>Interrupt signal</item>
+		<item>Silent mode</item>
+	</string-array>
+	<string-array name="block_mode_values">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+
 </resources>

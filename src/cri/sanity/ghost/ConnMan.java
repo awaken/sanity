@@ -7,7 +7,7 @@ public final class ConnMan extends GhostObj
 {
 	public ConnMan() { init(A.connMan()); }
 
-	public String[] getTetheredIfaces()      { return callStrArr("getTetheredIfaces"); }
+	public String[] getTetheredIfaces()      { return callStrArr("getTetheredIfaces");      }
 	public String[] getTetherableUsbRegexs() { return callStrArr("getTetherableUsbRegexs"); }
 
 	public boolean isTetheringOn()
@@ -18,8 +18,8 @@ public final class ConnMan extends GhostObj
     final String[] regexs = getTetherableUsbRegexs();
     if(regexs==null || regexs.length<=0) return false;
 
-    for(final String iface : ifaces)
-    	for(final String regex : regexs)
+    for(String iface : ifaces)
+    	for(String regex : regexs)
     		if(iface.matches(regex)) return true;
 
     return false;

@@ -38,8 +38,8 @@ public class TTS implements OnInitListener, OnUtteranceCompletedListener
 	{
 		stop();
 		tts.shutdown();
-		if(vol >= 0) Dev.setVolume(STREAM, vol, 0);
-		if(solo) Dev.mute(Dev.VOL_RING, false);
+		if(vol >= 0) A.audioMan().setStreamVolume(STREAM, vol, 0);
+		if(solo) A.audioMan().setStreamMute(Dev.VOL_RING, false);
 	}
 	
 	public void onError() { A.notify(A.s(R.string.err_tts_init)); }
@@ -65,10 +65,10 @@ public class TTS implements OnInitListener, OnUtteranceCompletedListener
 		// volume setup
 		int vol = A.geti(K.TTS_VOL);
 		if(vol >= 0) {
-			this.vol = Dev.getVolume(STREAM);
-			Dev.setVolume(STREAM, vol);
+			this.vol = A.audioMan().getStreamVolume(STREAM);
+			A.audioMan().setStreamVolume(STREAM, vol, 0);
 		}
-		if(solo = A.is(K.TTS_SOLO)) Dev.mute(Dev.VOL_RING, true);
+		if(solo = A.is(K.TTS_SOLO)) A.audioMan().setStreamMute(Dev.VOL_RING, true);
 		// tone setup
 		final int tone = A.geti(K.TTS_TONE);
 		if(tone > 0) tts.setPitch(tone * (1f/100f));
@@ -92,7 +92,7 @@ public class TTS implements OnInitListener, OnUtteranceCompletedListener
 			tts.speak      (id   , TextToSpeech.QUEUE_ADD, pars);
 		}
 		else if(solo)
-			new Task(){ public void run(){ Dev.mute(Dev.VOL_RING, solo = false); }}.exec(100);
+			new Task(){ public void run(){ A.audioMan().setStreamMute(Dev.VOL_RING, solo = false); }}.exec(Conf.TTS_UNMUTE_DELAY);
 	}
 
 }

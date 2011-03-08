@@ -1,3 +1,11 @@
+Version 2.02:
+- Nuovo: opzioni per bloccare automaticamente le chiamate ricevute.
+- Nuovo: opzione per evitare l'annuncio quando il telefono è in modalità silenziosa.
+- Nuovo: opzione per mostrare lo schermo della chiamata subito dopo aver avviato o arrestato la registrazione manualmente.
+- Fix: bug che disabilita il blocco tasti su alcuni telefoni.
+- Fix: bug nel disabilitare la connessione dati in mobilità.
+- Fix: bug nel riconoscimento della versione donazione.
+
 Version 2.01:
 - Fix: il chiamante veniva sempre annunciato.
 

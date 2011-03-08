@@ -16,6 +16,10 @@
 	                      android:summary="@string/tts_headset_sum"
 	                      android:dependency="tts"
 	                      android:key="tts_headset" />
+	  <CheckBoxPreference android:title="@string/tts_skip_title"
+	                      android:summary="@string/tts_skip_sum"
+	                      android:dependency="tts"
+	                      android:key="tts_skip" />
 	  <CheckBoxPreference android:title="@string/tts_solo_title"
 	                      android:summary="@string/tts_solo_sum"
 	                      android:dependency="tts"

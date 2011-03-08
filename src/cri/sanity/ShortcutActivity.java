@@ -56,23 +56,26 @@ public final class ShortcutActivity extends Activity implements DialogInterface.
 
 	private void chooseShortcut() {
 		final Map<Integer,Entry> map = new HashMap<Integer,Entry>();
-		map.put(R.string.profile_shortcut   , new Entry(R.drawable.ic_prf        , EXTRA_PRF   , null));
-		map.put(R.string.profile_cat        , new Entry(R.drawable.menu_profiles , EXTRA_SCREEN, ProfileActivity.class.getName()));
-		map.put(R.string.general_cat        , new Entry(R.drawable.menu_general  , EXTRA_SCREEN, GeneralActivity.class.getName()));
-		map.put(R.string.devices_cat        , new Entry(R.drawable.menu_devices  , EXTRA_SCREEN, DevicesActivity.class.getName()));
-		map.put(R.string.proximity_cat      , new Entry(R.drawable.menu_proximity, EXTRA_SCREEN, ProximityActivity.class.getName()));
-		map.put(R.string.speaker_cat        , new Entry(R.drawable.menu_speaker  , EXTRA_SCREEN, SpeakerActivity.class.getName()));
-		map.put(R.string.vol_cat            , new Entry(R.drawable.menu_vol      , EXTRA_SCREEN, VolumeActivity.class.getName()));
-		map.put(R.string.notify_cat         , new Entry(R.drawable.menu_notify   , EXTRA_SCREEN, NotifyActivity.class.getName()));
-		map.put(R.string.rec_cat            , new Entry(R.drawable.menu_rec      , EXTRA_SCREEN, RecordActivity.class.getName()));
-		map.put(R.string.rec_shortcut       , new Entry(R.drawable.ic_rec_now    , EXTRA_REC   , null));
-		map.put(R.string.rec_browse_title   , new Entry(R.drawable.menu_browse   , EXTRA_SCREEN, BrowseActivity.class.getName()));
-		map.put(R.string.tts_cat            , new Entry(R.drawable.menu_tts      , EXTRA_SCREEN, TtsActivity.class.getName()));
-		map.put(R.string.filter_shortcut_rec, new Entry(R.drawable.menu_rec      , EXTRA_FILTER, "rec"));
-		map.put(R.string.filter_shortcut_tts, new Entry(R.drawable.menu_tts      , EXTRA_FILTER, "tts"));
+		map.put(R.string.profile_shortcut     , new Entry(R.drawable.ic_prf        , EXTRA_PRF   , null));
+		map.put(R.string.profile_cat          , new Entry(R.drawable.menu_profiles , EXTRA_SCREEN, ProfileActivity.class.getName()));
+		map.put(R.string.general_cat          , new Entry(R.drawable.menu_general  , EXTRA_SCREEN, GeneralActivity.class.getName()));
+		map.put(R.string.devices_cat          , new Entry(R.drawable.menu_devices  , EXTRA_SCREEN, DevicesActivity.class.getName()));
+		map.put(R.string.proximity_cat        , new Entry(R.drawable.menu_proximity, EXTRA_SCREEN, ProximityActivity.class.getName()));
+		map.put(R.string.speaker_cat          , new Entry(R.drawable.menu_speaker  , EXTRA_SCREEN, SpeakerActivity.class.getName()));
+		map.put(R.string.vol_cat              , new Entry(R.drawable.menu_vol      , EXTRA_SCREEN, VolumeActivity.class.getName()));
+		map.put(R.string.notify_cat           , new Entry(R.drawable.menu_notify   , EXTRA_SCREEN, NotifyActivity.class.getName()));
+		map.put(R.string.tts_cat              , new Entry(R.drawable.menu_tts      , EXTRA_SCREEN, TtsActivity.class.getName()));
+		map.put(R.string.tts_cat              , new Entry(R.drawable.menu_tts      , EXTRA_SCREEN, BlockerActivity.class.getName()));
+		map.put(R.string.rec_cat              , new Entry(R.drawable.menu_rec      , EXTRA_SCREEN, RecordActivity.class.getName()));
+		map.put(R.string.rec_shortcut         , new Entry(R.drawable.ic_rec_now    , EXTRA_REC   , null));
+		map.put(R.string.rec_browse_title     , new Entry(R.drawable.menu_browse   , EXTRA_SCREEN, BrowseActivity.class.getName()));
+		map.put(R.string.filter_shortcut_rec  , new Entry(R.drawable.menu_rec      , EXTRA_FILTER, "rec"));
+		map.put(R.string.filter_shortcut_tts  , new Entry(R.drawable.menu_tts      , EXTRA_FILTER, "tts"));
+		map.put(R.string.filter_shortcut_block, new Entry(R.drawable.menu_block    , EXTRA_FILTER, "block"));
 		final int[] items = new int[]{ R.string.profile_shortcut, R.string.profile_cat, R.string.general_cat, R.string.devices_cat,
-			R.string.proximity_cat, R.string.speaker_cat, R.string.vol_cat, R.string.notify_cat, R.string.rec_cat,
-			R.string.rec_browse_title, R.string.rec_shortcut, R.string.tts_cat, R.string.filter_shortcut_rec, R.string.filter_shortcut_tts };
+			R.string.proximity_cat, R.string.speaker_cat, R.string.vol_cat, R.string.notify_cat, R.string.block_cat, R.string.tts_cat,
+			R.string.rec_cat, R.string.rec_browse_title, R.string.rec_shortcut,
+			R.string.filter_shortcut_rec, R.string.filter_shortcut_tts, R.string.filter_shortcut_block };
 		dlg(A.s(R.string.app_shortcut), items, new Click(){ void on(int which){
     	if(!A.isFull()) { askDonate(); return; }
   		final int title = items[which];
@@ -114,9 +117,11 @@ public final class ShortcutActivity extends Activity implements DialogInterface.
 	}
 
 	private boolean execRecSrv() {
-		if(!RecService.isRunning())      A.toast(R.string.msg_rec_no);
-		else if(RecService.isRecord()) { RecService.recStop (0); A.toast(R.string.msg_rec_limit); }
-		else                           { RecService.recStart(0); A.toast(R.string.msg_rec_go   ); }
+		if(!RecService.isRunning()) { A.toast(R.string.msg_rec_no); return false; }
+		if(RecService.isRecord()) { RecService.recStop (0); A.toast(R.string.msg_rec_limit); }
+		else                      { RecService.recStart(0); A.toast(R.string.msg_rec_go   ); }
+		if(A.is(K.REC_CALLSCREEN))
+			try { Dev.iTel().showCallScreen(); } catch(Exception e) {}
 		return false;
 	}
 	

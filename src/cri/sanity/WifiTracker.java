@@ -73,11 +73,11 @@ public final class WifiTracker extends BroadcastReceiver
 				break;
 			case DISABLED:
 				if(!enable) action = ACT_NONE;
-				else { action = ACT_ENABLE; taskAction.exec(TASK_ACTION, 0); }
+				else { action = ACT_ENABLE; taskAction.exec(TASK_ACTION, Conf.TRACKER_SWITCH_DELAY); }
 				break;
 			case ENABLED:
 				if(enable) action = ACT_NONE;
-				else { action = ACT_DISABLE; taskAction.exec(TASK_ACTION, 0); }
+				else { action = ACT_DISABLE; taskAction.exec(TASK_ACTION, Conf.TRACKER_SWITCH_DELAY); }
 				break;
 			default:
 				if(!enable) action = ACT_NONE;

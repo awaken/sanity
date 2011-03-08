@@ -43,8 +43,7 @@ public class MainActivity extends ScreenActivity
    		on(p, new Click(){ public boolean on(){ return A.gotoMarketDetails(Conf.DONATE_PKG); }});
 			p = pref("screen_record");
 			p.setSummary(p.getSummary()+" "+A.s(R.string.rec_cat_sum_free));
-    }
-    else {
+    } else {
 	  	p.setEnabled(false);
 	  	p.setSelectable(false);
 	  	if(Conf.FULL) { p.setTitle(R.string.full_title   ); p.setSummary(R.string.full_sum   ); }
@@ -107,11 +106,12 @@ public class MainActivity extends ScreenActivity
 		setEnabled("screen_notify"   , enabled);
 		setEnabled("screen_record"   , enabled);
 		setEnabled("screen_tts"      , enabled);
+		setEnabled("screen_block"    , enabled);
 	}
 
 	private boolean startDonateApp() {
 		final boolean done = startService(new Intent(Conf.ACTION_DONATE)) != null;
-		if(done) A.putc(K.FULL, true);
+		if(done) A.setFull();
 		return done;
 	}
 

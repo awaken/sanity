@@ -180,17 +180,21 @@
 	<string name="rec_stop_limit_sum">Choose the maximum duration of one audio recording. Sanity will stop the recording after this time.</string>
 	<string name="rec_autoremove_title">Automatic removal</string>
 	<string name="rec_autoremove_sum">Automatically remove the old recordings. Choose how long to keep the recordings.</string>
+	<string name="rec_callscreen_title">Call screen</string>
+	<string name="rec_callscreen_sum">Show the call screen just after you manually start or stop the recording.</string>
 	<string name="rec_shortcut">Record Call</string>
 
 	<string name="tts_cat">Announce caller</string>
-	<string name="tts_sum">Speak the name of the caller when receiving a call (while the phone is ringing).</string>
-	<string name="tts_enable_title">Enable Announce</string>
+	<string name="tts_sum">Speak the name of the caller when receiving a call.</string>
+	<string name="tts_enable_title">Enable announce</string>
 	<string name="tts_enable_sum">Speak the caller\'s name when a call is received (while the phone rings).</string>
 	<string name="tts_global_title">Global settings</string>
 	<string name="tts_global_sum">Tap here to open the Android global settings about the \"text to speech\" engine.</string>
 	<string name="tts_audio_cat">Audio options</string>
 	<string name="tts_headset_title">Headset only</string>
 	<string name="tts_headset_sum">Enable announce only if the headsets are connected.</string>
+	<string name="tts_skip_title">Skip if silent</string>
+	<string name="tts_skip_sum">Don\'t announce the caller when the phone is in silent mode.</string>
 	<string name="tts_solo_title">Mute ringtone</string>
 	<string name="tts_solo_sum">Mute the ringtone when announcing the caller\'s name.</string>
 	<string name="tts_vol_sum">Choose the volume level used to announce.</string>
@@ -208,6 +212,15 @@
 	<string name="tts_unknown_sum">Type the word \"Unknown\" in your language to announce caller is not in contacts.</string>
 	<string name="tts_test_title">Test</string>
 	<string name="tts_test_sum">Tap here to try announcing using current options.</string>
+
+	<string name="block_cat">Call blocker</string>
+	<string name="block_sum">Block incoming calls filtering out the phone number of the caller.</string>
+	<string name="block_enable_title">Enable call blocker</string>
+	<string name="block_enable_sum">Enable call blocking system to refuse incoming calls.</string>
+	<string name="block_skip_title">Skip if silent</string>
+	<string name="block_skip_sum">Don\'t block incoming calls when the phone is in silent mode.</string>
+	<string name="block_mode_title">Block method</string>
+	<string name="block_mode_sum">Choose how to block incoming calls.</string>
 
   <string name="notify_cat">Notification</string>
   <string name="notify_sum">Choose when Sanity should show notifications.</string>
@@ -264,6 +277,7 @@
 	<string name="filter_groups_sum">Choose the groups of contacts in this list.</string>
 	<string name="filter_shortcut_rec">Call filter - Recorder</string>
 	<string name="filter_shortcut_tts">Call filter - Announce caller</string>
+	<string name="filter_shortcut_block">Call filter - Call blocker</string>
 
   <string name="donate_title">Donate</string>
   <string name="donate_sum">Sanity is free. If you like this application, support the development with a donation.</string>

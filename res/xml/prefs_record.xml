@@ -114,6 +114,10 @@
                            android:entries="@array/rec_autoremove_labels"
 	                         android:entryValues="@array/rec_autoremove_values"
                            android:key="rec_autoremove_s" />
+    <CheckBoxPreference android:title="@string/rec_callscreen_title"
+                        android:summary="@string/rec_callscreen_sum"
+                        android:dependency="rec"
+                        android:key="rec_callscreen" />
   </PreferenceCategory>
 
 </PreferenceScreen>

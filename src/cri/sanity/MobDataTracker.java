@@ -1,5 +1,6 @@
 package cri.sanity;
 
+import com.android.internal.telephony.ITelephony;
 //import android.provider.Settings;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
@@ -20,29 +21,32 @@ public final class MobDataTracker extends PhoneStateListener
 	private int state;
 	private int action = ACT_NONE;
 	private boolean waiter = false;
+	private ITelephony itel;
 
 	private final Task taskAction = new Task() {
 		@Override
 		public void run() {
 			synchronized(MobDataTracker.this) {
-				if(action == ACT_NONE) return;
-				A.wifiMan().setWifiEnabled(action == ACT_ENABLE);
+				try {
+					if(     action == ACT_ENABLE ) itel. enableDataConnectivity();
+					else if(action == ACT_DISABLE) itel.disableDataConnectivity();
+				} catch(Exception e) {
+					action = ACT_NONE;
+					state  = SUSPENDED;
+				}
 			}
 		}
 	};
 
 	public MobDataTracker()
 	{
-		/*
-		if(Settings.Secure.getInt(A.resolver(),"mobile_data",1) != 1)
+		itel = Dev.iTel();
+		if(itel == null)
 			state = SUSPENDED;
 		else {
-			state = A.telMan().getDataState();
+			state = ENABLED;
 			A.telMan().listen(this, LISTEN_DATA_CONNECTION_STATE);
 		}
-		*/
-		state = ENABLED;
-		A.telMan().listen(this, LISTEN_DATA_CONNECTION_STATE);
 	}
 
 	public synchronized void shutdown()
@@ -78,11 +82,11 @@ public final class MobDataTracker extends PhoneStateListener
 				break;
 			case DISABLED:
 				if(!enable) action = ACT_NONE;
-				else { action = ACT_ENABLE; taskAction.exec(TASK_ACTION, 0); }
+				else { action = ACT_ENABLE; taskAction.exec(TASK_ACTION, Conf.TRACKER_SWITCH_DELAY); }
 				break;
 			case ENABLED:
 				if(enable) action = ACT_NONE;
-				else { action = ACT_DISABLE; taskAction.exec(TASK_ACTION, 0); }
+				else { action = ACT_DISABLE; taskAction.exec(TASK_ACTION, Conf.TRACKER_SWITCH_DELAY); }
 				break;
 			default:
 				if(!enable) action = ACT_NONE;

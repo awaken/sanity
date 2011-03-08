@@ -19,7 +19,7 @@ public class VolumeActivity extends ScreenActivity
 	public static CharSequence[][] getVolumeLevels(int stream)
 	{
   	final String lev = A.s(R.string.level) + ' ';
-  	final int m = Dev.getVolumeMax(stream);
+  	final int m = A.audioMan().getStreamMaxVolume(stream);
   	final int n = m + 1;
   	final CharSequence[] av = new CharSequence[n+1];
   	final CharSequence[] ae = new CharSequence[n+1];

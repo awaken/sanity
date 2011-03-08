@@ -1,6 +1,9 @@
 package cri.sanity;
 
+import java.lang.reflect.Method;
+
 import cri.sanity.ghost.*;
+import com.android.internal.telephony.ITelephony;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
@@ -20,6 +23,7 @@ import android.net.Uri;
 
 public final class Dev
 {
+	public static final int RING       = AudioManager.RINGER_MODE_NORMAL;
 	public static final int VOL_CALL   = AudioManager.STREAM_VOICE_CALL;
 	public static final int VOL_MEDIA  = AudioManager.STREAM_MUSIC;
 	public static final int VOL_ALARM  = AudioManager.STREAM_ALARM;
@@ -36,9 +40,9 @@ public final class Dev
 
 	public static int defVolFlags = 0;
 
-	private static TelMan  gTel;
-	private static WifiMan gWifi;
-	private static ConnMan gConn;
+	private static ITelephony iTel;
+	private static WifiMan    gWifi;
+	private static ConnMan    gConn;
 	private static int screenTimeoutBak = -1;
 	//private static int brightnessBak = -1;
 	private static PowerManager.WakeLock wakeCpuLock;
@@ -62,20 +66,13 @@ public final class Dev
 	public static final Sensor sensorGyro  () { return sensor(Sensor.TYPE_GYROSCOPE     ); }
 	*/
 
-	//---- having devices?
-	
-	public static final boolean haveWifi() { return A.wifiMan()   != null; }
-	public static final boolean haveBt()   { return A.btAdapter() != null; }
-	public static final boolean haveTel()  { return A.telMan()    != null; }
-	public static final boolean haveLoc()  { return A.locMan()    != null; }
-
 	//public static final boolean allowMobData() { return Settings.Secure.getInt(A.ctxRes(), "mobile_data", 1) == 1; }
 
-	//---- get ghost manager
+	//---- ghost manager
 
-	public static final TelMan gTel() {
-		if(gTel == null) gTel = new TelMan();
-		return gTel;
+	public static final ITelephony iTel() {
+		if(iTel == null) iTel = getITelephony();
+		return iTel;
 	}
 	public static final WifiMan gWifi() {
 		if(gWifi == null) gWifi = new WifiMan();
@@ -88,22 +85,25 @@ public final class Dev
 
 	//---- check on/off device state
 	
-	//public static final boolean isSpeakerOn() { return A.audioMan().isSpeakerphoneOn(); }
 	//public static final boolean isHeadsetOn() {
 	//	final AudioManager am = A.audioMan();
 	//	return am.isWiredHeadsetOn() || am.isBluetoothA2dpOn() || am.isBluetoothScoOn();
 	//}
 
 	public static final boolean isMobDataOn() {
-    if(Settings.Secure.getInt(A.resolver(),"mobile_data",1) != 1) return false;
+    if(iTel()==null || Settings.Secure.getInt(A.resolver(),"mobile_data",1)!=1) return false;
 		final int ds = A.telMan().getDataState();
 		return ds==TelephonyManager.DATA_CONNECTED || ds==TelephonyManager.DATA_CONNECTING;
 	}
-	//public static final boolean isWifiOn() { return haveWifi() && A.wifiMan().isWifiEnabled(); }
-	public static final boolean isBtOn()   { return haveBt  () && A.btAdapter().isEnabled(); }
-	public static final boolean isGpsOn()  { return haveLoc () && A.locMan().isProviderEnabled(LocationManager.GPS_PROVIDER); }
+	public static final boolean isBtOn() {
+		final BluetoothAdapter ba = A.btAdapter();
+		return ba!=null && ba.isEnabled();
+	}
+	public static final boolean isGpsOn() {
+		final LocationManager lm = A.locMan();
+		return lm!=null && lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+	}
 
-	//public static final boolean isScreenOn() { return A.powerMan().isScreenOn(); }
 	//public static final boolean isFlightModeOn() { return getSysInt(System.AIRPLANE_MODE_ON) == 1; }
 
 	public static final boolean isHotspotOn()        { return gWifi().isHotspotOn(); }
@@ -112,19 +112,7 @@ public final class Dev
 	public static final boolean isTetheringOn()        { return gConn().isTetheringOn(); }
 	public static final boolean isTetheringSupported() { return gConn().callable("getTetheredIfaces", "getTetherableUsbRegexs"); }
 
-	public static final boolean isRingOn() { return A.audioMan().getRingerMode() == AudioManager.RINGER_MODE_NORMAL; }
-
 	//---- enable/disable devices
-
-	public static final boolean enableMobData(boolean enable) {
-		return enable? gTel().enableDataConnectivity() : gTel().disableDataConnectivity();
-	}
-
-	/*
-	public static final boolean enableWifi(boolean enable) {
-		return A.wifiMan().setWifiEnabled(enable);
-	}
-	*/
 
 	public static final boolean enableBt(boolean enable) {
 		final BluetoothAdapter bt = A.btAdapter();
@@ -132,15 +120,13 @@ public final class Dev
 		return enable ? bt.enable() : bt.disable();
 	}
 
-	/*
 	public static final boolean enableFlightMode(boolean enable) {
 		if(!System.putInt(A.resolver(), System.AIRPLANE_MODE_ON, enable? 1 : 0)) return false;
-		final Intent i = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+		Intent i = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
 		i.putExtra("state", enable);
 		A.app().sendBroadcast(i);
 		return true;
 	}
-	*/
 
 	public static final void toggleGps() {
 		// use undocumented android broadcast
@@ -151,20 +137,14 @@ public final class Dev
     A.app().sendBroadcast(i);
 	}
 
-	public static final void enableSpeaker(boolean enable) { A.audioMan().setSpeakerphoneOn(enable); }
-
 	//---- volume
 
-	public static final int  getVolume   (int type) { return A.audioMan().getStreamVolume   (type); }
-	public static final int  getVolumeMax(int type) { return A.audioMan().getStreamMaxVolume(type); }
-
-	public static final void setVolume(int type, int vol)            { A.audioMan().setStreamVolume(type, vol, defVolFlags); }
-	public static final void setVolume(int type, int vol, int flags) { A.audioMan().setStreamVolume(type, vol, flags); }
-	public static final void setVolumeMax(int type)            { A.audioMan().setStreamVolume(type, getVolumeMax(type), defVolFlags); }
-	public static final void setVolumeMax(int type, int flags) { A.audioMan().setStreamVolume(type, getVolumeMax(type), flags); }
-
-	public static final void mute(int type, boolean muteOn) { A.audioMan().setStreamMute(type, muteOn); }
-	//public static final void solo(int type, boolean enable) { A.audioMan().setStreamSolo(type, enable); }
+	public static final void setVolume(int type, int vol)      { A.audioMan().setStreamVolume(type, vol, defVolFlags); }
+	public static final void setVolumeMax(int type)            { setVolumeMax(type, defVolFlags); }
+	public static final void setVolumeMax(int type, int flags) {
+		final AudioManager am = A.audioMan();
+		am.setStreamVolume(type, am.getStreamMaxVolume(type), flags);
+	}
 
 	//---- managing system
 
@@ -175,16 +155,13 @@ public final class Dev
 			return -1; 
 		}
 	}
-	public static final void putSysInt(String key, int val) {
-		System.putInt(A.resolver(), key, val);
-	}
 
 	public static final int getScreenOffTimeout() {
 		return getSysInt(System.SCREEN_OFF_TIMEOUT);
 	}
 	public static final void setScreenOffTimeout(int timeout) {
 		if(screenTimeoutBak < 0) screenTimeoutBak = getScreenOffTimeout();
-		putSysInt(System.SCREEN_OFF_TIMEOUT, timeout);
+		System.putInt(A.resolver(), System.SCREEN_OFF_TIMEOUT, timeout);
 	}
 	public static final void restoreScreenTimeout() {
 		if(screenTimeoutBak < 0) return;
@@ -245,6 +222,17 @@ public final class Dev
 		if(keyguardLock == null) keyguardLock = A.keyguardMan().newKeyguardLock("Dev");
 		if(enable) keyguardLock.reenableKeyguard();
 		else       keyguardLock.disableKeyguard();
+	}
+
+	private static ITelephony getITelephony() {
+		try {
+			final TelephonyManager tm = A.telMan();
+			final Method m = tm.getClass().getDeclaredMethod("getITelephony");
+			m.setAccessible(true);
+			return (ITelephony)m.invoke(tm);
+		} catch(Exception e) {
+			return null;
+		}
 	}
 
 }

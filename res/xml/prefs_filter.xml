@@ -17,7 +17,8 @@
 		                       android:entryValues="@array/filter_mode_values"/>
 	</PreferenceCategory>
 
-	<PreferenceCategory android:title="@string/filter_list_cat">
+	<PreferenceCategory android:title="@string/filter_list_cat"
+	                    android:key="filter_list">
 		<CheckBoxPreference android:title="@string/filter_all_title"
 		                    android:summary="@string/filter_all_sum"
 		                    android:persistent="false"

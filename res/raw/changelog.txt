@@ -1,3 +1,11 @@
+Version 2.02:
+- New: options to block incoming calls automatically.
+- New: option to skip announcing when the phone is in silent mode.
+- New: option to show the call screen just after you manually start or stop recording.
+- Fix: bug disables screen lock on some phones.
+- Fix: bug when disabling the mobile data.
+- Fix: bug when recognizing the donate version.
+
 Version 2.01:
 - Fix: the caller was always announced.
  

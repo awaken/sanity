@@ -67,10 +67,12 @@ public final class K
 	public static final String REC_STOP_LIMIT     = "rec_stop_limit";
 	public static final String REC_START_DIR      = "rec_start_dir";
 	public static final String REC_AUTOREMOVE     = "rec_autoremove";
+	public static final String REC_CALLSCREEN     = "rec_callscreen";
 	public static final String REC_FILTER         = "filter_enable_rec";
 	// announce caller (text to speech)
 	public static final String TTS                = "tts";
 	public static final String TTS_HEADSET        = "tts_headset";
+	public static final String TTS_SKIP           = "tts_skip";
 	public static final String TTS_SOLO           = "tts_solo";
 	public static final String TTS_VOL            = "tts_vol";
 	public static final String TTS_TONE           = "tts_tone";
@@ -81,6 +83,11 @@ public final class K
 	public static final String TTS_PREFIX         = "tts_prefix";
 	public static final String TTS_SUFFIX         = "tts_suffix";
 	public static final String TTS_FILTER         = "filter_enable_tts";
+	// call blocker
+	public static final String BLOCK              = "block";
+	public static final String BLOCK_SKIP         = "block_skip";
+	public static final String BLOCK_MODE         = "block_mode";
+	public static final String BLOCK_FILTER       = "filter_enable_block";
 
 	// internals (hidden to user)
 	public static final String FULL     = "full";
@@ -104,7 +111,8 @@ public final class K
 		return new String[]{
 			DISABLE_DELAY, ENABLE_DELAY, SPEAKER_DELAY, SPEAKER_CALL, SPEAKER_CALL_DELAY, SPEAKER_ON_COUNT, SPEAKER_OFF_COUNT,
 			VOL_PHONE, VOL_WIRED, VOL_BT, REC_SRC, REC_FMT, REC_START_DELAY, REC_STOP_DELAY, REC_START_HEADSET, REC_STOP_HEADSET,
-			REC_STOP_LIMIT, REC_START_TIMES, REC_START_DIR, REC_AUTOREMOVE, REVERSE_BT_TIMEOUT, TTS_VOL, TTS_TONE, TTS_REPEAT, TTS_PAUSE
+			REC_STOP_LIMIT, REC_START_TIMES, REC_START_DIR, REC_AUTOREMOVE, REVERSE_BT_TIMEOUT, TTS_VOL, TTS_TONE, TTS_REPEAT, TTS_PAUSE,
+			BLOCK_MODE
 		};
 	}
 
@@ -164,9 +172,11 @@ public final class K
 		m.put(REC_START_TIMES    , 0);
 		m.put(REC_START_DIR      , 0);
 		m.put(REC_AUTOREMOVE     , 0);
+		m.put(REC_CALLSCREEN     , true);
 		m.put(REC_FILTER         , false);
 		m.put(TTS                , false);			// announce caller
 		m.put(TTS_HEADSET        , false);
+		m.put(TTS_SKIP           , true);
 		m.put(TTS_SOLO           , false);
 		m.put(TTS_VOL            , -1);
 		m.put(TTS_TONE           ,  0);
@@ -177,6 +187,10 @@ public final class K
 		m.put(TTS_PREFIX         , "");
 		m.put(TTS_SUFFIX         , "");
 		m.put(TTS_FILTER         , false);
+		m.put(BLOCK              , false);
+		m.put(BLOCK_SKIP         , false);
+		m.put(BLOCK_MODE         , Blocker.MODE_FLIGHT);
+		m.put(BLOCK_FILTER       , true);
 		return m;
 	}
 
@@ -213,6 +227,7 @@ public final class K
 		if(oldVer < 1.97f) P.setDef(SPEAKER_ON_COUNT, SPEAKER_OFF_COUNT, REC_START_DIR);
 		if(oldVer < 1.99f) P.setDef(REVERSE_BT, REVERSE_BT_TIMEOUT);
 		if(oldVer < 2.00f) P.setDef(BT_OFF, REC_FILTER, REC_AUTOREMOVE, TTS, TTS_HEADSET, TTS_SOLO, TTS_VOL, TTS_TONE, TTS_REPEAT, TTS_PAUSE, TTS_PREFIX, TTS_SUFFIX, TTS_ANONYM, TTS_UNKNOWN, TTS_FILTER);
+		if(oldVer < 2.02f) P.setDef(REC_CALLSCREEN, TTS_SKIP, BLOCK, BLOCK_SKIP, BLOCK_MODE, BLOCK_FILTER);
 	}
 
 }

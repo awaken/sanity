@@ -192,17 +192,21 @@
 	<string name="rec_stop_limit_sum">Elija la duración máxima de una grabación de audio. Sanity va a detener la grabación después de esta duración.</string>
 	<string name="rec_autoremove_title">Eliminación automática</string>
 	<string name="rec_autoremove_sum">Eliminar automáticamente las grabaciones de edad. Elija cuánto tiempo debe mantener los registros.</string>
+	<string name="rec_callscreen_title">Pantalla de llamada</string>
+	<string name="rec_callscreen_sum">Mostrar la pantalla de llamada justo después de iniciar o detener manualmente la grabación.</string>
 	<string name="rec_shortcut">Grabar Llamada</string>
 
 	<string name="tts_cat">Anuncia que llaman</string>
-	<string name="tts_sum">Diga el nombre de la persona que llama cuando se recibe una llamada (mientras el teléfono está sonando).</string>
-	<string name="tts_enable_title">Habilitar Anuncian</string>
+	<string name="tts_sum">Diga el nombre de la persona que llama cuando se recibe una llamada.</string>
+	<string name="tts_enable_title">Habilitar anuncian</string>
 	<string name="tts_enable_sum">Diga el nombre de la persona que llama cuando se recibe una llamada (mientras suena el teléfono).</string>
 	<string name="tts_global_title">Ajustes globales</string>
 	<string name="tts_global_sum">Pulse aquí para abrir los ajustes globales de Android sobre el "texto a voz" del motor.</string>
 	<string name="tts_audio_cat">Opciones de audio</string>
 	<string name="tts_headset_title">Auricular sólo</string>
 	<string name="tts_headset_sum">Habilitar anunciar sólo cuando los auriculares están conectados.</string>
+	<string name="tts_skip_title">Saltar si en silencio</string>
+	<string name="tts_skip_sum">No anunciar la persona que llama cuando el teléfono está en modo silencioso.</string>
 	<string name="tts_solo_title">Silenciar tono</string>
 	<string name="tts_solo_sum">Silenciar el tono de llamada al anunciar el nombre de la persona que llama.</string>
 	<string name="tts_vol_sum">Elija el nivel de volumen utilizado para anunciar.</string>
@@ -220,6 +224,15 @@
 	<string name="tts_unknown_sum">Escriba la palabra \"Desconocido\" en su idioma para anunciar persona que llama no está en los contactos.</string>
 	<string name="tts_test_title">Prueba</string>
 	<string name="tts_test_sum">Pulse aquí para tratar el anuncio con las opciones actuales.</string>
+
+	<string name="block_cat">Bloqueador de llamadas</string>
+	<string name="block_sum">Bloquear las llamadas entrantes mediante el filtrado del número de la persona que llama.</string>
+	<string name="block_enable_title">Habilitar el bloqueador</string>
+	<string name="block_enable_sum">Habilitar el bloqueador de llamadas a rechazar las llamadas entrantes.</string>
+	<string name="block_skip_title">Saltar si en silencio</string>
+	<string name="block_skip_sum">No bloquear las llamadas entrantes cuando el teléfono está en modo silencioso.</string>
+	<string name="block_mode_title">Bloqueo método</string>
+	<string name="block_mode_sum">Elige la forma de bloquear las llamadas entrantes.</string>
 
 	<string name="about_cat">Saber mas y contactar</string>
 	<string name="about_sum">Informacion sobre esta aplicación y maneras de contactar con el desarrollador.</string>
@@ -267,6 +280,7 @@
 	<string name="filter_groups_sum">Elegir los grupos de contactos en la lista.</string>
 	<string name="filter_shortcut_rec">Filtro de llamadas - Grabadora</string>
 	<string name="filter_shortcut_tts">Filtro de llamadas - Anuncia que llaman</string>
+	<string name="filter_shortcut_block">Filtro de llamadas - Bloqueador de llamadas</string>
 
 	<string name="admin_title">Administrador</string>
 	<string name="admin_sum">Se usan privilegios de administrador para apagar la pantalla cuando el telefono está cerca de tu oido.</string>

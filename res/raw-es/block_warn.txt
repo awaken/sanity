@@ -1,0 +1,4 @@
+ADVERTENCIA: el método "colgar" no siempre funciona en Android 2.3 y newers!
+
+Puedes probarlo en tu teléfono.
+Si no funciona, elija el método "señal de interrupción" para bloquear llamadas, por favor.

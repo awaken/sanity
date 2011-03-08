@@ -172,7 +172,7 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 		if(!on)
 			vol = volPhone;
 		else if(volPhone < 0)
-			volPhone = volRestore<0 ? Dev.getVolume(Dev.VOL_CALL) : volRestore;
+			volPhone = volRestore<0 ? audioMan.getStreamVolume(Dev.VOL_CALL) : volRestore;
 		Dev.setVolume(Dev.VOL_CALL, vol);
 		//A.logd((on?"preferred":"restored")+" volume set to level "+vol);
 	}
@@ -182,7 +182,9 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 		//A.logd("onRinging");
 		outgoing    = false;
 		phoneNumber = PhoneReceiver.number;
-		if(A.is(K.TTS) && (headsetOn || (!A.is(K.TTS_HEADSET) && Dev.isRingOn())))
+		if(A.is(K.BLOCK) && CallFilter.includes(phoneNumber, "block", false) && (!A.is(K.BLOCK_SKIP) || audioMan.getRingerMode()==Dev.RING))
+			if(Blocker.apply(A.geti(K.BLOCK_MODE))) return;
+		if(A.is(K.TTS) && (headsetOn || !A.is(K.TTS_HEADSET)) && (!A.is(K.TTS_SKIP) || audioMan.getRingerMode()==Dev.RING))
 			tts = new TTS(phoneNumber, true);
 		btReverse();
 	}
@@ -203,10 +205,12 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 			else if(speakerCall == SPEAKER_CALL_OUTGOING) { if(!outgoing) speakerCall = 0; }
 			if(speakerCall>0 && lastFar) speakerOnFar();
 		}
-		if(outgoing) phoneNumber = PhoneReceiver.number;
-		if(rec) RecService.checkAutoRec();
 		if(!proximDisable) enableDevs(false);
-		if(outgoing) btReverse();
+		if(outgoing) {
+			phoneNumber = PhoneReceiver.number;
+			btReverse();
+		}
+		if(rec) RecService.checkAutoRec();
 		if(!lastFar) screenOff(true);
 		//A.logd("onOffhook: end");
 	}
@@ -216,36 +220,35 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 	{
 		//A.logd("onIdle");
 		shutdown = true;
-		if(offhook && !headsetOn && A.is(K.SPEAKER_SILENT_END)) Dev.enableSpeaker(false);
 		unregProximity();
 		unregHeadset();
+		Task.stop(TASK_SPEAKER);
+		if(offhook && !headsetOn && A.is(K.SPEAKER_SILENT_END)) audioMan.setSpeakerphoneOn(false);
 		if(tts != null) { tts.shutdown(); tts = null; }
 		if(rec) RecService.stop();
 		Task.stopAll();
-		//final Task.Pool pool = Task.shutdown();
 		if(offhook) {
 			if(volRestore >= 0) Dev.setVolume(Dev.VOL_CALL, volRestore);
-			enableDevs(true);
-			//Dev.enableLock(true);
+			Dev.enableLock(true);
 			volSolo(false);
 			screenOff(false);
 			if(A.is(K.VIBRATE_END)) A.vibrate();
 		}
-		if((btReverse || A.is(K.BT_OFF)) && Dev.isBtOn()) Dev.enableBt(false);
-		Dev.restoreScreenTimeout();
 		if(rec) RecService.cron();
+		Dev.restoreScreenTimeout();
 		CallFilter.shutdown();
+		Blocker.shutdown();
 		PhoneReceiver.number = null;
 		phoneNumber = null;
 		activeInst  = null;
 		try { A.telMan().listen(this, LISTEN_NONE); } catch(Exception e) {}
-		Task.shutdownWait();
-		if(offhook) enableDevs(true);		// after waiting shutdown but before trackers shutdown!!
+		if(offhook) enableDevs(true);
 		if(mobdTrack != null) mobdTrack.shutdown();
 		if(wifiTrack != null) wifiTrack.shutdown();
+		Task.shutdownWait();
+		if((btReverse || A.is(K.BT_OFF)) && Dev.isBtOn()) Dev.enableBt(false);
 		MainService.stop();
 		Dev.unwakeCpu();
-		System.gc();
 	}
 
 	private synchronized void enableDevs(boolean enable)
@@ -255,11 +258,7 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 		final long diff = now - devsLastTime;
 		if(diff < Conf.DEVS_MIN_RETRY) {
 			if(enable == devsLastEnable) return;
-			if(!shutdown) {
-				if(enable) taskDevsOn .exec(TASK_DEVS, (int)diff);
-				else       taskDevsOff.exec(TASK_DEVS, (int)diff);
-				return;
-			}
+			(enable? taskDevsOn : taskDevsOff).exec(TASK_DEVS, (int)diff);
 		}
 		boolean done = false;
 		if(gpsAuto         && enable!=Dev.isGpsOn())      { Dev.toggleGps();          done = true; }
@@ -278,8 +277,8 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 	{
 		if(headsetOn || far==audioMan.isSpeakerphoneOn()) return;
 		if(far && loudSpeaker && volRestore<0)
-			volRestore = volPhone<0 ? Dev.getVolume(Dev.VOL_CALL) : volPhone;  // retrieve current call volume (to restore later)
-		Dev.enableSpeaker(far);
+			volRestore = volPhone<0 ? audioMan.getStreamVolume(Dev.VOL_CALL) : volPhone;  // retrieve current call volume (to restore later)
+		audioMan.setSpeakerphoneOn(far);
 		//A.logd("auto set speaker: far="+far);
 		if(loudSpeaker) {
 			if(far) {
@@ -333,10 +332,10 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 	private void volSolo(boolean enable)
 	{
 		if(!volSolo) return;
-		Dev.mute(Dev.VOL_SYS   , enable);
-		Dev.mute(Dev.VOL_ALARM , enable);
-		Dev.mute(Dev.VOL_NOTIFY, enable);
-		if(!rec) Dev.mute(Dev.VOL_MEDIA, enable);		// if we mute media, we cannot record phone call!
+		audioMan.setStreamMute(Dev.VOL_SYS   , enable);
+		audioMan.setStreamMute(Dev.VOL_ALARM , enable);
+		audioMan.setStreamMute(Dev.VOL_NOTIFY, enable);
+		if(!rec) audioMan.setStreamMute(Dev.VOL_MEDIA, enable);		// if we mute media, we cannot record phone call!
 		//A.logd("set volume solo: "+enable);
 	}
 	

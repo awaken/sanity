@@ -52,6 +52,7 @@ public final class MainService extends Service
 		//A.logd("MainService destroyed");
 		running = false;
 		super.onDestroy();
+		System.gc();
 	}
 
 }

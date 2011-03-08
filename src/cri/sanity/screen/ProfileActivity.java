@@ -225,7 +225,8 @@ public class ProfileActivity extends ScreenActivity implements FilenameFilter
 			new String[]{ "vol_cat", K.VOL_PHONE, K.VOL_WIRED, K.VOL_BT, K.VOL_SOLO },
 			new String[]{ "notify_cat", K.NOTIFY_ENABLE, K.NOTIFY_DISABLE, K.NOTIFY_ACTIVITY, K.NOTIFY_VOLUME, K.NOTIFY_REC_STOP, K.VIBRATE_END },
 			new String[]{ "rec_cat", K.REC, K.REC_FMT, K.REC_SRC, K.REC_START, K.REC_START_DELAY, K.REC_FILTER, K.REC_START_SPEAKER, K.REC_START_HEADSET, K.REC_START_DIR, K.REC_START_TIMES, K.REC_STOP, K.REC_STOP_DELAY, K.REC_STOP_SPEAKER, K.REC_STOP_HEADSET, K.REC_STOP_LIMIT, K.REC_AUTOREMOVE },
-			new String[]{ "tts_cat", K.TTS, K.TTS_HEADSET, K.TTS_SOLO, K.TTS_VOL, K.TTS_TONE, K.TTS_REPEAT, K.TTS_PAUSE, K.TTS_PREFIX, K.TTS_SUFFIX, K.TTS_ANONYM, K.TTS_UNKNOWN, K.TTS_FILTER }
+			new String[]{ "tts_cat", K.TTS, K.TTS_HEADSET, K.TTS_SKIP, K.TTS_SOLO, K.TTS_VOL, K.TTS_TONE, K.TTS_REPEAT, K.TTS_PAUSE, K.TTS_PREFIX, K.TTS_SUFFIX, K.TTS_ANONYM, K.TTS_UNKNOWN, K.TTS_FILTER },
+			new String[]{ "block_cat", K.BLOCK, K.BLOCK_SKIP, K.BLOCK_MODE }
 		};
 	}
 	public static final Map<String,Pair<Integer,Integer>> intLabVals() {
@@ -253,6 +254,7 @@ public class ProfileActivity extends ScreenActivity implements FilenameFilter
 		m.put(K.TTS_TONE          , p(R.array.tts_tone_labels          , R.array.tts_tone_values));
 		m.put(K.TTS_REPEAT        , p(R.array.tts_repeat_labels        , R.array.tts_repeat_values));
 		m.put(K.TTS_PAUSE         , p(R.array.tts_pause_labels         , R.array.tts_pause_values));
+		m.put(K.BLOCK_MODE        , p(R.array.block_mode_labels        , R.array.block_mode_values));
 		return m;
 	}
 	private static Pair<Integer,Integer> p(int lab, int val) { return new Pair<Integer,Integer>(lab, val); }

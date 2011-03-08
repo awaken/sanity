@@ -111,12 +111,12 @@ public final class A extends Application
 
 	@Override
 	public void onCreate() {
-		a       = this;
-		name    = A.s(R.string.app);
-		prefs   = PreferenceManager.getDefaultSharedPreferences(a);
-		edit    = prefs.edit();
-		pkgInfo = _pkgInfo();
-		full    = Conf.FULL || prefs.getBoolean(K.FULL, false);
+		a     = this;
+		name  = A.s(R.string.app);
+		prefs = PreferenceManager.getDefaultSharedPreferences(a);
+		edit  = prefs.edit();
+		full  = Conf.FULL || prefs.getBoolean(K.FULL, false);
+		try { pkgInfo = getPackageManager().getPackageInfo(getPackageName(), 0); } catch(NameNotFoundException e) {}
 	}
 
 	//---- static methods
@@ -358,6 +358,7 @@ public final class A extends Application
 	public static final boolean isEnabled() { return prefs.getBoolean(K.ENABLED, false); }
 	public static final boolean isFull()    { return full; }
 	public static final boolean isBeta()    { return Conf.BETA > 0; }
+	public static final void    setFull()   { A.putc(K.FULL, A.full=true); }
 
 	public static final boolean is(String key)                { return prefs.getBoolean(key, false); }
 	//public static final boolean is(String key, boolean def)   { return prefs.getBoolean(key, def  ); }
@@ -365,7 +366,7 @@ public final class A extends Application
 	//public static final String  gets(String key, String def)  { return prefs.getString (key, def  ); }
 	public static final int     geti(String key)              { return prefs.getInt    (key, 0    ); }
 	//public static final int     geti(String key, int def)     { return prefs.getInt    (key, def  ); }
-	public static final long    getl(String key)              { return prefs.getLong   (key, 0    ); }
+	public static final long    getl(String key)              { return prefs.getLong   (key, 0l   ); }
 	//public static final long    getl(String key, long def)    { return prefs.getLong   (key, def  ); }
 	//public static final float   getf(String key)              { return prefs.getFloat  (key, 0    ); }
 	//public static final float   getf(String key, float def)   { return prefs.getFloat  (key, def  ); }
@@ -394,11 +395,11 @@ public final class A extends Application
 
 	public static final A putc(String key, Object val) { return put(key, val).commit(); }
 	public static final A put (String key, Object val) {
-		if(     val instanceof Boolean) edit().putBoolean(key, (Boolean)val);
-		else if(val instanceof Integer) edit().putInt    (key, (Integer)val);
-		else if(val instanceof Float  ) edit().putFloat  (key, (Float  )val);
-		else if(val instanceof Long   ) edit().putLong   (key, (Long   )val);
-		else                            edit().putString (key, val.toString());
+		if(     val instanceof Boolean) edit.putBoolean(key, (Boolean)val);
+		else if(val instanceof Integer) edit.putInt    (key, (Integer)val);
+		else if(val instanceof Float  ) edit.putFloat  (key, (Float  )val);
+		else if(val instanceof Long   ) edit.putLong   (key, (Long   )val);
+		else                            edit.putString (key, val.toString());
 		return a;
 	}
 
@@ -458,16 +459,6 @@ public final class A extends Application
 	}
 	public static final void vibrate() {
 		((Vibrator)A.app().getSystemService(VIBRATOR_SERVICE)).vibrate(Conf.VIBRATE_TIME);
-	}
-
-	//---- private api
-	
-	private static PackageInfo _pkgInfo() {
-		try {
-			return a.getPackageManager().getPackageInfo(a.getPackageName(), 0);
-		} catch(NameNotFoundException e) {
-			return null;
-		}
 	}
 
 }

@@ -139,10 +139,14 @@ public class RecService extends Service
 		final long now = A.now();
 		if(now-ts < Conf.SERVICE_TIMEOUT) return START_STICKY;
 		ts = now;
-		if(!running)             running = true;
-		else if(rec == null)   { A.notifyCanc(NID); stopSelf(); return START_NOT_STICKY; }
-		else if(rec.isStarted()) recStop (0);
-		else                     recStart(0);
+		if(!running)           running = true;
+		else if(rec == null) { A.notifyCanc(NID); stopSelf(); return START_NOT_STICKY; }
+		else {
+			if(rec.isStarted()) recStop (0);
+			else                recStart(0);
+			if(A.is(K.REC_CALLSCREEN))
+				try { Dev.iTel().showCallScreen(); } catch(Exception e) {}
+		}
 		return START_STICKY;
 	}
 

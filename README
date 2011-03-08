@@ -18,6 +18,14 @@ An Android application to assist during phone calls.
   Change log
 -------------------
 
+* version 2.02  (08/03/2011)
+- New: options to block incoming calls automatically.
+- New: option to skip announcing when the phone is in silent mode.
+- New: option to show the call screen just after you manually start or stop recording.
+- Fix: bug disables screen lock on some phones.
+- Fix: bug when disabling the mobile data.
+- Fix: bug when recognizing the donate version.
+
 * version 2.01  (07/03/2011)
 - Fix: the caller was always announced.
 
@@ -178,14 +186,6 @@ An Android application to assist during phone calls.
   + only if headsets
   + always on
   + only if silence mode
-
-* auto reject calls (call blocker)
-  + all calls
-  + on if headsets
-  + contacts whitelist
-  + contacts blacklist
-  + all anonymous call
-  + silence instead of reject!
 
 * auto responder when silence mode
   + record answer messages with archive
