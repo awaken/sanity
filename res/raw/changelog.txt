@@ -1,3 +1,14 @@
+Version 2.03:
+- New: option to delay signal restoring when the call is blocked through interrupting signal.
+- New: option to notify blocked calls.
+- New: function to add call filter numbers from the call log.
+- New: function for fast searching a contact in the call filter.
+- New: option for setting automatic handsfree volume.
+- Fix: bug in groups list of call filter.
+- Fix: bug in automatic recording when automatic handsfree is disabled.
+- Fix: minor bugs.
+- Change: optimizations in call blocker and annouce caller.
+
 Version 2.02:
 - New: options to block incoming calls automatically.
 - New: option to skip announcing when the phone is in silent mode.

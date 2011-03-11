@@ -2,7 +2,7 @@
 <resources>
 
 	<string name="app_desc">Asistente personal durante las llamadas.</string>
-  <string name="app_shortcut">Sanity - Atajos</string>
+  <string name="app_shortcut">Sanity - Atajo</string>
 
 	<string name="canc">Cancelar</string>
 	<string name="yes">Si</string>
@@ -27,6 +27,7 @@
 	<string name="call_out">saliente</string>
 	<string name="unknown">Desconocido</string>
 	<string name="anonym">Anónimo</string>
+	<string name="search">Búsqueda</string>
 	<string name="help">Ayuda</string>
 	<string name="backup">Copia de seguridad</string>
 	<string name="restore">Restaurar</string>
@@ -38,6 +39,7 @@
 	<string name="starred">Favorito</string>
 	<string name="sysgroup">grupo de sistema</string>
   <string name="announce">Anuncio</string>
+  <string name="callog">Registro</string>
 
 	<string name="groups_cat">Preferencias</string>
 	<string name="misc_cat">Varios</string>
@@ -107,8 +109,7 @@
 	<string name="auto_speaker_sum">Activar/Desactivar automáticamente el altavoz cuando el telefono está lejos/cerca de tu oído.</string>
 	<string name="delay_speaker_title">Retardo de activación</string>
 	<string name="delay_speaker_sum">Tiempo de espera para activar automáticamente el altavoz (manos libres) cuando NO está cerca de tu oído.</string>
-	<string name="loud_speaker_title">Altavoz fuerte</string>
-	<string name="loud_speaker_sum">Ajusta el volumen cuando Sanity activa el altavoz (manos libres).</string>
+  <string name="vol_speaker_sum">Volumen utilizado cuando el altavoz (manos libres) se activa automáticamente.</string>
 	<string name="speaker_call_title">Activar al inicio de la llamada</string>
 	<string name="speaker_call_sum">Activar pronto el altavoz (manos libres) cuando empiece la llamada.</string>
   <string name="delay_speaker_call_title">Retardo de inicio</string>
@@ -233,6 +234,9 @@
 	<string name="block_skip_sum">No bloquear las llamadas entrantes cuando el teléfono está en modo silencioso.</string>
 	<string name="block_mode_title">Bloqueo método</string>
 	<string name="block_mode_sum">Elige la forma de bloquear las llamadas entrantes.</string>
+	<string name="block_resume_title">Restaurar la señal</string>
+	<string name="block_resume_sum">Elegir el momento de restaurar la señal después de la llamada ha sido bloqueada.</string>
+	<string name="block_notify_sum">Notificar a la barra de estado la última llamada bloqueado.</string>
 
 	<string name="about_cat">Saber mas y contactar</string>
 	<string name="about_sum">Informacion sobre esta aplicación y maneras de contactar con el desarrollador.</string>
@@ -320,12 +324,17 @@
   <string name="msg_prf_nosel">No se selecciona el perfil!</string>
   <string name="msg_prf_restore_ok">Sanity: profilo \"%s\" attivato</string>
   <string name="msg_prf_restore_err">Sanity: impossibile attivare il profilo \"%s\"!</string>
-  <string name="msg_nums_edit">Número de teléfono</string>
+  <string name="msg_nums_edit">Número de teléfono (con el prefijo internacional)</string>
   <string name="msg_empty_list">No hay entradas en esta lista. Utilice el menú para crear otras nuevas.</string>
   <string name="msg_last_modified">Última modificación</string>
 	<string name="msg_email_choose">Elige como enviar el e-mail</string>
 	<string name="msg_eula_title">Acuerdo de licencia</string>
   <string name="msg_option_full">Lo sentimos, esta opción sólo está disponible en la versión Donación.</string>
+  <string name="msg_contact_err">Error para encontrar \"%s\"</string>
+  <string name="msg_contact_unsel">\"%s\" NO seleccionados</string>
+  <string name="msg_contact_sel">\"%s\" seleccionado</string>
+  <string name="msg_callog_new">Nuevo número de registro de llamadas</string>
+  <string name="msg_callog_empty">El registro de llamadas no contiene nuevos números desconocidos!</string>
 
 	<string name="err_dir">Error en Sanity: no se puede crear el directorio para guardar las grabaciónes de audio!</string>
 	<string name="err_rec">Error en Sanity: no se puede iniciar la grabación de audio!</string>

@@ -1,7 +1,7 @@
-package cri.sanity;
+package cri.sanity.util;
 
+import cri.sanity.*;
 import com.android.internal.telephony.ITelephony;
-//import android.provider.Settings;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 
@@ -15,7 +15,6 @@ public final class MobDataTracker extends PhoneStateListener
 	private static final int ENABLING    = TelephonyManager.DATA_CONNECTING;
 	private static final int DISABLED    = TelephonyManager.DATA_DISCONNECTED;
 	private static final int SUSPENDED   = TelephonyManager.DATA_SUSPENDED;
-	private static final int TIME_RETRY  = Conf.DEVS_MIN_RETRY;
 	private static final int TASK_ACTION = Task.idNew();
 	
 	private int state;
@@ -54,21 +53,23 @@ public final class MobDataTracker extends PhoneStateListener
 		try {
 			if(action != ACT_NONE) {
 				waiter = true;
-				wait(TIME_RETRY * 3);
+				wait(Conf.DEVS_MIN_RETRY * 3);
 			}
 		} catch(Exception e) {}
 		try { A.telMan().listen(this, LISTEN_NONE); } catch(Exception e) {}
 	}
 
-	public boolean   isOn() { return state==ENABLED  || state==ENABLING;  }
-	public boolean willOn() { return action==ACT_ENABLE || (action==ACT_NONE && (state==ENABLED || state==ENABLING)); }
+	public boolean isOn() { return state==ENABLED  || state==ENABLING;  }
+
+	public synchronized boolean willOn() {
+		return (action==ACT_NONE && (state==ENABLED || state==ENABLING)) || (action==ACT_ENABLE && Task.has(TASK_ACTION));
+	}
 
 	@Override
 	public synchronized void onDataConnectionStateChanged(int state)
 	{
 		this.state = state;
-		if(action == ACT_NONE) return;
-		enable(action == ACT_ENABLE);
+		if(action != ACT_NONE) enable(action == ACT_ENABLE);
 		if(waiter) notifyAll();
 	}
 
@@ -81,16 +82,28 @@ public final class MobDataTracker extends PhoneStateListener
 				action = enable? ACT_ENABLE : ACT_DISABLE;
 				break;
 			case DISABLED:
-				if(!enable) action = ACT_NONE;
-				else { action = ACT_ENABLE; taskAction.exec(TASK_ACTION, Conf.TRACKER_SWITCH_DELAY); }
+				if(!enable)
+					action = ACT_NONE;
+				else {
+					action = ACT_ENABLE;
+					if(!Task.has(TASK_ACTION)) taskAction.exec(TASK_ACTION, Conf.TRACKER_SWITCH_DELAY);
+				}
 				break;
 			case ENABLED:
-				if(enable) action = ACT_NONE;
-				else { action = ACT_DISABLE; taskAction.exec(TASK_ACTION, Conf.TRACKER_SWITCH_DELAY); }
+				if(enable)
+					action = ACT_NONE;
+				else {
+					action = ACT_DISABLE; 
+					if(!Task.has(TASK_ACTION)) taskAction.exec(TASK_ACTION, Conf.TRACKER_SWITCH_DELAY); 
+				}
 				break;
 			default:
-				if(!enable) action = ACT_NONE;
-				else { action = ACT_ENABLE; taskAction.exec(TASK_ACTION, TIME_RETRY); }
+				if(!enable)
+					action = ACT_NONE;
+				else {
+					action = ACT_ENABLE; 
+					if(!Task.has(TASK_ACTION)) taskAction.exec(TASK_ACTION, Conf.DEVS_MIN_RETRY);
+				}
 		}
 		//A.logd("after mobdata enable ("+enable+") : action="+action+", state="+state);
 	}

@@ -1,5 +1,6 @@
-package cri.sanity;
+package cri.sanity.util;
 
+import cri.sanity.*;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -16,20 +17,19 @@ public final class WifiTracker extends BroadcastReceiver
 	private static final int ENABLING    = WifiManager.WIFI_STATE_ENABLING;
 	private static final int DISABLING   = WifiManager.WIFI_STATE_DISABLING;
 	private static final int DISABLED    = WifiManager.WIFI_STATE_DISABLED;
-	private static final int TIME_RETRY  = Conf.DEVS_MIN_RETRY;
 	private static final int TASK_ACTION = Task.idNew();
 
 	private int state;
 	private int action = ACT_NONE;
 	private boolean waiter = false;
+	private final WifiManager wifiMan = A.wifiMan();
 
 	private final Task taskAction = new Task() {
 		@Override
 		public void run() {
 			synchronized(WifiTracker.this) {
-				if(action == ACT_NONE)
-					return;
-				A.wifiMan().setWifiEnabled(action == ACT_ENABLE);
+				if(action == ACT_NONE) return;
+				wifiMan.setWifiEnabled(action == ACT_ENABLE);
 			}
 		}
 	};
@@ -37,7 +37,6 @@ public final class WifiTracker extends BroadcastReceiver
 	public WifiTracker()
 	{
 		state = ENABLED;
-		// state = A.wifiMan().getWifiState();
 		A.app().registerReceiver(this, new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION));
 	}
 
@@ -46,21 +45,23 @@ public final class WifiTracker extends BroadcastReceiver
 		try {
 			if(action != ACT_NONE) {
 				waiter = true;
-				wait(TIME_RETRY * 3);
+				wait(Conf.DEVS_MIN_RETRY * 3);
 			}
-		} catch(Exception e) { }
+		} catch(Exception e) {}
 		try { A.app().unregisterReceiver(this); } catch(Exception e) {}
 	}
 
-	public boolean   isOn() { return state == ENABLED || state == ENABLING; }
-	public boolean willOn() { return action == ACT_ENABLE || (action == ACT_NONE && (state == ENABLED || state == ENABLING)); }
+	public boolean isOn() { return state == ENABLED || state == ENABLING; }
+
+	public synchronized boolean willOn() {
+		return (action==ACT_NONE && (state==ENABLED || state==ENABLING)) || (action==ACT_ENABLE && Task.has(TASK_ACTION)) ;
+	}
 
 	@Override
 	public synchronized void onReceive(Context ctx, Intent i)
 	{
 		state = i.getIntExtra(WifiManager.EXTRA_WIFI_STATE, WifiManager.WIFI_STATE_UNKNOWN);
-		if(action == ACT_NONE) return;
-		enable(action == ACT_ENABLE);
+		if(action != ACT_NONE) enable(action == ACT_ENABLE);
 		if(waiter) notifyAll();
 	}
 
@@ -69,19 +70,31 @@ public final class WifiTracker extends BroadcastReceiver
 		switch(state) {
 			case DISABLING:
 			case ENABLING:
-				action = enable ? ACT_ENABLE : ACT_DISABLE;
+				action = enable? ACT_ENABLE : ACT_DISABLE;
 				break;
 			case DISABLED:
-				if(!enable) action = ACT_NONE;
-				else { action = ACT_ENABLE; taskAction.exec(TASK_ACTION, Conf.TRACKER_SWITCH_DELAY); }
+				if(!enable)
+					action = ACT_NONE;
+				else {
+					action = ACT_ENABLE; 
+					if(!Task.has(TASK_ACTION)) taskAction.exec(TASK_ACTION, Conf.TRACKER_SWITCH_DELAY);
+				}
 				break;
 			case ENABLED:
-				if(enable) action = ACT_NONE;
-				else { action = ACT_DISABLE; taskAction.exec(TASK_ACTION, Conf.TRACKER_SWITCH_DELAY); }
+				if(enable)
+					action = ACT_NONE;
+				else {
+					action = ACT_DISABLE; 
+					if(!Task.has(TASK_ACTION)) taskAction.exec(TASK_ACTION, Conf.TRACKER_SWITCH_DELAY);
+				}
 				break;
 			default:
-				if(!enable) action = ACT_NONE;
-				else { action = ACT_ENABLE; taskAction.exec(TASK_ACTION, TIME_RETRY); }
+				if(!enable)
+					action = ACT_NONE;
+				else {
+					action = ACT_ENABLE; 
+					if(!Task.has(TASK_ACTION)) taskAction.exec(TASK_ACTION, Conf.DEVS_MIN_RETRY);
+				}
 		}
 		// A.logd("after wifi enable ("+enable+") : action="+action+", state="+state);
 	}

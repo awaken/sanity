@@ -1,6 +1,7 @@
 package cri.sanity.screen;
 
 import cri.sanity.*;
+import cri.sanity.util.*;
 import android.os.Bundle;
 import android.preference.Preference;
 
@@ -21,11 +22,11 @@ public class ProximityActivity extends ScreenActivity
 				if((Boolean)value)
 					Admin.request(ProximityActivity.this);
 				else
-					A.alert(
+					Alert.msg(
 						A.rawstr(R.raw.admin_ask_disable),
-						new A.Click(){ public void on(){ Admin.remove(); adminCheck(); }},
+						new Alert.Click(){ public void on(){ Admin.remove(); adminCheck(); }},
 						null,
-						A.ALERT_OKCANC
+						Alert.OKCANC
 					);
 				return false;
 			}});

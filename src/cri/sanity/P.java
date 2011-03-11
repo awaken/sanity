@@ -6,8 +6,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
 
 // tool class of application preferences
 public final class P
@@ -59,13 +61,15 @@ public final class P
 	}
 	public static final boolean backup(String fn) {
 		try {
-			Map<String,Object> skipMap = skipKeysMap();
 			BufferedWriter out = new BufferedWriter(new FileWriter(fn, false));
-			final Map<String,?> map = A.prefs().getAll();
-			for(Map.Entry<String,?> e : map.entrySet()) {
-				final String k = e.getKey();
+			final Map<String,?> skipMap = skipKeysMap();
+			final Map<String,?> map     = A.prefs().getAll();
+			final String[]      keys    = new String[map.size()];
+			map.keySet().toArray(keys);
+			Arrays.sort(keys);
+			for(String k : keys) {
 				if(skipMap.containsKey(k)) continue;
-				final Object v = e.getValue();
+				final Object v = map.get(k);
 				final String c = v.getClass().getName();
 				out.write(k+"=("+c.substring(c.lastIndexOf('.')+1)+')'+v+'\n');
 			}

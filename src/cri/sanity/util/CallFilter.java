@@ -1,5 +1,6 @@
-package cri.sanity;
+package cri.sanity.util;
 
+import cri.sanity.A;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract.PhoneLookup;
@@ -69,7 +70,10 @@ public final class CallFilter
 		return A.geti("filter_mode_"+sect)==0 ? found : !found;
 	}
 
-	public static void shutdown() {
+	public static final String lastNum () { return lastNum ; }
+	public static final String lastName() { return lastName; }
+
+	public static final void shutdown() {
 		if(cursor == null) return;
 		cursor.close();
 		cursor     = null;

@@ -10,12 +10,13 @@ import android.preference.PreferenceGroup;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import cri.sanity.util.*;
 import cri.sanity.screen.*;
 
 
-public class ScreenActivity extends PrefActivity implements SharedPreferences.OnSharedPreferenceChangeListener
+public abstract class ScreenActivity extends PrefActivity implements SharedPreferences.OnSharedPreferenceChangeListener
 {
-	private static final Click clickLogo = new Click(){ public boolean on(){ return A.gotoMarketPub(); }};
+	private static final Click clickLogo = new Click(){ public boolean on(){ return Goto.marketSearchPub(); }};
 	private static final String appDesc  = A.s(R.string.app_desc)+"\n"+A.s(R.string.app_copy);
 	private static final Map<Class<?>,Integer> mapScreenPref   = new HashMap<Class<?>,Integer>();
 	private static final Map<Class<?>,Integer> mapScreenWidget = new HashMap<Class<?>,Integer>();
@@ -78,7 +79,7 @@ public class ScreenActivity extends PrefActivity implements SharedPreferences.On
     m.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
-				A.alert(A.s(R.string.help), getGroupText(getPreferenceScreen(), false));
+				Alert.msg(A.s(R.string.help), getGroupText(getPreferenceScreen(), false));
 				return true;
 			}
 			private String getGroupText(PreferenceGroup pg, boolean all) {
@@ -115,7 +116,7 @@ public class ScreenActivity extends PrefActivity implements SharedPreferences.On
 	//---- public api
 
 	public static final boolean alertChangeLog() {
-		A.alert(A.s(R.string.changelog_title), A.rawstr(R.raw.changelog));
+		Alert.msg(A.s(R.string.changelog_title), A.rawstr(R.raw.changelog), Alert.NONE);
 		return true;
 	}
 
@@ -170,13 +171,13 @@ public class ScreenActivity extends PrefActivity implements SharedPreferences.On
 	protected void nag()
 	{
 		if(!nag || A.isFull()) return;
-		final long now = A.now();
+		final long now = A.time();
 		if(now-A.getl(K.NAG) < Conf.NAG_TIMEOUT) return;
 		A.putc(K.NAG, now);
-		A.alert(
+		Alert.msg(
 			A.rawstr(R.raw.nag),
-			new A.Click(){ public void on(){ nag = true; A.gotoMarketDetails(Conf.DONATE_PKG); }},
-			new A.Click(){ public void on(){ nag = true; }}
+			new Alert.Click(){ public void on(){ nag = true; Goto.marketDetails(Conf.DONATE_PKG); }},
+			new Alert.Click(){ public void on(){ nag = true; }}
 		);
 		nag = false;
 	}

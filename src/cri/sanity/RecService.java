@@ -1,14 +1,14 @@
 package cri.sanity;
 
+import cri.sanity.util.*;
 import java.io.File;
-import java.io.FileFilter;
-
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.os.SystemClock;
 
 
 public class RecService extends Service
@@ -110,7 +110,7 @@ public class RecService extends Service
 	public static final void cron() {
 		final int life = A.geti(K.REC_AUTOREMOVE);
 		if(life <= 0) return;
-		final long now     = ts>0 ? ts : A.now();
+		final long now     = A.time();
 		final long recheck = life>3 ? life>7 ? 86400000*3 : 86400000 : 86400000/2;
 		if(now-A.getl(K.CRON) < recheck) return;
 		final String dir = A.sdcardDir();
@@ -118,14 +118,11 @@ public class RecService extends Service
 		final String prefix  = Conf.REC_PREFIX;
 		final String extprf  = Conf.PRF_EXT;
 		final long threshold = now - ((long)life)*86400000;
-		File[] found = new File(dir).listFiles(new FileFilter() {
-			@Override
-			public boolean accept(File f) {
-				final String name = f.getName();
-				return name.startsWith(prefix) && !name.endsWith(extprf) && !name.endsWith(".txt") && f.lastModified()<threshold;
-			}
-		});
-		for(File f : found) f.delete();
+		for(File f : new File(dir).listFiles()) {
+			final String name = f.getName();
+			if(name.startsWith(prefix) && !name.endsWith(extprf) && !name.endsWith(".txt") && f.isFile() && f.lastModified()<threshold)
+				f.delete();
+		}
 		A.putc(K.CRON, now);
 	}
 
@@ -136,7 +133,7 @@ public class RecService extends Service
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int id) {
-		final long now = A.now();
+		final long now = SystemClock.elapsedRealtime();
 		if(now-ts < Conf.SERVICE_TIMEOUT) return START_STICKY;
 		ts = now;
 		if(!running)           running = true;
@@ -186,7 +183,7 @@ public class RecService extends Service
 			notif.icon = R.drawable.ic_bar;
 			notif.setLatestEventInfo(ctx, notifTitle, A.s(R.string.msg_rec_start), notifIntent);
 		}
-		notif.when = A.now();
+		notif.when = A.time();
 		A.notifyCanc();
 		A.notifMan().notify(NID, notif);
 	}
@@ -261,7 +258,7 @@ public class RecService extends Service
 		else {
 			autoStartDelay   = A.geti(K.REC_START_DELAY);
 			autoStartTimes   = A.geti(K.REC_START_TIMES);
-			autoStartSpeaker = A.is(K.REC_START_SPEAKER);
+			autoStartSpeaker = pl.hasAutoSpeaker() && A.is(K.REC_START_SPEAKER);
 			final int act    = A.geti(K.REC_START_HEADSET);
 			headsetStart     = act != ACT_HEADSET_SKIP;
 			headsetOnStart   = act == ACT_HEADSET_ON;
@@ -269,7 +266,7 @@ public class RecService extends Service
 		// setup auto stop
 		if(autoStop) {
 			autoStopDelay   = A.geti(K.REC_STOP_DELAY);
-			autoStopSpeaker = A.is(K.REC_STOP_SPEAKER);
+			autoStopSpeaker = pl.hasAutoSpeaker() && A.is(K.REC_STOP_SPEAKER);
 			final int act   = A.geti(K.REC_STOP_HEADSET);
 			headsetStop     = act != ACT_HEADSET_SKIP;
 			headsetOnStop   = act == ACT_HEADSET_ON;

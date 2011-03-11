@@ -1,8 +1,9 @@
 package cri.sanity.screen;
 
 import android.os.Bundle;
-import android.preference.Preference.OnPreferenceChangeListener;
 import cri.sanity.*;
+import cri.sanity.pref.*;
+import cri.sanity.util.*;
 
 
 public class BlockerActivity extends ScreenActivity
@@ -11,16 +12,30 @@ public class BlockerActivity extends ScreenActivity
   public void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
-    fullOnly(K.BLOCK_SKIP, K.BLOCK_MODE+K.WS);
-    final OnPreferenceChangeListener changeBlock = pref(K.BLOCK_MODE+K.WS).getOnPreferenceChangeListener();
-    on(K.BLOCK_MODE+K.WS, new Change(){ public boolean on(){
-    	if(changeBlock!=null && !changeBlock.onPreferenceChange(pref, value)) return false;
-    	if(A.SDK>8 && value.equals(Blocker.MODE_HANGUP+""))
-    		A.alert(A.rawstr(R.raw.block_warn));
-    	pref(K.BLOCK_SKIP).setEnabled(!value.equals(Blocker.MODE_SILENT+""));
+    on("block", new Change(){ public boolean on(){
+    	prefFilter().updateSum((Boolean)value);
     	return true;
     }});
-    pref(K.BLOCK_SKIP).setEnabled(A.geti(K.BLOCK_MODE) != Blocker.MODE_SILENT);
+    on(K.BLOCK_MODE+K.WS, new Change(){ public boolean on(){
+    	if(A.SDK>8 && value.equals(Blocker.MODE_HANGUP+""))
+    		Alert.msg(A.rawstr(R.raw.block_warn));
+    	pref(K.BLOCK_SKIP       ).setEnabled(!value.equals(Blocker.MODE_SILENT+""));
+    	pref(K.BLOCK_RESUME+K.WS).setEnabled( value.equals(Blocker.MODE_FLIGHT+""));
+    	return true;
+    }});
+    final int mode = A.geti(K.BLOCK_MODE);
+    pref(K.BLOCK_SKIP       ).setEnabled(mode != Blocker.MODE_SILENT);
+  	pref(K.BLOCK_RESUME+K.WS).setEnabled(mode == Blocker.MODE_FLIGHT);
+    fullOnly(K.BLOCK_MODE+K.WS, K.BLOCK_RESUME+K.WS, K.BLOCK_SKIP, K.BLOCK_NOTIFY);
   }
+	
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		setChecked("block", A.is(K.BLOCK_FILTER));
+	}
+
+	private PFilter prefFilter() { return (PFilter)pref("filter_block"); }
 
 }

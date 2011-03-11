@@ -2,12 +2,12 @@ package cri.sanity.screen;
 
 import java.util.Currency;
 import java.util.Locale;
-
-import cri.sanity.*;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
+import cri.sanity.*;
+import cri.sanity.util.*;
 
 
 public class AboutActivity extends ScreenActivity
@@ -23,13 +23,13 @@ public class AboutActivity extends ScreenActivity
   {
 		skipAllKeys = true;
     super.onCreate(savedInstanceState);
-  	on("eula"     , new Click(){ public boolean on(){ return A.gotoUrl(EULA_URL);    }});
-  	on("comment"  , new Click(){ public boolean on(){ return A.gotoMarketDetails();  }});
+  	on("eula"     , new Click(){ public boolean on(){ return Goto.url(EULA_URL);    }});
+  	on("comment"  , new Click(){ public boolean on(){ return Goto.marketDetails();  }});
   	on("changelog", new Click(){ public boolean on(){ return alertChangeLog();       }});
   	on("mail"     , new Click(){ public boolean on(){ return mailToDeveloper();      }});
-  	on("paypal"   , new Click(){ public boolean on(){ return A.gotoUrl(donateUrl()); }});
+  	on("paypal"   , new Click(){ public boolean on(){ return Goto.url(donateUrl()); }});
   	if(A.SDK < 8) setEnabled("uninstall", false);
-  	else on("uninstall", new Click(){ public boolean on(){ A.alert(A.rawstr(R.raw.uninstall)); return true; }});
+  	else on("uninstall", new Click(){ public boolean on(){ Alert.msg(A.rawstr(R.raw.uninstall)); return true; }});
   }
 
 	private boolean mailToDeveloper()

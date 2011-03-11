@@ -1,9 +1,10 @@
-package cri.sanity;
+package cri.sanity.util;
 
 import java.io.IOException;
 import android.media.MediaRecorder;
 import android.media.MediaRecorder.*;
 import android.text.format.DateFormat;
+import cri.sanity.*;
 
 
 public class Rec
@@ -107,7 +108,7 @@ public class Rec
 			A.notify(A.s(R.string.err_dir));
 			throw new IOException();
 		}
-		fn += '/' + prefix + DateFormat.format(FILE_PATTERN, A.now()) + suffix;
+		fn += '/' + prefix + DateFormat.format(FILE_PATTERN, A.time()) + suffix;
 		switch(fmt) {
 			case FMT_3GP: fn += ".3gp"; break;
 			case FMT_MP4: fn += ".m4a"; break;

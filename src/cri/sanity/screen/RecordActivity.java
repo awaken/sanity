@@ -1,6 +1,7 @@
 package cri.sanity.screen;
 
 import cri.sanity.*;
+import cri.sanity.util.*;
 import java.io.File;
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,7 +29,7 @@ public class RecordActivity extends ScreenActivity
 		}});
 		on("rec_scan", new Change(){ public boolean on(){
 			boolean res = (Boolean)value? scanEnable() : scanDisable();
-			if(!res) A.alert(String.format(A.s(R.string.err_scan), scanFn()));
+			if(!res) Alert.msg(String.format(A.s(R.string.err_scan), scanFn()));
 			return res;
 		}});
 		on(K.REC_START, new Change(){ public boolean on(){

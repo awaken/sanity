@@ -9,6 +9,7 @@ import android.speech.tts.TextToSpeech;
 import android.widget.Toast;
 import cri.sanity.*;
 import cri.sanity.pref.*;
+import cri.sanity.util.*;
 
 
 public class TtsActivity extends ScreenActivity
@@ -77,17 +78,17 @@ public class TtsActivity extends ScreenActivity
 	}
 
 	@Override
-	protected void onActivityResult(int request, int res, Intent data)
+	protected void onActivityResult(int request, int res, Intent i)
 	{
 		if(request != CODE_CHECK) return;
 		if(res == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS)
 			setChecked(K.TTS, true);
 		else
-			A.alert(
+			Alert.msg(
 				A.rawstr(R.raw.tts_install),
-				new A.Click(){ public void on(){ startActivity(new Intent(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA)); }},
+				new Alert.Click(){ public void on(){ startActivity(new Intent(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA)); }},
 				null,
-				A.ALERT_OKCANC
+				Alert.OKCANC
 			);
 	}
 

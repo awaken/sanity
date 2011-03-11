@@ -326,13 +326,42 @@
 
 	<string-array name="block_mode_labels">
 		<item>Hang up</item>
-		<item>Interrupt signal</item>
+		<item>Interrupt the signal</item>
 		<item>Silent mode</item>
 	</string-array>
 	<string-array name="block_mode_values">
 		<item>0</item>
 		<item>1</item>
 		<item>2</item>
+	</string-array>
+
+	<string-array name="block_resume_labels">
+		<item>Immediate</item>
+		<item>30 seconds</item>
+		<item>1 minute</item>
+		<item>2 minutes</item>
+		<item>3 minutes</item>
+		<item>4 minutes</item>
+		<item>5 minutes</item>
+		<item>10 minutes</item>
+		<item>15 minutes</item>
+		<item>20 minutes</item>
+		<item>30 minutes</item>
+		<item>60 minutes</item>
+	</string-array>
+	<string-array name="block_resume_values">
+		<item>0</item>
+		<item>30000</item>
+		<item>60000</item>
+		<item>120000</item>
+		<item>180000</item>
+		<item>240000</item>
+		<item>300000</item>
+		<item>600000</item>
+		<item>900000</item>
+		<item>1200000</item>
+		<item>1800000</item>
+		<item>3600000</item>
 	</string-array>
 
 </resources>

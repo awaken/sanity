@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import cri.sanity.*;
+import cri.sanity.util.*;
 
 
 public class ProfileActivity extends ScreenActivity implements FilenameFilter
@@ -67,7 +68,7 @@ public class ProfileActivity extends ScreenActivity implements FilenameFilter
 			case R.id.rename  : rename();                          break;
 			case R.id.delete  : delete();                          break;
 			case R.id.show    : showDetails();                     break;
-			case R.id.help    : A.alert(A.rawstr(R.raw.help_prf)); break;
+			case R.id.help    : Alert.msg(A.rawstr(R.raw.help_prf)); break;
 			default: return super.onOptionsItemSelected(item);
 		}
 		return true;
@@ -98,16 +99,16 @@ public class ProfileActivity extends ScreenActivity implements FilenameFilter
 
 	private void addnew() {
 		if(prefActive == null) addnewReally();
-		else A.alert(
+		else Alert.msg(
 			A.s(R.string.ask_prf_addnew),
-			new A.Click(){ public void on(){ dismiss(); addnewReally(); }},
+			new Alert.Click(){ public void on(){ dismiss(); addnewReally(); }},
 			null,
-			A.ALERT_OKCANC
+			Alert.OKCANC
 		);
 	}
 	
 	private void addnewReally() {
-		A.alertText(A.s(R.string.msg_prf_addnew), new A.Edited() {
+		Alert.edit(A.s(R.string.msg_prf_addnew), new Alert.Edited() {
 			@Override
 			public void on(String name) {
 				name = A.cleanFn(name, true);
@@ -131,17 +132,17 @@ public class ProfileActivity extends ScreenActivity implements FilenameFilter
 	private void activate() {
 		if(!isSelected() || prefSelected.isActive()) return;
 		if(A.has(K.PRF_NAME)) activateReally();
-		else A.alert(
+		else Alert.msg(
 			A.s(R.string.ask_prf_activate),
-			new A.Click(){ public void on(){ dismiss(); activateReally(); }},
+			new Alert.Click(){ public void on(){ dismiss(); activateReally(); }},
 			null,
-			A.ALERT_OKCANC
+			Alert.OKCANC
 		);
 	}
 	
 	private void activateReally() {
 		if(!P.restore(prefSelected.file.getAbsolutePath()))
-			A.alert(A.s(R.string.msg_restore_failed));
+			Alert.msg(A.s(R.string.msg_restore_failed));
 		else
 			prefSelected.setActive(true);
 	}
@@ -149,9 +150,9 @@ public class ProfileActivity extends ScreenActivity implements FilenameFilter
 	private void saveas() {
 		if(!isSelected()) return;
 		final Pref p = prefSelected;
-		A.alert(
+		Alert.msg(
 			String.format(A.s(R.string.ask_prf_saveas), p.name),
-			new A.Click(){ public void on(){
+			new Alert.Click(){ public void on(){
 				final String prfOld = A.gets(K.PRF_NAME);
 				A.putc(K.PRF_NAME, p.name);
 				if(P.backup(p.file.getAbsolutePath())) {
@@ -163,14 +164,14 @@ public class ProfileActivity extends ScreenActivity implements FilenameFilter
 				}
 			}},
 			null,
-			A.ALERT_OKCANC
+			Alert.OKCANC
 		);
 	}
 
 	private void rename() {
 		if(!isSelected()) return;
 		final Pref p = prefSelected;
-		A.alertText(A.s(R.string.msg_prf_rename), p.name, new A.Edited() {
+		Alert.edit(A.s(R.string.msg_prf_rename), p.name, new Alert.Edited() {
 			@Override
 			public void on(String name) {
 				name = A.cleanFn(name, true);
@@ -194,9 +195,9 @@ public class ProfileActivity extends ScreenActivity implements FilenameFilter
 
 	private void delete() {
 		if(!isSelected()) return;
-		A.alert(
+		Alert.msg(
 			String.format(A.s(R.string.ask_prf_delete), prefSelected.name),
-			new A.Click(){ public void on(){
+			new Alert.Click(){ public void on(){
 				try {
 					if(!prefSelected.file.delete()) throw new Exception();
 					prefGroup.removePreference(prefSelected);
@@ -212,24 +213,25 @@ public class ProfileActivity extends ScreenActivity implements FilenameFilter
 				}
 			}},
 			null,
-			A.ALERT_OKCANC
+			Alert.OKCANC
 		);
 	}
 
-	public static final String[][] sections() {
+	private static final String[]   filters () { return new String[]{ K.REC_FILTER, K.TTS_FILTER, K.BLOCK_FILTER }; }
+	private static final String[][] sections() {
 		return new String[][]{
 			new String[]{ "general_cat", K.ENABLED, K.FORCE_BT_AUDIO, K.REVERSE_PROXIMITY },
 			new String[]{ "devices_cat", K.AUTO_MOBDATA, K.AUTO_WIFI, K.AUTO_GPS, K.AUTO_BT, K.SKIP_BT, K.SKIP_MOBDATA, K.SKIP_HOTSPOT, K.SKIP_TETHER, K.REVERSE_BT, K.REVERSE_BT_TIMEOUT, K.BT_OFF },
 			new String[]{ "proximity_cat", K.DISABLE_PROXIMITY, K.DISABLE_DELAY, K.ENABLE_PROXIMITY, K.ENABLE_DELAY, K.SCREEN_OFF, K.SCREEN_ON },
-			new String[]{ "speaker_cat", K.SPEAKER_AUTO, K.SPEAKER_DELAY, K.SPEAKER_LOUD, K.SPEAKER_CALL, K.SPEAKER_CALL_DELAY, K.SPEAKER_SILENT_END, K.SPEAKER_ON_COUNT, K.SPEAKER_OFF_COUNT },
+			new String[]{ "speaker_cat", K.SPEAKER_AUTO, K.SPEAKER_DELAY, K.SPEAKER_CALL, K.SPEAKER_CALL_DELAY, K.SPEAKER_VOL, K.SPEAKER_SILENT_END, K.SPEAKER_ON_COUNT, K.SPEAKER_OFF_COUNT },
 			new String[]{ "vol_cat", K.VOL_PHONE, K.VOL_WIRED, K.VOL_BT, K.VOL_SOLO },
 			new String[]{ "notify_cat", K.NOTIFY_ENABLE, K.NOTIFY_DISABLE, K.NOTIFY_ACTIVITY, K.NOTIFY_VOLUME, K.NOTIFY_REC_STOP, K.VIBRATE_END },
 			new String[]{ "rec_cat", K.REC, K.REC_FMT, K.REC_SRC, K.REC_START, K.REC_START_DELAY, K.REC_FILTER, K.REC_START_SPEAKER, K.REC_START_HEADSET, K.REC_START_DIR, K.REC_START_TIMES, K.REC_STOP, K.REC_STOP_DELAY, K.REC_STOP_SPEAKER, K.REC_STOP_HEADSET, K.REC_STOP_LIMIT, K.REC_AUTOREMOVE },
 			new String[]{ "tts_cat", K.TTS, K.TTS_HEADSET, K.TTS_SKIP, K.TTS_SOLO, K.TTS_VOL, K.TTS_TONE, K.TTS_REPEAT, K.TTS_PAUSE, K.TTS_PREFIX, K.TTS_SUFFIX, K.TTS_ANONYM, K.TTS_UNKNOWN, K.TTS_FILTER },
-			new String[]{ "block_cat", K.BLOCK, K.BLOCK_SKIP, K.BLOCK_MODE }
+			new String[]{ "block_cat", K.BLOCK_FILTER, K.BLOCK_MODE, K.BLOCK_RESUME, K.BLOCK_SKIP, K.BLOCK_NOTIFY }
 		};
 	}
-	public static final Map<String,Pair<Integer,Integer>> intLabVals() {
+	private static final Map<String,Pair<Integer,Integer>> intLabVals() {
 		Map<String,Pair<Integer,Integer>> m = new HashMap<String,Pair<Integer,Integer>>();
 		Pair<Integer,Integer> pd  = p(R.array.disable_delay_labels, R.array.disable_delay_values);
 		Pair<Integer,Integer> psc = p(R.array.speaker_count_labels, R.array.speaker_count_values);
@@ -248,13 +250,14 @@ public class ProfileActivity extends ScreenActivity implements FilenameFilter
 		m.put(K.REC_STOP_HEADSET  , p(R.array.rec_stop_headset_labels  , R.array.rec_headset_values));
 		m.put(K.REC_STOP_LIMIT    , p(R.array.rec_stop_limit_labels    , R.array.rec_stop_limit_values));
 		m.put(K.REC_START_TIMES   , p(R.array.rec_start_times_labels   , R.array.rec_start_times_values));
-		m.put(K.REC_START_DIR     , p(R.array.rec_start_dir_labels     , R.array.rec_start_times_values));
+		m.put(K.REC_START_DIR     , p(R.array.rec_start_dir_labels     , R.array.rec_start_dir_values));
 		m.put(K.REC_AUTOREMOVE    , p(R.array.rec_autoremove_labels    , R.array.rec_autoremove_values));
 		m.put(K.REVERSE_BT_TIMEOUT, p(R.array.bt_reverse_timeout_labels, R.array.bt_reverse_timeout_values));
 		m.put(K.TTS_TONE          , p(R.array.tts_tone_labels          , R.array.tts_tone_values));
 		m.put(K.TTS_REPEAT        , p(R.array.tts_repeat_labels        , R.array.tts_repeat_values));
 		m.put(K.TTS_PAUSE         , p(R.array.tts_pause_labels         , R.array.tts_pause_values));
 		m.put(K.BLOCK_MODE        , p(R.array.block_mode_labels        , R.array.block_mode_values));
+		m.put(K.BLOCK_RESUME      , p(R.array.block_resume_labels      , R.array.block_resume_values));
 		return m;
 	}
 	private static Pair<Integer,Integer> p(int lab, int val) { return new Pair<Integer,Integer>(lab, val); }
@@ -264,22 +267,29 @@ public class ProfileActivity extends ScreenActivity implements FilenameFilter
 		final Map<String,?> mapPrf = P.load(prefSelected.file.getAbsolutePath());
 		if(mapPrf == null) { A.toast(R.string.err_name); return; }
 		final Map<String,Pair<Integer,Integer>> mapArr = intLabVals();
-		StringBuilder msg = new StringBuilder(512);
+		final String[] filters = filters();
+		final int fs = filters.length;
+		StringBuilder msg = new StringBuilder(2048);
 		try {
 			for(String[] sect : sections()) {
 				msg.append("** ").append(A.s(A.rstring(sect[0]))).append('\n');
 				final int n = sect.length;
-				for(int i=1; i<n; i++) {
+				for(int t, i=1; i<n; i++) {
+					final String k = sect[i];
 					try {
-						final String k = sect[i];
-						final String m = "- " + A.s(A.rstring(k+"_title"));
-						msg.append(m).append(": ").append(valShow(mapArr, k, mapPrf.get(k))).append('\n');
-					} catch(Exception exp) {}
+						t = A.rstring(k+"_title");
+					} catch(Exception e) {
+						t = 0;
+						for(int j=0; j<fs; j++)
+							if(filters[j].equals(k)) { t = R.string.filter_cat; break; }
+						if(t == 0) continue;
+					}
+					msg.append("- ").append(A.s(t)).append(": ").append(valShow(mapArr, k, mapPrf.get(k))).append('\n');
 				}
 				msg.append('\n');
 			}
 		} catch(Exception e) {}
-		A.alert(prefSelected.name, msg.toString());
+		Alert.msg(prefSelected.name, msg.toString());
 	}
 
 	private static String valShow(Map<String,Pair<Integer,Integer>> map, String k, Object o) {

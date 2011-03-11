@@ -18,6 +18,17 @@ An Android application to assist during phone calls.
   Change log
 -------------------
 
+* version 2.03  (11/03/2011)
+- New: option to delay signal restoring when the call is blocked through interrupting signal.
+- New: option to notify blocked calls.
+- New: function to add call filter numbers from the call log.
+- New: function for fast searching a contact in the call filter.
+- New: option for setting automatic handsfree volume.
+- Fix: bug in groups list of call filter.
+- Fix: bug in automatic recording when automatic handsfree is disabled.
+- Fix: minor bugs.
+- Change: optimizations in call blocker and annouce caller.
+
 * version 2.02  (08/03/2011)
 - New: options to block incoming calls automatically.
 - New: option to skip announcing when the phone is in silent mode.
@@ -176,11 +187,12 @@ An Android application to assist during phone calls.
   TODO
 -------------------
 
+* option to set exactly the handsfree volume
 * auto airplane mode when headsets are plugged
 * integrated audio player?
 * flip silence?
 * call log sync to gmail???
-* hard keys (volume, camera, media) for starting recording
+* block sms?
 
 * auto answer message (incoming calls)
   + only if headsets
@@ -197,3 +209,7 @@ An Android application to assist during phone calls.
 
 * auto turn off silence mode
   + show dialog asking when turn off silence mode when turned on
+
+* call filter:
+	+ fast search of a contact (in contacts list)
+	+ add item to explicit list from call log

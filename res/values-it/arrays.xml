@@ -173,4 +173,19 @@
 		<item>Modalità silenziosa</item>
 	</string-array>
 
+	<string-array name="block_resume_labels">
+		<item>Immediato</item>
+		<item>30 secondi</item>
+		<item>1 minuto</item>
+		<item>2 minuti</item>
+		<item>3 minuti</item>
+		<item>4 minuti</item>
+		<item>5 minuti</item>
+		<item>10 minuti</item>
+		<item>15 minuti</item>
+		<item>20 minuti</item>
+		<item>30 minuti</item>
+		<item>60 minuti</item>
+	</string-array>
+
 </resources>

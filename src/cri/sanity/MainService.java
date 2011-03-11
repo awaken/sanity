@@ -48,7 +48,7 @@ public final class MainService extends Service
 	{
 		try { A.telMan().listen(phoneListener, PhoneListener.LISTEN_NONE); } catch(Exception e) {}
 		A.notifyCanc();
-		A.notifyCancAll();
+		//A.notifyCancAll();
 		//A.logd("MainService destroyed");
 		running = false;
 		super.onDestroy();

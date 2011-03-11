@@ -2,7 +2,7 @@
 <resources>
 
   <string name="app_desc">Assistente personale per le telefonate.</string>
-  <string name="app_shortcut">Sanity - Scorciatoie</string>
+  <string name="app_shortcut">Sanity - Scorciatoia</string>
 
 	<string name="canc">Annulla</string>
 	<string name="yes">Sì</string>
@@ -27,6 +27,7 @@
 	<string name="call_out">effettuata</string>
 	<string name="unknown">Sconosciuto</string>
 	<string name="anonym">Anonimo</string>
+	<string name="search">Cerca</string>
 	<string name="help">Aiuto</string>
 	<string name="backup">Backup</string>
 	<string name="restore">Ripristino</string>
@@ -38,6 +39,7 @@
 	<string name="starred">Preferito</string>
 	<string name="sysgroup">gruppo di sistema</string>
   <string name="announce">Annuncio</string>
+  <string name="callog">Registro</string>
 
   <string name="groups_cat">Preferenze</string>
   <string name="misc_cat">Varie</string>
@@ -107,8 +109,7 @@
   <string name="auto_speaker_sum">Abilita/disabilita automaticamente il vivavoce quando allontano/avvicino il telefono all\'orecchio.</string>
   <string name="delay_speaker_title">Ritardo di attivazione</string>
   <string name="delay_speaker_sum">Quanto tempo aspettare prima che il vivavoce venga automaticamente acceso quando allontani il telefono dall\'orecchio.</string>
-  <string name="loud_speaker_title">Vivavoce forte</string>
-  <string name="loud_speaker_sum">Alza il volume al massimo quando Sanity attiva automaticamente il vivavoce.</string>
+  <string name="vol_speaker_sum">Volume da impostare quando il vivavoce viene attivato automaticamente.</string>
   <string name="speaker_call_title">Abilita a inizio chiamata</string>
   <string name="speaker_call_sum">Abilita subito il vivavoce quando inizia la telefonata.</string>
   <string name="delay_speaker_call_title">Ritardo di inizio</string>
@@ -136,7 +137,7 @@
 	<string name="rec_cat_sum_free">Questa versione gratuita è limitata a 2 minuti per ogni registrazione.</string>
 	<string name="rec_warn_title">Note legali</string>
 	<string name="rec_warn_sum">Attenzione: in alcuni paesi la registrazione delle telefonate è proibita dalle leggi del governo. L\'autore dissente ogni uso illegale di Sanity. Sii consapevole, usalo a tuo rischio!</string>
-	<string name="rec_title">Abilita la registrazione</string>
+	<string name="rec_title">Abilita il registratore</string>
 	<string name="rec_sum">Mette una notifica di registrazione nella barra di stato durante le telefonate: tocca quella notifica per avviare/arrestare la registrazione.</string>
 	<string name="rec_src_title">Sorgente audio</string>
 	<string name="rec_src_sum">Scegli il dispositivo usato per registrare l\'audio. Attenzione: su molti telefoni funziona soltanto la sorgente \"Microfono\"!!</string>
@@ -218,6 +219,9 @@
 	<string name="block_skip_sum">Non bloccare le chiamate quando il telefono è in modalità silenziosa.</string>
 	<string name="block_mode_title">Metodo di blocco</string>
 	<string name="block_mode_sum">Scegli come bloccare le chiamate ricevute.</string>
+	<string name="block_resume_title">Ripristina il segnale</string>
+	<string name="block_resume_sum">Scegli quando ripristinare il segnale dopo che la chiamata è stata bloccata.</string>
+	<string name="block_notify_sum">Notifica sulla barra di stato l\'ultima chiamata bloccata.</string>
 
   <string name="notify_cat">Notifica</string>
   <string name="notify_sum">Scegli quali notifiche visualizzare.</string>
@@ -319,13 +323,18 @@
   <string name="msg_prf_addnew">Scegli il nome del nuovo profilo da creare</string>
   <string name="msg_prf_rename">Modifica il nome del profilo</string>
   <string name="msg_prf_nosel">Nessun profilo risulta selezionato!</string>
-  <string name="msg_nums_edit">Numero telefonico</string>
+  <string name="msg_nums_edit">Numero telefonico (con prefisso internazionale)</string>
   <string name="msg_empty_list">Non esistono elementi in questa lista. Usa il menù per crearne di nuovi.</string>
   <string name="msg_last_modified">Ultima modifica</string>
   <string name="msg_email_choose">Scegli come inviare l\'email</string>
   <string name="msg_email_body">Ciao Cristiano!</string>
   <string name="msg_eula_title">Contratto di licenza software</string>
   <string name="msg_option_full">Spiacente, questa opzione è disponibile solo nella versione Donazione.</string>
+  <string name="msg_contact_err">Errore nella ricerca di \"%s\"</string>
+  <string name="msg_contact_unsel">\"%s\" NON selezionato</string>
+  <string name="msg_contact_sel">\"%s\" selezionato</string>
+  <string name="msg_callog_new">Nuovo numero dalle chiamate recenti</string>
+  <string name="msg_callog_empty">Il registro non contiene nuovi numeri sconosciuti!</string>
 
   <string name="err_dir">Sanity errore: impossibile creare la cartella sulla sdcard per salvare le registrazioni audio!</string>
   <string name="err_rec">Sanity errore: impossibile avviare la registrazione audio!</string>

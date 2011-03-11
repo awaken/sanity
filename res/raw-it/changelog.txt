@@ -1,4 +1,15 @@
-Version 2.02:
+Versione 2.03:
+- Nuovo: opzione per ritardare la ripresa del segnale radio quando la chiamata viene bloccata tramite l'interruzione del segnale.
+- Nuovo: opzione per notificare le chiamate bloccate.
+- Nuovo: opzione per impostare il volume del vivavoce automatico.
+- Nuovo: funzione per aggiungere numeri al filtro chiamate dal registro chiamate.
+- Nuovo: funzione per la ricerca veloce di un contatto nel filtro chiamate.
+- Fix: bug nella lista di gruppi del filtro chiamate.
+- Fix: bug nella registrazione automatica quando il vivavoce automatico è disabilitato.
+- Fix: bug minori.
+- Modifica: ottimizzazione nel blocco chiamate e nell'annuncio chiamante.
+
+Versione 2.02:
 - Nuovo: opzioni per bloccare automaticamente le chiamate ricevute.
 - Nuovo: opzione per evitare l'annuncio quando il telefono è in modalità silenziosa.
 - Nuovo: opzione per mostrare lo schermo della chiamata subito dopo aver avviato o arrestato la registrazione manualmente.
@@ -6,7 +17,7 @@ Version 2.02:
 - Fix: bug nel disabilitare la connessione dati in mobilità.
 - Fix: bug nel riconoscimento della versione donazione.
 
-Version 2.01:
+Versione 2.01:
 - Fix: il chiamante veniva sempre annunciato.
 
 Versione 2.00:

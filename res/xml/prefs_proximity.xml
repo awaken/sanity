@@ -29,6 +29,7 @@
                         android:key="admin" />
 	  <CheckBoxPreference android:title="@string/screen_off_title"
 	                      android:summary="@string/screen_off_sum"
+	                      android:dependency="admin"
 	                      android:key="screen_off" />
 	  <CheckBoxPreference android:title="@string/screen_on_title"
 	                      android:summary="@string/screen_on_sum"

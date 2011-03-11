@@ -4,7 +4,7 @@
   <string name="app">Sanity</string>
 	<string name="app_copy">(C) 2011 - Cristiano Tagliamonte.</string>
   <string name="app_desc">Personal assistant during phone calls.</string>
-  <string name="app_shortcut">Sanity - Shortcuts</string>
+  <string name="app_shortcut">Sanity - Shortcut</string>
 
 	<string name="ok">Ok</string>
 	<string name="canc">Cancel</string>
@@ -30,6 +30,7 @@
 	<string name="call_out">outgoing</string>
 	<string name="unknown">Unknown</string>
 	<string name="anonym">Anonymous</string>
+	<string name="search">Search</string>
 	<string name="help">Help</string>
 	<string name="backup">Backup</string>
 	<string name="restore">Restore</string>
@@ -41,6 +42,7 @@
 	<string name="starred">Favourite</string>
 	<string name="sysgroup">system group</string>
   <string name="announce">Announcement</string>
+  <string name="callog">Call Log</string>
 
   <string name="groups_cat">Preferences</string>
   <string name="misc_cat">Miscellaneous</string>
@@ -110,18 +112,17 @@
   <string name="auto_speaker_sum">Automatically enable/disable handsfree when the phone is far/close to your ear.</string>
   <string name="delay_speaker_title">Enable delay</string>
   <string name="delay_speaker_sum">Delay time for automatically turning ON handsfree when the phone is NOT close to your ear.</string>
-  <string name="loud_speaker_title">Loud speaker</string>
-  <string name="loud_speaker_sum">Set maximum volume when Sanity automatically enables handsfree.</string>
+  <string name="vol_speaker_sum">Volume to set when the handsfree is automatically enabled.</string>
   <string name="speaker_call_title">Enable on call start</string>
-  <string name="speaker_call_sum">Enable handsfree when call begins.</string>
+  <string name="speaker_call_sum">Enable handsfree when the call begins.</string>
   <string name="delay_speaker_call_title">Delay on start</string>
-  <string name="delay_speaker_call_sum">Delay time for automatically turning ON handsfree when call begins.</string>
+  <string name="delay_speaker_call_sum">Delay time for automatically turning ON the handsfree when call begins.</string>
   <string name="silent_end_speaker_title">Silent call end</string>
   <string name="silent_end_speaker_sum">Turn off handsfree on call end, just before the call end sound is played.</string>
   <string name="speaker_on_count_title">Limit to Enable</string>
-  <string name="speaker_on_count_sum">How many times up to automatically enable handsfree during one call when the phone is far from ear.</string>
+  <string name="speaker_on_count_sum">How many times up to automatically enable the handsfree during one call when the phone is far from ear.</string>
   <string name="speaker_off_count_title">Limit to Disable</string>
-  <string name="speaker_off_count_sum">How many times up to automatically disable handsfree during one call when the phone is close to ear.</string>
+  <string name="speaker_off_count_sum">How many times up to automatically disable the handsfree during one call when the phone is close to ear.</string>
 
 	<string name="vol_cat">Volume</string>
 	<string name="vol_sum">Options for automatic volume setting during a call.</string>
@@ -139,7 +140,7 @@
 	<string name="rec_cat_sum_free">This free version is limited to 2 minutes for each recording.</string>
 	<string name="rec_warn_title">Legal notes</string>
 	<string name="rec_warn_sum">Attention please: in some countries call recording is forbidden by government laws. The author disagrees every illegal use of Sanity. Be aware, use it at your risk!</string>
-	<string name="rec_title">Enable recording system</string>
+	<string name="rec_title">Enable recorder</string>
 	<string name="rec_sum">Put recording notification on statusbar during phone call: tap that notification to start/stop call recording.</string>
 	<string name="rec_src_title">Audio source</string>
 	<string name="rec_src_sum">Select the source device used for recording audio. Attention: many phones are limited to "Microphone" as only working one!</string>
@@ -221,6 +222,9 @@
 	<string name="block_skip_sum">Don\'t block incoming calls when the phone is in silent mode.</string>
 	<string name="block_mode_title">Block method</string>
 	<string name="block_mode_sum">Choose how to block incoming calls.</string>
+	<string name="block_resume_title">Restore the signal</string>
+	<string name="block_resume_sum">Choose when to restore the signal after the call has been blocked.</string>
+	<string name="block_notify_sum">Notify the last blocked call on the status bar.</string>
 
   <string name="notify_cat">Notification</string>
   <string name="notify_sum">Choose when Sanity should show notifications.</string>
@@ -324,13 +328,18 @@
   <string name="msg_prf_nosel">No profile is selected!</string>
   <string name="msg_prf_restore_ok">Sanity: profile \"%s\" is active</string>
   <string name="msg_prf_restore_err">Sanity: unable to activate profile \"%s\"!</string>
-  <string name="msg_nums_edit">Phone number</string>
+  <string name="msg_nums_edit">Phone number (with international prefix)</string>
   <string name="msg_empty_list">There aren\'t entries in this list. Use menu to create new ones.</string>
   <string name="msg_last_modified">Last modified</string>
   <string name="msg_email_choose">Choose how to send email</string>
   <string name="msg_email_body">Hello Cristiano!</string>
   <string name="msg_eula_title">Software license agreement</string>
   <string name="msg_option_full">Sorry, this option is available only in the Donate version.</string>
+  <string name="msg_contact_err">Error for finding \"%s\"</string>
+  <string name="msg_contact_unsel">\"%s\" NOT selected</string>
+  <string name="msg_contact_sel">\"%s\" selected</string>
+  <string name="msg_callog_new">New number from call log</string>
+  <string name="msg_callog_empty">The call log doesn\'t contain new unknown numbers!</string>
 
   <string name="err_dir">Sanity error: unable to create directory on sdcard for saving audio recording!</string>
   <string name="err_rec">Sanity error: unable to start audio recording!</string>

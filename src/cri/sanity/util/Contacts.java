@@ -1,4 +1,4 @@
-package cri.sanity;
+package cri.sanity.util;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.provider.ContactsContract.Data;
 import android.provider.ContactsContract.Groups;
 import android.provider.ContactsContract.CommonDataKinds.GroupMembership;
+import cri.sanity.A;
 
 
 public final class Contacts
@@ -17,6 +18,14 @@ public final class Contacts
 	public  static final int GRP_SID   = 2;
 	public  static final int GRP_ACC   = 3;
 
+	private static String adjustTitle(String title)
+	{
+		final int p = title.indexOf(':');
+		return p>0? title.substring(p+1).trim() : title;
+	}
+	
+	private static String adjustAcc(String acc) { return acc==null || acc.indexOf('@')<0 ? "" : acc; }
+
 	public static final Map<String,String> groups()
 	{
 		Map<String,String> map = new TreeMap<String,String>();
@@ -25,10 +34,7 @@ public final class Contacts
 			final int colId    = c.getColumnIndex(Groups._ID);
 			final int colTitle = c.getColumnIndex(Groups.TITLE);
 			do {
-				String title = c.getString(colTitle);
-				final int p = title.indexOf(':');
-				if(p > 0) title = title.substring(p+1).trim();
-				map.put(c.getString(colId), title);
+				map.put(c.getString(colId), adjustTitle(c.getString(colTitle)));
 			} while(c.moveToNext());
 		}
 		c.close();
@@ -43,18 +49,14 @@ public final class Contacts
 		);
 		String[][] res = new String[c.getCount()][];
 		if(c.moveToFirst()) {
-			final int colId      = c.getColumnIndex(Groups._ID);
-			final int colTitle   = c.getColumnIndex(Groups.TITLE);
-			final int colSid     = c.getColumnIndex(Groups.SYSTEM_ID);
-			final int colAcc = c.getColumnIndex(Groups.ACCOUNT_NAME);
-			int i = 0;
+			final int colId    = c.getColumnIndex(Groups._ID);
+			final int colTitle = c.getColumnIndex(Groups.TITLE);
+			final int colSid   = c.getColumnIndex(Groups.SYSTEM_ID);
+			final int colAcc   = c.getColumnIndex(Groups.ACCOUNT_NAME);
+			int i = -1;
 			do {
-				String title = c.getString(colTitle);
-				String acc   = c.getString(colAcc);
-				final int p  = title.indexOf(':');
-				if(p > 0) title = title.substring(p+1).trim();
-				if(acc.indexOf('@') < 0) acc = "";
-				res[i++] = new String[]{ c.getString(colId), title, c.getString(colSid), acc, };
+				res[++i] = new String[]{ c.getString(colId ), adjustTitle(c.getString(colTitle)),
+					                       c.getString(colSid), adjustAcc  (c.getString(colAcc  )) };
 			} while(c.moveToNext());
 		}
 		c.close();
@@ -68,8 +70,8 @@ public final class Contacts
 		);
 		String[] groups = new String[c.getCount()];
 		if(c.moveToFirst()) {
-			int col = c.getColumnIndex(GroupMembership.GROUP_ROW_ID);
-			int i   = -1;
+			final int col = c.getColumnIndex(GroupMembership.GROUP_ROW_ID);
+			int i = -1;
 			do {
 				groups[++i] = c.getString(col);
 			} while(c.moveToNext());

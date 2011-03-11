@@ -1,9 +1,6 @@
-package cri.sanity;
+package cri.sanity.util;
 
 import java.lang.reflect.Method;
-
-import cri.sanity.ghost.*;
-import com.android.internal.telephony.ITelephony;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
@@ -14,40 +11,21 @@ import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.location.LocationManager;
-import android.media.AudioManager;
 import android.app.KeyguardManager.KeyguardLock;
 import android.net.Uri;
-//import android.net.wifi.WifiConfiguration;
-//import android.content.ContentResolver;
+import com.android.internal.telephony.ITelephony;
+import cri.sanity.A;
+import cri.sanity.ghost.*;
 
 
 public final class Dev
 {
-	public static final int RING       = AudioManager.RINGER_MODE_NORMAL;
-	public static final int VOL_CALL   = AudioManager.STREAM_VOICE_CALL;
-	public static final int VOL_MEDIA  = AudioManager.STREAM_MUSIC;
-	public static final int VOL_ALARM  = AudioManager.STREAM_ALARM;
-	public static final int VOL_NOTIFY = AudioManager.STREAM_NOTIFICATION;
-	public static final int VOL_RING   = AudioManager.STREAM_RING;
-	public static final int VOL_DTMF   = AudioManager.STREAM_DTMF;
-	public static final int VOL_SYS    = AudioManager.STREAM_SYSTEM;
-	public static final int VOL_DEF    = AudioManager.USE_DEFAULT_STREAM_TYPE;
-	public static final int FLAG_VOL_SHOW    = AudioManager.FLAG_SHOW_UI;
-	public static final int FLAG_VOL_PLAY    = AudioManager.FLAG_PLAY_SOUND;
-	public static final int FLAG_VOL_VIBRATE = AudioManager.FLAG_VIBRATE;
-	public static final int FLAG_VOL_RING    = AudioManager.FLAG_ALLOW_RINGER_MODES;
-	public static final int FLAG_VOL_REMOVE  = AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE;
-
-	public static int defVolFlags = 0;
-
-	private static ITelephony iTel;
-	private static WifiMan    gWifi;
-	private static ConnMan    gConn;
-	private static int screenTimeoutBak = -1;
-	//private static int brightnessBak = -1;
+	private static ITelephony   iTel;
+	private static WifiMan      gWifi;
+	private static ConnMan      gConn;
+	private static KeyguardLock keyguardLock;
 	private static PowerManager.WakeLock wakeCpuLock;
 	private static PowerManager.WakeLock wakeScreenLock;
-	private static KeyguardLock keyguardLock;
 
 	//---- getting devices
 
@@ -70,21 +48,12 @@ public final class Dev
 
 	//---- ghost manager
 
-	public static final ITelephony iTel() {
-		if(iTel == null) iTel = getITelephony();
-		return iTel;
-	}
-	public static final WifiMan gWifi() {
-		if(gWifi == null) gWifi = new WifiMan();
-		return gWifi;
-	}
-	public static final ConnMan gConn() {
-		if(gConn == null) gConn = new ConnMan();
-		return gConn;
-	}
+	public static final ITelephony iTel() { if(iTel  == null) iTel  = getITelephony(); return iTel;  }
+	public static final WifiMan   gWifi() { if(gWifi == null) gWifi = new WifiMan();   return gWifi; }
+	public static final ConnMan   gConn() { if(gConn == null) gConn = new ConnMan();   return gConn; }
 
 	//---- check on/off device state
-	
+
 	//public static final boolean isHeadsetOn() {
 	//	final AudioManager am = A.audioMan();
 	//	return am.isWiredHeadsetOn() || am.isBluetoothA2dpOn() || am.isBluetoothScoOn();
@@ -104,7 +73,7 @@ public final class Dev
 		return lm!=null && lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
 	}
 
-	//public static final boolean isFlightModeOn() { return getSysInt(System.AIRPLANE_MODE_ON) == 1; }
+	public static final boolean isFlightModeOn() { return getSysInt(System.AIRPLANE_MODE_ON) == 1; }
 
 	public static final boolean isHotspotOn()        { return gWifi().isHotspotOn(); }
 	public static final boolean isHotspotSupported() { return gWifi().callable("getWifiApState"); }
@@ -137,15 +106,6 @@ public final class Dev
     A.app().sendBroadcast(i);
 	}
 
-	//---- volume
-
-	public static final void setVolume(int type, int vol)      { A.audioMan().setStreamVolume(type, vol, defVolFlags); }
-	public static final void setVolumeMax(int type)            { setVolumeMax(type, defVolFlags); }
-	public static final void setVolumeMax(int type, int flags) {
-		final AudioManager am = A.audioMan();
-		am.setStreamVolume(type, am.getStreamMaxVolume(type), flags);
-	}
-
 	//---- managing system
 
 	public static final int getSysInt(String key) {
@@ -155,36 +115,6 @@ public final class Dev
 			return -1; 
 		}
 	}
-
-	public static final int getScreenOffTimeout() {
-		return getSysInt(System.SCREEN_OFF_TIMEOUT);
-	}
-	public static final void setScreenOffTimeout(int timeout) {
-		if(screenTimeoutBak < 0) screenTimeoutBak = getScreenOffTimeout();
-		System.putInt(A.resolver(), System.SCREEN_OFF_TIMEOUT, timeout);
-	}
-	public static final void restoreScreenTimeout() {
-		if(screenTimeoutBak < 0) return;
-		setScreenOffTimeout(screenTimeoutBak);
-	}
-
-	/*
-	public static final int getBrightness() {
-		return getSysInt(System.SCREEN_BRIGHTNESS);
-	}
-	public static final void setBrightness(int brightness) {
-		if(brightnessBak < 0) brightnessBak = getBrightness();
-		setSysInt(System.SCREEN_BRIGHTNESS, brightness);
-	}
-	public static final void restoreBrightness() {
-		if(brightnessBak < 0) return;
-		setBrightness(brightnessBak);
-	}
-
-	public static final void dimScreen(boolean dim) {
-		setSysInt(System.DIM_SCREEN, dim? 1 : 0);
-	}
-	*/
 
 	//public static final boolean isWakeCpu() { return wakeCpuLock!=null && wakeCpuLock.isHeld(); }
 	public static final void wakeCpu() { wakeCpu(false); }

@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import cri.sanity.screen.*;
+import cri.sanity.util.*;
 
 
 public final class ShortcutActivity extends Activity implements DialogInterface.OnCancelListener, FilenameFilter
@@ -37,7 +38,7 @@ public final class ShortcutActivity extends Activity implements DialogInterface.
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		A.activity = this;
+		Alert.activity = this;
 		super.onCreate(savedInstanceState);
     final Intent i = getIntent();
     if(Intent.ACTION_CREATE_SHORTCUT.equals(i.getAction()))
@@ -50,7 +51,7 @@ public final class ShortcutActivity extends Activity implements DialogInterface.
 
 	@Override
 	public void onResume() {
-		A.activity = this;
+		Alert.activity = this;
 		super.onResume();
 	}
 
@@ -65,7 +66,7 @@ public final class ShortcutActivity extends Activity implements DialogInterface.
 		map.put(R.string.vol_cat              , new Entry(R.drawable.menu_vol      , EXTRA_SCREEN, VolumeActivity.class.getName()));
 		map.put(R.string.notify_cat           , new Entry(R.drawable.menu_notify   , EXTRA_SCREEN, NotifyActivity.class.getName()));
 		map.put(R.string.tts_cat              , new Entry(R.drawable.menu_tts      , EXTRA_SCREEN, TtsActivity.class.getName()));
-		map.put(R.string.tts_cat              , new Entry(R.drawable.menu_tts      , EXTRA_SCREEN, BlockerActivity.class.getName()));
+		map.put(R.string.block_cat            , new Entry(R.drawable.menu_block    , EXTRA_SCREEN, BlockerActivity.class.getName()));
 		map.put(R.string.rec_cat              , new Entry(R.drawable.menu_rec      , EXTRA_SCREEN, RecordActivity.class.getName()));
 		map.put(R.string.rec_shortcut         , new Entry(R.drawable.ic_rec_now    , EXTRA_REC   , null));
 		map.put(R.string.rec_browse_title     , new Entry(R.drawable.menu_browse   , EXTRA_SCREEN, BrowseActivity.class.getName()));
@@ -198,10 +199,10 @@ public final class ShortcutActivity extends Activity implements DialogInterface.
 	}
 	
 	private void askDonate() {
-		A.alert(
+		Alert.msg(
 			A.rawstr(R.raw.shortcut_free),
-			new A.Click(){ public void on(){ A.gotoMarketDetails(Conf.DONATE_PKG); finish(); }},
-			new A.Click(){ public void on(){ finish(); }}
+			new Alert.Click(){ public void on(){ Goto.marketDetails(Conf.DONATE_PKG); finish(); }},
+			new Alert.Click(){ public void on(){ finish(); }}
 		);
 	}
 

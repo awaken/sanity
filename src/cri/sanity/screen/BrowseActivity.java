@@ -1,6 +1,7 @@
 package cri.sanity.screen;
 
 import cri.sanity.*;
+import cri.sanity.util.*;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Comparator;
@@ -122,8 +123,8 @@ public class BrowseActivity extends ScreenActivity
 	{
 		final int n = selected.size();
 		if(n < 1) return;
-		A.alert(n>1? String.format(A.s(R.string.ask_del_all), n+"") : A.s(R.string.ask_del_one),
-			new A.Click() {
+		Alert.msg(n>1? String.format(A.s(R.string.ask_del_all), n+"") : A.s(R.string.ask_del_one),
+			new Alert.Click() {
 				@SuppressWarnings("unchecked")
 				public void on() {
 					int err = 0;
@@ -135,11 +136,11 @@ public class BrowseActivity extends ScreenActivity
 							selected.remove(p);
 						}
 					}
-					if(err > 0) A.alert(String.format(A.s(R.string.err_del), err+""));
+					if(err > 0) Alert.msg(String.format(A.s(R.string.err_del), err+""));
 				}
 			},
 			null,
-			A.ALERT_OKCANC
+			Alert.OKCANC
 		);
 	}
 	

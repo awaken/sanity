@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import cri.sanity.*;
+import cri.sanity.util.*;
 
 
 public class GeneralActivity extends ScreenActivity
@@ -15,11 +16,11 @@ public class GeneralActivity extends ScreenActivity
 		
 		on(K.FORCE_BT_AUDIO, new Change(){ public boolean on(){
 			if(!(Boolean)value) return true;
-			A.alert(
+			Alert.msg(
 				A.rawstr(R.raw.force_bt),
-				new A.Click(){ public void on(){ setChecked(pref, true); }},
+				new Alert.Click(){ public void on(){ setChecked(pref, true); }},
 				null,
-				A.ALERT_YESNO,
+				Alert.YESNO,
 				false
 			);
 			return false;
@@ -29,11 +30,11 @@ public class GeneralActivity extends ScreenActivity
 		p.setEnabled(p.isEnabled() && Dev.sensorProxim()!=null);
 		on(p, new Change(){ public boolean on(){
 			if(!(Boolean)value) return true;
-			A.alert(
+			Alert.msg(
 				A.rawstr(R.raw.reverse_proximity),
-				new A.Click(){ public void on(){ setChecked(pref, true); }},
+				new Alert.Click(){ public void on(){ setChecked(pref, true); }},
 				null,
-				A.ALERT_YESNO,
+				Alert.YESNO,
 				false
 			);
 			return false;
@@ -45,15 +46,15 @@ public class GeneralActivity extends ScreenActivity
 		}});
 
 		on("backup_prefs", new Click(){ public boolean on(){
-			A.alert(
+			Alert.msg(
 				A.s(R.string.msg_backup_prefs),
-				new A.Click(){ public void on(){
+				new Alert.Click(){ public void on(){
 					final boolean ok = P.backup();
 					A.toast(ok? R.string.msg_backup_success : R.string.msg_backup_failed);
 				}},
-				new A.Click(){ public void on(){
+				new Alert.Click(){ public void on(){
 					if(!P.backupExists())
-						A.alert(A.s(R.string.msg_backup_no));
+						Alert.msg(A.s(R.string.msg_backup_no));
 					else {
 						skipAllKeys = true;
 						final boolean ok = P.restore();
@@ -62,15 +63,15 @@ public class GeneralActivity extends ScreenActivity
 						skipAllKeys = false;
 					}
 				}},
-				A.ALERT_BAKRES
+				Alert.BAKRES
 			);
 			return true;
 		}});
 
 		on("reset_prefs", new Click(){ public boolean on(){
-			A.alert(
+			Alert.msg(
 				A.rawstr(R.raw.reset),
-				new A.Click(){ public void on(){
+				new Alert.Click(){ public void on(){
 					final boolean agree = A.is(K.AGREE);
 					final String    ver = A.gets(K.VER);
 					final int   btcount = A.geti(K.BT_COUNT);

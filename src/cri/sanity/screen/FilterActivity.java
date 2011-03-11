@@ -48,7 +48,6 @@ public class FilterActivity extends ScreenActivity implements OnPreferenceChange
 		sumGroups = p.getSummary().toString();
 		setSumGroups(A.geti(keySect("filter_groups_count")), p);
 		on(p, new Click(){ public boolean on(){ return startAct(GroupsActivity.class, CODE_GROUPS); }});
-		if(sect.equals("block")) pref("filter_enable").setSelectable(false);
 	}
 
 	@Override
@@ -63,7 +62,7 @@ public class FilterActivity extends ScreenActivity implements OnPreferenceChange
 	@Override
 	public void onActivityResult(int code, int res, Intent i)
 	{
-		if(res != RESULT_OK) return;
+		if(i==null || res!=RESULT_OK) return;
 		int k = i.getIntExtra(EXTRA_SECT, -666);
 		if(k == -666) return;
 		switch(code) {

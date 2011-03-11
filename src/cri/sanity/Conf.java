@@ -3,7 +3,7 @@ package cri.sanity;
 
 public final class Conf
 {
-	public static final boolean FULL = true;
+	public static final boolean FULL = false;
 	public static final int     BETA = 0;
 
 	public static final String AUTHOR          = "Cristiano Tagliamonte";

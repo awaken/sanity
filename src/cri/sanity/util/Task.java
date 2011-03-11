@@ -1,10 +1,11 @@
-package cri.sanity;
+package cri.sanity.util;
 
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.HashMap;
 import java.util.Map;
+import cri.sanity.Conf;
 
 
 public abstract class Task implements Runnable
@@ -43,12 +44,10 @@ public abstract class Task implements Runnable
 	public static final int idCur() { return   idCur; }
 	public static final int idNew() { return ++idCur; }
 
-	/*
 	public static final boolean has(int id) {
 		final ScheduledFuture<?> sf = map.get(id);
 		return sf!=null && !sf.isDone();
 	}
-	*/
 
 	public static final Pool shutdown() {
 		if(pool == null) return null;
@@ -64,16 +63,15 @@ public abstract class Task implements Runnable
 		if(pool == null) return;
 		if(pool == Task.pool) shutdown();
 		else             pool.shutdown();
-		if(pool.isTerminating()) {
-			try {
-		    if(!pool.awaitTermination(Conf.TASK_WAIT_SHUTDOWN, TimeUnit.MILLISECONDS)) {
-		      pool.shutdownNow();
-		      pool.awaitTermination(Conf.TASK_WAIT_SHUTDOWN, TimeUnit.MILLISECONDS);
-		    }
-		  } catch(InterruptedException e) {
-		    pool.shutdownNow();
-		  }
-		}
+		if(!pool.isTerminating()) return;
+		try {
+	    if(!pool.awaitTermination(Conf.TASK_WAIT_SHUTDOWN, TimeUnit.MILLISECONDS)) {
+	      pool.shutdownNow();
+	      pool.awaitTermination(Conf.TASK_WAIT_SHUTDOWN, TimeUnit.MILLISECONDS);
+	    }
+	  } catch(InterruptedException e) {
+	    pool.shutdownNow();
+	  }
 	}
 
 	public static final void stopAll() {

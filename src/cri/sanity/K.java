@@ -2,6 +2,8 @@ package cri.sanity;
 
 import java.util.HashMap;
 import java.util.Map;
+import android.media.AudioManager;
+import cri.sanity.util.*;
 
 
 // tool class: all preference keys; the default values; the upgrade phase.
@@ -33,9 +35,9 @@ public final class K
 	// speaker
 	public static final String SPEAKER_AUTO       = "auto_speaker";
 	public static final String SPEAKER_DELAY      = "delay_speaker";
-	public static final String SPEAKER_LOUD       = "loud_speaker";
 	public static final String SPEAKER_CALL       = "speaker_call";
 	public static final String SPEAKER_CALL_DELAY = "delay_speaker_call";
+	public static final String SPEAKER_VOL        = "vol_speaker";
 	public static final String SPEAKER_SILENT_END = "silent_end_speaker";
 	public static final String SPEAKER_ON_COUNT   = "speaker_on_count";
 	public static final String SPEAKER_OFF_COUNT  = "speaker_off_count";
@@ -84,10 +86,11 @@ public final class K
 	public static final String TTS_SUFFIX         = "tts_suffix";
 	public static final String TTS_FILTER         = "filter_enable_tts";
 	// call blocker
-	public static final String BLOCK              = "block";
+	public static final String BLOCK_FILTER       = "filter_enable_block";
 	public static final String BLOCK_SKIP         = "block_skip";
 	public static final String BLOCK_MODE         = "block_mode";
-	public static final String BLOCK_FILTER       = "filter_enable_block";
+	public static final String BLOCK_RESUME       = "block_resume";
+	public static final String BLOCK_NOTIFY       = "block_notify";
 
 	// internals (hidden to user)
 	public static final String FULL     = "full";
@@ -109,10 +112,10 @@ public final class K
 
 	static final String[] wrapIntKeys() {
 		return new String[]{
-			DISABLE_DELAY, ENABLE_DELAY, SPEAKER_DELAY, SPEAKER_CALL, SPEAKER_CALL_DELAY, SPEAKER_ON_COUNT, SPEAKER_OFF_COUNT,
+			DISABLE_DELAY, ENABLE_DELAY, SPEAKER_DELAY, SPEAKER_CALL, SPEAKER_CALL_DELAY, SPEAKER_VOL, SPEAKER_ON_COUNT, SPEAKER_OFF_COUNT,
 			VOL_PHONE, VOL_WIRED, VOL_BT, REC_SRC, REC_FMT, REC_START_DELAY, REC_STOP_DELAY, REC_START_HEADSET, REC_STOP_HEADSET,
 			REC_STOP_LIMIT, REC_START_TIMES, REC_START_DIR, REC_AUTOREMOVE, REVERSE_BT_TIMEOUT, TTS_VOL, TTS_TONE, TTS_REPEAT, TTS_PAUSE,
-			BLOCK_MODE
+			BLOCK_MODE, BLOCK_RESUME
 		};
 	}
 
@@ -140,13 +143,13 @@ public final class K
 		m.put(SCREEN_OFF         , true);
 		m.put(SCREEN_ON          , true);
 		m.put(SPEAKER_AUTO       , false);			// speaker
-		m.put(SPEAKER_DELAY      , 0);
-		m.put(SPEAKER_LOUD       , true);
-		m.put(SPEAKER_CALL       , 0);
-		m.put(SPEAKER_CALL_DELAY , 0);
+		m.put(SPEAKER_DELAY      ,  0);
+		m.put(SPEAKER_CALL       ,  0);
+		m.put(SPEAKER_CALL_DELAY ,  0);
+		m.put(SPEAKER_VOL        , -1);
 		m.put(SPEAKER_SILENT_END , true);
-		m.put(SPEAKER_ON_COUNT   , 0);
-		m.put(SPEAKER_OFF_COUNT  , 0);
+		m.put(SPEAKER_ON_COUNT   ,  0);
+		m.put(SPEAKER_OFF_COUNT  ,  0);
 		m.put(VOL_PHONE          , -1);					// volume
 		m.put(VOL_WIRED          , -1);
 		m.put(VOL_BT             , -1);
@@ -187,17 +190,18 @@ public final class K
 		m.put(TTS_PREFIX         , "");
 		m.put(TTS_SUFFIX         , "");
 		m.put(TTS_FILTER         , false);
-		m.put(BLOCK              , false);
+		m.put(BLOCK_FILTER       , false);
 		m.put(BLOCK_SKIP         , false);
 		m.put(BLOCK_MODE         , Blocker.MODE_FLIGHT);
-		m.put(BLOCK_FILTER       , true);
+		m.put(BLOCK_RESUME       , 0);
+		m.put(BLOCK_NOTIFY       , false);
 		return m;
 	}
 
 	static final void upgrade(float oldVer, int beta) {
 		// upgrade current preferences from an older existing version
 		if(oldVer < 0.9f) {
-			P.renameBool(DISABLE_PROXIMITY, "proximty");
+			P.renameBool(DISABLE_PROXIMITY, "proximty"   );
 			P.renameBool( ENABLE_PROXIMITY, "restore_far");
 		}
 		if(oldVer < 1.2f) {
@@ -227,7 +231,12 @@ public final class K
 		if(oldVer < 1.97f) P.setDef(SPEAKER_ON_COUNT, SPEAKER_OFF_COUNT, REC_START_DIR);
 		if(oldVer < 1.99f) P.setDef(REVERSE_BT, REVERSE_BT_TIMEOUT);
 		if(oldVer < 2.00f) P.setDef(BT_OFF, REC_FILTER, REC_AUTOREMOVE, TTS, TTS_HEADSET, TTS_SOLO, TTS_VOL, TTS_TONE, TTS_REPEAT, TTS_PAUSE, TTS_PREFIX, TTS_SUFFIX, TTS_ANONYM, TTS_UNKNOWN, TTS_FILTER);
-		if(oldVer < 2.02f) P.setDef(REC_CALLSCREEN, TTS_SKIP, BLOCK, BLOCK_SKIP, BLOCK_MODE, BLOCK_FILTER);
+		if(oldVer < 2.02f) P.setDef(REC_CALLSCREEN, TTS_SKIP, BLOCK_SKIP, BLOCK_MODE, BLOCK_FILTER);
+		if(oldVer < 2.03f) {
+			A.put(BLOCK_FILTER, A.is("block")).del("block");
+			A.put(SPEAKER_VOL, A.is("loud_speaker")? A.audioMan().getStreamMaxVolume(AudioManager.STREAM_VOICE_CALL) : -1).del("loud_speaker");
+			P.setDef(BLOCK_RESUME, BLOCK_NOTIFY);
+		}
 	}
 
 }

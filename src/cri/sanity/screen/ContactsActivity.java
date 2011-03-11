@@ -1,6 +1,7 @@
 package cri.sanity.screen;
 
 import cri.sanity.*;
+import cri.sanity.util.*;
 import java.util.Map;
 import java.util.HashMap;
 import android.content.Intent;
@@ -25,10 +26,11 @@ import android.view.MenuItem;
 public class ContactsActivity extends ScreenActivity
 {
 	private static final String SEP = Conf.FILTER_SEP+"";
+	private static final int CODE_SEARCH = 1;
 
 	private PreferenceCategory prefGroup;
 	private String sect;
-	private boolean changed;
+	private boolean changed, grouped;
 	private Map<String,Pref> prefs;
 
 	private Handler handler = new Handler() {
@@ -39,7 +41,7 @@ public class ContactsActivity extends ScreenActivity
 			pair.first.setSummary(pair.second);
 		}
 	};
-	
+
 	//---- overriding
 
 	@Override
@@ -55,6 +57,7 @@ public class ContactsActivity extends ScreenActivity
 		if(!A.empty(t)) prefGroup.setTitle(prefGroup.getTitle()+"  ("+t+')');
 		readContacts();
 		changed = false;
+		grouped = false;
 	}
 
 	@Override
@@ -69,6 +72,7 @@ public class ContactsActivity extends ScreenActivity
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
 		switch(item.getItemId()) {
+			case R.id.search : search();  break;
 			case R.id.selall : selall();  break;
 			case R.id.selnone: selnone(); break;
 			case R.id.canc   : canc();    break;
@@ -81,16 +85,32 @@ public class ContactsActivity extends ScreenActivity
 	public void onStart()
 	{
 		super.onStart();
-		new Async(){ void run(){ readContactGroups(this); }}.execute();
+		if(!grouped)
+			new Async(){ void run(){ readContactGroups(this); }}.execute();
 	}
 
 	@Override
 	public void onBackPressed()
 	{
+		if(isFinishing()) return;
 		Intent i = new Intent();
 		i.putExtra(FilterActivity.EXTRA_SECT, saveList());
 		setResult(RESULT_OK, i);
 		super.onBackPressed();
+	}
+	
+	@Override
+	public void onActivityResult(int code, int res, Intent i)
+	{
+		if(i==null || code!=CODE_SEARCH) return;
+		Cursor c = A.resolver().query(i.getData(), new String[]{ Contacts._ID, Contacts.DISPLAY_NAME }, null, null, null);
+		if(c.moveToFirst()) {
+			Pref p = prefs.get(c.getString(c.getColumnIndex(Contacts._ID)));
+			int msgId = p!=null? p.isChecked()? R.string.msg_contact_unsel : R.string.msg_contact_sel : R.string.msg_contact_err;
+			if(p != null) p.setChecked(!p.isChecked());
+			A.toast(String.format(A.s(msgId), c.getString(c.getColumnIndex(Contacts.DISPLAY_NAME))));
+		}
+		c.close();
 	}
 	
 	//---- private api
@@ -148,7 +168,7 @@ public class ContactsActivity extends ScreenActivity
 	private void readContactGroups(Async async, Cursor c)
 	{
 		if(!c.moveToFirst()) return;
-		Map<String,String> groups = cri.sanity.Contacts.groups();
+		Map<String,String> groups = cri.sanity.util.Contacts.groups();
 		if(async!=null && async.isCancelled()) return;
 		final int colGrp = c.getColumnIndex(GroupMembership.GROUP_ROW_ID);
 		final int colCon = c.getColumnIndex(GroupMembership.CONTACT_ID);
@@ -169,6 +189,7 @@ public class ContactsActivity extends ScreenActivity
 			if(async!=null && async.isCancelled()) return;
 		} while(c.moveToNext());
 		if(lastPref != null) lastPref.setSummaryAsync(sum);
+		grouped = true;
 	}
 
 	private int saveList()
@@ -206,6 +227,11 @@ public class ContactsActivity extends ScreenActivity
 	private String keyCount()          { return "filter_contacts_count_"+sect; }
 	private String keySect(String val) { return "filter_contact_"+val+sect; }
 
+	private void search()
+	{
+		startActivityForResult(new Intent(Intent.ACTION_PICK, Contacts.CONTENT_URI), CODE_SEARCH);
+	}
+
 	private void selall()
 	{
 		final int n = prefGroup.getPreferenceCount();
@@ -228,11 +254,11 @@ public class ContactsActivity extends ScreenActivity
 	private void canc()
 	{
 		if(!changed) { finish(); return; }
-		A.alert(
+		Alert.msg(
 			A.s(R.string.ask_canc_all),
-			new A.Click(){ public void on(){ changed = false; dismiss(); finish(); }},
+			new Alert.Click(){ public void on(){ changed = false; dismiss(); finish(); }},
 			null,
-			A.ALERT_OKCANC
+			Alert.OKCANC
 		);
 	}
 

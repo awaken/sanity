@@ -6,17 +6,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Map;
-import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.AlarmManager;
 import android.app.Application;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
-import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -27,37 +24,23 @@ import android.media.AudioManager;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.hardware.SensorManager;
-import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.os.Environment;
 import android.os.PowerManager;
 import android.os.Vibrator;
 import android.net.ConnectivityManager;
 import android.app.KeyguardManager;
 import android.app.admin.DevicePolicyManager;
-import android.widget.EditText;
 import android.widget.Toast;
-//import android.os.SystemClock;
 
 
 public final class A extends Application
 {
 	public  static final int SDK = android.os.Build.VERSION.SDK_INT;
-	public  static final int ALERT_SIMPLE    = 0;
-	public  static final int ALERT_OKCANC    = 1;
-	public  static final int ALERT_YESNO     = 2;
-	public  static final int ALERT_YESNOCANC = 3;
-	public  static final int ALERT_OPENDEL   = 4;
-	public  static final int ALERT_BAKRES    = 5;
-	private static final int DEF_ALERT       = ALERT_OKCANC;
-	private static final int NID             = 1;
+	private static final int NID = 1;
 
 	//---- data
-
-	public  static Activity                 activity;
 
 	private static A                        a;
 	private static String                   name;
@@ -79,40 +62,14 @@ public final class A extends Application
 	private static LocationManager          locMan;
 	private static SensorManager            sensorMan;
 	private static ConnectivityManager      connMan;
-	private static KeyguardManager          keyguardMan;
 	private static DevicePolicyManager      devpolMan;
-
-	//---- inner classes
-
-	public static class Click implements DialogInterface.OnClickListener
-	{
-		protected DialogInterface dlg;
-		protected int id;
-		@Override
-		public void onClick(DialogInterface dlg, int id) {
-			this.dlg = dlg;
-			this.id  = id;
-			on();
-		}
-		protected final void dismiss(){ dlg.dismiss(); }
-		// just override this method (default action is to close dialog)
-		public void on() { dlg.cancel(); }
-	}
-
-	public static abstract class Edited
-	{
-		protected DialogInterface dlg;
-		protected final void dismiss(){ dlg.dismiss(); }
-		private void on(String text, DialogInterface dlg) { this.dlg = dlg; on(text); }
-		public abstract void on(String text);
-	}
 
 	//---- methods
 
 	@Override
 	public void onCreate() {
 		a     = this;
-		name  = A.s(R.string.app);
+		name  = getString(R.string.app);
 		prefs = PreferenceManager.getDefaultSharedPreferences(a);
 		edit  = prefs.edit();
 		full  = Conf.FULL || prefs.getBoolean(K.FULL, false);
@@ -126,7 +83,7 @@ public final class A extends Application
 	public static final String                   name() { return name;  }
 	public static final SharedPreferences       prefs() { return prefs; }
 	public static final SharedPreferences.Editor edit() { return edit;  }
-	//public static final String                    pkg() { return pkgInfo.packageName; }
+	public static final String                    pkg() { return pkgInfo.packageName; }
 	public static final Resources           resources() { if(resources==null) resources=a.getResources(); return resources; }
 	public static final ContentResolver      resolver() { if(ctxRes==null) ctxRes=a.getContentResolver(); return ctxRes; }
 	//public static final PackageInfo           pkgInfo() { return pkgInfo; }
@@ -147,9 +104,9 @@ public final class A extends Application
 	//public static final int loge(String msg) { return Log.e(name, msg); }
 
 	// misc
-	//public static final boolean isEmpty(String s) { return s==null || s.trim().length()<=0; }
+	public static final String s(int id) { return a.getString(id); }
+	//public static final String s(int id) { return (String)resources().getText(id); }
 
-	public static final String s(int id) { return (String)resources().getText(id); }
 	public static final boolean empty(String s) { return s==null || s.length()<=0; }
 
 	public static final int rstring(String field) throws IllegalAccessException, NoSuchFieldException {
@@ -175,30 +132,8 @@ public final class A extends Application
     }
   }
 
-	public static final long now() { return System.currentTimeMillis(); }
-	//public static final long uptime() { return SystemClock.uptimeMillis(); }
+	public static final long time() { return System.currentTimeMillis(); }
 
-	//public static final boolean gotoMarketPkg()             { return gotoMarketPkg(a.getPackageName()); }
-	//public static final boolean gotoMarketPkg(String pkg)   { return gotoMarketUrl("search?q=pname:\""+pkg+'"'); }
-	public static final boolean gotoMarketPub()               { return gotoMarketUrl("search?q=pub:\""+Conf.AUTHOR+'"'); }
-	public static final boolean gotoMarketDetails()           { return gotoMarketDetails(pkgInfo.packageName); }
-	public static final boolean gotoMarketDetails(String pkg) { return gotoMarketUrl("details?id="+pkg); }
-	public static final boolean gotoMarketUrl(String query) {
-		final boolean res = gotoUrl("market://"+query);
-		if(!res) alert(A.s(R.string.err_market));
-		return res;
-	}
-	public static final boolean gotoUrl(String url) {
-		final Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		try {
-			a.startActivity(i);
-			return true;
-		} catch(ActivityNotFoundException e) {
-			return false;
-		}
-	}
-	
 	public static final String sdcardDir() {
 		final String dir = Environment.getExternalStorageDirectory().getAbsolutePath() + '/' + name;
 		final File  file = new File(dir);
@@ -211,8 +146,6 @@ public final class A extends Application
 		if(slashClean) fn = fn.replace("/", "");
 		return fn.trim();
 	}
-
-	public static final View layout(int resId) { return LayoutInflater.from(a).inflate(resId, null); }
 
 	// string conversion
 	/*
@@ -232,126 +165,32 @@ public final class A extends Application
 	public static final void toast(String msg)              { Toast.makeText(a  , msg  , Toast.LENGTH_SHORT).show(); }
 	public static final void toast(int  resId)              { Toast.makeText(a  , resId, Toast.LENGTH_SHORT).show(); }
 
-	public static final void notify(String msg)                          { notify(name , msg, NID, now()); }
-	public static final void notify(String msg, int id)                  { notify(name , msg, id , now()); }
-	public static final void notify(String msg, long when)               { notify(name , msg, NID, when);  }
-	public static final void notify(String msg, int id, long when)       { notify(name , msg, id , when);  }
-	public static final void notify(String title, String msg)            { notify(title, msg, NID, now()); }
-	public static final void notify(String title, String msg, int id)    { notify(title, msg, id , now()); }
-	public static final void notify(String title, String msg, long when) { notify(title, msg, NID, when);  }
-	public static final void notify(String title, String msg, int id, long when) {
+	public static final void notify(String msg)                          { notify(name , msg, NID, R.drawable.ic_bar, time()); }
+	public static final void notify(String msg, int id)                  { notify(name , msg, id , R.drawable.ic_bar, time()); }
+	public static final void notify(String msg, long when)               { notify(name , msg, NID, R.drawable.ic_bar, when);  }
+	public static final void notify(String msg, int id, long when)       { notify(name , msg, id , R.drawable.ic_bar, when);  }
+	public static final void notify(String msg, int id, int icon)        { notify(name , msg, id , icon             , time()); }
+	public static final void notify(String title, String msg)            { notify(title, msg, NID, R.drawable.ic_bar, time()); }
+	public static final void notify(String title, String msg, int id)    { notify(title, msg, id , R.drawable.ic_bar, time()); }
+	public static final void notify(String title, String msg, long when) { notify(title, msg, NID, R.drawable.ic_bar, when);  }
+	public static final void notify(String title, String msg, int id, int icon) { notify(title, msg, id, icon, time()); }
+	public static final void notify(String title, String msg, int id, int icon, long when) {
 		if(notif == null) {
-			notif = new Notification(R.drawable.ic_bar, msg, when);
-			final Intent i = new Intent(a, MainActivity.class);
+			notif = new Notification(icon, msg, when);
+			Intent i = new Intent(a, MainActivity.class);
 			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			notifIntent = PendingIntent.getActivity(a, 0, i, 0);
 		}	else {
 			notif.tickerText = msg;
 			notif.when       = when;
+			notif.icon       = icon;
 		}
 		notif.setLatestEventInfo(a, title, msg, notifIntent);
 		notifMan().notify(id, notif);
 	}
 	public static final void notifyCanc()       { notifMan().cancel(NID); }
 	public static final void notifyCanc(int id) { notifMan().cancel( id); }
-	public static final void notifyCancAll()    { notifMan().cancelAll(); }
-
-	public static final AlertDialog alert(String msg) {
-		return alert(name, msg, null, null, null, ALERT_SIMPLE, true);
-	}
-	public static final AlertDialog alert(String msg, Click pos, Click neg) {
-		return alert(name, msg, pos, neg, null, DEF_ALERT, true);
-	}
-	public static final AlertDialog alert(String msg, Click pos, Click neg, int type) {
-		return alert(name, msg, pos, neg, null, type, true);
-	}
-  public static final AlertDialog alert(String msg, Click pos, Click neg, int type, boolean cancelable) {
-  	return alert(name, msg, pos, neg, null, type, cancelable);
-  }
-  public static final AlertDialog alert(String msg, Click pos, Click neg, Click neu, int type) {
-  	return alert(name, msg, pos, neg, neu, type, true);
-  }
-  public static final AlertDialog alert(String msg, Click pos, Click neg, Click neu, int type, boolean cancelable) {
-  	return alert(name, msg, pos, neg, neu, type, cancelable);
-  }
-  public static final AlertDialog alert(String title, String msg, Click pos, Click neg, Click neu, int type, boolean cancelable) {
-  	return alert(title, msg, pos, neg, neu, type, cancelable, activity);
-  }
-  public static final AlertDialog alert(String title, String msg, Click pos, Click neg, Click neu, int type, boolean cancelable, Context ctx) {
-  	int idPos=0, idNeg=0, idNeu=0;
-  	switch(type) {
-  		case ALERT_SIMPLE:    idPos = R.string.ok    ;                                                  break;
-  		case ALERT_OKCANC:    idPos = R.string.ok    ; idNeg = R.string.canc   ;                        break;
-  		case ALERT_YESNO:     idPos = R.string.yes   ; idNeg = R.string.no     ;                        break;
-  		case ALERT_YESNOCANC: idPos = R.string.yes   ; idNeu = R.string.no     ; idNeg = R.string.canc; break;
-  		case ALERT_OPENDEL:   idPos = R.string.open  ; idNeg = R.string.del    ;                        break;
-  		case ALERT_BAKRES:    idPos = R.string.backup; idNeg = R.string.restore;                        break;
-  	}
-		final AlertDialog.Builder adb = new AlertDialog.Builder(ctx);
-		adb.setIcon(R.drawable.ic_bar);
-		adb.setTitle(title);
-		adb.setMessage(msg);
-		adb.setCancelable(cancelable);
-		if(idPos > 0) adb.setPositiveButton(idPos, pos==null? new Click() : pos);
-		if(idNeg > 0) adb.setNegativeButton(idNeg, neg==null? new Click() : neg);
-		if(idNeu > 0) adb.setNeutralButton (idNeu, neu==null? new Click() : neu);
-		return adb.show();
-	}
-  public static final AlertDialog alert(String title, String msg, Click pos, Click neg, Click neu, int type) {
-  	return alert(title, msg, pos, neg, neu, type, true);
-  }
-  public static final AlertDialog alert(String title, String msg, Click pos, Click neg, int type, boolean cancelable) {
-  	return alert(title, msg, pos, neg, null, type, cancelable);
-  }
-  public static final AlertDialog alert(String title, String msg, Click pos, Click neg, int type) {
-  	return alert(title, msg, pos, neg, null, type, true);
-  }
-  public static final AlertDialog alert(String title, String msg, Click pos, Click neg) {
-  	return alert(title, msg, pos, neg, null, DEF_ALERT, true);
-  }
-  public static final AlertDialog alert(String title, String msg) {
-  	return alert(title, msg, null, null, null, ALERT_SIMPLE, true);
-  }
-
-  public static final EditText alertText(String title, final Edited pos, Context ctx) {
-  	return alertText(title, pos, null, ctx);
-  }
-  public static final EditText alertText(String title, String text, final Edited pos, Context ctx) {
-  	return alertText(title, text, pos, null, ctx);
-  }
-  public static final EditText alertText(String title, String text, final Edited pos, final Edited neg, Context ctx) {
-  	EditText edit = alertText(title, pos, neg, ctx);
-		if(text != null) {
-			edit.setText(text);
-			edit.selectAll();
-		}
-		return edit;
-  }
-  public static final EditText alertText(String title, final Edited pos, final Edited neg, Context ctx) {
-		final View   layout = layout(R.layout.alert_text);
-    final EditText edit = (EditText)layout.findViewById(R.id.alert_text_edit);
-		final AlertDialog.Builder adb = new AlertDialog.Builder(ctx);
-		adb.setIcon(R.drawable.ic_bar);
-		adb.setTitle(title);
-		adb.setView(layout);
-		adb.setCancelable(true);
-		adb.setPositiveButton(R.string.ok  , pos==null? new Click() : new Click(){ public void on(){ pos.on(edit.getText().toString(),dlg); }});
-		adb.setNegativeButton(R.string.canc, neg==null? new Click() : new Click(){ public void on(){ neg.on(edit.getText().toString(),dlg); }});
-		adb.show();
-		return edit;
-	}
-  public static final EditText alertText(String title, String text, final Edited pos, final Edited neg) {
-  	return alertText(title, text, pos, neg, activity);
-  }
-  public static final EditText alertText(String title, final Edited pos, final Edited neg) {
-  	return alertText(title, pos, neg, activity);
-  }
-  public static final EditText alertText(String title, String text, final Edited pos) {
-  	return alertText(title, text, pos, null, activity);
-  }
-  public static final EditText alertText(String title, final Edited pos) {
-  	return alertText(title, pos, null, activity);
-  }
+	//public static final void notifyCancAll()    { notifMan().cancelAll(); }
 
   //---- preferences
 
@@ -377,7 +216,6 @@ public final class A extends Application
 	//public static final float   getsf(String key)             { return Float  .parseFloat(prefs.getString(key, "0")); }
 	//public static final float   getsf(String key, String def) { return Float  .parseFloat(prefs.getString(key, def)); }
 
-	public static final Map<String,?> allPrefs() { return prefs.getAll(); }
 	public static final boolean has (String key) { return prefs.contains(key); }
 	public static final A       del (String key) { edit.remove(key);          return a; }
 	public static final A       delc(String key) { edit.remove(key).commit(); return a; }
@@ -406,7 +244,7 @@ public final class A extends Application
 	public static final A putAll (Map<String,?> map) {
 		for(Map.Entry<String,?> e : map.entrySet())
 			put(e.getKey(), e.getValue());
-		return a; 
+		return a;
 	}
 
 	public static final A commit() { edit.commit(); return a; }
@@ -434,8 +272,7 @@ public final class A extends Application
 		return connMan;
 	}
 	public static final KeyguardManager keyguardMan() {
-		if(keyguardMan == null) keyguardMan = (KeyguardManager)a.getSystemService(KEYGUARD_SERVICE);
-		return keyguardMan;
+		return (KeyguardManager)a.getSystemService(KEYGUARD_SERVICE);
 	}
 	public static final DevicePolicyManager devpolMan() {
 		if(devpolMan == null) devpolMan = (DevicePolicyManager)a.getSystemService(DEVICE_POLICY_SERVICE);
@@ -452,6 +289,9 @@ public final class A extends Application
 	public static final SensorManager sensorMan() {
 		if(sensorMan == null) sensorMan = (SensorManager)a.getSystemService(SENSOR_SERVICE);
 		return sensorMan;
+	}
+	public static final AlarmManager alarmMan() {
+		return (AlarmManager)a.getSystemService(ALARM_SERVICE);
 	}
 	public static final BluetoothAdapter btAdapter() {
 		if(btAdapter == null) btAdapter = BluetoothAdapter.getDefaultAdapter();

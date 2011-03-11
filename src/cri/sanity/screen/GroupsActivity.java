@@ -1,7 +1,7 @@
 package cri.sanity.screen;
 
 import cri.sanity.*;
-
+import cri.sanity.util.*;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
@@ -64,6 +64,7 @@ public class GroupsActivity extends ScreenActivity
 	@Override
 	public void onBackPressed()
 	{
+		if(isFinishing()) return;
 		Intent i = new Intent();
 		i.putExtra(FilterActivity.EXTRA_SECT, saveList());
 		setResult(RESULT_OK, i);
@@ -163,11 +164,11 @@ public class GroupsActivity extends ScreenActivity
 	private void canc()
 	{
 		if(!changed) { finish(); return; }
-		A.alert(
+		Alert.msg(
 			A.s(R.string.ask_canc_all),
-			new A.Click(){ public void on(){ changed = false; dismiss(); finish(); }},
+			new Alert.Click(){ public void on(){ changed = false; dismiss(); finish(); }},
 			null,
-			A.ALERT_OKCANC
+			Alert.OKCANC
 		);
 	}
 

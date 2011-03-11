@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 		      package="cri.sanity" android:installLocation="auto"
-		      android:versionCode="38" android:versionName="2.02">
+		      android:versionCode="39" android:versionName="2.03">
 
   <application android:icon="@drawable/ic_app"
                android:label="@string/app"
@@ -25,12 +25,12 @@
     <activity android:theme="@style/Theme" android:name=".screen.AboutActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.BrowseActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.ProfileActivity" />
-    <activity android:theme="@style/Theme" android:name=".screen.FilterActivity" />
-    <activity android:theme="@style/Theme" android:name=".screen.NumsActivity" />
-    <activity android:theme="@style/Theme" android:name=".screen.ContactsActivity" />
-    <activity android:theme="@style/Theme" android:name=".screen.GroupsActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.TtsActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.BlockerActivity" />
+    <activity android:theme="@style/Theme" android:name=".screen.FilterActivity" />
+    <activity android:theme="@style/Theme" android:name=".screen.ContactsActivity" />
+    <activity android:theme="@style/Theme" android:name=".screen.GroupsActivity" />
+    <activity android:theme="@style/Theme" android:name=".screen.NumsActivity" />
 
     <activity android:theme="@android:style/Theme.Dialog" android:name=".ShortcutActivity" android:label="@string/app_shortcut">
       <intent-filter>
@@ -41,6 +41,8 @@
 
 	  <service android:name=".MainService" />
 	  <service android:name=".RecService" />
+
+	  <receiver android:name=".AlarmReceiver" />
 
 	  <receiver android:name=".PhoneReceiver">
       <intent-filter>

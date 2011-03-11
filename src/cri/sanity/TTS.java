@@ -1,15 +1,16 @@
 package cri.sanity;
 
+import cri.sanity.util.*;
 import java.util.HashMap;
+
+import android.media.AudioManager;
 import android.speech.tts.TextToSpeech;
-import android.speech.tts.TextToSpeech.Engine;
-import android.speech.tts.TextToSpeech.OnInitListener;
-import android.speech.tts.TextToSpeech.OnUtteranceCompletedListener;
+import android.speech.tts.TextToSpeech.*;
 
 
 public class TTS implements OnInitListener, OnUtteranceCompletedListener
 {
-	public  final static int    STREAM     = Dev.VOL_ALARM;
+	public  final static int    STREAM     = AudioManager.STREAM_ALARM;
 	private final static String STREAM_STR = "4"; 	// string value of STREAM
 
 	protected TextToSpeech tts;
@@ -39,7 +40,7 @@ public class TTS implements OnInitListener, OnUtteranceCompletedListener
 		stop();
 		tts.shutdown();
 		if(vol >= 0) A.audioMan().setStreamVolume(STREAM, vol, 0);
-		if(solo) A.audioMan().setStreamMute(Dev.VOL_RING, false);
+		if(solo) A.audioMan().setStreamMute(AudioManager.STREAM_RING, false);
 	}
 	
 	public void onError() { A.notify(A.s(R.string.err_tts_init)); }
@@ -68,7 +69,7 @@ public class TTS implements OnInitListener, OnUtteranceCompletedListener
 			this.vol = A.audioMan().getStreamVolume(STREAM);
 			A.audioMan().setStreamVolume(STREAM, vol, 0);
 		}
-		if(solo = A.is(K.TTS_SOLO)) A.audioMan().setStreamMute(Dev.VOL_RING, true);
+		if(solo = A.is(K.TTS_SOLO)) A.audioMan().setStreamMute(AudioManager.STREAM_RING, true);
 		// tone setup
 		final int tone = A.geti(K.TTS_TONE);
 		if(tone > 0) tts.setPitch(tone * (1f/100f));
@@ -90,9 +91,11 @@ public class TTS implements OnInitListener, OnUtteranceCompletedListener
 		if(--repeat > 0) {
 			tts.playSilence(pause, TextToSpeech.QUEUE_ADD, null);
 			tts.speak      (id   , TextToSpeech.QUEUE_ADD, pars);
+		} else if(solo) {
+			new Task(){ public void run(){
+				A.audioMan().setStreamMute(AudioManager.STREAM_RING, solo = false);
+			}}.exec(Conf.TTS_UNMUTE_DELAY);
 		}
-		else if(solo)
-			new Task(){ public void run(){ A.audioMan().setStreamMute(Dev.VOL_RING, solo = false); }}.exec(Conf.TTS_UNMUTE_DELAY);
 	}
 
 }

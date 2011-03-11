@@ -4,18 +4,29 @@
 	<PreferenceCategory android:title="@string/block_cat">
 	  <CheckBoxPreference android:title="@string/block_enable_title"
 	                      android:summary="@string/block_enable_sum"
+	                      android:persistent="false"
 	                      android:key="block" />
-	  <CheckBoxPreference android:title="@string/block_skip_title"
-	                      android:summary="@string/block_skip_sum"
-	                      android:dependency="block"
-	                      android:key="block_skip" />
+	  <cri.sanity.pref.PFilter android:dependency="block"
+	                           android:key="filter_block" />
 	  <cri.sanity.pref.PList android:title="@string/block_mode_title"
 	                         android:summary="@string/block_mode_sum"
 	                         android:dependency="block"
 	                         android:key="block_mode_s"
 	                         android:entries="@array/block_mode_labels"
 	                         android:entryValues="@array/block_mode_values" />
-	  <cri.sanity.pref.PFilter android:dependency="block"
-	                           android:key="filter_block" />
+	  <cri.sanity.pref.PList android:title="@string/block_resume_title"
+	                         android:summary="@string/block_resume_sum"
+	                         android:dependency="block"
+	                         android:key="block_resume_s"
+	                         android:entries="@array/block_resume_labels"
+	                         android:entryValues="@array/block_resume_values" />
+	  <CheckBoxPreference android:title="@string/block_skip_title"
+	                      android:summary="@string/block_skip_sum"
+	                      android:dependency="block"
+	                      android:key="block_skip" />
+	  <CheckBoxPreference android:title="@string/notify_cat"
+	                      android:summary="@string/block_notify_sum"
+	                      android:dependency="block"
+	                      android:key="block_notify" />
 	</PreferenceCategory>
 </PreferenceScreen>

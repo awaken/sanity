@@ -8,6 +8,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
+import cri.sanity.util.Alert;
 
 
 public abstract class PrefActivity extends PreferenceActivity
@@ -43,14 +44,14 @@ public abstract class PrefActivity extends PreferenceActivity
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
-		A.activity = this;
+		Alert.activity = this;
 		super.onCreate(savedInstanceState);
 	}
 
 	@Override
 	public void onResume()
 	{
-		A.activity = this;
+		Alert.activity = this;
 		super.onResume();
 	}
 
@@ -106,9 +107,9 @@ public abstract class PrefActivity extends PreferenceActivity
 	public final void fullOnly(Preference p) {
 		if(A.isFull()) return;
 		if(p instanceof CheckBoxPreference || p instanceof ListPreference || p instanceof EditTextPreference)
-			on(p, new Change(){ public boolean on(){ A.alert(A.s(R.string.msg_option_full)); return false; }});
+			on(p, new Change(){ public boolean on(){ Alert.msg(A.s(R.string.msg_option_full)); return false; }});
 		else
-			on(p, new Click(){ public boolean on(){ A.alert(A.s(R.string.msg_option_full)); return true ; }});
+			on(p, new Click(){ public boolean on(){ Alert.msg(A.s(R.string.msg_option_full)); return true ; }});
 	}
 
 }

@@ -1,26 +1,38 @@
 package cri.sanity.screen;
 
-import cri.sanity.*;
-
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Stack;
+import java.util.Vector;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceCategory;
 import android.preference.CheckBoxPreference;
+import android.provider.CallLog.Calls;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import cri.sanity.*;
+import cri.sanity.util.*;
 
 
 public class NumsActivity extends ScreenActivity
 {
 	private static final String SEP = Conf.FILTER_SEP+"";
-
+	private static final int CODE_CALLOG = 1;
+	private static final int MAX_CALLOGS = 30;
+	
 	private PreferenceCategory prefGroup;
 	private Stack<Pref> selected = new Stack<Pref>();
+	private Map<String,Pref> prefs = new HashMap<String,Pref>();
+	private List<String> callog;
 	private String sect;
 	private boolean changed;
 
@@ -38,18 +50,20 @@ public class NumsActivity extends ScreenActivity
 		sect      = i.getStringExtra(FilterActivity.EXTRA_SECT);
 		String t  = i.getStringExtra(FilterActivity.EXTRA_TITLE);
 		if(!A.empty(t))
-			prefGroup.setTitle(prefGroup.getTitle() + "  (" + t + ')');
+			prefGroup.setTitle(prefGroup.getTitle()+"  ("+t+ ')');
 		String nums = A.gets(keyAll());
-		if(A.empty(nums)) A.toast(R.string.msg_empty_list);
-		else for(String num : nums.split(SEP))
-			prefGroup.addPreference(new Pref(num));
+		if(A.empty(nums))
+			A.toast(R.string.msg_empty_list);
+		else
+			for(String num : nums.split(SEP))
+				addnum(num);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		MenuInflater inflater = getMenuInflater();
-    inflater.inflate(R.menu.lista, menu);
+    inflater.inflate(R.menu.nums, menu);
     return true;
 	}
 
@@ -58,6 +72,7 @@ public class NumsActivity extends ScreenActivity
 	{
 		switch(item.getItemId()) {
 			case R.id.addnew : addnew();  break;
+			case R.id.callog : callog();  break;
 			case R.id.change : change();  break;
 			case R.id.del    : delete();  break;
 			case R.id.selall : selall();  break;
@@ -95,20 +110,73 @@ public class NumsActivity extends ScreenActivity
 		super.onBackPressed();
 	}
 	
+	@Override
+	public void onActivityResult(int code, int res, Intent i)
+	{
+		if(i==null || code!=CODE_CALLOG) return;
+	}
+	
 	//---- private api
 
 	private String keyAll()            { return "filter_nums_"+sect; }
 	private String keyCount()          { return "filter_nums_count_"+sect; }
 	private String keySect(String val) { return "filter_num_"+val+sect; }
 
+	private void addnum(String num)
+	{
+		Pref pref = new Pref(num);
+		prefs.put(num, pref);
+		prefGroup.addPreference(pref);
+	}
+
+	private void callog()
+	{
+		if(callog == null) {
+			Cursor c = A.resolver().query(Calls.CONTENT_URI,
+				new String[]{ Calls.NUMBER }, Calls.CACHED_NAME+" IS NULL", null, Calls.DEFAULT_SORT_ORDER
+			);
+			int n = Math.min(c.getCount(), MAX_CALLOGS);
+			callog = new Vector<String>(n);
+			Map<String,Integer> read = new HashMap<String,Integer>(n);
+			if(c.moveToFirst()) {
+				final int col = c.getColumnIndex(Calls.NUMBER);
+				n = 0;
+				do {
+					final String num = c.getString(col);
+					if(num==null || num.length()<3 || prefs.get(num)!=null || read.get(num)!=null) continue;
+					callog.add(num);
+					read.put(num, 1);
+					if(++n > MAX_CALLOGS) break;
+				} while(c.moveToNext());
+			}
+			c.close();
+		}
+		final int n = callog.size();
+		if(n <= 0)
+			A.toast(R.string.msg_callog_empty);
+		else {
+			new AlertDialog.Builder(this).setIcon(R.drawable.ic_bar).setTitle(R.string.msg_callog_new).setCancelable(true)
+				.setItems((String[])callog.toArray(new String[n]), new DialogInterface.OnClickListener(){
+					@Override
+					public void onClick(DialogInterface dlg, int which) {
+						addnum(callog.get(which).toString());
+						changed = true;
+					}
+				}
+			).show();
+			A.logd("call log: +"+callog);
+		}
+	}
+
 	private void addnew()
 	{
-		A.alertText(A.s(R.string.msg_nums_edit), new A.Edited() {
+		Alert.edit(A.s(R.string.msg_nums_edit), PrefixNum.get(), new Alert.Edited() {
 			@Override
 			public void on(String num) {
 				num = num.trim();
-				if(A.empty(num)) { A.toast(R.string.err_name); return; }
-				prefGroup.addPreference(new Pref(num));
+				if(num.length() < 2) { A.toast(R.string.err_name); return; }
+				if(prefs.get(num) != null) { A.toast(String.format(A.s(R.string.err_exists), num)); return; }
+				addnum(num);
 				changed = true;
 			}
 		}).setInputType(InputType.TYPE_CLASS_PHONE);
@@ -119,12 +187,13 @@ public class NumsActivity extends ScreenActivity
 		if(selected.isEmpty()) return;
 		final Pref prefSel  = selected.peek();
 		final String numSel = prefSel.getNum();
-		A.alertText(A.s(R.string.msg_nums_edit), numSel, new A.Edited() {
+		Alert.edit(A.s(R.string.msg_nums_edit), numSel, new Alert.Edited() {
 			@Override
 			public void on(String num) {
 				num = num.trim();
-				if(A.empty(num)) { A.toast(R.string.err_name); return; }
+				if(num.length() < 2) { A.toast(R.string.err_name); return; }
 				if(num.equals(numSel)) return;
+				if(prefs.get(num) != null) { A.toast(String.format(A.s(R.string.err_exists), num)); return; }
 				prefSel.setNum(num);
 				changed = true;
 			}
@@ -135,12 +204,13 @@ public class NumsActivity extends ScreenActivity
 	{
 		final int n = selected.size();
 		if(n < 1) return;
-		A.alert(n>1? String.format(A.s(R.string.ask_del_all), n+"") : A.s(R.string.ask_del_one),
-			new A.Click() {
+		Alert.msg(n>1? String.format(A.s(R.string.ask_del_all), n+"") : A.s(R.string.ask_del_one),
+			new Alert.Click() {
 				@SuppressWarnings("unchecked")
 				public void on() {
 					if(selected.isEmpty()) return;
 					for(Pref p : (Stack<Pref>)selected.clone()) {
+						prefs.remove(p.getNum());
 						prefGroup.removePreference(p);
 						selected.remove(p);
 					}
@@ -148,7 +218,7 @@ public class NumsActivity extends ScreenActivity
 				}
 			},
 			null,
-			A.ALERT_OKCANC
+			Alert.OKCANC
 		);
 	}
 	
@@ -175,15 +245,15 @@ public class NumsActivity extends ScreenActivity
 	private void canc()
 	{
 		if(!changed) { finish(); return; }
-		A.alert(
+		Alert.msg(
 			A.s(R.string.ask_canc_all),
-			new A.Click(){ public void on(){ changed = false; dismiss(); finish(); }},
+			new Alert.Click(){ public void on(){ changed = false; dismiss(); finish(); }},
 			null,
-			A.ALERT_OKCANC
+			Alert.OKCANC
 		);
 	}
 
-	//---- inner class
+	//---- inner classes
 
 	private class Pref extends CheckBoxPreference implements OnPreferenceChangeListener
 	{

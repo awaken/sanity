@@ -1,5 +1,6 @@
 package cri.sanity;
 
+import cri.sanity.util.*;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -40,7 +41,7 @@ public class MainActivity extends ScreenActivity
 	private void setupDonate() {
 		Preference p = pref("donate");
     if(!A.isFull() && !startDonateApp()) {
-   		on(p, new Click(){ public boolean on(){ return A.gotoMarketDetails(Conf.DONATE_PKG); }});
+   		on(p, new Click(){ public boolean on(){ return Goto.marketDetails(Conf.DONATE_PKG); }});
 			p = pref("screen_record");
 			p.setSummary(p.getSummary()+" "+A.s(R.string.rec_cat_sum_free));
     } else {
@@ -52,10 +53,10 @@ public class MainActivity extends ScreenActivity
 	}
 
 	private void firstRun() {
-		A.alert(
+		Alert.msg(
 		  A.s(R.string.msg_eula_title),
 			A.fullName()+"\n\n"+A.s(R.string.app_desc)+'\n'+A.s(R.string.app_copy)+"\n\n"+A.rawstr(R.raw.license),
-			new A.Click(){ public void on(){
+			new Alert.Click(){ public void on(){
 				A.put(K.AGREE,true);
 				P.setDefaults();
 				updateOptions();
@@ -63,37 +64,37 @@ public class MainActivity extends ScreenActivity
 				if(P.backupExists()) askRestore();
 				else                 askAdmin();
 			}},
-			new A.Click(){ public void on(){ finish(); }},
-			A.ALERT_OKCANC,
+			new Alert.Click(){ public void on(){ finish(); }},
+			Alert.OKCANC,
 			false
 		);
 	}
 
 	private void askRestore() {
-		A.alert(
+		Alert.msg(
 			A.s(R.string.ask_restore),
-			new A.Click(){ public void on(){
+			new Alert.Click(){ public void on(){
 				final boolean ok = P.restore();
 				A.toast(ok? R.string.msg_restore_success : R.string.msg_restore_failed);
 				if(ok) updateOptions();
 				dismiss();
 				askAdmin();
 			}},
-			new A.Click(){ public void on(){
+			new Alert.Click(){ public void on(){
 				dismiss();
 				askAdmin();
 			}},
-			A.ALERT_OKCANC
+			Alert.OKCANC
 		);
 	}
 
 	private void askAdmin() {
 		if(A.SDK<8 || Admin.isActive()) return;
-		A.alert(
+		Alert.msg(
 			A.rawstr(R.raw.admin_ask_enable),
-			new A.Click(){ public void on(){ Admin.request(MainActivity.this); }},
+			new Alert.Click(){ public void on(){ Admin.request(MainActivity.this); }},
 			null,
-			A.ALERT_OKCANC
+			Alert.OKCANC
 		);
 	}
 	

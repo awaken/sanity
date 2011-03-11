@@ -1,5 +1,6 @@
 package cri.sanity;
 
+import cri.sanity.util.Dev;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;

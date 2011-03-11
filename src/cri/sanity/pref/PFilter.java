@@ -33,8 +33,15 @@ public final class PFilter extends Preference implements OnPreferenceClickListen
 		return key.substring(key.lastIndexOf('_') + 1);
 	}
 	
+	public final String filterKey() { return "filter_enable_"+sect(); }
+
 	public final void updateSum() {
-		setSummary(sum + " (" + A.s(A.is("filter_enable_"+sect())? R.string.active : R.string.disactive) + ')');
+		setSummary(sum + " (" + A.s(A.is(filterKey())? R.string.active : R.string.disactive) + ')');
+	}
+
+	public final void updateSum(boolean enable) {
+		A.putc(filterKey(), enable);
+		updateSum();
 	}
 
 	@Override

@@ -1,8 +1,9 @@
 package cri.sanity.screen;
 
+import android.media.AudioManager;
 import android.os.Bundle;
 import cri.sanity.*;
-import cri.sanity.pref.PList;
+import cri.sanity.pref.*;
 
 
 public class VolumeActivity extends ScreenActivity
@@ -11,7 +12,7 @@ public class VolumeActivity extends ScreenActivity
   public void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
-		CharSequence[][] arr = getVolumeLevels(Dev.VOL_CALL);
+		CharSequence[][] arr = getVolumeLevels(AudioManager.STREAM_VOICE_CALL);
   	for(String k : new String[]{ K.VOL_PHONE, K.VOL_WIRED, K.VOL_BT })
   		setVolumeLevels((PList)pref(k + K.WS), arr);
   }
