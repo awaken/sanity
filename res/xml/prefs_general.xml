@@ -28,5 +28,9 @@
                 android:summary="@string/reset_prefs_sum"
                 android:persistent="false"
                 android:key="reset_prefs" />
+    <Preference android:title="@string/delete_filters_title"
+                android:summary="@string/delete_filters_sum"
+                android:persistent="false"
+                android:key="delete_filters" />
 	</PreferenceCategory>
 </PreferenceScreen>

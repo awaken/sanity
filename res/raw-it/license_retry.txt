@@ -1,0 +1,5 @@
+Attenzione prego: impossibile contattare il server per verificare la tua licenza di "Sanity Donazione".
+
+Per favore collegati a Internet e riapri Sanity per completare questo passaggio.
+
+Tutte le funzionalità dell'applicazione verranno abilitate soltanto dopo aver completato questo passaggio con successo.

@@ -23,9 +23,11 @@ import android.location.LocationManager;
 import android.media.AudioManager;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
+import android.text.ClipboardManager;
 import android.hardware.SensorManager;
 import android.net.wifi.WifiManager;
 import android.util.Log;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.PowerManager;
 import android.os.Vibrator;
@@ -40,12 +42,22 @@ public final class A extends Application
 	public  static final int SDK = android.os.Build.VERSION.SDK_INT;
 	private static final int NID = 1;
 
+	//---- inner classes
+
+	public abstract static class Async extends AsyncTask<Void,Void,Void> {
+		public Void doInBackground(Void ...v) {
+			run();
+			return null;
+		}
+		public abstract void run();
+	}
+
 	//---- data
 
 	private static A                        a;
 	private static String                   name;
 	private static Resources                resources;
-	private static ContentResolver          ctxRes;
+	private static ContentResolver          resolver;
 	private static PackageInfo              pkgInfo;
 	private static SharedPreferences        prefs;
 	private static SharedPreferences.Editor edit;
@@ -84,15 +96,10 @@ public final class A extends Application
 	public static final SharedPreferences       prefs() { return prefs; }
 	public static final SharedPreferences.Editor edit() { return edit;  }
 	public static final String                    pkg() { return pkgInfo.packageName; }
-	public static final Resources           resources() { if(resources==null) resources=a.getResources(); return resources; }
-	public static final ContentResolver      resolver() { if(ctxRes==null) ctxRes=a.getContentResolver(); return ctxRes; }
+	public static final Resources           resources() { if(resources==null) resources=a.getResources();       return resources; }
+	public static final ContentResolver      resolver() { if(resolver ==null) resolver =a.getContentResolver(); return resolver;  }
 	//public static final PackageInfo           pkgInfo() { return pkgInfo; }
 	public static final String                    ver() { return pkgInfo.versionName; }
-	public static final String               fullName() {
-		String v = name + "  v" + ver();
-		if(Conf.BETA > 0) { v += " beta "; if(Conf.BETA > 1) v += Conf.BETA; }
-		return v;
-	}
 
 	// log
 	//public static final int logd(Object o, String method) { return Log.d(name, o.getClass().getSimpleName()+'.'+method); }
@@ -197,24 +204,24 @@ public final class A extends Application
 	public static final boolean isEnabled() { return prefs.getBoolean(K.ENABLED, false); }
 	public static final boolean isFull()    { return full; }
 	public static final boolean isBeta()    { return Conf.BETA > 0; }
-	public static final void    setFull()   { A.putc(K.FULL, A.full=true); }
+	public static final void setFull(boolean full) { A.putc(K.FULL, A.full=full); }
 
 	public static final boolean is(String key)                { return prefs.getBoolean(key, false); }
 	//public static final boolean is(String key, boolean def)   { return prefs.getBoolean(key, def  ); }
-	public static final String  gets(String key)              { return prefs.getString (key, ""   ); }
-	//public static final String  gets(String key, String def)  { return prefs.getString (key, def  ); }
-	public static final int     geti(String key)              { return prefs.getInt    (key, 0    ); }
-	//public static final int     geti(String key, int def)     { return prefs.getInt    (key, def  ); }
-	public static final long    getl(String key)              { return prefs.getLong   (key, 0l   ); }
-	//public static final long    getl(String key, long def)    { return prefs.getLong   (key, def  ); }
-	//public static final float   getf(String key)              { return prefs.getFloat  (key, 0    ); }
-	//public static final float   getf(String key, float def)   { return prefs.getFloat  (key, def  ); }
-	public static final int     getsi(String key)             { return Integer.parseInt  (prefs.getString(key, "0")); }
-	//public static final int     getsi(String key, String def) { return Integer.parseInt  (prefs.getString(key, def)); }
-	//public static final long    getsl(String key)             { return Long   .parseLong (prefs.getString(key, "0")); }
-	//public static final long    getsl(String key, String def) { return Long   .parseLong (prefs.getString(key, def)); }
-	//public static final float   getsf(String key)             { return Float  .parseFloat(prefs.getString(key, "0")); }
-	//public static final float   getsf(String key, String def) { return Float  .parseFloat(prefs.getString(key, def)); }
+	public static final String gets(String key)              { return prefs.getString (key, ""   ); }
+	//public static final String gets(String key, String def)  { return prefs.getString (key, def  ); }
+	public static final int    geti(String key)              { return prefs.getInt    (key, 0    ); }
+	//public static final int    geti(String key, int def)     { return prefs.getInt    (key, def  ); }
+	public static final long   getl(String key)              { return prefs.getLong   (key, 0l   ); }
+	//public static final long   getl(String key, long def)    { return prefs.getLong   (key, def  ); }
+	//public static final float  getf(String key)              { return prefs.getFloat  (key, 0    ); }
+	//public static final float  getf(String key, float def)   { return prefs.getFloat  (key, def  ); }
+	public static final int    getsi(String key)             { return Integer.parseInt(prefs.getString(key, "0")); }
+	//public static final int    getsi(String key, String def) { return Integer.parseInt  (prefs.getString(key, def)); }
+	//public static final long   getsl(String key)             { return Long   .parseLong (prefs.getString(key, "0")); }
+	//public static final long   getsl(String key, String def) { return Long   .parseLong (prefs.getString(key, def)); }
+	//public static final float  getsf(String key)             { return Float  .parseFloat(prefs.getString(key, "0")); }
+	//public static final float  getsf(String key, String def) { return Float  .parseFloat(prefs.getString(key, def)); }
 
 	public static final boolean has (String key) { return prefs.contains(key); }
 	public static final A       del (String key) { edit.remove(key);          return a; }
@@ -292,6 +299,9 @@ public final class A extends Application
 	}
 	public static final AlarmManager alarmMan() {
 		return (AlarmManager)a.getSystemService(ALARM_SERVICE);
+	}
+	public static final ClipboardManager clipMan() {
+		return (ClipboardManager)a.getSystemService(CLIPBOARD_SERVICE);
 	}
 	public static final BluetoothAdapter btAdapter() {
 		if(btAdapter == null) btAdapter = BluetoothAdapter.getDefaultAdapter();

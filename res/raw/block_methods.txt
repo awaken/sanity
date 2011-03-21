@@ -1,0 +1,10 @@
+Description of all methods for blocking the calls:
+
+- Hang up: this is the usual way to reject a call, it's like you refuse a call by hand (for example by pressing the red button) while the phone is ringing.
+
+- Interrupt the signal: this method stops the GSM antenna, then turn on it again. You can also choose a late restart, thus leaving the signal dropped for a while, you will avoid to decline again the caller (if he tries to recall you immediately).
+
+- Silent answer: mute the audio system and automatically answer the call. In this way, the caller will not hear anything. So, it will be almost impossible the caller understands you're refusing him!
+CAUTION: with this method it's very important you don't use the phone during the muted call, otherwise Android will automatically turn on the microphone!!
+
+- Silent ringtone: put the phone in silent mode only while ringing. It's useful if you don't want to answer or reject the call: the ringtone won't annoy you.

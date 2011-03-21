@@ -1,0 +1,5 @@
+WARNING: you have an invalid license of "Sanity Donate"!!
+
+This happens if you installed "Sanity Donate" illegally or if you have configured the Market with a different email from that one you made ​​the donation for Sanity.
+
+Contact the developer for further problems.

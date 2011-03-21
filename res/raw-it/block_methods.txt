@@ -1,0 +1,10 @@
+Descrizione dei metodi di blocco chiamata:
+
+- Riaggancia: questo è il modo usuale di rifiutare una chiamata, è come riagganciare a mano la telefonata (ad esempio premendo il tasto rosso) mentre il telefono squilla.
+
+- Interrompi il segnale: questo metodo spegne l'antenna GSM, dopodiché la riaccende. Puoi anche scegliere un ritardo di riaccensione, in questo modo, lasciando il segnale sganciato per un po', eviterai di rifiutare di nuovo il chiamante (se proverà a richiamarti subito).
+
+- Risposta silenziosa: rende muto il sistema audio e risponde automaticamente alla telefonata. Così facendo, il chiamante non sentirà nulla. Allora, sarà quasi impossibile che il chiamante capisca che lo stai rifiutando!
+ATTENZIONE: con questo metodo è molto importante non usare il telefono durante la chiamata senza sonoro, altrimenti Android riaccenderà automaticamente il microfono!!
+
+- Suoneria silenziosa: mette automaticamente il telefono nella modalità sileziosa soltanto mentre squilla. È utile se non vuoi né rispondere e né rifiutare la telefonata: la suoneria non ti disturberà.

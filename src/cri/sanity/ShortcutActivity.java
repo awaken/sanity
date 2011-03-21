@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,26 +15,20 @@ import cri.sanity.util.*;
 
 public final class ShortcutActivity extends Activity implements DialogInterface.OnCancelListener, FilenameFilter
 {
-	public  static final String EXTRA_KEY    = "cri.sanity.shortcut";
-	private static final String EXTRA_KEY2   = "cri.sanity.shortcut2";
-	private static final String EXTRA_PRF    = "profile";
-	private static final String EXTRA_REC    = "rec_srv";
-	private static final String EXTRA_FILTER = "filter";
-	private static final String EXTRA_SCREEN = "screen";
+	public  static final String EXTRA_KEY       = "cri.sanity.shortcut";
+	private static final String EXTRA_KEY2      = "cri.sanity.shortcut2";
+	private static final String EXTRA_PRF       = "profile";
+	private static final String EXTRA_REC       = "rec_srv";
+	private static final String EXTRA_FILTER    = "filter";
+	private static final String EXTRA_SCREEN    = "screen";
+	private static final String SHORTCUT_PREFIX = "[S] ";
 
-	private class Dlg extends AlertDialog.Builder {
-		private Dlg() { super(ShortcutActivity.this); }
-	}
-	private class Click implements DialogInterface.OnClickListener {
-		public void onClick(DialogInterface dlg, int which) { on(which); }
-		void on(int which) {}
-	}
 	private static class Entry {
 		int icon;
 		String extra, extra2;
 		Entry(int ic, String e, String e2) { icon = ic; extra = e; extra2 = e2; }
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		Alert.activity = this;
@@ -53,6 +46,12 @@ public final class ShortcutActivity extends Activity implements DialogInterface.
 	public void onResume() {
 		Alert.activity = this;
 		super.onResume();
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		finish();
 	}
 
 	private void chooseShortcut() {
@@ -73,17 +72,18 @@ public final class ShortcutActivity extends Activity implements DialogInterface.
 		map.put(R.string.filter_shortcut_rec  , new Entry(R.drawable.menu_rec      , EXTRA_FILTER, "rec"));
 		map.put(R.string.filter_shortcut_tts  , new Entry(R.drawable.menu_tts      , EXTRA_FILTER, "tts"));
 		map.put(R.string.filter_shortcut_block, new Entry(R.drawable.menu_block    , EXTRA_FILTER, "block"));
+		map.put(R.string.history_block        , new Entry(R.drawable.menu_block    , EXTRA_SCREEN, BlockHistoryActivity.class.getName()));
 		final int[] items = new int[]{ R.string.profile_shortcut, R.string.profile_cat, R.string.general_cat, R.string.devices_cat,
 			R.string.proximity_cat, R.string.speaker_cat, R.string.vol_cat, R.string.notify_cat, R.string.block_cat, R.string.tts_cat,
 			R.string.rec_cat, R.string.rec_browse_title, R.string.rec_shortcut,
-			R.string.filter_shortcut_rec, R.string.filter_shortcut_tts, R.string.filter_shortcut_block };
-		dlg(A.s(R.string.app_shortcut), items, new Click(){ void on(int which){
+			R.string.filter_shortcut_rec, R.string.filter_shortcut_tts, R.string.filter_shortcut_block, R.string.history_block };
+		Alert.choose(A.s(R.string.app_shortcut), items, new Alert.Click(){ public void on(){
     	if(!A.isFull()) { askDonate(); return; }
   		final int title = items[which];
 			final Entry e = map.get(title);
-			createShortcut("[S] "+A.s(title), e.icon, e.extra, e.extra2);
+			createShortcut(SHORTCUT_PREFIX+A.s(title), e.icon, e.extra, e.extra2);
 			finish();
-		}}).show();
+		}}).setOnCancelListener(this);
 	}
 
 	private void createShortcut(String name, int icon, String extra, String extra2) {
@@ -111,11 +111,10 @@ public final class ShortcutActivity extends Activity implements DialogInterface.
 
 	private boolean execProfiles(String prf) {
 		if(prf != null) return restoreProfile(prf);
-  	Dlg dlg = profileChooser();
-  	if(dlg == null) { A.toast(A.name()+": "+A.s(R.string.msg_prf_empty)); return false; }
-  	dlg.show();
-  	return true;
-	}
+  	if(profileChooser()) return true;
+  	A.toast(A.name()+": "+A.s(R.string.msg_prf_empty));
+  	return false;
+  }
 
 	private boolean execRecSrv() {
 		if(!RecService.isRunning()) { A.toast(R.string.msg_rec_no); return false; }
@@ -153,15 +152,17 @@ public final class ShortcutActivity extends Activity implements DialogInterface.
 		return false;
 	}
 
-	private Dlg profileChooser() {
+	private boolean profileChooser() {
 		final String[] profiles = profiles();
-		if(profiles == null) return null;
-		return dlg(A.s(R.string.profile_shortcut), profiles, new Click(){
-			void on(int which) {
+		if(profiles == null) return false;
+		Alert.choose(A.s(R.string.profile_shortcut), profiles, new Alert.Click(){
+			@Override
+			public void on() {
 				restoreProfile(profiles[which]);
 				finish();
 			}
-		});
+		}).setOnCancelListener(this);
+		return true;
 	}
 	
 	private boolean restoreProfile(String name) {
@@ -183,25 +184,11 @@ public final class ShortcutActivity extends Activity implements DialogInterface.
 		Arrays.sort(profiles, 0, profiles.length);
 		return profiles;
 	}
-	
-	private Dlg dlg(String title, String[] items, Click click) {
-		Dlg dlg = new Dlg();
-		dlg.setIcon(R.drawable.ic_bar).setTitle(title).setItems(items, click).setCancelable(true).setOnCancelListener(this);
-		return dlg;
-	}
 
-	private Dlg dlg(String title, int[] items, Click click) {
-		final int n = items.length;
-		String[] labels = new String[n];
-		for(int i=0; i<n; i++)
-			labels[i] = A.s(items[i]);
-		return dlg(title, labels, click);
-	}
-	
 	private void askDonate() {
 		Alert.msg(
 			A.rawstr(R.raw.shortcut_free),
-			new Alert.Click(){ public void on(){ Goto.marketDetails(Conf.DONATE_PKG); finish(); }},
+			new Alert.Click(){ public void on(){ Goto.marketDetails(License.FULL_PKG); finish(); }},
 			new Alert.Click(){ public void on(){ finish(); }}
 		);
 	}

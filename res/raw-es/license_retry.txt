@@ -1,0 +1,5 @@
+Atención por favor: no se puede contactar con el servidor para comprobar su licencia "Sanity Donación".
+
+Por favor, conectarse a Internet y vuelva a abrir Sanity para completar este paso.
+
+Todas las funciones de la aplicación se activará sólo después de completar este paso con éxito.

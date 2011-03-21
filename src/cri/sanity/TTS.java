@@ -6,6 +6,7 @@ import java.util.HashMap;
 import android.media.AudioManager;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.*;
+import android.telephony.TelephonyManager;
 
 
 public class TTS implements OnInitListener, OnUtteranceCompletedListener
@@ -32,7 +33,7 @@ public class TTS implements OnInitListener, OnUtteranceCompletedListener
 	public final void stop()
 	{
 		repeat = 0;
-		if(tts.isSpeaking()) tts.stop();
+		tts.stop();
 	}
 
 	public final void shutdown()
@@ -42,7 +43,7 @@ public class TTS implements OnInitListener, OnUtteranceCompletedListener
 		if(vol >= 0) A.audioMan().setStreamVolume(STREAM, vol, 0);
 		if(solo) A.audioMan().setStreamMute(AudioManager.STREAM_RING, false);
 	}
-	
+
 	public void onError() { A.notify(A.s(R.string.err_tts_init)); }
 
 	@Override
@@ -62,9 +63,10 @@ public class TTS implements OnInitListener, OnUtteranceCompletedListener
 					if(id.length() <= 0) return;
 				}
 			}
+			if(A.telMan().getCallState() != TelephonyManager.CALL_STATE_RINGING) return;
 		}
 		// volume setup
-		int vol = A.geti(K.TTS_VOL);
+		final int vol = A.geti(K.TTS_VOL);
 		if(vol >= 0) {
 			this.vol = A.audioMan().getStreamVolume(STREAM);
 			A.audioMan().setStreamVolume(STREAM, vol, 0);

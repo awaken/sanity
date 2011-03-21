@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 import java.util.Vector;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -25,7 +23,7 @@ import cri.sanity.util.*;
 
 public class NumsActivity extends ScreenActivity
 {
-	private static final String SEP = Conf.FILTER_SEP+"";
+	private static final String SEP = FilterActivity.SEP;
 	private static final int CODE_CALLOG = 1;
 	private static final int MAX_CALLOGS = 30;
 	
@@ -154,18 +152,14 @@ public class NumsActivity extends ScreenActivity
 		final int n = callog.size();
 		if(n <= 0)
 			A.toast(R.string.msg_callog_empty);
-		else {
-			new AlertDialog.Builder(this).setIcon(R.drawable.ic_bar).setTitle(R.string.msg_callog_new).setCancelable(true)
-				.setItems((String[])callog.toArray(new String[n]), new DialogInterface.OnClickListener(){
-					@Override
-					public void onClick(DialogInterface dlg, int which) {
-						addnum(callog.get(which).toString());
-						changed = true;
-					}
+		else
+			Alert.choose(A.s(R.string.msg_callog_new), (String[])callog.toArray(new String[n]), new Alert.Click() {
+				@Override
+				public void on() {
+					addnum(callog.get(which).toString());
+					changed = true;
 				}
-			).show();
-			A.logd("call log: +"+callog);
-		}
+			});
 	}
 
 	private void addnew()

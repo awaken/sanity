@@ -8,6 +8,12 @@
 	                      android:key="block" />
 	  <cri.sanity.pref.PFilter android:dependency="block"
 	                           android:key="filter_block" />
+	  <Preference android:title="@string/block_help_title"
+	              android:summary="@string/block_help_sum"
+	              android:persistent="false"
+	              android:dependency="block"
+	              android:key="block_help"
+	              android:widgetLayout="@layout/img_help" />
 	  <cri.sanity.pref.PList android:title="@string/block_mode_title"
 	                         android:summary="@string/block_mode_sum"
 	                         android:dependency="block"
@@ -28,5 +34,10 @@
 	                      android:summary="@string/block_notify_sum"
 	                      android:dependency="block"
 	                      android:key="block_notify" />
+	  <Preference android:title="@string/history"
+	              android:summary="@string/block_history_sum"
+	              android:persistent="false"
+	              android:key="block_history"
+	              android:widgetLayout="@layout/img_history" />
 	</PreferenceCategory>
 </PreferenceScreen>

@@ -1,0 +1,5 @@
+ATTENZIONE: questa funzione cancellerà tutti i filtri chiamata che hai configurato.
+
+Tutti i filtri chiamata attuali verranno persi.
+
+Vuoi davvero eliminare tutti i filtri chiamata?

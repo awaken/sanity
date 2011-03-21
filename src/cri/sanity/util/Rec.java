@@ -49,7 +49,7 @@ public class Rec
 	public final String  fn()        { return fn; }
 	public final boolean isStarted() { return started; }
 
-	public final void start()
+	public final synchronized void start()
 	{
 		try {
 			if(started || !init()) return;
@@ -63,7 +63,7 @@ public class Rec
 		}
 	}
 
-	public final void stop()
+	public final synchronized void stop()
 	{
 		if(!started || mediaRec==null) return;
 		started = false;
@@ -74,7 +74,7 @@ public class Rec
 		//A.logd("rec stopped");
 	}
 
-	public final void release()
+	public final synchronized void release()
 	{
 		if(mediaRec == null) return;
 		try {

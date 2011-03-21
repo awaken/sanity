@@ -21,8 +21,9 @@ public final class P
 		return defs;
 	}
 	public static final void setDefaults() {
+		final Map<String,?> bakMap = bakMap();
 		A.edit().clear();
-		A.putAll(getDefaults()).commit();
+		A.putAll(getDefaults()).putAll(bakMap).commit();
 		setWrapKeys();
 		setVer();
 	}
@@ -87,10 +88,11 @@ public final class P
 		return restore(dir+'/'+Conf.BACKUP_FN);
 	}
 	public static final boolean restore(String fn) {
-		Map<String,?> m = load(fn);
-		if(m == null) return false;
+		final Map<String,?> loadMap = load(fn);
+		if(loadMap == null) return false;
+		final Map<String,?> bakMap = bakMap();
 		A.edit().clear();
-		A.putAll(m).commit();
+		A.putAll(loadMap).putAll(bakMap).commit();
 		upgrade();
 		return true;
 	}
@@ -125,6 +127,16 @@ public final class P
 			return read? m : null;
 		}
 	}
+	
+	public static final void removeFilters() {
+		for(String k : A.prefs().getAll().keySet()) {
+			if(!k.startsWith("filter_")) continue;
+			if(k.startsWith("filter_enable_")) continue;
+			if(k.contains("_count_")) A.put(k, 0);
+			else A.del(k);
+		}
+		A.commit();
+	}
 
 	public static final boolean upgrade() {
 		final String ver = A.gets(K.VER );
@@ -134,24 +146,32 @@ public final class P
 		return true;
 	}
 
-	/*
-	public static final Map<String,?> getAll(String prefix, String suffix) {
-		Map<String,?>      all = A.prefs().getAll();
-		Map<String,Object> map = new HashMap<String,Object>(all.size());
-		for(String key : all.keySet())
-			if((prefix==null || key.startsWith(prefix)) && (suffix==null || key.endsWith(suffix)))
-				map.put(key, all.get(key));
-		return map;
-	}
-	*/
-
 	//---- private api
+
+	private static Map<String,Object> bakMap() {
+		final String[] skipKeys = K.skipKeys();
+		final Map<String,Object> bakMap = new HashMap<String,Object>(skipKeys.length);
+		for(String k : skipKeys) {
+			Object v;
+			try { v = A.geti(k); } catch(Exception ei) {
+			try { v = A.getl(k); } catch(Exception el) {
+			try { v = A.is(k);   } catch(Exception eb) {
+			try { v = A.gets(k); } catch(Exception es) {
+				//A.logd("error: unable to get skip key \""+k+'"');
+				continue;
+			}}}}
+			bakMap.put(k, v);
+		}
+		return bakMap;
+	}
 
 	private static void setWrapKeys() {
 		for(String ki : K.wrapIntKeys()) {
 			final String ks = ki + K.WS;
 			try {
-				A.put(ks, Integer.toString(A.geti(ki)));
+				int i = A.geti(ki);
+				if(A.has(ks)) A.del(ks);
+				A.put(ks, Integer.toString(i));
 			}	catch(Exception e) { try {
 				final String s = A.gets(ki);
 				A.put(ki, Integer.parseInt(s)).put(ks, s);

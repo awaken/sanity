@@ -1,5 +1,6 @@
 package cri.sanity.screen;
 
+import android.content.Intent;
 import android.os.Bundle;
 import cri.sanity.*;
 import cri.sanity.pref.*;
@@ -20,12 +21,20 @@ public class BlockerActivity extends ScreenActivity
     	if(A.SDK>8 && value.equals(Blocker.MODE_HANGUP+""))
     		Alert.msg(A.rawstr(R.raw.block_warn));
     	pref(K.BLOCK_SKIP       ).setEnabled(!value.equals(Blocker.MODE_SILENT+""));
-    	pref(K.BLOCK_RESUME+K.WS).setEnabled( value.equals(Blocker.MODE_FLIGHT+""));
+    	pref(K.BLOCK_RESUME+K.WS).setEnabled( value.equals(Blocker.MODE_RADIO +""));
     	return true;
     }});
     final int mode = A.geti(K.BLOCK_MODE);
     pref(K.BLOCK_SKIP       ).setEnabled(mode != Blocker.MODE_SILENT);
-  	pref(K.BLOCK_RESUME+K.WS).setEnabled(mode == Blocker.MODE_FLIGHT);
+  	pref(K.BLOCK_RESUME+K.WS).setEnabled(mode == Blocker.MODE_RADIO );
+    on("block_history", new Click(){ public boolean on(){
+    	startActivity(new Intent(A.app(), BlockHistoryActivity.class));
+    	return true;
+    }});
+    on("block_help", new Click(){ public boolean on(){
+    	Alert.msg(A.s(R.string.block_help_title), A.rawstr(R.raw.block_methods), null, null, Alert.NONE);
+    	return true;
+    }});
     fullOnly(K.BLOCK_MODE+K.WS, K.BLOCK_RESUME+K.WS, K.BLOCK_SKIP, K.BLOCK_NOTIFY);
   }
 	

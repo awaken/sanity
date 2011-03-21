@@ -11,7 +11,7 @@ import cri.sanity.Conf;
 public abstract class Task implements Runnable
 {
 	public static class Pool extends ScheduledThreadPoolExecutor {
-		public Pool() { super(Conf.THREAD_POOL_SIZE); }
+		public Pool() { super(1); }
 	}
 	
 	private static final Map<Integer,ScheduledFuture<?>> map = new HashMap<Integer,ScheduledFuture<?>>();

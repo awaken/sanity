@@ -1,0 +1,3 @@
+Errore: il server ha rifiutato la richiesta di attivazione di "Sanity Donazione"!!
+
+Se il problema persiste, sei invitato a contattare lo sviluppatore.

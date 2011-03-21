@@ -7,26 +7,26 @@ package com.android.internal.telephony;
 
 public interface ITelephony
 {
-  boolean endCall();
-  boolean showCallScreen();
   boolean enableDataConnectivity();
   boolean disableDataConnectivity();
+  boolean showCallScreen();
+  boolean endCall();
+  void    answerRingingCall();
   /*
+  boolean setRadio(boolean turnOn);
+  void    cancelMissedCallsNotification();
   boolean showCallScreenWithDialpad(boolean showDialpad);
   void dial(String number);
   void call(String number);
-  void answerRingingCall();
   void silenceRinger();
   boolean isOffhook();
   boolean isRinging();
   boolean isIdle();
   boolean isRadioOn();
   boolean isSimPinEnabled();
-  void cancelMissedCallsNotification();
   boolean supplyPin(String pin);
   boolean handlePinMmi(String dialString);
   void toggleRadioOnOff();
-  boolean setRadio(boolean turnOn);
   void updateServiceLocation();
   void enableLocationUpdates();
   void disableLocationUpdates();

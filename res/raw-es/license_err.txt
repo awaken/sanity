@@ -1,0 +1,3 @@
+Error: el servidor rechazó la solicitud de activación de "Sanity Donación"!
+
+Si el problema persiste, póngase en contacto con el desarrollador.

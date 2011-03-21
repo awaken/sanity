@@ -97,6 +97,7 @@ public final class K
 	public static final String BETA     = "beta";
 	public static final String AGREE    = "agree";
 	public static final String VER      = "ver";
+	public static final String LICVER   = "licver";
 	public static final String NAG      = "nag";
 	public static final String BT_COUNT = "bt_count";
 	public static final String PRF_NAME = "prf_name";
@@ -108,7 +109,7 @@ public final class K
 	
 	//--- methods: only class P should call these methods!
 
-	static final String[] skipKeys() { return new String[]{ BT_COUNT, NAG, CRON }; }
+	static final String[] skipKeys() { return new String[]{ BT_COUNT, NAG, CRON, FULL, LICVER }; }
 
 	static final String[] wrapIntKeys() {
 		return new String[]{
@@ -143,7 +144,7 @@ public final class K
 		m.put(SCREEN_OFF         , true);
 		m.put(SCREEN_ON          , true);
 		m.put(SPEAKER_AUTO       , false);			// speaker
-		m.put(SPEAKER_DELAY      ,  0);
+		m.put(SPEAKER_DELAY      , 1000);
 		m.put(SPEAKER_CALL       ,  0);
 		m.put(SPEAKER_CALL_DELAY ,  0);
 		m.put(SPEAKER_VOL        , -1);
@@ -192,7 +193,7 @@ public final class K
 		m.put(TTS_FILTER         , false);
 		m.put(BLOCK_FILTER       , false);
 		m.put(BLOCK_SKIP         , false);
-		m.put(BLOCK_MODE         , Blocker.MODE_FLIGHT);
+		m.put(BLOCK_MODE         , Blocker.MODE_RADIO);
 		m.put(BLOCK_RESUME       , 0);
 		m.put(BLOCK_NOTIFY       , false);
 		return m;
@@ -227,7 +228,7 @@ public final class K
 				}}
 			}
 		}
-		if(oldVer < 1.96f) A.put(SPEAKER_CALL, A.is(SPEAKER_CALL)? 3 : 0);
+		if(oldVer < 1.96f) A.put(SPEAKER_CALL, A.is(SPEAKER_CALL)? 3 : 0).del(SPEAKER_CALL);
 		if(oldVer < 1.97f) P.setDef(SPEAKER_ON_COUNT, SPEAKER_OFF_COUNT, REC_START_DIR);
 		if(oldVer < 1.99f) P.setDef(REVERSE_BT, REVERSE_BT_TIMEOUT);
 		if(oldVer < 2.00f) P.setDef(BT_OFF, REC_FILTER, REC_AUTOREMOVE, TTS, TTS_HEADSET, TTS_SOLO, TTS_VOL, TTS_TONE, TTS_REPEAT, TTS_PAUSE, TTS_PREFIX, TTS_SUFFIX, TTS_ANONYM, TTS_UNKNOWN, TTS_FILTER);

@@ -3,29 +3,40 @@ package cri.sanity;
 import cri.sanity.util.*;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.Preference;
 
 
 public class MainActivity extends ScreenActivity
 {
+	private Handler handler;
+
 	@Override
   public void onCreate(Bundle savedInstanceState) {
+    handler     = new Handler();
+		nagDefault  = false;
 		skipAllKeys = true;
 		screener(MainActivity.class, R.xml.prefs);
     super.onCreate(savedInstanceState);
     screenerAll();
   	setupProximity();
-    setupDonate();
-		nag = false;
-		if(!A.is(K.AGREE))   firstRun();
-		else if(P.upgrade()) alertChangeLog();
-		else if(!A.isFull()) nag = true;
+    if(nagDefault = setupFull()) startup();
+    if(!Dev.isBtOn()) A.putc(K.BT_COUNT, 0);	// recheck sometimes to avoid false counter
   }
 
 	@Override
 	public void onResume() {
 		updateOptions();
 		super.onResume();
+	}
+	
+	@Override
+	public void onActivityResult(int code, int res, Intent i) {
+		if(code != License.CODE) return;
+		try {
+			final boolean full = License.result(res, handler, new Runnable(){ public void run(){ startup(); }});
+			handler.post(new Runnable(){ public void run(){ enableFull(full); }});
+		} catch(IllegalStateException e) {}
 	}
 
 	@Override
@@ -38,26 +49,47 @@ public class MainActivity extends ScreenActivity
   		setEnabled("screen_proximity", false);
 	}
 
-	private void setupDonate() {
+	private boolean setupFull() {
+		if(License.isChecked()) {
+			enableFull(true);
+			return true;
+		}
+		if(!License.check()) {
+			enableFull(false);
+			return true;
+		}
+		return false;
+	}
+	
+	private void enableFull(boolean enable) {
 		Preference p = pref("donate");
-    if(!A.isFull() && !startDonateApp()) {
-   		on(p, new Click(){ public boolean on(){ return Goto.marketDetails(Conf.DONATE_PKG); }});
-			p = pref("screen_record");
-			p.setSummary(p.getSummary()+" "+A.s(R.string.rec_cat_sum_free));
-    } else {
+    if(enable) {
 	  	p.setEnabled(false);
 	  	p.setSelectable(false);
 	  	if(Conf.FULL) { p.setTitle(R.string.full_title   ); p.setSummary(R.string.full_sum   ); }
 	  	else          { p.setTitle(R.string.donated_title); p.setSummary(R.string.donated_sum); }
+    } else {
+   		on(p, new Click(){ public boolean on(){ return Goto.marketDetails(License.FULL_PKG); }});
+			p = pref("screen_record");
+			p.setSummary(p.getSummary()+" "+A.s(R.string.rec_cat_sum_free));
     }
+	}
+
+	private void startup() {
+		if(!A.is(K.AGREE))
+			firstRun();
+		else if(P.upgrade())
+			alertChangeLog();
+		else if(License.isCompleted() && !A.isFull())
+			nag = nagDefault = true;
 	}
 
 	private void firstRun() {
 		Alert.msg(
 		  A.s(R.string.msg_eula_title),
-			A.fullName()+"\n\n"+A.s(R.string.app_desc)+'\n'+A.s(R.string.app_copy)+"\n\n"+A.rawstr(R.raw.license),
+			fullName()+"\n\n"+appDesc()+"\n\n"+A.rawstr(R.raw.license),
 			new Alert.Click(){ public void on(){
-				A.put(K.AGREE,true);
+				A.put(K.AGREE, true);
 				P.setDefaults();
 				updateOptions();
 				dismiss();
@@ -108,12 +140,6 @@ public class MainActivity extends ScreenActivity
 		setEnabled("screen_record"   , enabled);
 		setEnabled("screen_tts"      , enabled);
 		setEnabled("screen_block"    , enabled);
-	}
-
-	private boolean startDonateApp() {
-		final boolean done = startService(new Intent(Conf.ACTION_DONATE)) != null;
-		if(done) A.setFull();
-		return done;
 	}
 
 }

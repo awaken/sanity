@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<Preference android:key="logo" />
+	<PreferenceCategory android:title="@string/history"
+	                    android:key="history_main">
+		<Preference android:title="@string/history_clear_title"
+		            android:summary="@string/history_clear_sum"
+		            android:persistent="false"
+		            android:key="clear"
+		            android:widgetLayout="@layout/img_delete" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/history"
+	                    android:key="history" />
+</PreferenceScreen>

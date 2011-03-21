@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.HashMap;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,7 +24,7 @@ import android.view.MenuItem;
 
 public class ContactsActivity extends ScreenActivity
 {
-	private static final String SEP = Conf.FILTER_SEP+"";
+	private static final String SEP = FilterActivity.SEP;
 	private static final int CODE_SEARCH = 1;
 
 	private PreferenceCategory prefGroup;
@@ -86,7 +85,7 @@ public class ContactsActivity extends ScreenActivity
 	{
 		super.onStart();
 		if(!grouped)
-			new Async(){ void run(){ readContactGroups(this); }}.execute();
+			new Async(){ public void run(){ readContactGroups(this); }}.execute();
 	}
 
 	@Override
@@ -107,8 +106,10 @@ public class ContactsActivity extends ScreenActivity
 		if(c.moveToFirst()) {
 			Pref p = prefs.get(c.getString(c.getColumnIndex(Contacts._ID)));
 			int msgId = p!=null? p.isChecked()? R.string.msg_contact_unsel : R.string.msg_contact_sel : R.string.msg_contact_err;
-			if(p != null) p.setChecked(!p.isChecked());
 			A.toast(String.format(A.s(msgId), c.getString(c.getColumnIndex(Contacts.DISPLAY_NAME))));
+			if(p == null) return;
+			p.setChecked(!p.isChecked());
+			changed = true;
 		}
 		c.close();
 	}
@@ -264,14 +265,7 @@ public class ContactsActivity extends ScreenActivity
 
 	//---- inner class
 
-	private abstract class Async extends AsyncTask<Void,Void,Void>
-	{
-		public Void doInBackground(Void ...v) {
-			run();
-			return null;
-		}
-		abstract void run();
-	}
+	private abstract class Async extends A.Async {}
 
 	private class Pref extends CheckBoxPreference implements OnPreferenceChangeListener
 	{

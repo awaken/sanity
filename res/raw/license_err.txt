@@ -1,0 +1,3 @@
+Error: the server refused the request for activating "Sanity Donate"!!
+
+If the problem persists, please contact the developer.

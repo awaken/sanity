@@ -13,10 +13,11 @@ public class FilterActivity extends ScreenActivity implements OnPreferenceChange
 {
 	public  static final String EXTRA_SECT  = "cri.sanity.Filter.id";
 	public  static final String EXTRA_TITLE = "cri.sanity.Filter.title";
+	public  static final String SEP         = "§";
+	private static final String ITEMS_FMT   = A.s(R.string.msg_items);
 	private static final int CODE_NUMS      = 1;
 	private static final int CODE_CONTACTS  = 2;
 	private static final int CODE_GROUPS    = 3;
-	private static final String itemsFmt    = A.s(R.string.msg_items);
 
 	public static PFilter pref;
 	private String sect, title, sumNums, sumContacts, sumGroups;
@@ -138,15 +139,18 @@ public class FilterActivity extends ScreenActivity implements OnPreferenceChange
 
 	private void setSumNums(int cnt, Preference p) {
 		if(p == null) p = pref("filter_nums");
-		p.setSummary(sumNums+" ("+String.format(itemsFmt, cnt+"")+')');
+		p.setSummary(sumNums + itemsFmt(cnt));
 	}
 	private void setSumContacts(int cnt, Preference p) {
 		if(p == null) p = pref("filter_contacts");
-		p.setSummary(sumContacts+" ("+String.format(itemsFmt, cnt+"")+')');
+		p.setSummary(sumContacts + itemsFmt(cnt));
 	}
 	private void setSumGroups(int cnt, Preference p) {
 		if(p == null) p = pref("filter_groups");
-		p.setSummary(sumGroups+" ("+String.format(itemsFmt, cnt+"")+')');
+		p.setSummary(sumGroups + itemsFmt(cnt));
+	}
+	private static String itemsFmt(int cnt) {
+		return " ("+String.format(ITEMS_FMT, Integer.toString(cnt))+')';
 	}
 
 	@Override

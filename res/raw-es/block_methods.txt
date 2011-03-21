@@ -1,0 +1,10 @@
+Descripción de los métodos de el bloqueador de llamadas:
+
+- Colgar: esta es la forma habitual para rechazar una llamada,es como colgar la llamada a mano (por ejemplo, pulsando el botón rojo), mientras suena el teléfono.
+
+- Detener la señal: Este método apaga la antena GSM,despues la enchufa otra vez. También puede optar por un último reinicio, dejando caer la señal por un tiempo, evitará un nuevo descenso en la persona que llama (si se intenta devolver la llamada inmediatamente).
+
+- Respuesta silenciosa: silencia el sistema de audio y responde automáticamente a la llamada. Al hacerlo, la persona que llama no oirá nada. Entonces, la persona que llama será casi imposible entender que usted está rechazando!
+PRECAUCIÓN: con este método es muy importante no utilizar el teléfono durante la llamada no se oye nada, de lo contrario Android enchuferà en forma automatica el microfono!
+
+- Tono silencioso: pone automáticamente el teléfono en el modo silencio sólo  mientras que suena. Es útil si no quieres y se niegan a responder a una llamada: la alarma no te molesta.

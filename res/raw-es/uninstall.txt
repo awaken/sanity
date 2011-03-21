@@ -1,4 +1,4 @@
-Para desinstalar Sanity, Vd. tiene que deseleccionar el permiso de "Administrador" dentro de la seccion de "Ajustes en proximidad".
+Para desinstalar Sanity, Vd. tiene que deseleccionar el permiso de "Administrador" dentro de la seccion de Proximidad.
 
 Mientras la opcion de "Administrador" este seleccionada, Vd. no puede desinstalar Sanity!
 

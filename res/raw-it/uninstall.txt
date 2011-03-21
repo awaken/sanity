@@ -1,4 +1,4 @@
-Per disinstallare Sanity, è necessario disattivare l'opzione "Amministratore" nella sezione "Disabilita in prossimità".
+Per disinstallare Sanity, è necessario disattivare l'opzione "Amministratore" nella sezione Prossimità.
 
 Fintantoché l'opzione "Amministratore" risulta attivata, non sarà consentito disinstallare Sanity!
 

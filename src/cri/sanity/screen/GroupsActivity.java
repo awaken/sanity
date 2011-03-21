@@ -18,7 +18,7 @@ import android.view.MenuInflater;
 
 public class GroupsActivity extends ScreenActivity
 {
-	private static final String SEP = Conf.FILTER_SEP+"";
+	private static final String SEP = FilterActivity.SEP;
 
 	private PreferenceCategory prefGroup;
 	private String sect;

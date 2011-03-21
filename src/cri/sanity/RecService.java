@@ -55,7 +55,6 @@ public class RecService extends Service
 		pl  = phoneListener;
 		rec = new Rec(A.geti(K.REC_SRC), A.geti(K.REC_FMT));
 		notifLimit = A.is(K.NOTIFY_REC_STOP) ? A.s(A.isFull()? R.string.msg_rec_limit : R.string.msg_rec_free_limit) : null;
-		if(rec.src == Rec.SRC_MIC) A.audioMan().setMicrophoneMute(false);
 		autoInit();
 		buildTasks();
 		startService();
@@ -150,6 +149,7 @@ public class RecService extends Service
 	@Override
 	public void onDestroy() {
 		running = false;
+		A.notifyCanc(NID);
 		super.onDestroy();
 	}
 
@@ -175,6 +175,10 @@ public class RecService extends Service
 			notif       = new Notification();
 			notif.flags = Notification.FLAG_ONGOING_EVENT|Notification.FLAG_NO_CLEAR;
 			notifTitle  = A.s(R.string.msg_rec_title);
+		}
+		if(rec == null) {
+			A.notifyCanc(NID);
+			return;
 		}
 		if(rec.isStarted()) {
 			notif.icon = R.drawable.ic_rec_bar;

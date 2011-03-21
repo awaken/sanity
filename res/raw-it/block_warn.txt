@@ -1,4 +1,4 @@
-ATTENZIONE: il metodo "riaggancia" non funziona sempre su Android 2.3 e successivi!!
+ATTENZIONE: il metodo "riaggancia" non è garantito che funzioni sul tuo telefono!
 
-Puoi provare se funziona sul tuo telefono.
-Se non funziona, dovresti scegliere il metodo "interrompi segnale" per bloccare le chiamate.
+Puoi comunque provare se funziona.
+Questo metodo funziona una volta, dovrebbe funzionare sempre.

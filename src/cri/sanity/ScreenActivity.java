@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceGroup;
+import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,24 +17,27 @@ import cri.sanity.screen.*;
 
 public abstract class ScreenActivity extends PrefActivity implements SharedPreferences.OnSharedPreferenceChangeListener
 {
-	private static final Click clickLogo = new Click(){ public boolean on(){ return Goto.marketSearchPub(); }};
-	private static final String appDesc  = A.s(R.string.app_desc)+"\n"+A.s(R.string.app_copy);
+	private static final String AUTHOR     = "Cristiano Tagliamonte";
+	private static final String FIRST_YEAR = "2011";
+
 	private static final Map<Class<?>,Integer> mapScreenPref   = new HashMap<Class<?>,Integer>();
 	private static final Map<Class<?>,Integer> mapScreenWidget = new HashMap<Class<?>,Integer>();
 	private static final Map<Class<?>,Integer> mapScreenMenu   = new HashMap<Class<?>,Integer>();
 	private static final Map<Integer,Class<?>> mapMenuScreen   = new HashMap<Integer,Class<?>>();
 	private static final Map<String,Object>    mapSkipKeys     = P.skipKeysMap();
 
-	protected boolean nag         = true;
-	protected boolean skipAllKeys = false;
+	protected static boolean nagDefault = true;
+	protected boolean nag;
 	protected boolean shortcut;
-	
+	protected boolean skipAllKeys = false;
+
 	//---- Activity override
 
 	@Override
   public void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
+    nag      = nagDefault;
     shortcut = getIntent().getIntExtra(ShortcutActivity.EXTRA_KEY, 0) > 0;		// called through shortcut?
     if(mapMenuScreen.isEmpty() && !isMainActivity()) screenerAll();
     final Integer i = mapScreenPref.get(getClass());
@@ -41,12 +45,12 @@ public abstract class ScreenActivity extends PrefActivity implements SharedPrefe
     addPreferencesFromResource(i);
 		final Preference p = pref("logo");
 		if(p == null) return;
-		p.setTitle(A.fullName());
-		p.setSummary(appDesc);
+		p.setTitle(fullName());
+		p.setSummary(appDesc());
 		p.setPersistent(false);
-		Integer w = mapScreenWidget.get(getClass());
+		final Integer w = mapScreenWidget.get(getClass());
 		if(w != null) p.setWidgetLayoutResource(w);
-		on(p, clickLogo);
+		on(p, new Click(){ public boolean on(){ return Goto.marketSearchPub(AUTHOR); }});
   }
 
 	@Override
@@ -62,7 +66,7 @@ public abstract class ScreenActivity extends PrefActivity implements SharedPrefe
 	{
 		super.onPause();
 		A.prefs().unregisterOnSharedPreferenceChangeListener(this);
-		nag = true;
+		nag = nagDefault;
 		if(shortcut) finish();		// finish to allow other screens to be called through shortcut (otherwise this screen will be shown again)
 	}
 
@@ -114,6 +118,17 @@ public abstract class ScreenActivity extends PrefActivity implements SharedPrefe
 	}
 
 	//---- public api
+
+	public static final String fullName() {
+		String v = A.name() + "  v" + A.ver();
+		if(Conf.BETA > 0) { v += " beta "; if(Conf.BETA > 1) v += Conf.BETA; }
+		return v;
+	}
+	public static final String appDesc() {
+		String year = DateFormat.format("yyyy", A.time()).toString();
+		if(!year.equals(FIRST_YEAR)) year = FIRST_YEAR+'-'+year;
+		return A.s(R.string.app_desc)+"\n(C) "+year+", "+AUTHOR+'.';
+	}
 
 	public static final boolean alertChangeLog() {
 		Alert.msg(A.s(R.string.changelog_title), A.rawstr(R.raw.changelog), Alert.NONE);
@@ -172,11 +187,15 @@ public abstract class ScreenActivity extends PrefActivity implements SharedPrefe
 	{
 		if(!nag || A.isFull()) return;
 		final long now = A.time();
-		if(now-A.getl(K.NAG) < Conf.NAG_TIMEOUT) return;
+		try {
+			if(now-A.getl(K.NAG) < Conf.NAG_TIMEOUT) return;
+		} catch(Exception e) {
+			A.del(K.NAG);
+		}
 		A.putc(K.NAG, now);
 		Alert.msg(
 			A.rawstr(R.raw.nag),
-			new Alert.Click(){ public void on(){ nag = true; Goto.marketDetails(Conf.DONATE_PKG); }},
+			new Alert.Click(){ public void on(){ nag = true; Goto.marketDetails(License.FULL_PKG); }},
 			new Alert.Click(){ public void on(){ nag = true; }}
 		);
 		nag = false;
@@ -186,7 +205,7 @@ public abstract class ScreenActivity extends PrefActivity implements SharedPrefe
 
 	public void onSharedPreferenceChanged(SharedPreferences prefs, String key)
 	{
-		if(skipAllKeys || mapSkipKeys.containsKey(key)) return;
+		if(skipAllKeys || mapSkipKeys.containsKey(key) || key.startsWith("priv_")) return;
 		if(A.has(K.PRF_NAME)) A.delc(K.PRF_NAME);
 	}
 

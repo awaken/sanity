@@ -1,0 +1,5 @@
+Attention please: unable to contact the server to verify your "Sanity Donate" license.
+
+Please connect to the Internet and restart Sanity to complete this step.
+
+All application features will be enabled only after you complete this step successfully.

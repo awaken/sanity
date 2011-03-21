@@ -170,7 +170,8 @@
 	<string-array name="block_mode_labels">
 		<item>Riaggancia</item>
 		<item>Interrompi il segnale</item>
-		<item>Modalità silenziosa</item>
+		<item>Risposta silenziosa</item>
+		<item>Suoneria silenziosa</item>
 	</string-array>
 
 	<string-array name="block_resume_labels">

@@ -2,7 +2,6 @@
 <resources>
 
   <string name="app">Sanity</string>
-	<string name="app_copy">(C) 2011 - Cristiano Tagliamonte.</string>
   <string name="app_desc">Personal assistant during phone calls.</string>
   <string name="app_shortcut">Sanity - Shortcut</string>
 
@@ -43,6 +42,13 @@
 	<string name="sysgroup">system group</string>
   <string name="announce">Announcement</string>
   <string name="callog">Call Log</string>
+	<string name="history">History</string>
+	<string name="call">Call</string>
+	<string name="send_sms">Send SMS</string>
+	<string name="view_contact">View contact</string>
+	<string name="add_contact">Add new contact</string>
+	<string name="copy">Copy</string>
+	<string name="share">Share</string>
 
   <string name="groups_cat">Preferences</string>
   <string name="misc_cat">Miscellaneous</string>
@@ -56,10 +62,12 @@
   <string name="force_bt_audio_sum">Force bluetooth audio device to be correctly handled by Sanity.</string>
   <string name="reverse_proximity_title">Reverse proximity</string>
   <string name="reverse_proximity_sum">Check this option only if Sanity enable/disable handsfree or devices in a wrong way when the phone is far/close to your ear.</string>
-	<string name="reset_prefs_title">Reset to default</string>
-	<string name="reset_prefs_sum">Set default values for all application preferences.</string>
 	<string name="backup_prefs_title">Backup and Restore</string>
 	<string name="backup_prefs_sum">Tap here to backup/restore all current preferences to/from memory card.</string>
+	<string name="reset_prefs_title">Reset to default</string>
+	<string name="reset_prefs_sum">Set default values for all application preferences.</string>
+  <string name="delete_filters_title">Delete filters</string>
+  <string name="delete_filters_sum">Delete all call filters currently configured.</string>
 	<string name="profile_cat">Profiles</string>
 	<string name="profile_sum">Manage settings profiles to quickly change more preferences in one fell swoop.</string>
 	<string name="profile_shortcut">Activate Profile</string>
@@ -225,6 +233,9 @@
 	<string name="block_resume_title">Restore the signal</string>
 	<string name="block_resume_sum">Choose when to restore the signal after the call has been blocked.</string>
 	<string name="block_notify_sum">Notify the last blocked call on the status bar.</string>
+	<string name="block_history_sum">Show the detailed list of all blocked calls.</string>
+	<string name="block_help_title">Choice of method</string>
+	<string name="block_help_sum">Tap here to show the description of all call block methods.</string>
 
   <string name="notify_cat">Notification</string>
   <string name="notify_sum">Choose when Sanity should show notifications.</string>
@@ -283,6 +294,11 @@
 	<string name="filter_shortcut_tts">Call filter - Announce caller</string>
 	<string name="filter_shortcut_block">Call filter - Call blocker</string>
 
+	<string name="history_clear_title">Clear all</string>
+	<string name="history_clear_sum">Remove all history entries.</string>
+	<string name="history_copied">Element copied to clipboard</string>
+	<string name="history_block">History - Call blocker</string>
+
   <string name="donate_title">Donate</string>
   <string name="donate_sum">Sanity is free. If you like this application, support the development with a donation.</string>
   <string name="donated_title">Donation completed</string>
@@ -300,6 +316,7 @@
   <string name="ask_del_one">Are you sure to DELETE the selected item?</string>
   <string name="ask_del_all">Are you sure to DELETE all %s selected items?</string>
   <string name="ask_canc_all">Are you sure to CANCEL all changes?</string>
+  <string name="ask_clear_history">Are you sure to REMOVE all history entries?</string>
 
   <string name="msg_rec_title">Sanity - Recorder</string>
   <string name="msg_rec_start">Tap here to START call recording</string>
@@ -335,7 +352,7 @@
   <string name="msg_email_body">Hello Cristiano!</string>
   <string name="msg_eula_title">Software license agreement</string>
   <string name="msg_option_full">Sorry, this option is available only in the Donate version.</string>
-  <string name="msg_contact_err">Error for finding \"%s\"</string>
+  <string name="msg_contact_err">The contact \"%s\" has NOT a phone number!</string>
   <string name="msg_contact_unsel">\"%s\" NOT selected</string>
   <string name="msg_contact_sel">\"%s\" selected</string>
   <string name="msg_callog_new">New number from call log</string>
@@ -350,6 +367,5 @@
   <string name="err_exists">Action canceled: \"%s\" already exists</string>
   <string name="err_market">Unable to open Market! Check Market application is rightly installed.</string>
 	<string name="err_tts_init">Sanity error: unable to initialize TTS engine!</string>
-	<string name="err_tts_lang">Sanity error: your language isn\'t supported by TTS engine!</string>
 
 </resources>

@@ -327,11 +327,13 @@
 	<string-array name="block_mode_labels">
 		<item>Hang up</item>
 		<item>Interrupt the signal</item>
-		<item>Silent mode</item>
+		<item>Silent answer</item>
+		<item>Silent ringtone</item>
 	</string-array>
 	<string-array name="block_mode_values">
 		<item>0</item>
 		<item>1</item>
+		<item>3</item>
 		<item>2</item>
 	</string-array>
 

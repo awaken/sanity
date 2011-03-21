@@ -169,8 +169,9 @@
 
 	<string-array name="block_mode_labels">
 		<item>Colgar</item>
-		<item>Interrupción de la señal</item>
-		<item>Modo silencioso</item>
+		<item>Detener la señal</item>
+		<item>Respuesta silenciosa</item>
+		<item>Tono silencioso</item>
 	</string-array>
 
 	<string-array name="block_resume_labels">

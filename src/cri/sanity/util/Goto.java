@@ -8,10 +8,8 @@ import cri.sanity.*;
 
 public final class Goto
 {
-	//public static final boolean marketSearchPkg()           { return marketPkgSearch(A.pkg(); }
 	//public static final boolean marketSearchPkg(String pkg) { return marketUrl("search?q=pname:\""+pkg+'"'); }
-	public static final boolean marketSearchPub()         { return marketUrl("search?q=pub:\""+Conf.AUTHOR+'"'); }
-	public static final boolean marketDetails()           { return marketDetails(A.pkg()); }
+	public static final boolean marketSearchPub(String pub) { return marketUrl("search?q=pub:\""+pub+'"'); }
 	public static final boolean marketDetails(String pkg) { return marketUrl("details?id="+pkg); }
 
 	public static final boolean marketUrl(String query) {

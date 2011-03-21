@@ -1,3 +1,13 @@
+Version 2.04:
+- New: call blocker method: silent answer.
+- New: history of all calls blocked.
+- New: option to remove all call filters.
+- Fix: bug to handle multiple/concurrent calls.
+- Fix: bug in call filter when searching a contact.
+- Fix: bug turns microphone off after recording.
+- Fix: bug won't stop announcing after the answer.
+- Fix: minor bugs.
+
 Version 2.03:
 - New: option to delay signal restoring when the call is blocked through interrupting signal.
 - New: option to notify blocked calls.

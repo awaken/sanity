@@ -1,0 +1,5 @@
+ADVERTENCIA: usted tiene una licencia válida de la "Sanity Donación"!
+
+Esto ocurre si se ha instalado "Sanity Donación" ilegalmente o si ha configurado el mercado con un correo electrónico diferente de la que usted hizo la donación de Sanity.
+
+Póngase en contacto con el desarrollador por otros problemas.

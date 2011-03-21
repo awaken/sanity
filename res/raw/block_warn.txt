@@ -1,4 +1,4 @@
-WARNING: the "hang up" method doesn't work always on Android 2.3 and newers!!
+WARNING: the "hang up" method is not guaranteed to work on your phone!
 
-You can try it on your phone.
-If it doesn't work, please choose the "interrupt signal" method to block the calls.
+Anyway you can try it.
+If this method works once, it should work all the time.

@@ -1,3 +1,13 @@
+Version 2.04:
+- Nuovo: metodo di blocco chiamata: risposta silenziosa.
+- Nuovo: cronologia di tutte le chiamate bloccate.
+- Nuovo: opzione per rimuovere tutti i filtri chiamata.
+- Fix: bug nella gestione di chiamate multiple/concorrenti.
+- Fix: bug nella ricerca di un contatto nel filtro chiamate.
+- Fix: bug che spegne il microfono al termine di una registrazione.
+- Fix: bug che non interrompe l'annuncio dopo aver risposto.
+- Fix: bug minori.
+
 Versione 2.03:
 - Nuovo: opzione per ritardare la ripresa del segnale radio quando la chiamata viene bloccata tramite l'interruzione del segnale.
 - Nuovo: opzione per notificare le chiamate bloccate.

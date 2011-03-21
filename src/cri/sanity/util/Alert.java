@@ -29,11 +29,11 @@ public final class Alert
 	public static class Click implements DialogInterface.OnClickListener
 	{
 		protected DialogInterface dlg;
-		protected int id;
+		protected int which;
 		@Override
-		public void onClick(DialogInterface dlg, int id) {
-			this.dlg = dlg;
-			this.id  = id;
+		public void onClick(DialogInterface dlg, int which) {
+			this.dlg   = dlg;
+			this.which = which;
 			on();
 		}
 		protected final void dismiss(){ dlg.dismiss(); }
@@ -154,6 +154,28 @@ public final class Alert
   }
   public static final EditText edit(String title, final Edited pos) {
   	return edit(title, pos, null, activity);
+  }
+  
+  public static final AlertDialog choose(String title, String[] items, Click click) {
+  	return choose(title, items, click, activity);
+  }
+  public static final AlertDialog choose(String title, String[] items, Click click, Context ctx) {
+		final AlertDialog.Builder adb = new AlertDialog.Builder(ctx);
+		adb.setIcon(R.drawable.ic_bar);
+		adb.setTitle(title);
+		adb.setItems(items, click);
+		adb.setCancelable(true);
+  	return adb.show();
+  }
+  public static final AlertDialog choose(String title, int[] items, Click click, Context ctx) {
+		final int n = items.length;
+		String[] labels = new String[n];
+		for(int i=0; i<n; i++)
+			labels[i] = A.s(items[i]);
+		return choose(title, labels, click, ctx);
+  }
+  public static final AlertDialog choose(String title, int[] items, Click click) {
+  	return choose(title, items, click, activity);
   }
 
 }

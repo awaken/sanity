@@ -85,6 +85,18 @@ public class GeneralActivity extends ScreenActivity
 			);
 			return true;
 		}});
+		
+		on("delete_filters", new Click(){ public boolean on(){
+			Alert.msg(
+				A.rawstr(R.raw.delete_filters),
+				new Alert.Click(){ public void on(){
+					P.removeFilters();
+					pref.setEnabled(false);
+				}},
+				null
+			);
+			return true;
+		}});
 	}
 
 	private void updateScreenPrefs() { updatePrefs(K.FORCE_BT_AUDIO, K.REVERSE_PROXIMITY); }

@@ -1,0 +1,5 @@
+ADVERTENCIA: Esta función eliminará todos los filtros de llamadas que haya configurado.
+
+Todos los filtros llamada actual se perderá.
+
+¿Está seguro de eliminar todos los filtros?

@@ -26,6 +26,7 @@ public class ProfileActivity extends ScreenActivity implements FilenameFilter
 	private static final String SUM_ACTIVE   = "\n>>>  " + A.s(R.string.active_prf) + "  <<<";
 	private static final String LASTMOD      = A.s(R.string.msg_last_modified) + ":  ";
 	private static final String PRF_EXT      = Conf.PRF_EXT;
+	private static final String PRF_DATE     = Conf.DATE_PATTERN;
 
 	private PreferenceCategory prefGroup;
 	private Pref prefSelected, prefActive;
@@ -366,7 +367,7 @@ public class ProfileActivity extends ScreenActivity implements FilenameFilter
 		}
 
 		private void setSummary() {
-			String sum = LASTMOD + DateFormat.format(Conf.PRF_DATE, file.lastModified());
+			String sum = LASTMOD + DateFormat.format(PRF_DATE, file.lastModified());
 			if(isActive()) sum += SUM_ACTIVE;
 			setSummary(sum);
 		}
