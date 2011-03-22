@@ -1,3 +1,6 @@
+Version 2.05:
+- Fix: crash urgente su alcuni telefoni.
+
 Version 2.04:
 - Nuovo: metodo di blocco chiamata: risposta silenziosa.
 - Nuovo: cronologia di tutte le chiamate bloccate.

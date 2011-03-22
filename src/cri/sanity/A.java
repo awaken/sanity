@@ -84,8 +84,10 @@ public final class A extends Application
 		name  = getString(R.string.app);
 		prefs = PreferenceManager.getDefaultSharedPreferences(a);
 		edit  = prefs.edit();
-		full  = Conf.FULL || prefs.getBoolean(K.FULL, false);
-		try { pkgInfo = getPackageManager().getPackageInfo(getPackageName(), 0); } catch(NameNotFoundException e) {}
+		try { full = Conf.FULL || prefs.getBoolean(K.FULL, false); }
+		catch(Exception e) { edit.putBoolean(K.FULL, full=false).commit(); }
+		try { pkgInfo = getPackageManager().getPackageInfo(getPackageName(), 0); }
+		catch(NameNotFoundException e) {}
 	}
 
 	//---- static methods

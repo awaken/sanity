@@ -18,6 +18,9 @@ An Android application to assist during phone calls.
   Change log
 -------------------
 
+* version 2.05  (22/03/2011)
+- Fix: urgent crash on some phones.
+
 * version 2.04  (21/03/2011)
 - New: call blocker method: silent answer.
 - New: history of all calls blocked.

@@ -1,3 +1,6 @@
+Version 2.05:
+- Fix: urgent crash on some phones.
+
 Version 2.04:
 - New: call blocker method: silent answer.
 - New: history of all calls blocked.
