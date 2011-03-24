@@ -2,17 +2,15 @@ package cri.sanity;
 
 import cri.sanity.util.*;
 import java.util.HashMap;
-
 import android.media.AudioManager;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.*;
-import android.telephony.TelephonyManager;
 
 
 public class TTS implements OnInitListener, OnUtteranceCompletedListener
 {
-	public  final static int    STREAM     = AudioManager.STREAM_ALARM;
-	private final static String STREAM_STR = "4"; 	// string value of STREAM
+	public  final static int    STREAM     = AudioManager.STREAM_NOTIFICATION;
+	private final static String STREAM_STR = "5"; 	// string value of STREAM
 
 	protected TextToSpeech tts;
 	protected String  id;
@@ -20,6 +18,7 @@ public class TTS implements OnInitListener, OnUtteranceCompletedListener
 	protected int     pause;
 	protected int     vol    = -1;
 	protected boolean solo   = false;
+	protected boolean force  = false;
 	protected boolean filter;
 	protected HashMap<String,String> pars;
 
@@ -63,8 +62,8 @@ public class TTS implements OnInitListener, OnUtteranceCompletedListener
 					if(id.length() <= 0) return;
 				}
 			}
-			if(A.telMan().getCallState() != TelephonyManager.CALL_STATE_RINGING) return;
 		}
+		if(!force && !Dev.isRinging()) return;
 		// volume setup
 		final int vol = A.geti(K.TTS_VOL);
 		if(vol >= 0) {
@@ -90,7 +89,7 @@ public class TTS implements OnInitListener, OnUtteranceCompletedListener
 	@Override
 	public void onUtteranceCompleted(String idUtter)
 	{
-		if(--repeat > 0) {
+		if(--repeat>0 && (force || Dev.isRinging())) {
 			tts.playSilence(pause, TextToSpeech.QUEUE_ADD, null);
 			tts.speak      (id   , TextToSpeech.QUEUE_ADD, pars);
 		} else if(solo) {

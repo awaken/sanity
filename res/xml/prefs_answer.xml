@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<Preference android:key="logo" />
+	<PreferenceCategory android:title="@string/answer_cat">
+	  <CheckBoxPreference android:title="@string/answer_enable_title"
+	                      android:summary="@string/answer_enable_sum"
+	                      android:key="answer" />
+	  <CheckBoxPreference android:title="@string/headset_only"
+	                      android:summary="@string/answer_headset_sum"
+	                      android:dependency="answer"
+	                      android:key="answer_headset" />
+	  <CheckBoxPreference android:title="@string/skip_silent"
+	                      android:summary="@string/answer_skip_sum"
+	                      android:dependency="answer"
+	                      android:key="answer_skip" />
+	  <cri.sanity.pref.PList android:title="@string/answer_delay_title"
+	                         android:summary="@string/answer_delay_sum"
+	                         android:dependency="answer"
+	                         android:key="answer_delay_s"
+	                         android:entries="@array/disable_delay_labels"
+	                         android:entryValues="@array/disable_delay_values" />
+	  <cri.sanity.pref.PFilter android:dependency="answer"
+	                           android:key="filter_answer" />
+	</PreferenceCategory>
+</PreferenceScreen>

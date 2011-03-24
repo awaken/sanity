@@ -26,7 +26,7 @@
 	                         android:key="block_resume_s"
 	                         android:entries="@array/block_resume_labels"
 	                         android:entryValues="@array/block_resume_values" />
-	  <CheckBoxPreference android:title="@string/block_skip_title"
+	  <CheckBoxPreference android:title="@string/skip_silent"
 	                      android:summary="@string/block_skip_sum"
 	                      android:dependency="block"
 	                      android:key="block_skip" />

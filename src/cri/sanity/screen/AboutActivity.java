@@ -1,7 +1,5 @@
 package cri.sanity.screen;
 
-import java.util.Currency;
-import java.util.Locale;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,10 +10,11 @@ import cri.sanity.util.*;
 
 public class AboutActivity extends ScreenActivity
 {
-	private static final String CURRENCY_VAR = "$CUR";
+	private static final String PRICE        = "3";
+	private static final String CURRENCY     = "EUR";
 	private static final String NAME_VAR     = "$NAME";
 	private static final String EMAIL_VAR    = "$EMAIL";
-	private static final String DONATE_URL   = "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business="+EMAIL_VAR+"&item_name="+NAME_VAR+"&currency_code="+CURRENCY_VAR+"&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted";
+	private static final String DONATE_URL   = "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business="+EMAIL_VAR+"&item_name="+NAME_VAR+"&currency_code="+CURRENCY+"&amount="+PRICE+"&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted";
 	private static final String EULA_URL     = "http://www.gnu.org/licenses";
 	private static final String AUTHOR_EMAIL = "cristiano@tagliamonte.net";
 
@@ -46,16 +45,12 @@ public class AboutActivity extends ScreenActivity
 	}
 	
 	private static final String subject() {
-		String name = fullName();
-		String full = A.isFull()? Conf.FULL? "Full" : "Donate" : "";
-		if(full.length() > 0) name += " ("+full+')';
-		return name + "  -  id:" + A.telMan().getDeviceId();
+		return fullName() + (A.isFull()? Conf.FULL? " (Full)" : " (Donate)" : "") + "  -  id:" + A.telMan().getDeviceId();
 	}
 
 	private static final String donateUrl() {
-		return DONATE_URL.replace(NAME_VAR    , Uri.encode(subject()))
-		                 .replace(EMAIL_VAR   , Uri.encode(AUTHOR_EMAIL))
-		                 .replace(CURRENCY_VAR, Uri.encode(Currency.getInstance(Locale.getDefault()).getCurrencyCode()));
+		return DONATE_URL.replace(NAME_VAR , Uri.encode(subject()))
+		                 .replace(EMAIL_VAR, Uri.encode(AUTHOR_EMAIL));
 	}
 
 }

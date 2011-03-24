@@ -6,6 +6,7 @@ import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.provider.Settings.System;
 import android.telephony.TelephonyManager;
+import android.view.KeyEvent;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -81,7 +82,35 @@ public final class Dev
 	public static final boolean isTetheringOn()        { return gConn().isTetheringOn(); }
 	public static final boolean isTetheringSupported() { return gConn().callable("getTetheredIfaces", "getTetherableUsbRegexs"); }
 
+	public static final boolean isRinging() { return A.telMan().getCallState() == TelephonyManager.CALL_STATE_RINGING; }
+
 	//---- enable/disable devices
+	
+	public static final void answerCall() {
+		try {
+			iTel().answerRingingCall();
+		} catch(Exception e) {
+			Intent i1 = new Intent(Intent.ACTION_MEDIA_BUTTON);             
+      i1.putExtra(Intent.EXTRA_KEY_EVENT, new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_HEADSETHOOK));
+      A.app().sendOrderedBroadcast(i1, "android.permission.CALL_PRIVILEGED");
+      Intent i2 = new Intent(Intent.ACTION_MEDIA_BUTTON);               
+      i2.putExtra(Intent.EXTRA_KEY_EVENT, new KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_HEADSETHOOK));
+      A.app().sendOrderedBroadcast(i2, "android.permission.CALL_PRIVILEGED");
+		}
+	}
+	
+	public static final boolean endCall() {
+		try {
+			iTel().endCall();
+			return true;
+		} catch(Exception e) { try {
+			enableFlightMode(true );
+			enableFlightMode(false);
+			return true;
+		} catch(Exception e2) {
+			return false;
+		}}
+	}
 
 	public static final boolean enableBt(boolean enable) {
 		final BluetoothAdapter bt = A.btAdapter();

@@ -91,6 +91,7 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 		lastCallState    = CALL_STATE_NONE;
 		wiredHeadsetOn   = audioMan.isWiredHeadsetOn();
 		headsetOn        = (btCount>0 && A.is(K.FORCE_BT_AUDIO)) || wiredHeadsetOn || audioMan.isBluetoothA2dpOn() || audioMan.isBluetoothScoOn();
+		notifyEnable = notifyDisable = false;
 		Dev.wakeCpu();
 	}
 
@@ -169,6 +170,10 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 
 	private void updateHeadset(boolean on, int vol)
 	{
+		if(A.is(K.NOTIFY_HEADSET)) {
+			A.notify(A.s(on? R.string.msg_headset_on : R.string.msg_headset_off)); 
+			if(rec) A.notifyCanc(); 
+		}
 		if(headsetOn == on) return;
 		headsetOn = on;
 		if(!offhook) return;
@@ -184,14 +189,22 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 	private void onRinging()
 	{
 		//A.logd("onRinging");
-		outgoing    = false;
-		phoneNumber = PhoneReceiver.number;
-		if(CallFilter.includes(phoneNumber, "block", false) && (!A.is(K.BLOCK_SKIP) || isRingtoneOn()))
+		outgoing      = false;
+		phoneNumber   = PhoneReceiver.number;
+		boolean block = false;
+		if(CallFilter.includes(phoneNumber, "block", false) && (!A.is(K.BLOCK_SKIP) || isRingtoneOn())) {
 			if(Blocker.apply(A.geti(K.BLOCK_MODE))) return;
-		if(A.is(K.TTS) && (headsetOn || !A.is(K.TTS_HEADSET)) && (!A.is(K.TTS_SKIP) || isRingtoneOn()))
+			A.notify(A.s(R.string.err_block));
+			block = true;
+		}
+		final int answer = !block && A.is(K.ANSWER) && (headsetOn || !A.is(K.ANSWER_HEADSET)) && (!A.is(K.ANSWER_SKIP) || isRingtoneOn())
+		                   && CallFilter.includes(phoneNumber, "answer", true)
+		                   ? A.geti(K.ANSWER_DELAY) : -1;
+		if((answer<0 || answer>1000) && A.is(K.TTS) && (headsetOn || !A.is(K.TTS_HEADSET)) && (!A.is(K.TTS_SKIP) || isRingtoneOn()))
 			tts = new TTS(phoneNumber, true);
 		initCall();
 		btReverse();
+		if(answer >= 0) new Task(){ public void run(){ Dev.answerCall(); }}.exec(answer);
 	}
 
 	// we have a call!

@@ -48,12 +48,28 @@
 	<string name="copy">Copia</string>
 	<string name="share">Condividi</string>
 
+	<string name="always">Sempre</string>
+	<string name="time">Ora</string>
+	<string name="date">Data</string>
+	<string name="alldays">Tutti i giorni</string>
+	<string name="monday">Lunedì</string>
+	<string name="tuesday">Martedì</string>
+	<string name="wednesday">Mercoledì</string>
+	<string name="thursday">Giovedì</string>
+	<string name="friday">Venerdì</string>
+	<string name="saturday">Sabato</string>
+	<string name="sunday">Domenica</string>
+
   <string name="groups_cat">Preferenze</string>
   <string name="misc_cat">Varie</string>
   <string name="geek_cat">Roba da smanettoni</string>
+	<string name="skip_silent">Evita se silenzioso</string>
+	<string name="headset_only">Solo in cuffia</string>
 
   <string name="general_cat">Generale</string>
   <string name="general_sum">Opzioni principali dell\'applicazione.</string>
+  <string name="silent_limit_title">Timeout in Silenzioso</string>
+  <string name="silent_limit_sum">Ogni volta che attivi la Modalità Silenziosa, Sanity ti inviterà a scegliere un timeout per ripristinare automaticamente la Modalità Normale.</string>
   <string name="enabled_title">Abilita Sanity</string>
   <string name="enabled_sum">Abilita o disabilita il sistema Sanity. Se disabilitato, questa applicazione non avrà effetti durante le telefonate.</string>
   <string name="force_bt_audio_title">Forza l\'audio BT</string>
@@ -130,17 +146,6 @@
   <string name="speaker_off_count_title">Limite di Spegnimento</string>
   <string name="speaker_off_count_sum">Quante volte il vivavoce potrà essere spento automaticamente durante una telefonata quando avvicini il telefono all\'orecchio.</string>
 
-	<string name="vol_cat">Volume</string>
-	<string name="vol_sum">Opzioni per la gestione automatica del volume durante una telefonata.</string>
-	<string name="vol_phone_title">Volume telefono</string>
-	<string name="vol_phone_sum">Volume da impostare automaticamente durante una chiamata quando non si usano le cuffie.</string>
-	<string name="vol_wired_title">Cuffie con i fili</string>
-	<string name="vol_wired_sum">Volume da impostare automaticamente durante una chiamata mentre si usano le cuffie con i fili.</string>
-	<string name="vol_bt_title">Cuffie bluetooth</string>
-	<string name="vol_bt_sum">Volume da impostare automaticamente durante una chiamata mentre si usano le cuffie senza fili.</string>
-	<string name="vol_solo_title">Solo conversazione</string>
-	<string name="vol_solo_sum">Ascolta solo l\'audio della conversazione, spegnendo ogni altro flusso audio durante la telefonata.</string>
-
 	<string name="rec_cat">Registratore</string>
 	<string name="rec_cat_sum">Opzioni per registrare l\'audio della telefonata sulla memory card.</string>
 	<string name="rec_cat_sum_free">Questa versione gratuita è limitata a 2 minuti per ogni registrazione.</string>
@@ -198,9 +203,7 @@
 	<string name="tts_global_title">Impostazioni globali</string>
 	<string name="tts_global_sum">Tocca qui per aprire le impostazioni globali di Android relative al motore \"da testo a voce\".</string>
 	<string name="tts_audio_cat">Opzioni audio</string>
-	<string name="tts_headset_title">Solo in cuffia</string>
 	<string name="tts_headset_sum">Attiva l\'annuncio solo se le cuffie sono collegate.</string>
-	<string name="tts_skip_title">Evita se silenzioso</string>
 	<string name="tts_skip_sum">Non annunciare il chiamante quando il telefono è in modalità silenziosa.</string>
 	<string name="tts_solo_title">Interrompi suoneria</string>
 	<string name="tts_solo_sum">Interrompe la suoneria quando annuncia il nome del chiamante.</string>
@@ -224,7 +227,6 @@
 	<string name="block_sum">Blocca le chiamate in arrivo filtrando il numero di telefono del chiamante.</string>
 	<string name="block_enable_title">Abilita blocco chiamate</string>
 	<string name="block_enable_sum">Abilita il sistema di blocco chiamate per rifiutare le telefonate ricevute.</string>
-	<string name="block_skip_title">Evita se silenzioso</string>
 	<string name="block_skip_sum">Non bloccare le chiamate quando il telefono è in modalità silenziosa.</string>
 	<string name="block_mode_title">Metodo di blocco</string>
 	<string name="block_mode_sum">Scegli come bloccare le chiamate ricevute.</string>
@@ -234,6 +236,26 @@
 	<string name="block_history_sum">Mostra la lista dettagliata di tutte le chiamate bloccate.</string>
 	<string name="block_help_title">Scelta del metodo</string>
 	<string name="block_help_sum">Tocca qui per mostrare la descrizione di tutti i metodi di blocco chiamata.</string>
+
+	<string name="answer_cat">Risposta automatica</string>
+	<string name="answer_sum">Regole per rispondere automaticamente quando si riceve una chiamata.</string>
+	<string name="answer_enable_title">Abilita risposta automatica</string>
+	<string name="answer_enable_sum">Abilita la risposta automatica quando si riceve una telefonata.</string>
+	<string name="answer_headset_sum">Abilita la risposta automatica solo le le cuffie sono collegate.</string>
+	<string name="answer_skip_sum">Non rispondere automaticamente quando il telefono è in modalità silenziosa.</string>
+	<string name="answer_delay_title">Ritardo di risposta</string>
+	<string name="answer_delay_sum">Quanto tempo attendere prima di rispondere automaticamente.</string>
+
+	<string name="vol_cat">Volume</string>
+	<string name="vol_sum">Opzioni per la gestione automatica del volume durante una telefonata.</string>
+	<string name="vol_phone_title">Volume telefono</string>
+	<string name="vol_phone_sum">Volume da impostare automaticamente durante una chiamata quando non si usano le cuffie.</string>
+	<string name="vol_wired_title">Cuffie con i fili</string>
+	<string name="vol_wired_sum">Volume da impostare automaticamente durante una chiamata mentre si usano le cuffie con i fili.</string>
+	<string name="vol_bt_title">Cuffie bluetooth</string>
+	<string name="vol_bt_sum">Volume da impostare automaticamente durante una chiamata mentre si usano le cuffie senza fili.</string>
+	<string name="vol_solo_title">Solo conversazione</string>
+	<string name="vol_solo_sum">Ascolta solo l\'audio della conversazione, spegnendo ogni altro flusso audio durante la telefonata.</string>
 
   <string name="notify_cat">Notifica</string>
   <string name="notify_sum">Scegli quali notifiche visualizzare.</string>
@@ -245,8 +267,11 @@
   <string name="notify_activity_sum">Notifica se Sanity è in esecuzione quando inizia una telefonata.</string>
   <string name="notify_volume_title">Notifica volume</string>
   <string name="notify_volume_sum">Notifica quando il volume viene automaticamente modificato da Sanity.</string>
+  <string name="notify_headset_title">Notifica le cuffie</string>
+  <string name="notify_headset_sum">Notifica quando le cuffie vengono collegate o scollegate.</string>
   <string name="notify_rec_stop_title">Notifica registrazione</string>
   <string name="notify_rec_stop_sum">Notifica quando la registrazione audio viene arrestata da Sanity.</string>
+  <string name="notify_block_title">Notifica blocco chiamata</string>
   <string name="vibrate_end_title">Vibrazione</string>
   <string name="vibrate_end_sum">Vibra il telefono al termine della telefonata.</string>
 
@@ -263,7 +288,7 @@
   <string name="eula_title">Licenza GNU GPL v3</string>
   <string name="eula_sum">Tocca qui per aprire la pagina web ufficiale della GNU General Public License versione 3.</string>
   <string name="paypal_title">Donazione PayPal</string>
-  <string name="paypal_sum">Per supportare Sanity, puoi donare l\'ammontare che preferisci usando PayPal. Tocca qui per aprire il sito di PayPal.</string>
+  <string name="paypal_sum">Oltre al Market, puoi donare con PayPal. Una volta completata la donazione, l\'autore ti invierà la versione donazione. Tocca qui per aprire il sito PayPal.</string>
 
 	<string name="filter_cat">Filtro chiamate</string>
 	<string name="filter_sum">Scegli i numeri di telefono per applicare l\'azione.</string>
@@ -288,6 +313,14 @@
 	<string name="filter_star_sum">Tutti i contatti che hai contrassegnato come preferiti.</string>
 	<string name="filter_groups_title">Lista gruppi</string>
 	<string name="filter_groups_sum">Scegli i gruppi di contatti da mettere in lista.</string>
+	<string name="filter_dt_title">Data e ora</string>
+	<string name="filter_dt_sum">Scegli quando questo filtro deve essere abilitato.</string>
+	<string name="filter_dt_enable_title">Scegli data e ora</string>
+	<string name="filter_dt_enable_sum">Se disabilitato, il filtro risulterà sempre attivo.</string>
+	<string name="filter_dt_add_title">Nuovo intervallo</string>
+	<string name="filter_dt_add_sum">Tocca qui per creare un nuovo intervallo. Se non crei intervalli, il filtro risulterà attivo tutto il giorno.</string>
+	<string name="filter_dt_add_start">Scegli l\'ora di inizio</string>
+	<string name="filter_dt_add_stop">Scegli l\'ora di fine</string>
 	<string name="filter_shortcut_rec">Filtro chiamate - Registratore</string>
 	<string name="filter_shortcut_tts">Filtro chiamate - Annuncia chiamante</string>
 	<string name="filter_shortcut_block">Filtro chiamate - Blocco chiamate</string>
@@ -315,6 +348,7 @@
   <string name="ask_del_all">Sei sicuro di voler ELIMINARE tutti i %s elementi selezionati?</string>
   <string name="ask_canc_all">Sei sicuro di voler ANNULLARE tutte le modifiche?</string>
   <string name="ask_clear_history">Sei sicuro di voler CANCELLARE tutta la cronologia?</string>
+  <string name="ask_silent_limit">Ore e Minuti in cui rimanere nella modalità silenziosa</string>
 
   <string name="msg_rec_title">Sanity - Registratore</string>
   <string name="msg_rec_start">Tocca qui per AVVIARE la registrazione</string>
@@ -353,6 +387,7 @@
   <string name="msg_contact_sel">\"%s\" selezionato</string>
   <string name="msg_callog_new">Nuovo numero dalle chiamate recenti</string>
   <string name="msg_callog_empty">Il registro non contiene nuovi numeri sconosciuti!</string>
+  <string name="msg_incompatible">Spiacente, questa funzionalità non funziona sulla tua versione di Android.</string>
 
   <string name="err_dir">Sanity errore: impossibile creare la cartella sulla sdcard per salvare le registrazioni audio!</string>
   <string name="err_rec">Sanity errore: impossibile avviare la registrazione audio!</string>
@@ -363,5 +398,9 @@
   <string name="err_exists">Azione annullata: \"%s\" già esiste</string>
   <string name="err_market">Impossibile aprire il Market! Verifica che l\'applicazione Market sia correttamente installata.</string>
 	<string name="err_tts_init">Sanity errore: impossibile inizializzare il motore TTS!</string>
+  <string name="err_block">Sanity errore: impossibile bloccare la chiamata usando il metodo corrente!</string>
+  <string name="err_answer">Sanity errore: impossibile rispondere alla chiamata (forse il tuo telefono non è compatibile)!</string>
+	<string name="err_datetime_day">Per abilitare la data e l\'ora di filtraggio, è necessario scegliere almeno un giorno!</string>
+	<string name="err_datetime_time">Annullato: l\'ora di inizio deve essere precedente rispetto all\'ora di fine!</string>
 
 </resources>

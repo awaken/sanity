@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 		      package="cri.sanity" android:installLocation="auto"
-		      android:versionCode="41" android:versionName="2.05">
+		      android:versionCode="42" android:versionName="2.06">
 
   <application android:icon="@drawable/ic_app"
                android:label="@string/app"
@@ -26,13 +26,16 @@
     <activity android:theme="@style/Theme" android:name=".screen.BrowseActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.ProfileActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.TtsActivity" />
+    <activity android:theme="@style/Theme" android:name=".screen.AnswerActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.BlockerActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.BlockHistoryActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.FilterActivity" />
+    <activity android:theme="@style/Theme" android:name=".screen.DateTimeActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.ContactsActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.GroupsActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.NumsActivity" />
 
+    <activity android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" android:name=".RingerActivity" />
     <activity android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" android:name=".BlankActivity" />
 
     <activity android:theme="@android:style/Theme.Translucent.NoTitleBar" android:name=".ShortcutActivity" android:label="@string/app_shortcut">
@@ -58,6 +61,12 @@
       <intent-filter>
         <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
         <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
+      </intent-filter>
+    </receiver>
+
+	  <receiver android:name=".RingerReceiver">
+      <intent-filter>
+        <action android:name="android.media.RINGER_MODE_CHANGED" />
       </intent-filter>
     </receiver>
 

@@ -6,6 +6,10 @@
     <CheckBoxPreference android:title="@string/enabled_title"
                         android:summary="@string/enabled_sum"
                         android:key="enabled" />
+    <CheckBoxPreference android:title="@string/silent_limit_title"
+                        android:summary="@string/silent_limit_sum"
+                        android:dependency="enabled"
+                        android:key="silent_limit" />
     <CheckBoxPreference android:title="@string/force_bt_audio_title"
                         android:summary="@string/force_bt_audio_sum"
                         android:dependency="enabled"
@@ -24,13 +28,13 @@
                 android:widgetLayout="@layout/img_backup"
                 android:persistent="false"
                 android:key="backup_prefs" />
-    <Preference android:title="@string/reset_prefs_title"
-                android:summary="@string/reset_prefs_sum"
-                android:persistent="false"
-                android:key="reset_prefs" />
     <Preference android:title="@string/delete_filters_title"
                 android:summary="@string/delete_filters_sum"
                 android:persistent="false"
                 android:key="delete_filters" />
+    <Preference android:title="@string/reset_prefs_title"
+                android:summary="@string/reset_prefs_sum"
+                android:persistent="false"
+                android:key="reset_prefs" />
 	</PreferenceCategory>
 </PreferenceScreen>

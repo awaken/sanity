@@ -48,14 +48,30 @@
 	<string name="copy">Copiar</string>
 	<string name="share">Compartir</string>
 
+	<string name="always">Siempre</string>
+	<string name="time">Hora</string>
+	<string name="date">Fecha</string>
+	<string name="alldays">Todos los días</string>
+	<string name="monday">Lunes</string>
+	<string name="tuesday">Martes</string>
+	<string name="wednesday">Miércoles</string>
+	<string name="thursday">Jueves</string>
+	<string name="friday">Viernes</string>
+	<string name="saturday">Sábado</string>
+	<string name="sunday">Domingo</string>
+
 	<string name="groups_cat">Preferencias</string>
 	<string name="misc_cat">Varios</string>
   <string name="geek_cat">Avanzadas</string>
+	<string name="skip_silent">Saltar si en silencio</string>
+	<string name="headset_only">Auricular sólo</string>
 
 	<string name="general_cat">General</string>
 	<string name="general_sum">Opciones principales de aplicación.</string>
 	<string name="enabled_title">Activar Sanity</string>
 	<string name="enabled_sum">Activar o desactivar Sanity. Desactivado,la aplicación no funcionara durante las llamadas de teléfono.</string>
+  <string name="silent_limit_title">Modo Silencioso limitado</string>
+  <string name="silent_limit_sum">Cada vez que active el Modo Silencioso, Sanity le pedirá que elija un tiempo de espera para restaurar automáticamente el Modo Normal.</string>
 	<string name="force_bt_audio_title">Fuerza audio BT</string>
 	<string name="force_bt_audio_sum">Fuerza al dispositivo Bluetooth a ser controlado por Sanity.</string>
 	<string name="reverse_proximity_title">Invertir proximidad</string>
@@ -130,32 +146,6 @@
   <string name="speaker_off_count_title">Límite de Desactivación</string>
   <string name="speaker_off_count_sum">Cuántas veces hasta desactivar automáticamente el altavoz durante una llamada cuando está lejos de tu oído.</string>
 
-	<string name="vol_cat">Volumen</string>
-	<string name="vol_sum">Opciones para el ajuste automático del volumen durante una llamada.</string>
-	<string name="vol_phone_title">Volumen del telefono</string>
-	<string name="vol_phone_sum">Ajustar automáticamente el volumen durante una llamada cuando no se ultilizan los auriculares.</string>
-	<string name="vol_wired_title">Auriculares por cable</string>
-	<string name="vol_wired_sum">Ajustar automáticamente el volumen durante una llamada usando auriculares por cable.</string>
-	<string name="vol_bt_title">Auriculares por Bluetooth</string>
-	<string name="vol_bt_sum">Ajustar automáticamente el volumen durante una llamada usando los auriculares por Bluetooth.</string>
-	<string name="vol_solo_title">Conversacion unicamente</string>
-	<string name="vol_solo_sum">Reproducir unicamente el audio de la conversacion, silenciando cualquier otra reproduccion durante las llamadas.</string>
-
-	<string name="notify_cat">Notificaciones</string>
-	<string name="notify_sum">Elegir cuando Sanity debe mostrar las notificaciones.</string>
-	<string name="notify_disable_title">Notificar al apagar</string>
-	<string name="notify_disable_sum">Notificar cuando Sanity apaga/desactiva los dispositivos.</string>
-	<string name="notify_enable_title">Notificar al restaurar</string>
-	<string name="notify_enable_sum">Notificar cuando Sanity restaura los dispositivos.</string>
-	<string name="notify_activity_title">Notificar actividad</string>
-	<string name="notify_activity_sum">Notificar si Sanity funciona cuando empiezas una llamada.</string>
-	<string name="notify_volume_title">Notificar el volumen</string>
-	<string name="notify_volume_sum">Notificar cuando el volumen es cambiado automáticamente por Sanity.</string>
-  <string name="notify_rec_stop_title">Notificar la grabación</string>
-  <string name="notify_rec_stop_sum">Notificar cuando la grabación del audio se detiene por Sanity.</string>
-	<string name="vibrate_end_title">Vibración</string>
-	<string name="vibrate_end_sum">Vibrar cuando terminas la llamada.</string>
-
 	<string name="rec_cat">Grabadora</string>
 	<string name="rec_cat_sum">Opciones para la grabación del audio de la llamada en la tarjeta de memoria.</string>
 	<string name="rec_cat_sum_free">Esta versión gratuita está limitada a 2 minutos de grabación.</string>
@@ -213,9 +203,7 @@
 	<string name="tts_global_title">Ajustes globales</string>
 	<string name="tts_global_sum">Pulse aquí para abrir los ajustes globales de Android sobre el "texto a voz" del motor.</string>
 	<string name="tts_audio_cat">Opciones de audio</string>
-	<string name="tts_headset_title">Auricular sólo</string>
 	<string name="tts_headset_sum">Habilitar anunciar sólo cuando los auriculares están conectados.</string>
-	<string name="tts_skip_title">Saltar si en silencio</string>
 	<string name="tts_skip_sum">No anunciar la persona que llama cuando el teléfono está en modo silencioso.</string>
 	<string name="tts_solo_title">Silenciar tono</string>
 	<string name="tts_solo_sum">Silenciar el tono de llamada al anunciar el nombre de la persona que llama.</string>
@@ -250,6 +238,44 @@
 	<string name="block_help_title">Elección del método</string>
 	<string name="block_help_sum">Pulse aquí para mostrar la descripción de todos los métodos de bloqueo de llamada.</string>
 
+	<string name="answer_cat">Respuesta automática</string>
+	<string name="answer_sum">Reglas para que responda automáticamente las llamadas entrantes.</string>
+	<string name="answer_enable_title">Activar respuesta automática</string>
+	<string name="answer_enable_sum">Activar respuesta automática de las llamadas entrantes.</string>
+	<string name="answer_headset_sum">Activar respuesta automática sólo si los auriculares están conectados.</string>
+	<string name="answer_skip_sum">No conteste automáticamente cuando el teléfono está en modo silencioso.</string>
+	<string name="answer_delay_title">Retardo de la respuesta</string>
+	<string name="answer_delay_sum">Tiempo de retardo antes de contestar de forma automática.</string>
+
+	<string name="vol_cat">Volumen</string>
+	<string name="vol_sum">Opciones para el ajuste automático del volumen durante una llamada.</string>
+	<string name="vol_phone_title">Volumen del telefono</string>
+	<string name="vol_phone_sum">Ajustar automáticamente el volumen durante una llamada cuando no se ultilizan los auriculares.</string>
+	<string name="vol_wired_title">Auriculares por cable</string>
+	<string name="vol_wired_sum">Ajustar automáticamente el volumen durante una llamada usando auriculares por cable.</string>
+	<string name="vol_bt_title">Auriculares por Bluetooth</string>
+	<string name="vol_bt_sum">Ajustar automáticamente el volumen durante una llamada usando los auriculares por Bluetooth.</string>
+	<string name="vol_solo_title">Conversacion unicamente</string>
+	<string name="vol_solo_sum">Reproducir unicamente el audio de la conversacion, silenciando cualquier otra reproduccion durante las llamadas.</string>
+
+	<string name="notify_cat">Notificaciones</string>
+	<string name="notify_sum">Elegir cuando Sanity debe mostrar las notificaciones.</string>
+	<string name="notify_disable_title">Notificar al apagar</string>
+	<string name="notify_disable_sum">Notificar cuando Sanity apaga/desactiva los dispositivos.</string>
+	<string name="notify_enable_title">Notificar al restaurar</string>
+	<string name="notify_enable_sum">Notificar cuando Sanity restaura los dispositivos.</string>
+	<string name="notify_activity_title">Notificar actividad</string>
+	<string name="notify_activity_sum">Notificar si Sanity funciona cuando empiezas una llamada.</string>
+	<string name="notify_volume_title">Notificar el volumen</string>
+	<string name="notify_volume_sum">Notificar cuando el volumen es cambiado automáticamente por Sanity.</string>
+  <string name="notify_headset_title">Notificar los auriculares</string>
+  <string name="notify_headset_sum">Notificar cuando los auriculares están conectados o desconectados.</string>
+  <string name="notify_rec_stop_title">Notificar la grabación</string>
+  <string name="notify_rec_stop_sum">Notificar cuando la grabación del audio se detiene por Sanity.</string>
+  <string name="notify_block_title">Notificar bloque de llamada</string>
+	<string name="vibrate_end_title">Vibración</string>
+	<string name="vibrate_end_sum">Vibrar cuando terminas la llamada.</string>
+
 	<string name="about_cat">Saber mas y contactar</string>
 	<string name="about_sum">Informacion sobre esta aplicación y maneras de contactar con el desarrollador.</string>
 	<string name="changelog_title">Cambios recientes</string>
@@ -261,7 +287,7 @@
 	<string name="eula_title">Licencia GNU GPL v3</string>
 	<string name="eula_sum">Pulse aqui para abrir la web oficial de la GNU GPL versión 3.</string>
 	<string name="paypal_title">Donación por PayPal</string>
-	<string name="paypal_sum">Para ayudar a Sanity, puedes hacer tu donación a traves de PayPal. Pulsa aqui para acceder al portal de PayPal.</string>
+	<string name="paypal_sum">Además de Market, usted puede donar a través de PayPal. Una vez que completa la donación, el autor le enviará la versión donación. Pulse aquí para abrir el sitio de PayPal.</string>
 	<string name="donate_title">Donar</string>
 	<string name="donate_sum">Sanity es gratuito. Si te gusta esta aplicación, apoya al desarrolador con una donación.</string>
 	<string name="donated_title">Donación realizada</string>
@@ -294,6 +320,14 @@
 	<string name="filter_star_sum">Todos los contactos que agregó a favoritos.</string>
 	<string name="filter_groups_title">Lista de grupos</string>
 	<string name="filter_groups_sum">Elegir los grupos de contactos en la lista.</string>
+	<string name="filter_dt_title">Fecha y hora</string>
+	<string name="filter_dt_sum">Elegir el momento de este filtro debe estar habilitado.</string>
+	<string name="filter_dt_enable_title">Choose date and time</string>
+	<string name="filter_dt_enable_sum">If disabled, the filter will be always enabled.</string>
+	<string name="filter_dt_add_title">New range</string>
+	<string name="filter_dt_add_sum">Tap here to create a new time range. If you don\'t create time ranges, the filter will be enabled for the entire day.</string>
+	<string name="filter_dt_add_start">Choose the start time</string>
+	<string name="filter_dt_add_stop">Choose the stop time</string>
 	<string name="filter_shortcut_rec">Filtro de llamadas - Grabadora</string>
 	<string name="filter_shortcut_tts">Filtro de llamadas - Anuncia que llaman</string>
 	<string name="filter_shortcut_block">Filtro de llamadas - Bloqueador de llamadas</string>
@@ -314,6 +348,7 @@
   <string name="ask_del_all">¿Estás seguro de ELIMINAR los %s elementos seleccionados?</string>
   <string name="ask_canc_all">¿Estás seguro de CANCELAR todos los cambios?</string>
   <string name="ask_clear_history">¿Estás seguro de BORRAR toda la historia?</string>
+  <string name="ask_silent_limit">Horas y Minutos para permanecer el silencio</string>
 
 	<string name="msg_rec_title">Sanity - Grabadora</string>
 	<string name="msg_rec_start">Pulse aqui para INICIAR la grabación de llamada</string>
@@ -340,7 +375,7 @@
   <string name="msg_prf_addnew">Elija el nombre del nuevo perfil para crear</string>
   <string name="msg_prf_rename">Cambie el nombre del perfil</string>
   <string name="msg_prf_nosel">No se selecciona el perfil!</string>
-  <string name="msg_prf_restore_ok">Sanity: profilo \"%s\" attivato</string>
+  <string name="msg_prf_restore_ok">Sanity: perfil \"%s\" activado</string>
   <string name="msg_prf_restore_err">Sanity: impossibile attivare il profilo \"%s\"!</string>
   <string name="msg_nums_edit">Número de teléfono (con el prefijo internacional)</string>
   <string name="msg_empty_list">No hay entradas en esta lista. Utilice el menú para crear otras nuevas.</string>
@@ -353,15 +388,20 @@
   <string name="msg_contact_sel">\"%s\" seleccionado</string>
   <string name="msg_callog_new">Nuevo número de registro de llamadas</string>
   <string name="msg_callog_empty">El registro de llamadas no contiene nuevos números desconocidos!</string>
+  <string name="msg_incompatible">Lo sentimos, esta característica no funciona en su versión de Android.</string>
 
-	<string name="err_dir">Error en Sanity: no se puede crear el directorio para guardar las grabaciónes de audio!</string>
-	<string name="err_rec">Error en Sanity: no se puede iniciar la grabación de audio!</string>
+	<string name="err_dir">Sanity error: no se puede crear el directorio para guardar las grabaciónes de audio!</string>
+	<string name="err_rec">Sanity error: no se puede iniciar la grabación de audio!</string>
 	<string name="err_scan">Error mientras se cambiaban las propiedades de Escanner: se deniega el permiso en el archivo \"%s\"</string>
   <string name="err_name">Error: el nombre no válido!</string>
   <string name="err_rename">Error: no se puede cambiar el nombre de archivo!</string>
-  <string name="err_del">Error: la eliminación de %s archivos no!</string>
+  <string name="err_del">Error: no se puede eliminar el archivos %s!</string>
   <string name="err_exists">Acción cancelada: \"%s\" ya existe</string>
 	<string name="err_market">No se puede abrir el Market! Compruebe la aplicación Market este instalada correctamente.</string>
 	<string name="err_tts_init">Sanity error: no se puede inicializar el motor TTS!</string>
+  <string name="err_block">Sanity error: no se puede bloquear la llamada utilizando el método actual!</string>
+  <string name="err_answer">Sanity error: no se puede responder a la llamada (tal vez el teléfono no es compatible)!</string>
+	<string name="err_datetime_day">Para habilitar el filtrado de la fecha y la hora, usted debe elegir al menos un día!</string>
+	<string name="err_datetime_time">Cancelado: la hora de inicio debe ser anterior a la hora de parada!</string>
 
 </resources>

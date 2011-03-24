@@ -1,4 +1,0 @@
-WARNING: the "hang up" method is not guaranteed to work on your phone!
-
-Anyway you can try it.
-If this method works once, it should work all the time.

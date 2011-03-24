@@ -1,4 +1,0 @@
-ADVERTENCIA: el método "colgar" no se garantiza que funcione en tu teléfono!
-
-Puedes probarlo en tu teléfono.
-Si este método funciona una vez, debería funcionar siempre.

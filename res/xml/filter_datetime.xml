@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<Preference android:key="logo" />
+	<PreferenceCategory android:title="@string/filter_dt_title"
+	                    android:key="group">
+		<CheckBoxPreference android:title="@string/filter_dt_enable_title"
+		                    android:summary="@string/filter_dt_enable_sum"
+		                    android:persistent="false"
+		                    android:key="filter_dt" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/date">
+		<Preference android:title="@string/alldays"
+		            android:persistent="false"
+		            android:dependency="filter_dt"
+		            android:key="alldays" />
+		<CheckBoxPreference android:title="@string/monday"
+		                    android:persistent="false"
+		                    android:dependency="filter_dt"
+		                    android:key="filter_dt_day2" />
+		<CheckBoxPreference android:title="@string/tuesday"
+		                    android:persistent="false"
+		                    android:dependency="filter_dt"
+		                    android:key="filter_dt_day3" />
+		<CheckBoxPreference android:title="@string/wednesday"
+		                    android:persistent="false"
+		                    android:dependency="filter_dt"
+		                    android:key="filter_dt_day4" />
+		<CheckBoxPreference android:title="@string/thursday"
+		                    android:persistent="false"
+		                    android:dependency="filter_dt"
+		                    android:key="filter_dt_day5" />
+		<CheckBoxPreference android:title="@string/friday"
+		                    android:persistent="false"
+		                    android:dependency="filter_dt"
+		                    android:key="filter_dt_day6" />
+		<CheckBoxPreference android:title="@string/saturday"
+		                    android:persistent="false"
+		                    android:dependency="filter_dt"
+		                    android:key="filter_dt_day7" />
+		<CheckBoxPreference android:title="@string/sunday"
+		                    android:persistent="false"
+		                    android:dependency="filter_dt"
+		                    android:key="filter_dt_day1" />
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/time"
+	                    android:key="times">
+		<Preference android:title="@string/filter_dt_add_title"
+		            android:summary="@string/filter_dt_add_sum"
+		            android:persistent="false"
+		            android:dependency="filter_dt"
+		            android:key="add" />
+	</PreferenceCategory>
+</PreferenceScreen>

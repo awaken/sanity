@@ -17,8 +17,14 @@
 	  <CheckBoxPreference android:title="@string/notify_volume_title"
 	                      android:summary="@string/notify_volume_sum"
 	                      android:key="notify_volume" />
+	  <CheckBoxPreference android:title="@string/notify_headset_title"
+	                      android:summary="@string/notify_headset_sum"
+	                      android:key="notify_headset" />
 	  <CheckBoxPreference android:title="@string/notify_rec_stop_title"
 	                      android:summary="@string/notify_rec_stop_sum"
 	                      android:key="notify_rec_stop" />
+	  <CheckBoxPreference android:title="@string/notify_block_title"
+	                      android:summary="@string/block_notify_sum"
+	                      android:key="block_notify" />
 	</PreferenceCategory>
 </PreferenceScreen>

@@ -12,11 +12,11 @@
 	              android:key="tts_global" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/tts_audio_cat">
-	  <CheckBoxPreference android:title="@string/tts_headset_title"
+	  <CheckBoxPreference android:title="@string/headset_only"
 	                      android:summary="@string/tts_headset_sum"
 	                      android:dependency="tts"
 	                      android:key="tts_headset" />
-	  <CheckBoxPreference android:title="@string/tts_skip_title"
+	  <CheckBoxPreference android:title="@string/skip_silent"
 	                      android:summary="@string/tts_skip_sum"
 	                      android:dependency="tts"
 	                      android:key="tts_skip" />

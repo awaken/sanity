@@ -13,12 +13,12 @@ public interface ITelephony
   boolean endCall();
   void    answerRingingCall();
   /*
+  void    silenceRinger();
   boolean setRadio(boolean turnOn);
   void    cancelMissedCallsNotification();
   boolean showCallScreenWithDialpad(boolean showDialpad);
   void dial(String number);
   void call(String number);
-  void silenceRinger();
   boolean isOffhook();
   boolean isRinging();
   boolean isIdle();

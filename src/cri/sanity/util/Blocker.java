@@ -31,11 +31,7 @@ public final class Blocker
 		name = num = null;
 		switch(mode) {
 			case MODE_HANGUP:
-				try {
-					if(!Dev.iTel().endCall()) return false;
-				} catch(Exception e) {
-					return false;
-				}
+				if(!Dev.endCall()) return false;
 				break;
 			case MODE_RADIO:
 				if(!Dev.enableFlightMode(true)) return false;
@@ -47,11 +43,7 @@ public final class Blocker
 				new Task(){ public void run(){ try { A.devpolMan().lockNow(); } catch(Exception e) {} }}.exec(Conf.BLOCK_LOCK_DELAY);
 				break;
 			case MODE_ANSWER:
-				try {
-					Dev.iTel().answerRingingCall();
-				} catch(Exception e) {
-					return false; 
-				}
+				Dev.answerCall();
 				break;
 			default:
 				return false;
@@ -77,19 +69,13 @@ public final class Blocker
 		Intent i = new Intent(A.app(), BlankActivity.class);
 		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		A.app().startActivity(i);
-		new Task(){ public void run(){
-			try {
-				Dev.iTel().endCall();
-			} catch(Exception e) { try {
-				Dev.enableFlightMode(true );
-				Dev.enableFlightMode(false);
-			} catch(Exception e2) {}}
-		}}.exec(ANSWER_TIMEOUT);
+		new Task(){ public void run(){ Dev.endCall(); }}.exec(ANSWER_TIMEOUT);
 		return true;
 	}
 
 	public static final void shutdown()
 	{
+		Alarmer.stop(Alarmer.ACT_FLIGHTOFF);
 		switch(mode) {
 			case MODE_HANGUP:
 				break;
@@ -120,7 +106,7 @@ public final class Blocker
 	}
 	
 	//---- private api
-	
+
 	private static void notification()
 	{
 		String title = name();

@@ -50,14 +50,30 @@
 	<string name="copy">Copy</string>
 	<string name="share">Share</string>
 
+	<string name="always">Always</string>
+	<string name="time">Time</string>
+	<string name="date">Date</string>
+	<string name="alldays">All days</string>
+	<string name="monday">Monday</string>
+	<string name="tuesday">Tuesday</string>
+	<string name="wednesday">Wednesday</string>
+	<string name="thursday">Thursday</string>
+	<string name="friday">Friday</string>
+	<string name="saturday">Saturday</string>
+	<string name="sunday">Sunday</string>
+
   <string name="groups_cat">Preferences</string>
   <string name="misc_cat">Miscellaneous</string>
   <string name="geek_cat">Under the Hood</string>
+  <string name="skip_silent">Skip if silent</string>
+	<string name="headset_only">Headset only</string>
 
   <string name="general_cat">General</string>
   <string name="general_sum">Application main options.</string>
   <string name="enabled_title">Enable Sanity</string>
   <string name="enabled_sum">Enable or disable whole Sanity sytem. If disabled, this application won\'t affect phone calls.</string>
+  <string name="silent_limit_title">Silent mode Timeout</string>
+  <string name="silent_limit_sum">Each time you activate the Silent mode, Sanity will ask you to choose a timeout for restoring automatically the Normal mode.</string>
   <string name="force_bt_audio_title">Force BT audio</string>
   <string name="force_bt_audio_sum">Force bluetooth audio device to be correctly handled by Sanity.</string>
   <string name="reverse_proximity_title">Reverse proximity</string>
@@ -132,17 +148,6 @@
   <string name="speaker_off_count_title">Limit to Disable</string>
   <string name="speaker_off_count_sum">How many times up to automatically disable the handsfree during one call when the phone is close to ear.</string>
 
-	<string name="vol_cat">Volume</string>
-	<string name="vol_sum">Options for automatic volume setting during a call.</string>
-	<string name="vol_phone_title">Phone volume</string>
-	<string name="vol_phone_sum">Volume to automatically set during a call while no headsets are used.</string>
-	<string name="vol_wired_title">Wired headsets</string>
-	<string name="vol_wired_sum">Volume to automatically set during a call while using wired headsets.</string>
-	<string name="vol_bt_title">Bluetooth headsets</string>
-	<string name="vol_bt_sum">Volume to automatically set during a call while using wireless headsets.</string>
-	<string name="vol_solo_title">Conversation only</string>
-	<string name="vol_solo_sum">Play only the audio of the conversation, muting any other audio stream during phone calls.</string>
-
 	<string name="rec_cat">Recorder</string>
 	<string name="rec_cat_sum">Options for recording call audio on memory card.</string>
 	<string name="rec_cat_sum_free">This free version is limited to 2 minutes for each recording.</string>
@@ -200,9 +205,7 @@
 	<string name="tts_global_title">Global settings</string>
 	<string name="tts_global_sum">Tap here to open the Android global settings about the \"text to speech\" engine.</string>
 	<string name="tts_audio_cat">Audio options</string>
-	<string name="tts_headset_title">Headset only</string>
 	<string name="tts_headset_sum">Enable announce only if the headsets are connected.</string>
-	<string name="tts_skip_title">Skip if silent</string>
 	<string name="tts_skip_sum">Don\'t announce the caller when the phone is in silent mode.</string>
 	<string name="tts_solo_title">Mute ringtone</string>
 	<string name="tts_solo_sum">Mute the ringtone when announcing the caller\'s name.</string>
@@ -226,7 +229,6 @@
 	<string name="block_sum">Block incoming calls filtering out the phone number of the caller.</string>
 	<string name="block_enable_title">Enable call blocker</string>
 	<string name="block_enable_sum">Enable call blocking system to refuse incoming calls.</string>
-	<string name="block_skip_title">Skip if silent</string>
 	<string name="block_skip_sum">Don\'t block incoming calls when the phone is in silent mode.</string>
 	<string name="block_mode_title">Block method</string>
 	<string name="block_mode_sum">Choose how to block incoming calls.</string>
@@ -236,6 +238,26 @@
 	<string name="block_history_sum">Show the detailed list of all blocked calls.</string>
 	<string name="block_help_title">Choice of method</string>
 	<string name="block_help_sum">Tap here to show the description of all call block methods.</string>
+
+	<string name="answer_cat">Auto answer</string>
+	<string name="answer_sum">Rules to answer automatically on incoming calls.</string>
+	<string name="answer_enable_title">Enable auto answer</string>
+	<string name="answer_enable_sum">Enable automatic answering on incoming calls.</string>
+	<string name="answer_headset_sum">Enable automatic answering only if the headsets are connected.</string>
+	<string name="answer_skip_sum">Don\'t answer automatically when the phone is in silent mode.</string>
+	<string name="answer_delay_title">Delay of answer</string>
+	<string name="answer_delay_sum">Delay time before answering automatically.</string>
+
+	<string name="vol_cat">Volume</string>
+	<string name="vol_sum">Options for automatic volume setting during a call.</string>
+	<string name="vol_phone_title">Phone volume</string>
+	<string name="vol_phone_sum">Volume to automatically set during a call while no headsets are used.</string>
+	<string name="vol_wired_title">Wired headsets</string>
+	<string name="vol_wired_sum">Volume to automatically set during a call while using wired headsets.</string>
+	<string name="vol_bt_title">Bluetooth headsets</string>
+	<string name="vol_bt_sum">Volume to automatically set during a call while using wireless headsets.</string>
+	<string name="vol_solo_title">Conversation only</string>
+	<string name="vol_solo_sum">Play only the audio of the conversation, muting any other audio stream during phone calls.</string>
 
   <string name="notify_cat">Notification</string>
   <string name="notify_sum">Choose when Sanity should show notifications.</string>
@@ -247,8 +269,11 @@
   <string name="notify_activity_sum">Notify if Sanity is running when a phone call starts.</string>
   <string name="notify_volume_title">Notify volume</string>
   <string name="notify_volume_sum">Notify when volume is automatically changed by Sanity.</string>
+  <string name="notify_headset_title">Notify headsets</string>
+  <string name="notify_headset_sum">Notify when headsets are connected or disconnected.</string>
   <string name="notify_rec_stop_title">Notify recording</string>
   <string name="notify_rec_stop_sum">Notify when audio recording is stopped by Sanity.</string>
+  <string name="notify_block_title">Notify call block</string>
   <string name="vibrate_end_title">Vibrate</string>
   <string name="vibrate_end_sum">Vibrate when phone call ends.</string>
 
@@ -265,7 +290,7 @@
   <string name="eula_title">License GNU GPL v3</string>
   <string name="eula_sum">Tap here to open the official web site of the GNU General Public License version 3.</string>
   <string name="paypal_title">PayPal donate</string>
-  <string name="paypal_sum">For supporting Sanity, you can donate any amount of money using PayPal. Tap here to open PayPal site.</string>
+  <string name="paypal_sum">In addition to Market, you can donate using PayPal. Once you complete the donation, the author will send you the donation version. Tap here to open the PayPal site.</string>
 
 	<string name="filter_cat">Call filter</string>
 	<string name="filter_sum">Choose the phone numbers for applying the action.</string>
@@ -290,6 +315,14 @@
 	<string name="filter_star_sum">All contacts you tagged as favourites.</string>
 	<string name="filter_groups_title">Groups list</string>
 	<string name="filter_groups_sum">Choose the groups of contacts in this list.</string>
+	<string name="filter_dt_title">Date and time</string>
+	<string name="filter_dt_sum">Choose when this filter should be enabled.</string>
+	<string name="filter_dt_enable_title">Choose date and time</string>
+	<string name="filter_dt_enable_sum">If disabled, the filter will be always enabled.</string>
+	<string name="filter_dt_add_title">New range</string>
+	<string name="filter_dt_add_sum">Tap here to create a new time range. If you don\'t create time ranges, the filter will be enabled for the entire day.</string>
+	<string name="filter_dt_add_start">Choose the start time</string>
+	<string name="filter_dt_add_stop">Choose the stop time</string>
 	<string name="filter_shortcut_rec">Call filter - Recorder</string>
 	<string name="filter_shortcut_tts">Call filter - Announce caller</string>
 	<string name="filter_shortcut_block">Call filter - Call blocker</string>
@@ -317,6 +350,7 @@
   <string name="ask_del_all">Are you sure to DELETE all %s selected items?</string>
   <string name="ask_canc_all">Are you sure to CANCEL all changes?</string>
   <string name="ask_clear_history">Are you sure to REMOVE all history entries?</string>
+  <string name="ask_silent_limit">Hours and Minutes to stay in silent mode</string>
 
   <string name="msg_rec_title">Sanity - Recorder</string>
   <string name="msg_rec_start">Tap here to START call recording</string>
@@ -357,6 +391,9 @@
   <string name="msg_contact_sel">\"%s\" selected</string>
   <string name="msg_callog_new">New number from call log</string>
   <string name="msg_callog_empty">The call log doesn\'t contain new unknown numbers!</string>
+  <string name="msg_headset_on">Sanity: headsets connected.</string>
+  <string name="msg_headset_off">Sanity: headsets disconnected.</string>
+  <string name="msg_incompatible">Sorry, this feature doen\'t work on your Android version.</string>
 
   <string name="err_dir">Sanity error: unable to create directory on sdcard for saving audio recording!</string>
   <string name="err_rec">Sanity error: unable to start audio recording!</string>
@@ -367,5 +404,9 @@
   <string name="err_exists">Action canceled: \"%s\" already exists</string>
   <string name="err_market">Unable to open Market! Check Market application is rightly installed.</string>
 	<string name="err_tts_init">Sanity error: unable to initialize TTS engine!</string>
+  <string name="err_block">Sanity error: unable to block call using the current method!</string>
+  <string name="err_answer">Sanity error: unable to answer the call (maybe your phone is incompatible)!</string>
+	<string name="err_datetime_day">You must choose at least one day to enable date and time filtering!</string>
+	<string name="err_datetime_time">Canceled: the start time must be earlier than the stop time!</string>
 
 </resources>

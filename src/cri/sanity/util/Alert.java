@@ -2,11 +2,13 @@ package cri.sanity.util;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import cri.sanity.*;
 
 
@@ -31,7 +33,7 @@ public final class Alert
 		protected DialogInterface dlg;
 		protected int which;
 		@Override
-		public void onClick(DialogInterface dlg, int which) {
+		public final void onClick(DialogInterface dlg, int which) {
 			this.dlg   = dlg;
 			this.which = which;
 			on();
@@ -49,7 +51,25 @@ public final class Alert
 		public abstract void on(String text);
 	}
 	
-	//---- public api
+	public static abstract class Timed implements TimePickerDialog.OnTimeSetListener
+	{
+		protected TimePickerDialog dlg;
+		protected TimePicker      view;
+		protected int       hour, mins;
+		public Timed() { hour = mins = 0; }
+		public Timed(int hour, int mins) { this.hour = hour; this.mins = mins; }
+		protected final void dismiss(){ dlg.dismiss(); }
+		@Override
+		public final void onTimeSet(TimePicker view, int hour, int mins) {
+			this.view = view;
+			this.hour = hour;
+			this.mins = mins;
+			on();
+		}
+		public abstract void on();
+	}
+	
+	//---- show message (with buttons)
 
 	public static final View layout(int resId) { return LayoutInflater.from(A.app()).inflate(resId, null); }
 
@@ -116,6 +136,8 @@ public final class Alert
   	return msg(title, msg, null, null, null, SIMPLE, true);
   }
 
+  //---- show edit view
+ 
   public static final EditText edit(String title, final Edited pos, Context ctx) {
   	return edit(title, pos, null, ctx);
   }
@@ -176,6 +198,29 @@ public final class Alert
   }
   public static final AlertDialog choose(String title, int[] items, Click click) {
   	return choose(title, items, click, activity);
+  }
+
+  //--- time pick
+ 
+  public static final TimePickerDialog time(String title, Timed timed, Context ctx) {
+		final TimePickerDialog tpd = new TimePickerDialog(ctx, timed, timed.hour, timed.mins, true) {
+			@Override
+			public void onTimeChanged(TimePicker view, int h, int m) { /* don't change the dialog title! */ }
+		};
+		timed.dlg = tpd;
+		if(!A.empty(title)) tpd.setTitle(title);
+		tpd.setIcon(R.drawable.ic_bar);
+		tpd.show();
+		return tpd;
+  }
+  public static final TimePickerDialog time(String title, Timed timed) {
+  	return time(title, timed, activity);
+  }
+  public static final TimePickerDialog time(Timed timed) {
+  	return time(null, timed, activity);
+  }
+  public static final TimePickerDialog time(Timed timed, Context ctx) {
+  	return time(null, timed, ctx);
   }
 
 }

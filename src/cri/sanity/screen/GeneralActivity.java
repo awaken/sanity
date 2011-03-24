@@ -13,7 +13,12 @@ public class GeneralActivity extends ScreenActivity
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		
+
+		on(K.SILENT_LIMIT, new Change(){ public boolean on(){
+			if(!(Boolean)value) Alarmer.stop(Alarmer.ACT_SILENTLIMIT);
+			return true;
+		}});
+	
 		on(K.FORCE_BT_AUDIO, new Change(){ public boolean on(){
 			if(!(Boolean)value) return true;
 			Alert.msg(

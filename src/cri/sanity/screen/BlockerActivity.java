@@ -18,8 +18,6 @@ public class BlockerActivity extends ScreenActivity
     	return true;
     }});
     on(K.BLOCK_MODE+K.WS, new Change(){ public boolean on(){
-    	if(A.SDK>8 && value.equals(Blocker.MODE_HANGUP+""))
-    		Alert.msg(A.rawstr(R.raw.block_warn));
     	pref(K.BLOCK_SKIP       ).setEnabled(!value.equals(Blocker.MODE_SILENT+""));
     	pref(K.BLOCK_RESUME+K.WS).setEnabled( value.equals(Blocker.MODE_RADIO +""));
     	return true;

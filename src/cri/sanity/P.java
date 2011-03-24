@@ -188,8 +188,11 @@ public final class P
 		if(oldVer < 0.1f)
 			setDefaults();
 		else {
-			getDefaults();
+			Map<String,Object> def = getDefaults();
 			K.upgrade(oldVer, beta);
+			A.commit();
+			for(String k : def.keySet())
+				if(!A.has(k)) A.put(k, def.get(k));
 			A.commit();
 			setWrapKeys();
 			setVer();

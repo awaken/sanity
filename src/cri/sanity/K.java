@@ -11,6 +11,7 @@ public final class K
 {
 	// general
 	public static final String ENABLED            = "enabled";
+	public static final String SILENT_LIMIT       = "silent_limit";
 	public static final String FORCE_BT_AUDIO     = "force_bt_audio";
 	public static final String REVERSE_PROXIMITY  = "reverse_proximity";
 	// devices
@@ -51,6 +52,7 @@ public final class K
 	public static final String NOTIFY_DISABLE     = "notify_disable";
 	public static final String NOTIFY_ACTIVITY    = "notify_activity";
 	public static final String NOTIFY_VOLUME      = "notify_volume";
+	public static final String NOTIFY_HEADSET     = "notify_headset";
 	public static final String NOTIFY_REC_STOP    = "notify_rec_stop";
 	public static final String VIBRATE_END        = "vibrate_end";
 	// call recorder
@@ -81,7 +83,7 @@ public final class K
 	public static final String TTS_REPEAT         = "tts_repeat";
 	public static final String TTS_PAUSE          = "tts_pause";
 	public static final String TTS_ANONYM         = "tts_anonym";
-	public static final String TTS_UNKNOWN        = "tts_anonym";
+	public static final String TTS_UNKNOWN        = "tts_unknown";
 	public static final String TTS_PREFIX         = "tts_prefix";
 	public static final String TTS_SUFFIX         = "tts_suffix";
 	public static final String TTS_FILTER         = "filter_enable_tts";
@@ -91,6 +93,12 @@ public final class K
 	public static final String BLOCK_MODE         = "block_mode";
 	public static final String BLOCK_RESUME       = "block_resume";
 	public static final String BLOCK_NOTIFY       = "block_notify";
+	// auto answer
+	public static final String ANSWER             = "answer";
+	public static final String ANSWER_HEADSET     = "answer_headset";
+	public static final String ANSWER_SKIP        = "answer_skip";
+	public static final String ANSWER_DELAY       = "answer_delay";
+	public static final String ANSWER_FILTER      = "filter_enable_answer";
 
 	// internals (hidden to user)
 	public static final String FULL     = "full";
@@ -116,7 +124,7 @@ public final class K
 			DISABLE_DELAY, ENABLE_DELAY, SPEAKER_DELAY, SPEAKER_CALL, SPEAKER_CALL_DELAY, SPEAKER_VOL, SPEAKER_ON_COUNT, SPEAKER_OFF_COUNT,
 			VOL_PHONE, VOL_WIRED, VOL_BT, REC_SRC, REC_FMT, REC_START_DELAY, REC_STOP_DELAY, REC_START_HEADSET, REC_STOP_HEADSET,
 			REC_STOP_LIMIT, REC_START_TIMES, REC_START_DIR, REC_AUTOREMOVE, REVERSE_BT_TIMEOUT, TTS_VOL, TTS_TONE, TTS_REPEAT, TTS_PAUSE,
-			BLOCK_MODE, BLOCK_RESUME
+			BLOCK_MODE, BLOCK_RESUME, ANSWER_DELAY
 		};
 	}
 
@@ -124,6 +132,7 @@ public final class K
 		final Map<String,Object> m = new HashMap<String,Object>();
 		// all preferences default values
 		m.put(ENABLED            , true);				// main
+		m.put(SILENT_LIMIT       , false);
 		m.put(FORCE_BT_AUDIO     , false);
 		m.put(REVERSE_PROXIMITY  , false);
 		m.put(AUTO_MOBDATA       , false);			// devices
@@ -159,6 +168,7 @@ public final class K
 		m.put(NOTIFY_DISABLE     , true);
 		m.put(NOTIFY_ACTIVITY    , true);
 		m.put(NOTIFY_VOLUME      , false);
+		m.put(NOTIFY_HEADSET     , false);
 		m.put(NOTIFY_REC_STOP    , true);
 		m.put(VIBRATE_END        , false);
 		m.put(REC                , false);			// call recorder
@@ -196,25 +206,17 @@ public final class K
 		m.put(BLOCK_MODE         , Blocker.MODE_RADIO);
 		m.put(BLOCK_RESUME       , 0);
 		m.put(BLOCK_NOTIFY       , false);
+		m.put(ANSWER             , false);
+		m.put(ANSWER_HEADSET     , false);
+		m.put(ANSWER_SKIP        , false);
+		m.put(ANSWER_DELAY       , 3000);
+		m.put(ANSWER_FILTER      , false);
 		return m;
 	}
 
 	static final void upgrade(float oldVer, int beta) {
 		// upgrade current preferences from an older existing version
-		if(oldVer < 0.9f) {
-			P.renameBool(DISABLE_PROXIMITY, "proximty"   );
-			P.renameBool( ENABLE_PROXIMITY, "restore_far");
-		}
-		if(oldVer < 1.2f) {
-			P.setDef(SKIP_BT, SKIP_HOTSPOT, SKIP_TETHER);
-			P.setDefIfNew(NOTIFY_ACTIVITY, SCREEN_OFF, SCREEN_ON);
-		}
-		if(oldVer < 1.5f) P.setDef(REC, REC_FMT);
-		if(oldVer < 1.8f) P.setDef(REC_SRC);
-		if(oldVer < 1.9f) P.setDef(NOTIFY_REC_STOP, VIBRATE_END, REC_START, REC_STOP, REC_START_DELAY, REC_STOP_DELAY, REC_START_SPEAKER, REC_STOP_SPEAKER, REC_STOP_LIMIT);
-		if(oldVer < 1.93f) P.setDef(REC_START_TIMES);
 		if(oldVer < 1.95f) {
-			P.setDef(SPEAKER_CALL_DELAY, SPEAKER_SILENT_END, REC_START_HEADSET, REC_STOP_HEADSET);
 			for(String k : new String[]{ VOL_PHONE, VOL_WIRED, VOL_BT }) {
 				try {
 					switch(A.getsi(k)) {
@@ -228,15 +230,11 @@ public final class K
 				}}
 			}
 		}
-		if(oldVer < 1.96f) A.put(SPEAKER_CALL, A.is(SPEAKER_CALL)? 3 : 0).del(SPEAKER_CALL);
-		if(oldVer < 1.97f) P.setDef(SPEAKER_ON_COUNT, SPEAKER_OFF_COUNT, REC_START_DIR);
-		if(oldVer < 1.99f) P.setDef(REVERSE_BT, REVERSE_BT_TIMEOUT);
-		if(oldVer < 2.00f) P.setDef(BT_OFF, REC_FILTER, REC_AUTOREMOVE, TTS, TTS_HEADSET, TTS_SOLO, TTS_VOL, TTS_TONE, TTS_REPEAT, TTS_PAUSE, TTS_PREFIX, TTS_SUFFIX, TTS_ANONYM, TTS_UNKNOWN, TTS_FILTER);
-		if(oldVer < 2.02f) P.setDef(REC_CALLSCREEN, TTS_SKIP, BLOCK_SKIP, BLOCK_MODE, BLOCK_FILTER);
+		if(oldVer < 1.96f)
+			A.put(SPEAKER_CALL, A.is(SPEAKER_CALL)? 3 : 0).del(SPEAKER_CALL);
 		if(oldVer < 2.03f) {
 			A.put(BLOCK_FILTER, A.is("block")).del("block");
 			A.put(SPEAKER_VOL, A.is("loud_speaker")? A.audioMan().getStreamMaxVolume(AudioManager.STREAM_VOICE_CALL) : -1).del("loud_speaker");
-			P.setDef(BLOCK_RESUME, BLOCK_NOTIFY);
 		}
 	}
 

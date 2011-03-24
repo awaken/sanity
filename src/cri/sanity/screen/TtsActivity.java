@@ -4,7 +4,6 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.speech.tts.TextToSpeech;
 import android.widget.Toast;
 import cri.sanity.*;
@@ -14,24 +13,18 @@ import cri.sanity.util.*;
 
 public class TtsActivity extends ScreenActivity
 {
-	private static final int CODE_CHECK  = 1;
-	private static final int TEST_REPEAT = 2;
+	private static final int    CODE_CHECK  = 1;
+	private static final int    TEST_REPEAT = 2;
+	private static final String TEXT_REPEAT = A.name();
 
-	private TTS tts;
-
-	private final Handler handler = new Handler() {
-		@Override
-		public void handleMessage(Message msg) {
-			if(msg == null) return;
-			ttsFree();
-			pref("tts_test").setEnabled(true);
-		}
-	};
+	private TTS     tts;
+	private Handler handler;
 
 	@Override
   public void onCreate(Bundle savedInstanceState)
   {
     super.onCreate(savedInstanceState);
+    handler = new Handler();
  		on(K.TTS, new Change(){ public boolean on(){
  			if(!(Boolean)value) return true;
  	 		startActivityForResult(new Intent(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA), CODE_CHECK);
@@ -50,11 +43,12 @@ public class TtsActivity extends ScreenActivity
  		on("tts_test", new Click(){ public boolean on(){
  			pref.setEnabled(false);
  			ttsFree();
- 			tts = new TTS(A.name(), false) {
+ 			tts = new TTS(TEXT_REPEAT, false) {
  				@Override
  				public void onError() { A.toast(R.string.err_tts_init); }
  				@Override
  				public void onInit(int status) {
+ 					force = true;
  					super.onInit(status);
  					if(repeat <= 0) return;
  					if(repeat > TEST_REPEAT) repeat = TEST_REPEAT;
@@ -63,7 +57,13 @@ public class TtsActivity extends ScreenActivity
  				@Override
  				public void onUtteranceCompleted(String idUtter) {
  					super.onUtteranceCompleted(idUtter);
- 					if(repeat <= 0) handler.sendMessage(new Message());
+ 					if(repeat <= 0) handler.post(new Runnable() {
+ 						@Override
+ 						public void run() {
+	 						ttsFree();
+	 						pref("tts_test").setEnabled(true);
+ 						}
+ 					});
  				}
  			};
  			return true;

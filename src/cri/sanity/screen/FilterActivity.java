@@ -18,9 +18,10 @@ public class FilterActivity extends ScreenActivity implements OnPreferenceChange
 	private static final int CODE_NUMS      = 1;
 	private static final int CODE_CONTACTS  = 2;
 	private static final int CODE_GROUPS    = 3;
+	private static final int CODE_DATETIME  = 4;
 
 	public static PFilter pref;
-	private String sect, title, sumNums, sumContacts, sumGroups;
+	private String sect, title, sumNums, sumContacts, sumGroups, sumDt;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -37,7 +38,11 @@ public class FilterActivity extends ScreenActivity implements OnPreferenceChange
 		}
 		initCheckbox("filter_enable", "filter_all", "filter_anonym", "filter_unknown", "filter_allcontacts", "filter_star");
 		initList("filter_mode");
-		Preference p = pref("filter_nums");
+		Preference p = pref("filter_dt");
+		sumDt = p.getSummary().toString();
+		setSumDt(A.is(keySect("filter_dt")), p);
+		on(p, new Click(){ public boolean on(){ return startAct(DateTimeActivity.class, CODE_DATETIME); }});
+		p = pref("filter_nums");
 		sumNums = p.getSummary().toString();
 		setSumNums(A.geti(keySect("filter_nums_count")), p);
 		on(p, new Click(){ public boolean on(){ return startAct(NumsActivity.class, CODE_NUMS); }});
@@ -64,7 +69,7 @@ public class FilterActivity extends ScreenActivity implements OnPreferenceChange
 	public void onActivityResult(int code, int res, Intent i)
 	{
 		if(i==null || res!=RESULT_OK) return;
-		int k = i.getIntExtra(EXTRA_SECT, -666);
+		final int k = i.getIntExtra(EXTRA_SECT, -666);
 		if(k == -666) return;
 		switch(code) {
 			case CODE_NUMS:
@@ -82,6 +87,9 @@ public class FilterActivity extends ScreenActivity implements OnPreferenceChange
 				break;
 			case CODE_GROUPS:
 				setSumGroups(k, null);
+				break;
+			case CODE_DATETIME:
+				setSumDt(k>0, null);
 				break;
 		}
 	}
@@ -137,6 +145,10 @@ public class FilterActivity extends ScreenActivity implements OnPreferenceChange
 		}
 	}
 
+	private void setSumDt(boolean active, Preference p) {
+		if(p == null) p = pref("filter_dt");
+		p.setSummary(sumDt+" ("+A.s(active? R.string.active : R.string.always)+')');
+	}
 	private void setSumNums(int cnt, Preference p) {
 		if(p == null) p = pref("filter_nums");
 		p.setSummary(sumNums + itemsFmt(cnt));

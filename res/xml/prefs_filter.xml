@@ -8,6 +8,12 @@
 		                    android:summary="@string/filter_enable_sum"
 		                    android:persistent="false"
 		                    android:key="filter_enable" />
+		<Preference android:title="@string/filter_dt_title"
+		            android:summary="@string/filter_dt_sum"
+		            android:persistent="false"
+		            android:dependency="filter_enable"
+		            android:key="filter_dt"
+		            android:widgetLayout="@layout/img_history" />
 		<cri.sanity.pref.PList android:title="@string/filter_mode_title"
 		                       android:summary="@string/filter_mode_sum"
 		                       android:persistent="false"

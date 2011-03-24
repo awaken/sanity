@@ -111,7 +111,7 @@ public class RecService extends Service
 		if(life <= 0) return;
 		final long now     = A.time();
 		final long recheck = life>3 ? life>7 ? 86400000*3 : 86400000 : 86400000/2;
-		if(now-A.getl(K.CRON) < recheck) return;
+		try { if(now-A.getl(K.CRON) < recheck) return; } catch(Exception e) {}
 		final String dir = A.sdcardDir();
 		if(dir == null) return;
 		final String prefix  = Conf.REC_PREFIX;

@@ -1,7 +1,14 @@
-Version 2.05:
+Versione 2.06:
+- Nuovo: opzioni per rispondere automaticamente alle chiamate ricevute.
+- Nuovo: opzione per disabilitare automaticamente la modalità silenziosa dopo un certo timeout (nella sezione Generale).
+- Nuovo: filtro chiamate in base alla data e all'ora.
+- Fix: bug nel blocco chiamate.
+- Fix: bug minori.
+
+Versione 2.05:
 - Fix: crash urgente su alcuni telefoni.
 
-Version 2.04:
+Versione 2.04:
 - Nuovo: metodo di blocco chiamata: risposta silenziosa.
 - Nuovo: cronologia di tutte le chiamate bloccate.
 - Nuovo: opzione per rimuovere tutti i filtri chiamata.

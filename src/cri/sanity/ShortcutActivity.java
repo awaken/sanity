@@ -66,6 +66,7 @@ public final class ShortcutActivity extends Activity implements DialogInterface.
 		map.put(R.string.notify_cat           , new Entry(R.drawable.menu_notify   , EXTRA_SCREEN, NotifyActivity.class.getName()));
 		map.put(R.string.tts_cat              , new Entry(R.drawable.menu_tts      , EXTRA_SCREEN, TtsActivity.class.getName()));
 		map.put(R.string.block_cat            , new Entry(R.drawable.menu_block    , EXTRA_SCREEN, BlockerActivity.class.getName()));
+		map.put(R.string.answer_cat           , new Entry(R.drawable.menu_answer   , EXTRA_SCREEN, AnswerActivity.class.getName()));
 		map.put(R.string.rec_cat              , new Entry(R.drawable.menu_rec      , EXTRA_SCREEN, RecordActivity.class.getName()));
 		map.put(R.string.rec_shortcut         , new Entry(R.drawable.ic_rec_now    , EXTRA_REC   , null));
 		map.put(R.string.rec_browse_title     , new Entry(R.drawable.menu_browse   , EXTRA_SCREEN, BrowseActivity.class.getName()));

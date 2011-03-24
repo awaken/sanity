@@ -73,7 +73,6 @@ public final class A extends Application
 	private static PowerManager             powerMan;
 	private static LocationManager          locMan;
 	private static SensorManager            sensorMan;
-	private static ConnectivityManager      connMan;
 	private static DevicePolicyManager      devpolMan;
 
 	//---- methods
@@ -85,7 +84,7 @@ public final class A extends Application
 		prefs = PreferenceManager.getDefaultSharedPreferences(a);
 		edit  = prefs.edit();
 		try { full = Conf.FULL || prefs.getBoolean(K.FULL, false); }
-		catch(Exception e) { edit.putBoolean(K.FULL, full=false).commit(); }
+		catch(Exception e) { setFull(false); }
 		try { pkgInfo = getPackageManager().getPackageInfo(getPackageName(), 0); }
 		catch(NameNotFoundException e) {}
 	}
@@ -277,8 +276,7 @@ public final class A extends Application
 		return wifiMan;
 	}
 	public static final ConnectivityManager connMan() {
-		if(connMan == null) connMan = (ConnectivityManager)a.getSystemService(CONNECTIVITY_SERVICE);
-		return connMan;
+		return (ConnectivityManager)a.getSystemService(CONNECTIVITY_SERVICE);
 	}
 	public static final KeyguardManager keyguardMan() {
 		return (KeyguardManager)a.getSystemService(KEYGUARD_SERVICE);

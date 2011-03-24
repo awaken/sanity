@@ -1,3 +1,10 @@
+Version 2.06:
+- New: options to answer automatically on incoming calls.
+- New: option to automatically disable the silent mode after a given timeout (in the General section).
+- New: call filter by date and time.
+- Fix: call blocker bugs.
+- Fix: minor bugs.
+
 Version 2.05:
 - Fix: urgent crash on some phones.
 

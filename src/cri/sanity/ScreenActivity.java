@@ -177,8 +177,9 @@ public abstract class ScreenActivity extends PrefActivity implements SharedPrefe
   	screener("screen_speaker"  , SpeakerActivity.class  , R.xml.prefs_speaker  , R.id.menu_speaker  , R.layout.img_speaker);
   	screener("screen_volume"   , VolumeActivity.class   , R.xml.prefs_volume   , R.id.menu_vol      , R.layout.img_vol);
   	screener("screen_record"   , RecordActivity.class   , R.xml.prefs_record   , R.id.menu_rec      , R.layout.img_rec);
-  	screener("screen_tts"      , TtsActivity.class      , R.xml.prefs_tts      , R.id.menu_tts      , R.layout.img_tts);
   	screener("screen_block"    , BlockerActivity.class  , R.xml.prefs_block    , R.id.menu_block    , R.layout.img_block);
+  	screener("screen_tts"      , TtsActivity.class      , R.xml.prefs_tts      , R.id.menu_tts      , R.layout.img_tts);
+  	screener("screen_answer"   , AnswerActivity.class   , R.xml.prefs_answer   , R.id.menu_answer   , R.layout.img_answer);
   	screener("screen_notify"   , NotifyActivity.class   , R.xml.prefs_notify   , R.id.menu_notify   , R.layout.img_notify);
   	screener("screen_about"    , AboutActivity.class    , R.xml.prefs_about    , R.id.menu_about    , R.layout.img_about);
 	}
