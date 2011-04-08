@@ -30,5 +30,12 @@ public final class Conf
 	public static final String PRF_EXT      = ".prf";
 	public static final String BACKUP_FN    = "sanity_backup.txt";
 	public static final String BLOCK_FN     = "block_history.txt";
+	public static final String SMS_FN       = "sms_history.txt";
 	public static final String DATE_PATTERN = "dd/MM/yyyy, kk:mm";
+
+	public static final char   FILTER_SEP   = '§';
+	public static final char   BLOCK_SEP    = '|';
+	public static final char   SMS_SEP      = '§';
+	public static final String SMS_UNSEP    = "{[(S)]}";
+	public static final String SMS_UNSLASH  = "{[(\\)]}";
 }

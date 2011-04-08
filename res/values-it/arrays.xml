@@ -26,6 +26,7 @@
 		<item>8 secondi</item>
 		<item>9 secondi</item>
 		<item>10 secondi</item>
+		<item>15 secondi</item>
 	</string-array>
 
 	<string-array name="enable_delay_labels">
@@ -41,6 +42,7 @@
 		<item>8 secondi</item>
 		<item>9 secondi</item>
 		<item>10 secondi</item>
+		<item>15 secondi</item>
 	</string-array>
 
 	<string-array name="speaker_call_labels">
@@ -187,6 +189,25 @@
 		<item>20 minuti</item>
 		<item>30 minuti</item>
 		<item>60 minuti</item>
+	</string-array>
+
+	<string-array name="blocksms_max_labels">
+		<item>Nessuno</item>
+		<item>10</item>
+		<item>50</item>
+		<item>100</item>
+		<item>200</item>
+		<item>300</item>
+		<item>400</item>
+		<item>500</item>
+		<item>1000</item>
+		<item>Illimitati</item>
+	</string-array>
+
+	<string-array name="urgent_mode_labels">
+		<item>Solo suoneria</item>
+		<item>Solo vibrazione</item>
+		<item>Suoneria e vibrazione</item>
 	</string-array>
 
 </resources>

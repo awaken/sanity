@@ -16,20 +16,21 @@ public class AboutActivity extends ScreenActivity
 	private static final String EMAIL_VAR    = "$EMAIL";
 	private static final String DONATE_URL   = "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business="+EMAIL_VAR+"&item_name="+NAME_VAR+"&currency_code="+CURRENCY+"&amount="+PRICE+"&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted";
 	private static final String EULA_URL     = "http://www.gnu.org/licenses";
+	private static final String FORUM_URL    = "http://tagliamonte.net/forum";
 	private static final String AUTHOR_EMAIL = "cristiano@tagliamonte.net";
 
 	@Override
   public void onCreate(Bundle savedInstanceState)
   {
+		secure      = false;
 		skipAllKeys = true;
     super.onCreate(savedInstanceState);
-  	on("eula"     , new Click(){ public boolean on(){ return Goto.url(EULA_URL);          }});
-  	on("comment"  , new Click(){ public boolean on(){ return Goto.marketDetails(A.pkg()); }});
   	on("changelog", new Click(){ public boolean on(){ return alertChangeLog();            }});
-  	on("mail"     , new Click(){ public boolean on(){ return mailToDeveloper();           }});
+  	on("eula"     , new Click(){ public boolean on(){ return Goto.url(EULA_URL);          }});
+  	on("forum"    , new Click(){ public boolean on(){ return Goto.url(FORUM_URL);         }});
   	on("paypal"   , new Click(){ public boolean on(){ return Goto.url(donateUrl());       }});
-  	if(A.SDK < 8) setEnabled("uninstall", false);
-  	else on("uninstall", new Click(){ public boolean on(){ Alert.msg(A.rawstr(R.raw.uninstall)); return true; }});
+  	on("comment"  , new Click(){ public boolean on(){ return Goto.marketDetails(A.pkg()); }});
+  	on("mail"     , new Click(){ public boolean on(){ return mailToDeveloper();           }});
   }
 
 	private boolean mailToDeveloper()

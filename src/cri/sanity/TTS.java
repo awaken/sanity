@@ -51,12 +51,13 @@ public class TTS implements OnInitListener, OnUtteranceCompletedListener
 		if(status != TextToSpeech.SUCCESS) { onError(); return; }
 		if(filter) {
 			// check if announce
-			if(!CallFilter.includes(id, "tts", true)) return;
+			final CallFilter cf = CallFilter.instance();
+			if(!cf.includes(id, "tts", true)) return;
 			if(A.empty(id)) {
 				id = A.gets(K.TTS_ANONYM);
 				if(id.length() <= 0) return;
 			} else {
-				id = CallFilter.searchName(id);
+				id = cf.searchName(id);
 				if(A.empty(id)) {
 					id = A.gets(K.TTS_UNKNOWN);
 					if(id.length() <= 0) return;

@@ -13,12 +13,8 @@ public class GeneralActivity extends ScreenActivity
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		Admin.prefSetup(pref("admin"));
 
-		on(K.SILENT_LIMIT, new Change(){ public boolean on(){
-			if(!(Boolean)value) Alarmer.stop(Alarmer.ACT_SILENTLIMIT);
-			return true;
-		}});
-	
 		on(K.FORCE_BT_AUDIO, new Change(){ public boolean on(){
 			if(!(Boolean)value) return true;
 			Alert.msg(
@@ -32,7 +28,7 @@ public class GeneralActivity extends ScreenActivity
 		}});
 
 		final Preference p = pref(K.REVERSE_PROXIMITY);
-		p.setEnabled(p.isEnabled() && Dev.sensorProxim()!=null);
+		p.setEnabled(p.isEnabled() && A.sensorProxim()!=null);
 		on(p, new Change(){ public boolean on(){
 			if(!(Boolean)value) return true;
 			Alert.msg(
@@ -104,6 +100,17 @@ public class GeneralActivity extends ScreenActivity
 		}});
 	}
 
-	private void updateScreenPrefs() { updatePrefs(K.FORCE_BT_AUDIO, K.REVERSE_PROXIMITY); }
+	@Override
+	public void onResume()
+	{
+		Admin.prefCheck(pref("admin"));
+		super.onResume();
+	}
+	
+	private void updateScreenPrefs()
+	{
+		updatePrefs(K.FORCE_BT_AUDIO, K.REVERSE_PROXIMITY);
+		updatePrefsNoDep(K.SILENT_LIMIT, K.AIRPLANE_LIMIT, K.PWD_CLEAR, K.PWD);
+	}
 
 }

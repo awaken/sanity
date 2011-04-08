@@ -1,0 +1,2 @@
+Il telefono non dispone di un sensore di prossimità perfettamente funzionante!
+Per questa ragione, alcune opzioni sono state disabilitate.

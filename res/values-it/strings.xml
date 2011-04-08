@@ -6,6 +6,7 @@
 
 	<string name="canc">Annulla</string>
 	<string name="yes">Sì</string>
+	<string name="full">Completa</string>
 	<string name="min">Minimo</string>
 	<string name="max">Massimo</string>
 	<string name="level">Livello</string>
@@ -26,7 +27,7 @@
 	<string name="call_in">ricevuta</string>
 	<string name="call_out">effettuata</string>
 	<string name="unknown">Sconosciuto</string>
-	<string name="anonym">Anonimo</string>
+	<string name="anonymous">Anonimo</string>
 	<string name="search">Cerca</string>
 	<string name="help">Aiuto</string>
 	<string name="backup">Backup</string>
@@ -47,6 +48,7 @@
 	<string name="add_contact">Aggiungi nuovo contatto</string>
 	<string name="copy">Copia</string>
 	<string name="share">Condividi</string>
+	<string name="hours_mins">\  Ore \  \  \  \  \  \  Minuti</string>
 
 	<string name="always">Sempre</string>
 	<string name="time">Ora</string>
@@ -60,18 +62,26 @@
 	<string name="saturday">Sabato</string>
 	<string name="sunday">Domenica</string>
 
+	<string name="pwd_old">Vecchia password</string>
+	<string name="pwd_new">Nuova password</string>
+	<string name="pwd_confirm">Conferma password</string>
+	<string name="pwd_show">mostra testo leggibile</string>
+
   <string name="groups_cat">Preferenze</string>
   <string name="misc_cat">Varie</string>
   <string name="geek_cat">Roba da smanettoni</string>
-	<string name="skip_silent">Evita se silenzioso</string>
-	<string name="headset_only">Solo in cuffia</string>
+  <string name="security_cat">Sicurezza</string>
 
   <string name="general_cat">Generale</string>
   <string name="general_sum">Opzioni principali dell\'applicazione.</string>
-  <string name="silent_limit_title">Timeout in Silenzioso</string>
-  <string name="silent_limit_sum">Ogni volta che attivi la Modalità Silenziosa, Sanity ti inviterà a scegliere un timeout per ripristinare automaticamente la Modalità Normale.</string>
+  <string name="general_more_cat">Risoluzione dei problemi</string>
+  <string name="general_prefs_cat">Gestisci preferenze</string>
   <string name="enabled_title">Abilita Sanity</string>
   <string name="enabled_sum">Abilita o disabilita il sistema Sanity. Se disabilitato, questa applicazione non avrà effetti durante le telefonate.</string>
+  <string name="silent_limit_title">Timeout in Silenzioso</string>
+  <string name="silent_limit_sum">Ogni volta che attivi la Modalità Silenziosa, Sanity ti inviterà a scegliere un timeout per ripristinare automaticamente la Modalità Normale.</string>
+  <string name="airplane_limit_title">Timeout in Aereo</string>
+  <string name="airplane_limit_sum">Ogni volta che attivi la Modalità Aereo (Offline), Sanity ti inviterà a scegliere un timeout per ripristinare automaticamente la Modalità Normale.</string>
   <string name="force_bt_audio_title">Forza l\'audio BT</string>
   <string name="force_bt_audio_sum">Forza le periferiche audio bluetooth affinché siano correttamente gestite da Sanity.</string>
   <string name="reverse_proximity_title">Inverti prossimità</string>
@@ -82,9 +92,15 @@
 	<string name="reset_prefs_sum">Imposta tutte le preferenze dell\'applicazione ai valori iniziali predefiniti.</string>
   <string name="delete_filters_title">Elimina filtri</string>
   <string name="delete_filters_sum">Elimina tutti i filtri chiamata attualmente configurati.</string>
+  <string name="pwd_sum">Scegli una password globale per modificare le opzioni e per accedere alle risorse di Sanity.</string>
+  <string name="pwd_clear_title">Password in chiaro</string>
+  <string name="pwd_clear_sum">Mostra sempre le password usando il testo visibile.</string>
 	<string name="profile_cat">Profili</string>
 	<string name="profile_sum">Gestisci i profili delle impostazioni per cambiare velocemente più preferenze in un colpo solo.</string>
 	<string name="profile_shortcut">Attiva Profilo</string>
+	<string name="silent_shortcut">Modo Silenzioso</string>
+	<string name="airplane_shortcut">Modo Aereo</string>
+	<string name="option_shortcut">Singola opzione</string>
 
   <string name="devices_cat">Dispositivi</string>
   <string name="devices_sum">Quali dispositivi spegnere per ridurre le onde elettromagnetiche durante la telefonata.</string>
@@ -134,6 +150,7 @@
   <string name="auto_speaker_sum">Abilita/disabilita automaticamente il vivavoce quando allontano/avvicino il telefono all\'orecchio.</string>
   <string name="delay_speaker_title">Ritardo di attivazione</string>
   <string name="delay_speaker_sum">Quanto tempo aspettare prima che il vivavoce venga automaticamente acceso quando allontani il telefono dall\'orecchio.</string>
+  <string name="vol_speaker_title">Volume altoparlante</string>
   <string name="vol_speaker_sum">Volume da impostare quando il vivavoce viene attivato automaticamente.</string>
   <string name="speaker_call_title">Abilita a inizio chiamata</string>
   <string name="speaker_call_sum">Abilita subito il vivavoce quando inizia la telefonata.</string>
@@ -196,6 +213,34 @@
 	<string name="rec_callscreen_sum">Mostra lo schermo della chiamata subito dopo aver avviato o arrestato la registrazione manualmente.</string>
 	<string name="rec_shortcut">Registra Chiamata</string>
 
+	<string name="block_cat">Blocco chiamate</string>
+	<string name="block_sum">Blocca le chiamate e gli SMS in arrivo filtrando il numero di telefono del chiamante.</string>
+	<string name="block_enable_title">Abilita blocco chiamate</string>
+	<string name="block_enable_sum">Abilita il sistema di blocco chiamate per rifiutare telefonate e messaggi ricevuti.</string>
+	<string name="block_help_title">Scelta del metodo</string>
+	<string name="block_help_sum">Tocca qui per mostrare la descrizione di tutti i metodi di blocco chiamata.</string>
+	<string name="block_mode_title">Metodo di blocco</string>
+	<string name="block_mode_sum">Scegli come bloccare le chiamate ricevute.</string>
+	<string name="block_resume_title">Ripristina il segnale</string>
+	<string name="block_resume_sum">Scegli quando ripristinare il segnale dopo che la chiamata è stata bloccata.</string>
+	<string name="block_pickup_title">Rispondi e poi blocca</string>
+	<string name="block_pickup_sum">Rispondi alle chiamate in arrivo un attimo prima di bloccarle. Può essere utile per evitare deviazioni alla segreteria telefonica.</string>
+	<string name="block_skip_title">Evita se silenzioso</string>
+	<string name="block_skip_sum">Non bloccare le chiamate quando il telefono è in modalità silenziosa.</string>
+	<string name="block_notify_title">Notifica blocco chiamata</string>
+	<string name="block_notify_sum">Notifica sulla barra di stato l\'ultima chiamata bloccata.</string>
+	<string name="block_history_sum">Mostra la lista dettagliata di tutte le chiamate bloccate.</string>
+	<string name="blocksms_cat">Blocco SMS</string>
+	<string name="blocksms_title">Abilita blocco SMS</string>
+	<string name="blocksms_sum">Abilita il sistema di blocco degli SMS per cancellare automaticamente i messaggi non voluti.</string>
+	<string name="blocksms_shared_title">Filtro condiviso</string>
+	<string name="blocksms_shared_sum">Se attivato, usa il filtro del blocco chiamate per bloccare anche gli SMS. In alternativa, puoi scegliere un filtro dedicato al blocco degli SMS.</string>
+	<string name="blocksms_notify_title">Notifica blocco SMS</string>
+	<string name="blocksms_notify_sum">Notifica sulla barra di stato l\'ultimo SMS bloccato.</string>
+	<string name="blocksms_max_title">Dimensione Cronologia</string>
+	<string name="blocksms_max_sum">Scegli quanti SMS bloccati vanno conservati nella cronologia.</string>
+	<string name="blocksms_history_sum">Mostra la lista dettagliata dei messaggi SMS recentemente bloccati.</string>
+
 	<string name="tts_cat">Annuncia chiamante</string>
 	<string name="tts_sum">Pronuncia il nome del chiamante quando si riceve una chiamata.</string>
 	<string name="tts_enable_title">Attiva annuncio</string>
@@ -203,10 +248,13 @@
 	<string name="tts_global_title">Impostazioni globali</string>
 	<string name="tts_global_sum">Tocca qui per aprire le impostazioni globali di Android relative al motore \"da testo a voce\".</string>
 	<string name="tts_audio_cat">Opzioni audio</string>
+	<string name="tts_headset_title">Solo in cuffia</string>
 	<string name="tts_headset_sum">Attiva l\'annuncio solo se le cuffie sono collegate.</string>
+	<string name="tts_skip_title">Evita se silenzioso</string>
 	<string name="tts_skip_sum">Non annunciare il chiamante quando il telefono è in modalità silenziosa.</string>
 	<string name="tts_solo_title">Interrompi suoneria</string>
 	<string name="tts_solo_sum">Interrompe la suoneria quando annuncia il nome del chiamante.</string>
+	<string name="tts_vol_title">Volume annuncio</string>
 	<string name="tts_vol_sum">Scegli il livello del volume usato per annunciare.</string>
 	<string name="tts_tone_title">Tono di voce</string>
 	<string name="tts_tone_sum">Scegli il tono di voce per annunciare il chiamante.</string>
@@ -216,32 +264,33 @@
 	<string name="tts_pause_title">Pausa tra le ripetizioni</string>
 	<string name="tts_pause_sum">Quanto tempo aspettare prima di pronunciare di nuovo il chiamante.</string>
 	<string name="tts_what_cat">Cosa annunciare</string>
+	<string name="tts_prefix_title">Prefisso</string>
 	<string name="tts_prefix_sum">Scegli cosa pronunciare PRIMA del nome del chiamante.</string>
+	<string name="tts_suffix_title">Suffisso</string>
 	<string name="tts_suffix_sum">Scegli cosa pronunciare DOPO il nome del chiamante.</string>
+	<string name="tts_anonym_title">Anonimo</string>
 	<string name="tts_anonym_sum">Scrivi la parola \"Anonimo\" nella tua lingua per annunciare le chiamate anonime.</string>
+	<string name="tts_unknown_title">Sconosciuto</string>
 	<string name="tts_unknown_sum">Scrivi la parola \"Sconosciuto\" nella tua lingua per annunciare un chiamante non in rubrica.</string>
 	<string name="tts_test_title">Prova</string>
 	<string name="tts_test_sum">Tocca qui per provare ad annunciare usando le opzioni attuali.</string>
 
-	<string name="block_cat">Blocco chiamate</string>
-	<string name="block_sum">Blocca le chiamate in arrivo filtrando il numero di telefono del chiamante.</string>
-	<string name="block_enable_title">Abilita blocco chiamate</string>
-	<string name="block_enable_sum">Abilita il sistema di blocco chiamate per rifiutare le telefonate ricevute.</string>
-	<string name="block_skip_sum">Non bloccare le chiamate quando il telefono è in modalità silenziosa.</string>
-	<string name="block_mode_title">Metodo di blocco</string>
-	<string name="block_mode_sum">Scegli come bloccare le chiamate ricevute.</string>
-	<string name="block_resume_title">Ripristina il segnale</string>
-	<string name="block_resume_sum">Scegli quando ripristinare il segnale dopo che la chiamata è stata bloccata.</string>
-	<string name="block_notify_sum">Notifica sulla barra di stato l\'ultima chiamata bloccata.</string>
-	<string name="block_history_sum">Mostra la lista dettagliata di tutte le chiamate bloccate.</string>
-	<string name="block_help_title">Scelta del metodo</string>
-	<string name="block_help_sum">Tocca qui per mostrare la descrizione di tutti i metodi di blocco chiamata.</string>
+	<string name="urgent_cat">Chiamate urgenti</string>
+	<string name="urgent_sum">Scegli su quali numeri far squillare o vibrare il telefono quando è in modalità silenziosa.</string>
+	<string name="urgent_enable_title">Abilita chiamate urgenti</string>
+	<string name="urgent_enable_sum">Se disabilitato, il telefono non squillerà mai nella modalità silenziosa. Se abilitato, puoi scegliere le chiamate da far squillare o vibrare.</string>
+	<string name="urgent_skip_title">Evita se vibra</string>
+	<string name="urgent_skip_sum">Non abilitare le chiamate urgenti se il telefono è impostato per vibrare nella modalità silenziosa.</string>
+	<string name="urgent_mode_title">Modalità urgente</string>
+	<string name="urgent_mode_sum">Scegli se far squillare o vibrare il telefono durante le chiamate urgenti.</string>
 
 	<string name="answer_cat">Risposta automatica</string>
 	<string name="answer_sum">Regole per rispondere automaticamente quando si riceve una chiamata.</string>
 	<string name="answer_enable_title">Abilita risposta automatica</string>
 	<string name="answer_enable_sum">Abilita la risposta automatica quando si riceve una telefonata.</string>
+	<string name="answer_headset_title">Solo in cuffia</string>
 	<string name="answer_headset_sum">Abilita la risposta automatica solo le le cuffie sono collegate.</string>
+	<string name="answer_skip_title">Evita se silenzioso</string>
 	<string name="answer_skip_sum">Non rispondere automaticamente quando il telefono è in modalità silenziosa.</string>
 	<string name="answer_delay_title">Ritardo di risposta</string>
 	<string name="answer_delay_sum">Quanto tempo attendere prima di rispondere automaticamente.</string>
@@ -263,7 +312,7 @@
   <string name="notify_disable_sum">Notifica quando i dispositivi vengono automaticamente spenti da Sanity.</string>
   <string name="notify_enable_title">Notifica il ripristino</string>
   <string name="notify_enable_sum">Notifica quando i dispositivi vengono automaticamente riaccesi da Sanity.</string>
-  <string name="notify_activity_title">Notifica l\'attività</string>
+  <string name="notify_activity_title">Notifica l\'esecuzione</string>
   <string name="notify_activity_sum">Notifica se Sanity è in esecuzione quando inizia una telefonata.</string>
   <string name="notify_volume_title">Notifica volume</string>
   <string name="notify_volume_sum">Notifica quando il volume viene automaticamente modificato da Sanity.</string>
@@ -271,7 +320,6 @@
   <string name="notify_headset_sum">Notifica quando le cuffie vengono collegate o scollegate.</string>
   <string name="notify_rec_stop_title">Notifica registrazione</string>
   <string name="notify_rec_stop_sum">Notifica quando la registrazione audio viene arrestata da Sanity.</string>
-  <string name="notify_block_title">Notifica blocco chiamata</string>
   <string name="vibrate_end_title">Vibrazione</string>
   <string name="vibrate_end_sum">Vibra il telefono al termine della telefonata.</string>
 
@@ -279,10 +327,12 @@
   <string name="about_sum">Informazioni su questa applicazione e strumenti per contattare lo sviluppatore.</string>
   <string name="changelog_title">Modifiche recenti</string>
   <string name="changelog_sum">Visualizza le modifiche recenti implementate nelle ultime versioni di Sanity.</string>
+  <string name="forum_title">Forum ufficiale</string>
+  <string name="forum_sum">Tocca qui per aprire la pagina web del forum dello sviluppatore. Puoi usare il forum anche per segnalare bug e richiedere migliorie.</string>
   <string name="uninstall_title">Come disinstallare</string>
   <string name="uninstall_sum">Tocca qui per leggere le istruzioni su come disinstallare Sanity (utili solo su Android Froyo 2.2 o superiori).</string>
   <string name="mail_title">Scrivi allo sviluppatore</string>
-  <string name="mail_sum">Tocca qui per scrivere un\'email allo sviluppatore. Puoi usare l\'email anche per segnalare bug e richiedere migliorie.</string>
+  <string name="mail_sum">Tocca qui per scrivere un\'email allo sviluppatore.</string>
   <string name="comment_title">Lascia un commento</string>
   <string name="comment_sum">Sei invitato a lasciare un commento sul Market riguardo Sanity. Tocca qui per aprire il Market. Per favore evita di segnalare bug nei commenti del Market.</string>
   <string name="eula_title">Licenza GNU GPL v3</string>
@@ -321,14 +371,13 @@
 	<string name="filter_dt_add_sum">Tocca qui per creare un nuovo intervallo. Se non crei intervalli, il filtro risulterà attivo tutto il giorno.</string>
 	<string name="filter_dt_add_start">Scegli l\'ora di inizio</string>
 	<string name="filter_dt_add_stop">Scegli l\'ora di fine</string>
-	<string name="filter_shortcut_rec">Filtro chiamate - Registratore</string>
-	<string name="filter_shortcut_tts">Filtro chiamate - Annuncia chiamante</string>
-	<string name="filter_shortcut_block">Filtro chiamate - Blocco chiamate</string>
+	<string name="filter_search_title">Ricerca rapida</string>
+	<string name="filter_search_sum">Tocca qui per ricercare rapidamente un contatto.</string>
 
 	<string name="history_clear_title">Pulisci tutto</string>
 	<string name="history_clear_sum">Rimuove tutti gli elementi della cronologia.</string>
-	<string name="history_copied">Elemento copiato negli appunti</string>
 	<string name="history_block">Cronologia - Blocco chiamate</string>
+	<string name="history_sms">Cronologia - Blocco SMS</string>
 
   <string name="donate_title">Donazione</string>
   <string name="donate_sum">Sanity è gratuito. Se questa applicazione ti piace, supporta lo sviluppo con una donazione.</string>
@@ -348,7 +397,8 @@
   <string name="ask_del_all">Sei sicuro di voler ELIMINARE tutti i %s elementi selezionati?</string>
   <string name="ask_canc_all">Sei sicuro di voler ANNULLARE tutte le modifiche?</string>
   <string name="ask_clear_history">Sei sicuro di voler CANCELLARE tutta la cronologia?</string>
-  <string name="ask_silent_limit">Ore e Minuti in cui rimanere nella modalità silenziosa</string>
+  <string name="ask_silent_limit">Per quante ore e minuti rimanere silenzioso</string>
+  <string name="ask_airplane_limit">Per quante ore e minuti rimanere offline</string>
 
   <string name="msg_rec_title">Sanity - Registratore</string>
   <string name="msg_rec_start">Tocca qui per AVVIARE la registrazione</string>
@@ -388,6 +438,9 @@
   <string name="msg_callog_new">Nuovo numero dalle chiamate recenti</string>
   <string name="msg_callog_empty">Il registro non contiene nuovi numeri sconosciuti!</string>
   <string name="msg_incompatible">Spiacente, questa funzionalità non funziona sulla tua versione di Android.</string>
+	<string name="msg_clipboard_copied">Elemento copiato negli appunti</string>
+  <string name="msg_mode_scheduled">Sanity: ripristino pianificato alle %s</string>
+  <string name="msg_option_set" formatted="false">%s impostato su \"%s\"</string>
 
   <string name="err_dir">Sanity errore: impossibile creare la cartella sulla sdcard per salvare le registrazioni audio!</string>
   <string name="err_rec">Sanity errore: impossibile avviare la registrazione audio!</string>
@@ -402,5 +455,7 @@
   <string name="err_answer">Sanity errore: impossibile rispondere alla chiamata (forse il tuo telefono non è compatibile)!</string>
 	<string name="err_datetime_day">Per abilitare la data e l\'ora di filtraggio, è necessario scegliere almeno un giorno!</string>
 	<string name="err_datetime_time">Annullato: l\'ora di inizio deve essere precedente rispetto all\'ora di fine!</string>
+	<string name="err_pwd_old">Annullato: la vecchia password è sbagliata!</string>
+	<string name="err_pwd_new">Annullato: la nuova password non è uguale a quella confermata!</string>
 
 </resources>

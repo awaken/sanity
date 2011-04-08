@@ -21,7 +21,7 @@
 	                         android:key="delay_speaker_call_s"
 	                         android:entries="@array/disable_delay_labels"
 	                         android:entryValues="@array/disable_delay_values" />
-	  <cri.sanity.pref.PList android:title="@string/vol_cat"
+	  <cri.sanity.pref.PList android:title="@string/vol_speaker_title"
 	                         android:summary="@string/vol_speaker_sum"
 	                         android:key="vol_speaker_s" />
 	  <CheckBoxPreference android:title="@string/silent_end_speaker_title"

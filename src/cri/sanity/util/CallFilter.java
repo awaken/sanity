@@ -9,14 +9,23 @@ import cri.sanity.*;
 
 public final class CallFilter
 {
-	private static Cursor   cursor;
-	private static String   lastNum;
-	private static String   lastName;
-	private static String[] lastGroups;
+	private static CallFilter instance;
+	private Cursor   cursor;
+	private String   lastNum, lastName;
+	private String[] lastGroups;
 
 	//---- public api
-
-	public static final boolean includes(String num, String sect, boolean resultIfDisabled) {
+	
+	public final static CallFilter instance() {
+		if(instance == null) instance = new CallFilter();
+		return instance;
+	}
+	public final static void shutdown() {
+		if(instance != null)
+			instance.close();
+	}
+	
+	public final boolean includes(String num, String sect, boolean resultIfDisabled) {
 		if(!A.is("filter_enable_"+sect) || skipDateTime(sect)) return resultIfDisabled;
 		// check if this filter has all numbers
 		if(A.is("filter_all_"+sect)) return res(true, sect);
@@ -44,7 +53,7 @@ public final class CallFilter
 	}
 
 	// get display name of given phone number
-	public static String searchName(String num) {
+	public final String searchName(String num) {
 		if(num==null || num.length()<=0) return null;
 		final boolean cached = num.equals(lastNum);
 		if(cached && lastName!=null) return lastName;
@@ -52,10 +61,10 @@ public final class CallFilter
 		return lastName = cursor.getString(cursor.getColumnIndex(PhoneLookup.DISPLAY_NAME));
 	}
 
-	public static final String lastNum () { return lastNum ; }
-	public static final String lastName() { return lastName; }
+	public final String lastNum () { return lastNum;  }
+	public final String lastName() { return lastName; }
 
-	public static final void shutdown() {
+	public final void close() {
 		if(cursor == null) return;
 		cursor.close();
 		cursor     = null;
@@ -65,6 +74,10 @@ public final class CallFilter
 	}
 
 	//---- private api
+
+	private static boolean res(boolean found, String sect) {
+		return A.geti("filter_mode_"+sect)==0 ? found : !found;
+	}
 
 	private static boolean skipDateTime(String sect) {
 		if(!A.is("filter_dt_"+sect)) return false;
@@ -92,12 +105,12 @@ public final class CallFilter
 		return true;
 	}
 
-	private static boolean query(String num, boolean cached) {
+	private boolean query(String num, boolean cached) {
 		if(!cached) {
 			if(cursor != null) cursor.close();
 			lastGroups = null;
 			lastNum    = num;
-			if(num.charAt(0) == '+') num = "%2B"+num.substring(1);	// equals to Uri.encode(num) for phone numbers
+			if(num.charAt(0) == '+') num = "%2B"+num.substring(1);	// equals to Uri.encode(num) for phone numbers (but faster)
 			cursor = A.resolver().query(Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI, num),
 					                        new String[]{ PhoneLookup._ID, PhoneLookup.DISPLAY_NAME, PhoneLookup.STARRED },
 					                        null, null, null);
@@ -105,12 +118,8 @@ public final class CallFilter
 		return cursor.moveToFirst();
 	}
 
-	private static boolean isStarred() {
+	private boolean isStarred() {
 		return cursor.getString(cursor.getColumnIndex(PhoneLookup.STARRED)).equals("1");
-	}
-
-	private static boolean res(boolean found, String sect) {
-		return A.geti("filter_mode_"+sect)==0 ? found : !found;
 	}
 
 }

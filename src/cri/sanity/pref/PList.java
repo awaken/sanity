@@ -13,8 +13,8 @@ public class PList extends ListPreference implements OnPreferenceChangeListener
 	private OnPreferenceChangeListener listener = null;
 	private CharSequence sum = null;
 
-	public PList(Context ctx)                     { super(ctx);        init();           }
-	public PList(Context ctx, AttributeSet attrs) { super(ctx, attrs); init(); update(); }
+	public PList(Context ctx)                                { super(ctx);        init();           }
+	public PList(Context ctx, AttributeSet attrs)            { super(ctx, attrs); init(); update(); }
 
 	//---- ListPreference override
 

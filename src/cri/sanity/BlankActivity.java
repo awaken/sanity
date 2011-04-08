@@ -1,5 +1,6 @@
 package cri.sanity;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import android.app.Activity;
 import android.content.Intent;
@@ -11,7 +12,7 @@ import android.view.KeyEvent;
 public class BlankActivity extends Activity
 {
 	private static BlankActivity singleton;
-	private static final LinkedList<Runnable> posts = new LinkedList<Runnable>();
+	private static final Collection<Runnable> posts = new LinkedList<Runnable>();
 	private Handler handler;
 
 	public static final BlankActivity getInstance() { return singleton; }
@@ -38,7 +39,9 @@ public class BlankActivity extends Activity
 		super.onCreate(savedInstanceState);
 		handler = new Handler();
 		if(!PhoneListener.isRunning() || Intent.ACTION_MAIN.equals(getIntent().getAction())) {
-			startActivity(new Intent(A.app(), MainActivity.class));
+			Intent i = new Intent(A.app(), MainActivity.class);
+			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(i);
 			finish();
 			return;
 		}
@@ -48,19 +51,18 @@ public class BlankActivity extends Activity
 		}
 		singleton = this;
 	}
-	
+
 	@Override
 	public void onStart()
 	{
 		super.onStart();
 		synchronized(posts) {
 			if(posts.isEmpty()) return;
-			for(Runnable r : posts)
-				handler.post(r);
+			for(Runnable r : posts) handler.post(r);
 			posts.clear();
 		}
 	}
-	
+
 	@Override
 	public void onDestroy()
 	{

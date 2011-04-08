@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Map;
+import java.util.Vector;
 import android.app.AlarmManager;
 import android.app.Application;
 import android.app.Notification;
@@ -24,6 +25,7 @@ import android.media.AudioManager;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.text.ClipboardManager;
+import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.net.wifi.WifiManager;
 import android.util.Log;
@@ -72,7 +74,6 @@ public final class A extends Application
 	private static WifiManager              wifiMan;
 	private static PowerManager             powerMan;
 	private static LocationManager          locMan;
-	private static SensorManager            sensorMan;
 	private static DevicePolicyManager      devpolMan;
 
 	//---- methods
@@ -104,8 +105,8 @@ public final class A extends Application
 
 	// log
 	//public static final int logd(Object o, String method) { return Log.d(name, o.getClass().getSimpleName()+'.'+method); }
-	//public static final int logd(Throwable t) { return Log.wtf(name, t); }
-	public static final int logd(String msg) { return Log.d(name, msg); }
+	public static final int logd(Throwable t) { return Log.wtf(name, t); }
+	public static final int logd(String  msg) { return Log.d(name, msg); }
 	//public static final int logi(String msg) { return Log.i(name, msg); }
 	//public static final int logv(String msg) { return Log.v(name, msg); }
 	//public static final int logw(String msg) { return Log.w(name, msg); }
@@ -116,6 +117,26 @@ public final class A extends Application
 	//public static final String s(int id) { return (String)resources().getText(id); }
 
 	public static final boolean empty(String s) { return s==null || s.length()<=0; }
+
+	//public static final Vector<String> split(String sep, String str) { return split(sep, str, 16); }
+	public static final Vector<String> split(String sep, String str, int capacity) {
+		Vector<String> split = new Vector<String>(capacity);
+		final int n = str.length();
+		if(n <= 0) return split;
+		int p = 0;
+		int q = str.indexOf(sep);
+		while(q > 0) {
+			split.add(str.substring(p, q));
+			p = q + 1;
+			if(p >= n) {
+				split.add("");
+				return split;
+			}
+			q = str.indexOf(sep, p);
+		}
+		split.add(str.substring(p));
+		return split;
+	}
 
 	public static final int rstring(String field) throws IllegalAccessException, NoSuchFieldException {
 		return R.string.class.getDeclaredField(field).getInt(R.string.class);
@@ -143,8 +164,10 @@ public final class A extends Application
 	public static final long time() { return System.currentTimeMillis(); }
 
 	public static final String sdcardDir() {
-		final String dir = Environment.getExternalStorageDirectory().getAbsolutePath() + '/' + name;
-		final File  file = new File(dir);
+		File file = Environment.getExternalStorageDirectory();
+		if(!file.canWrite()) return null;
+		final String dir = file.getAbsolutePath() + '/' + name;
+		file = new File(dir);
 		return file.isDirectory()||file.mkdir() ? dir : null;
 	}
 
@@ -294,8 +317,7 @@ public final class A extends Application
 		return locMan;
 	}
 	public static final SensorManager sensorMan() {
-		if(sensorMan == null) sensorMan = (SensorManager)a.getSystemService(SENSOR_SERVICE);
-		return sensorMan;
+		return (SensorManager)a.getSystemService(SENSOR_SERVICE);
 	}
 	public static final AlarmManager alarmMan() {
 		return (AlarmManager)a.getSystemService(ALARM_SERVICE);
@@ -308,7 +330,12 @@ public final class A extends Application
 		return btAdapter;
 	}
 	public static final void vibrate() {
-		((Vibrator)A.app().getSystemService(VIBRATOR_SERVICE)).vibrate(Conf.VIBRATE_TIME);
+		((Vibrator)a.getSystemService(VIBRATOR_SERVICE)).vibrate(Conf.VIBRATE_TIME);
+	}
+
+	public static final Sensor sensorProxim() {
+		final SensorManager sm = sensorMan();
+		return sm==null ? null : sm.getDefaultSensor(Sensor.TYPE_PROXIMITY);
 	}
 
 }

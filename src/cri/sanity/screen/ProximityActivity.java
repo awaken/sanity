@@ -1,9 +1,8 @@
 package cri.sanity.screen;
 
 import cri.sanity.*;
-import cri.sanity.util.*;
+import cri.sanity.util.Alert;
 import android.os.Bundle;
-import android.preference.Preference;
 
 
 public class ProximityActivity extends ScreenActivity
@@ -12,34 +11,22 @@ public class ProximityActivity extends ScreenActivity
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		final Preference p = pref("admin");
-		if(A.SDK < 8) {
-			p.setEnabled(false);
-			p.setSummary(R.string.msg_require_froyo);
-		}
-		else {
-			on(p, new Change(){ public boolean on(){
-				if((Boolean)value)
-					Admin.request(ProximityActivity.this);
-				else
-					Alert.msg(
-						A.rawstr(R.raw.admin_ask_disable),
-						new Alert.Click(){ public void on(){ Admin.remove(); adminCheck(); }},
-						null,
-						Alert.OKCANC
-					);
-				return false;
-			}});
-		}
+		Admin.prefSetup(pref("admin"));
+		if(A.sensorProxim() != null) return;
+		setEnabled(K.DISABLE_PROXIMITY , false);
+		setEnabled(K .ENABLE_PROXIMITY , false);
+		setEnabled(K.DISABLE_DELAY+K.WS, false);
+		setEnabled(K. ENABLE_DELAY+K.WS, false);
+		setEnabled(K.SCREEN_OFF        , false);
+		setEnabled(K.SCREEN_ON         , false);
+		Alert.msg(A.rawstr(R.raw.proxim_none));
 	}
 
 	@Override
 	public void onResume()
 	{
-		adminCheck();
+		Admin.prefCheck(pref("admin"));
 		super.onResume();
 	}
 	
-	private void adminCheck() { setChecked("admin", Admin.isActive()); }
-
 }

@@ -18,6 +18,24 @@ An Android application to assist during phone calls.
   Change log
 -------------------
 
+* version 2.07  (08/04/2011)
+- New: Urgent calls section.
+- New: options to block SMS (Call block section).
+- New: option to pick up call before block (to avoid voicemail).
+- New: option to automatically disable the airplane mode after a given timeout (General section).
+- New: shortcuts to enable silent or airplane mode with timeout.
+- New: shortcuts to any option.
+- New: go to the official forum (About and contacts section).
+- Fix: minor bugs.
+- Change: user interface minor enhancements.
+
+* version 2.06  (25/03/2011)
+- New: options to answer automatically on incoming calls.
+- New: option to automatically disable the silent mode after a given timeout (General section).
+- New: call filter by date and time.
+- Fix: call blocker bugs.
+- Fix: minor bugs.
+
 * version 2.05  (22/03/2011)
 - Fix: urgent crash on some phones.
 
@@ -200,31 +218,10 @@ An Android application to assist during phone calls.
   TODO
 -------------------
 
-* auto airplane mode when headsets are plugged??
 * integrated audio player?
 * flip silence?
 * call log sync to gmail???
-* block sms?
 
-* new call block method: attiva la segreteria telefonica
+* new call block method: attiva la segreteria telefonica?
 
-* segreteria telefonica completa
-
-* call filter:
-  + add filter by day and time
-
-* auto answer message (incoming calls)
-  + only if headsets
-  + always on
-  + only if silence mode
-
-* auto responder when silence mode
-  + record answer messages with archive
-  + call filter
-
-* missed calls notifier:
-  + play sound every X seconds after a missed call
-  + change lock screen!
-
-* auto turn off silence mode
-  + show dialog asking when turn off silence mode when turned on
+* voicemail

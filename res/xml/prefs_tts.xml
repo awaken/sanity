@@ -12,11 +12,11 @@
 	              android:key="tts_global" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/tts_audio_cat">
-	  <CheckBoxPreference android:title="@string/headset_only"
+	  <CheckBoxPreference android:title="@string/tts_headset_title"
 	                      android:summary="@string/tts_headset_sum"
 	                      android:dependency="tts"
 	                      android:key="tts_headset" />
-	  <CheckBoxPreference android:title="@string/skip_silent"
+	  <CheckBoxPreference android:title="@string/tts_skip_title"
 	                      android:summary="@string/tts_skip_sum"
 	                      android:dependency="tts"
 	                      android:key="tts_skip" />
@@ -24,7 +24,7 @@
 	                      android:summary="@string/tts_solo_sum"
 	                      android:dependency="tts"
 	                      android:key="tts_solo" />
-	  <cri.sanity.pref.PList android:title="@string/vol_cat"
+	  <cri.sanity.pref.PList android:title="@string/tts_vol_title"
 	                         android:summary="@string/tts_vol_sum"
 	                         android:dependency="tts"
 	                         android:key="tts_vol_s" />
@@ -50,25 +50,27 @@
 	                         android:entryValues="@array/tts_pause_values" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/tts_what_cat">
-	  <cri.sanity.pref.PEdit android:title="@string/prefix"
+	  <cri.sanity.pref.PEdit android:title="@string/tts_prefix_title"
 	                         android:summary="@string/tts_prefix_sum"
 	                         android:dependency="tts"
 	                         android:key="tts_prefix"
 	                         android:singleLine="true"
 	                         suffix=" " />
-	  <cri.sanity.pref.PEdit android:title="@string/suffix"
+	  <cri.sanity.pref.PEdit android:title="@string/tts_suffix_title"
 	                         android:summary="@string/tts_suffix_sum"
 	                         android:dependency="tts"
 	                         android:key="tts_suffix"
 	                         android:singleLine="true"
 	                         prefix=" " />
-	  <cri.sanity.pref.PEdit android:title="@string/anonym"
+	  <cri.sanity.pref.PEdit android:title="@string/tts_anonym_title"
 	                         android:summary="@string/tts_anonym_sum"
 	                         android:dependency="tts"
+	                         android:singleLine="true"
 	                         android:key="tts_anonym" />
-	  <cri.sanity.pref.PEdit android:title="@string/unknown"
+	  <cri.sanity.pref.PEdit android:title="@string/tts_unknown_title"
 	                         android:summary="@string/tts_unknown_sum"
 	                         android:dependency="tts"
+	                         android:singleLine="true"
 	                         android:key="tts_unknown" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/geek_cat">

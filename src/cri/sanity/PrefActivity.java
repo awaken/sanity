@@ -8,7 +8,8 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
-import cri.sanity.util.Alert;
+import cri.sanity.util.*;
+import cri.sanity.pref.*;
 
 
 public abstract class PrefActivity extends PreferenceActivity
@@ -66,14 +67,19 @@ public abstract class PrefActivity extends PreferenceActivity
 	// enabledDep is true if and only if "key" preference is dependent also to global "enabled" key
 	public final void updatePref(String key, boolean enabledDep) {
 		final Preference         p   = findPreference(key);
-		final CheckBoxPreference dep = (CheckBoxPreference)findPreference(p.getDependency());
+		final String             kd  = p.getDependency();
+		final CheckBoxPreference dep = A.empty(kd)? null : (CheckBoxPreference)findPreference(kd);
 		enabledDep = !enabledDep || A.isEnabled();
 		p.setEnabled(enabledDep && (dep==null || (dep.isEnabled() && dep.isChecked())));
 		if(     p instanceof CheckBoxPreference) ((CheckBoxPreference)p).setChecked(A.is(key));
 		else if(p instanceof ListPreference    ) ((ListPreference)p).setValue(A.gets(key));
+		else if(p instanceof PFilter           ) ((PFilter)p).updateSum();
+		else if(p instanceof PEdit             ) ((PEdit  )p).updateSum();
+		else if(p instanceof PPwd              ) ((PPwd   )p).updateSum();
 	}
-	public final void updatePref (String     key ) { updatePref(key, true); }
-	public final void updatePrefs(String ... keys) { for(final String k : keys) updatePref(k, true); }
+	public final void updatePref      (String     key ) { updatePref(key, true); }
+	public final void updatePrefs     (String ... keys) { for(final String k : keys) updatePref(k, true ); }
+	public final void updatePrefsNoDep(String ... keys) { for(final String k : keys) updatePref(k, false); }
 
 	public final boolean is(String key)   { return ((CheckBoxPreference)pref(key)).isChecked(); }
 	public final boolean is(Preference p) { return ((CheckBoxPreference)p        ).isChecked(); }

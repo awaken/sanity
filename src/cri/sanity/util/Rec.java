@@ -77,10 +77,8 @@ public class Rec
 	public final synchronized void release()
 	{
 		if(mediaRec == null) return;
-		try {
-			if(started) stop();
-			mediaRec.release();
-		} catch(Exception e) {}
+		if(started) stop();
+		try { mediaRec.release(); } catch(Exception e) {}
 		mediaRec = null;
 	}
 

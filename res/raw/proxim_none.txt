@@ -1,0 +1,2 @@
+Your phone hasn't a fully functional proximity sensor!
+Some options has been disabled for this reason.

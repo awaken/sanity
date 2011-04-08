@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.SystemClock;
+import android.telephony.TelephonyManager;
 
 
 public class RecService extends Service
@@ -84,7 +85,7 @@ public class RecService extends Service
 		final int d = A.geti(K.REC_START_DIR);
 		if(     d == INCOMING) { if( pl.isOutgoing()) noAutoStart(); }
 		else if(d == OUTGOING) { if(!pl.isOutgoing()) noAutoStart(); }
-		if(autoStart && !CallFilter.includes(pl.phoneNumber(),"rec",true)) noAutoStart();
+		if(autoStart && !CallFilter.instance().includes(pl.phoneNumber(),"rec",true)) noAutoStart();
 		setSpeakerListener();
 		if(!autoStart) return;
 		if(headsetStart) {
@@ -107,16 +108,16 @@ public class RecService extends Service
 	}
 	
 	public static final void cron() {
-		final int life = A.geti(K.REC_AUTOREMOVE);
-		if(life <= 0) return;
+		final int daysLife = A.geti(K.REC_AUTOREMOVE);
+		if(daysLife <= 0) return;
 		final long now     = A.time();
-		final long recheck = life>3 ? life>7 ? 86400000*3 : 86400000 : 86400000/2;
+		final long recheck = daysLife>3 ? daysLife>7 ? 86400000*3 : 86400000 : 86400000/2;
 		try { if(now-A.getl(K.CRON) < recheck) return; } catch(Exception e) {}
 		final String dir = A.sdcardDir();
 		if(dir == null) return;
 		final String prefix  = Conf.REC_PREFIX;
 		final String extprf  = Conf.PRF_EXT;
-		final long threshold = now - ((long)life)*86400000;
+		final long threshold = now - ((long)daysLife)*86400000;
 		for(File f : new File(dir).listFiles()) {
 			final String name = f.getName();
 			if(name.startsWith(prefix) && !name.endsWith(extprf) && !name.endsWith(".txt") && f.isFile() && f.lastModified()<threshold)
@@ -221,33 +222,39 @@ public class RecService extends Service
 		taskRecStart = new Task() {
 			@Override
 			public void run() {
-				if(rec==null || rec.isStarted()) return;
-				if(A.empty(rec.suffix)) {
-					if(pl == null) { stopService(); return; }
-					rec.suffix = Conf.REC_SEP + (pl.isOutgoing()? "out" : "in");
-					final String s = pl.phoneNumber();
-					if(!A.empty(s)) rec.suffix += Conf.REC_SEP + A.cleanFn(s,true);
-				}
-				rec.start();
-				applyLimit();
-				notifyStatus();
+				try {
+					if(rec==null || rec.isStarted() || A.telMan().getCallState()!=TelephonyManager.CALL_STATE_OFFHOOK) return;
+					if(A.empty(rec.suffix)) {
+						if(pl == null) { stopService(); return; }
+						rec.suffix = Conf.REC_SEP + (pl.isOutgoing()? "out" : "in");
+						final String s = pl.phoneNumber();
+						if(!A.empty(s)) rec.suffix += Conf.REC_SEP + A.cleanFn(s,true);
+					}
+					rec.start();
+					applyLimit();
+					notifyStatus();
+				} catch(Exception e) {}
 			}
 		};
 		taskRecStop = new Task() {
 			@Override
 			public void run() {
-				if(rec==null || !rec.isStarted()) return;
-				rec.stop();
-				notifyStatus();
+				try {
+					if(rec==null || !rec.isStarted()) return;
+					rec.stop();
+					notifyStatus();
+				} catch(Exception e) {}
 			}
 		};
 		taskRecLimit = autoStopLimit<=0? null : new Task(){
 			@Override
 			public void run() {
-				if(rec==null || !rec.isStarted()) return;
-				rec.stop();
-				if(notifLimit != null) A.notify(notifLimit);
-				notifyStatus();
+				try {
+					if(rec==null || !rec.isStarted()) return;
+					rec.stop();
+					if(notifLimit != null) A.notify(notifLimit);
+					notifyStatus();
+				} catch(Exception e) {}
 			}
 		};
 	}

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 		      package="cri.sanity" android:installLocation="auto"
-		      android:versionCode="42" android:versionName="2.06">
+		      android:versionCode="43" android:versionName="2.07">
 
   <application android:icon="@drawable/ic_app"
                android:label="@string/app"
@@ -27,15 +27,17 @@
     <activity android:theme="@style/Theme" android:name=".screen.ProfileActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.TtsActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.AnswerActivity" />
+    <activity android:theme="@style/Theme" android:name=".screen.UrgentActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.BlockerActivity" />
-    <activity android:theme="@style/Theme" android:name=".screen.BlockHistoryActivity" />
+    <activity android:theme="@style/Theme" android:name=".screen.CallHistoryActivity" />
+    <activity android:theme="@style/Theme" android:name=".screen.SmsHistoryActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.FilterActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.DateTimeActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.ContactsActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.GroupsActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.NumsActivity" />
 
-    <activity android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" android:name=".RingerActivity" />
+    <activity android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" android:name=".ModeActivity" />
     <activity android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" android:name=".BlankActivity" />
 
     <activity android:theme="@android:style/Theme.Translucent.NoTitleBar" android:name=".ShortcutActivity" android:label="@string/app_shortcut">
@@ -64,11 +66,18 @@
       </intent-filter>
     </receiver>
 
-	  <receiver android:name=".RingerReceiver">
+	  <receiver android:name=".ModeReceiver">
       <intent-filter>
         <action android:name="android.media.RINGER_MODE_CHANGED" />
+        <action android:name="android.intent.action.AIRPLANE_MODE" />
       </intent-filter>
     </receiver>
+
+		<receiver android:name=".SmsReceiver"> 
+			<intent-filter android:priority="10000">
+				<action android:name="android.provider.Telephony.SMS_RECEIVED" /> 
+			</intent-filter> 
+		</receiver>
 
 		<receiver android:name=".Admin$Receiver" android:permission="android.permission.BIND_DEVICE_ADMIN">
 	    <meta-data android:name="android.app.device_admin" android:resource="@xml/admin" />
@@ -101,7 +110,8 @@
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.RECORD_AUDIO" />
 	<uses-permission android:name="android.permission.VIBRATE" />
-	<uses-permission android:name="android.permission.READ_CONTACTS"/>
+	<uses-permission android:name="android.permission.READ_CONTACTS" />
+	<uses-permission android:name="android.permission.RECEIVE_SMS" />
 
 	<supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true"
 	                  android:xlargeScreens="true" android:anyDensity="true" />

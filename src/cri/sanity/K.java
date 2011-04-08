@@ -12,8 +12,11 @@ public final class K
 	// general
 	public static final String ENABLED            = "enabled";
 	public static final String SILENT_LIMIT       = "silent_limit";
+	public static final String AIRPLANE_LIMIT     = "airplane_limit";
 	public static final String FORCE_BT_AUDIO     = "force_bt_audio";
 	public static final String REVERSE_PROXIMITY  = "reverse_proximity";
+	public static final String PWD                = "pwd";
+	public static final String PWD_CLEAR          = "pwd_clear";
 	// devices
 	public static final String AUTO_MOBDATA       = "mobdata";
 	public static final String AUTO_WIFI          = "wifi";
@@ -73,6 +76,17 @@ public final class K
 	public static final String REC_AUTOREMOVE     = "rec_autoremove";
 	public static final String REC_CALLSCREEN     = "rec_callscreen";
 	public static final String REC_FILTER         = "filter_enable_rec";
+	// call blocker
+	public static final String BLOCK_FILTER       = "filter_enable_block";
+	public static final String BLOCK_MODE         = "block_mode";
+	public static final String BLOCK_RESUME       = "block_resume";
+	public static final String BLOCK_PICKUP       = "block_pickup";
+	public static final String BLOCK_SKIP         = "block_skip";
+	public static final String BLOCK_NOTIFY       = "block_notify";
+	public static final String BLOCK_SMS          = "blocksms";
+	public static final String BLOCK_SMS_MAX      = "blocksms_max";
+	public static final String BLOCK_SMS_NOTIFY   = "blocksms_notify";
+	public static final String BLOCK_SMS_FILTER   = "filter_enable_blocksms";
 	// announce caller (text to speech)
 	public static final String TTS                = "tts";
 	public static final String TTS_HEADSET        = "tts_headset";
@@ -87,12 +101,10 @@ public final class K
 	public static final String TTS_PREFIX         = "tts_prefix";
 	public static final String TTS_SUFFIX         = "tts_suffix";
 	public static final String TTS_FILTER         = "filter_enable_tts";
-	// call blocker
-	public static final String BLOCK_FILTER       = "filter_enable_block";
-	public static final String BLOCK_SKIP         = "block_skip";
-	public static final String BLOCK_MODE         = "block_mode";
-	public static final String BLOCK_RESUME       = "block_resume";
-	public static final String BLOCK_NOTIFY       = "block_notify";
+	// urgent calls
+	public static final String URGENT_FILTER      = "filter_enable_urgent";
+	public static final String URGENT_SKIP        = "urgent_skip";
+	public static final String URGENT_MODE        = "urgent_mode";
 	// auto answer
 	public static final String ANSWER             = "answer";
 	public static final String ANSWER_HEADSET     = "answer_headset";
@@ -101,40 +113,31 @@ public final class K
 	public static final String ANSWER_FILTER      = "filter_enable_answer";
 
 	// internals (hidden to user)
-	public static final String FULL     = "full";
-	public static final String BETA     = "beta";
-	public static final String AGREE    = "agree";
-	public static final String VER      = "ver";
-	public static final String LICVER   = "licver";
-	public static final String NAG      = "nag";
-	public static final String BT_COUNT = "bt_count";
-	public static final String PRF_NAME = "prf_name";
-	public static final String CRON     = "cron";
+	public static final String FULL      = "full";
+	public static final String BETA      = "beta";
+	public static final String AGREE     = "agree";
+	public static final String VER       = "ver";
+	public static final String LICVER    = "licver";
+	public static final String NAG       = "nag";
+	public static final String BT_COUNT  = "bt_count";
+	public static final String PRF_NAME  = "prf_name";
+	public static final String CRON      = "cron";
+	public static final String SMS_COUNT = "sms_count";
 
 	public static final String WS = "_s";		// wrap suffix for string values of integer keys
 
-	//--- inner class
-	
 	//--- methods: only class P should call these methods!
-
-	static final String[] skipKeys() { return new String[]{ BT_COUNT, NAG, CRON, FULL, LICVER }; }
-
-	static final String[] wrapIntKeys() {
-		return new String[]{
-			DISABLE_DELAY, ENABLE_DELAY, SPEAKER_DELAY, SPEAKER_CALL, SPEAKER_CALL_DELAY, SPEAKER_VOL, SPEAKER_ON_COUNT, SPEAKER_OFF_COUNT,
-			VOL_PHONE, VOL_WIRED, VOL_BT, REC_SRC, REC_FMT, REC_START_DELAY, REC_STOP_DELAY, REC_START_HEADSET, REC_STOP_HEADSET,
-			REC_STOP_LIMIT, REC_START_TIMES, REC_START_DIR, REC_AUTOREMOVE, REVERSE_BT_TIMEOUT, TTS_VOL, TTS_TONE, TTS_REPEAT, TTS_PAUSE,
-			BLOCK_MODE, BLOCK_RESUME, ANSWER_DELAY
-		};
-	}
 
 	static final Map<String,Object> getDefaults() {
 		final Map<String,Object> m = new HashMap<String,Object>();
 		// all preferences default values
 		m.put(ENABLED            , true);				// main
 		m.put(SILENT_LIMIT       , false);
+		m.put(AIRPLANE_LIMIT     , false);
 		m.put(FORCE_BT_AUDIO     , false);
 		m.put(REVERSE_PROXIMITY  , false);
+		m.put(PWD                , "");
+		m.put(PWD_CLEAR          , false);
 		m.put(AUTO_MOBDATA       , false);			// devices
 		m.put(AUTO_WIFI          , false);
 		m.put(AUTO_BT            , false);
@@ -188,6 +191,16 @@ public final class K
 		m.put(REC_AUTOREMOVE     , 0);
 		m.put(REC_CALLSCREEN     , true);
 		m.put(REC_FILTER         , false);
+		m.put(BLOCK_FILTER       , false);			// call blocker
+		m.put(BLOCK_MODE         , Blocker.MODE_RADIO);
+		m.put(BLOCK_RESUME       , 0);
+		m.put(BLOCK_PICKUP       , false);
+		m.put(BLOCK_SKIP         , false);
+		m.put(BLOCK_NOTIFY       , false);
+		m.put(BLOCK_SMS          , false);
+		m.put(BLOCK_SMS_MAX      , 10);
+		m.put(BLOCK_SMS_NOTIFY   , false);
+		m.put(BLOCK_SMS_FILTER   , false);
 		m.put(TTS                , false);			// announce caller
 		m.put(TTS_HEADSET        , false);
 		m.put(TTS_SKIP           , true);
@@ -196,20 +209,18 @@ public final class K
 		m.put(TTS_TONE           ,  0);
 		m.put(TTS_REPEAT         , 1000);
 		m.put(TTS_PAUSE          , 1000);
-		m.put(TTS_ANONYM         , A.s(R.string.anonym ));
+		m.put(TTS_ANONYM         , A.s(R.string.anonymous));
 		m.put(TTS_UNKNOWN        , A.s(R.string.unknown));
 		m.put(TTS_PREFIX         , "");
 		m.put(TTS_SUFFIX         , "");
 		m.put(TTS_FILTER         , false);
-		m.put(BLOCK_FILTER       , false);
-		m.put(BLOCK_SKIP         , false);
-		m.put(BLOCK_MODE         , Blocker.MODE_RADIO);
-		m.put(BLOCK_RESUME       , 0);
-		m.put(BLOCK_NOTIFY       , false);
-		m.put(ANSWER             , false);
+		m.put(URGENT_FILTER      , false);			// urgent calls
+		m.put(URGENT_SKIP        , true);
+		m.put(URGENT_MODE        , AudioManager.RINGER_MODE_NORMAL);
+		m.put(ANSWER             , false);			// auto answer
 		m.put(ANSWER_HEADSET     , false);
 		m.put(ANSWER_SKIP        , false);
-		m.put(ANSWER_DELAY       , 3000);
+		m.put(ANSWER_DELAY       , 5000);
 		m.put(ANSWER_FILTER      , false);
 		return m;
 	}

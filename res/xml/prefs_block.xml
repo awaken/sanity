@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<Preference android:key="logo" />
+
 	<PreferenceCategory android:title="@string/block_cat">
 	  <CheckBoxPreference android:title="@string/block_enable_title"
 	                      android:summary="@string/block_enable_sum"
@@ -26,11 +27,15 @@
 	                         android:key="block_resume_s"
 	                         android:entries="@array/block_resume_labels"
 	                         android:entryValues="@array/block_resume_values" />
-	  <CheckBoxPreference android:title="@string/skip_silent"
+	  <CheckBoxPreference android:title="@string/block_pickup_title"
+	                      android:summary="@string/block_pickup_sum"
+	                      android:dependency="block"
+	                      android:key="block_pickup" />
+	  <CheckBoxPreference android:title="@string/block_skip_title"
 	                      android:summary="@string/block_skip_sum"
 	                      android:dependency="block"
 	                      android:key="block_skip" />
-	  <CheckBoxPreference android:title="@string/notify_cat"
+	  <CheckBoxPreference android:title="@string/block_notify_title"
 	                      android:summary="@string/block_notify_sum"
 	                      android:dependency="block"
 	                      android:key="block_notify" />
@@ -40,4 +45,34 @@
 	              android:key="block_history"
 	              android:widgetLayout="@layout/img_history" />
 	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/blocksms_cat">
+	  <CheckBoxPreference android:title="@string/blocksms_title"
+	                      android:summary="@string/blocksms_sum"
+	                      android:dependency="block"
+	                      android:key="blocksms" />
+	  <CheckBoxPreference android:title="@string/blocksms_notify_title"
+	                      android:summary="@string/blocksms_notify_sum"
+	                      android:dependency="blocksms"
+	                      android:key="blocksms_notify" />
+	  <CheckBoxPreference android:title="@string/blocksms_shared_title"
+	                      android:summary="@string/blocksms_shared_sum"
+	                      android:persistent="false"
+	                      android:dependency="blocksms"
+	                      android:key="blocksms_shared" />
+	  <cri.sanity.pref.PFilter android:dependency="blocksms"
+	                           android:key="filter_blocksms" />
+	  <cri.sanity.pref.PList android:title="@string/blocksms_max_title"
+	                         android:summary="@string/blocksms_max_sum"
+	                         android:dependency="blocksms"
+	                         android:key="blocksms_max_s"
+	                         android:entries="@array/blocksms_max_labels"
+	                         android:entryValues="@array/blocksms_max_values" />
+	  <Preference android:title="@string/history"
+	              android:summary="@string/blocksms_history_sum"
+	              android:persistent="false"
+	              android:key="blocksms_history"
+	              android:widgetLayout="@layout/img_history" />
+	</PreferenceCategory>
+
 </PreferenceScreen>

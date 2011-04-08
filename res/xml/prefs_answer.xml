@@ -5,11 +5,11 @@
 	  <CheckBoxPreference android:title="@string/answer_enable_title"
 	                      android:summary="@string/answer_enable_sum"
 	                      android:key="answer" />
-	  <CheckBoxPreference android:title="@string/headset_only"
+	  <CheckBoxPreference android:title="@string/answer_headset_title"
 	                      android:summary="@string/answer_headset_sum"
 	                      android:dependency="answer"
 	                      android:key="answer_headset" />
-	  <CheckBoxPreference android:title="@string/skip_silent"
+	  <CheckBoxPreference android:title="@string/answer_skip_title"
 	                      android:summary="@string/answer_skip_sum"
 	                      android:dependency="answer"
 	                      android:key="answer_skip" />

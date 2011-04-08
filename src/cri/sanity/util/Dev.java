@@ -9,8 +9,6 @@ import android.telephony.TelephonyManager;
 import android.view.KeyEvent;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.location.LocationManager;
 import android.app.KeyguardManager.KeyguardLock;
 import android.net.Uri;
@@ -30,11 +28,6 @@ public final class Dev
 
 	//---- getting devices
 
-	public static final Sensor sensor(int type) {
-		final SensorManager sm = A.sensorMan();
-		return sm==null ? null : sm.getDefaultSensor(type);
-	}
-	public static final Sensor sensorProxim() { return sensor(Sensor.TYPE_PROXIMITY     ); }
 	/*
 	public static final Sensor sensorOrient() { return sensor(Sensor.TYPE_ORIENTATION   ); }
 	public static final Sensor sensorAccel () { return sensor(Sensor.TYPE_ACCELEROMETER ); }
@@ -67,7 +60,9 @@ public final class Dev
 	}
 	public static final boolean isBtOn() {
 		final BluetoothAdapter ba = A.btAdapter();
-		return ba!=null && ba.isEnabled();
+		if(ba == null) return false;
+		final int state = ba.getState();
+		return state==BluetoothAdapter.STATE_ON || state==BluetoothAdapter.STATE_TURNING_ON;
 	}
 	public static final boolean isGpsOn() {
 		final LocationManager lm = A.locMan();
@@ -83,6 +78,7 @@ public final class Dev
 	public static final boolean isTetheringSupported() { return gConn().callable("getTetheredIfaces", "getTetherableUsbRegexs"); }
 
 	public static final boolean isRinging() { return A.telMan().getCallState() == TelephonyManager.CALL_STATE_RINGING; }
+	public static final boolean isIdle   () { return A.telMan().getCallState() == TelephonyManager.CALL_STATE_IDLE;    }
 
 	//---- enable/disable devices
 	

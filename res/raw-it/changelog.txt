@@ -1,6 +1,17 @@
+Versione 2.07:
+- Nuovo: sezione Chiamate urgenti.
+- Nuovo: opzioni per bloccare gli SMS (sezione Blocco chiamate).
+- Nuovo: opzione per rispondere ad una chiamata un attimo prima di bloccarla (per evitare la segreteria telefonica).
+- Nuovo: opzione per disabilitare automaticamente la modalità aereo dopo un certo timeout (sezione Generale).
+- Nuovo: scelte rapide per abilitare la modalità silenziosa/aereo con timeout.
+- Nuovo: scelte rapide per qualsiasi opzione.
+- Nuovo: visita il forum ufficiale (sezione Info e contatti).
+- Fix: bug minori.
+- Modifica: miglioramenti minori all'interfaccia utente.
+
 Versione 2.06:
 - Nuovo: opzioni per rispondere automaticamente alle chiamate ricevute.
-- Nuovo: opzione per disabilitare automaticamente la modalità silenziosa dopo un certo timeout (nella sezione Generale).
+- Nuovo: opzione per disabilitare automaticamente la modalità silenziosa dopo un certo timeout (sezione Generale).
 - Nuovo: filtro chiamate in base alla data e all'ora.
 - Fix: bug nel blocco chiamate.
 - Fix: bug minori.

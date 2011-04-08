@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/alert_time"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+							android:padding="10dip">
+	<TextView android:id="@+id/alert_time_text"
+	          android:layout_width="wrap_content"
+	          android:layout_height="wrap_content"
+	          android:layout_centerHorizontal="true"
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+	          android:text="@string/hours_mins"
+	/>
+	<TimePicker android:id="@+id/alert_time_picker"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_centerHorizontal="true"
+	            android:layout_below="@id/alert_time_text" 
+	/>
+	<SeekBar android:id="@+id/alert_time_bar"
+	         android:layout_width="fill_parent"
+	         android:layout_height="wrap_content"
+           android:layout_marginTop="30dip"
+	         android:paddingBottom="20dip"
+	         android:layout_below="@id/alert_time_picker"
+	/>
+</RelativeLayout>

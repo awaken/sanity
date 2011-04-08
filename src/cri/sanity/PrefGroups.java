@@ -1,0 +1,78 @@
+package cri.sanity;
+
+import java.util.HashMap;
+import java.util.Map;
+import android.util.Pair;
+
+
+public final class PrefGroups
+{
+	public static final String[][] sections() {
+		return new String[][]{
+			new String[]{ "general_cat", K.ENABLED, K.SILENT_LIMIT, K.AIRPLANE_LIMIT, K.FORCE_BT_AUDIO, K.REVERSE_PROXIMITY, K.PWD, K.PWD_CLEAR },
+			new String[]{ "devices_cat", K.AUTO_MOBDATA, K.AUTO_WIFI, K.AUTO_GPS, K.AUTO_BT, K.SKIP_BT, K.SKIP_MOBDATA, K.SKIP_HOTSPOT, K.SKIP_TETHER, K.REVERSE_BT, K.REVERSE_BT_TIMEOUT, K.BT_OFF },
+			new String[]{ "proximity_cat", K.DISABLE_PROXIMITY, K.DISABLE_DELAY, K.ENABLE_PROXIMITY, K.ENABLE_DELAY, K.SCREEN_OFF, K.SCREEN_ON },
+			new String[]{ "speaker_cat", K.SPEAKER_AUTO, K.SPEAKER_DELAY, K.SPEAKER_CALL, K.SPEAKER_CALL_DELAY, K.SPEAKER_VOL, K.SPEAKER_SILENT_END, K.SPEAKER_ON_COUNT, K.SPEAKER_OFF_COUNT },
+			new String[]{ "rec_cat", K.REC, K.REC_FMT, K.REC_SRC, K.REC_START, K.REC_START_DELAY, K.REC_FILTER, K.REC_START_SPEAKER, K.REC_START_HEADSET, K.REC_START_DIR, K.REC_START_TIMES, K.REC_STOP, K.REC_STOP_DELAY, K.REC_STOP_SPEAKER, K.REC_STOP_HEADSET, K.REC_STOP_LIMIT, K.REC_AUTOREMOVE },
+			new String[]{ "block_cat", K.BLOCK_FILTER, K.BLOCK_MODE, K.BLOCK_RESUME, K.BLOCK_PICKUP, K.BLOCK_SKIP, K.BLOCK_NOTIFY, K.BLOCK_SMS, K.BLOCK_SMS_FILTER, K.BLOCK_SMS_NOTIFY, K.BLOCK_SMS_MAX },
+			new String[]{ "tts_cat", K.TTS, K.TTS_HEADSET, K.TTS_SKIP, K.TTS_SOLO, K.TTS_VOL, K.TTS_TONE, K.TTS_REPEAT, K.TTS_PAUSE, K.TTS_PREFIX, K.TTS_SUFFIX, K.TTS_ANONYM, K.TTS_UNKNOWN, K.TTS_FILTER },
+			new String[]{ "urgent_cat", K.URGENT_FILTER, K.URGENT_MODE },
+			new String[]{ "answer_cat", K.ANSWER, K.ANSWER_HEADSET, K.ANSWER_SKIP, K.ANSWER_DELAY, K.ANSWER_FILTER },
+			new String[]{ "vol_cat", K.VOL_PHONE, K.VOL_WIRED, K.VOL_BT, K.VOL_SOLO },
+			new String[]{ "notify_cat", K.VIBRATE_END, K.NOTIFY_ENABLE, K.NOTIFY_DISABLE, K.NOTIFY_ACTIVITY, K.NOTIFY_VOLUME, K.NOTIFY_REC_STOP },
+		};
+	}
+
+	public static final String[] skipKeys() { 
+		return new String[]{ K.BT_COUNT, K.NAG, K.CRON, K.FULL, K.LICVER, K.SMS_COUNT };
+	}
+
+	public static final String[] edits() {
+		return new String[]{ K.TTS_PREFIX, K.TTS_SUFFIX, K.TTS_ANONYM, K.TTS_ANONYM };
+	}
+
+	public static final String[] wrapIntKeys() {
+		return new String[]{
+			K.DISABLE_DELAY, K.ENABLE_DELAY, K.SPEAKER_DELAY, K.SPEAKER_CALL, K.SPEAKER_CALL_DELAY, K.SPEAKER_VOL, K.SPEAKER_ON_COUNT, K.SPEAKER_OFF_COUNT,
+			K.VOL_PHONE, K.VOL_WIRED, K.VOL_BT, K.REC_SRC, K.REC_FMT, K.REC_START_DELAY, K.REC_STOP_DELAY, K.REC_START_HEADSET, K.REC_STOP_HEADSET,
+			K.REC_STOP_LIMIT, K.REC_START_TIMES, K.REC_START_DIR, K.REC_AUTOREMOVE, K.REVERSE_BT_TIMEOUT, K.TTS_VOL, K.TTS_TONE, K.TTS_REPEAT, K.TTS_PAUSE,
+			K.BLOCK_MODE, K.BLOCK_RESUME, K.ANSWER_DELAY, K.URGENT_MODE
+		};
+	}
+
+	public static final Map<String,Pair<Integer,Integer>> intLabVals() {
+		Map<String,Pair<Integer,Integer>> m = new HashMap<String,Pair<Integer,Integer>>();
+		Pair<Integer,Integer> pd  = p(R.array.disable_delay_labels, R.array.disable_delay_values);
+		Pair<Integer,Integer> psc = p(R.array.speaker_count_labels, R.array.speaker_count_values);
+		m.put(K.DISABLE_DELAY     , pd);
+		m.put(K.ENABLE_DELAY      , p(R.array.enable_delay_labels, R.array.enable_delay_values));
+		m.put(K.SPEAKER_DELAY     , pd);
+		m.put(K.SPEAKER_CALL      , p(R.array.speaker_call_labels, R.array.speaker_call_values));
+		m.put(K.SPEAKER_CALL_DELAY, pd);
+		m.put(K.SPEAKER_ON_COUNT  , psc);
+		m.put(K.SPEAKER_OFF_COUNT , psc);
+		m.put(K.REC_FMT           , p(R.array.rec_fmt_labels, R.array.rec_fmt_values));
+		m.put(K.REC_SRC           , p(R.array.rec_src_labels, R.array.rec_src_values));
+		m.put(K.REC_START_DELAY   , pd);
+		m.put(K.REC_STOP_DELAY    , pd);
+		m.put(K.REC_START_HEADSET , p(R.array.rec_start_headset_labels , R.array.rec_headset_values));
+		m.put(K.REC_STOP_HEADSET  , p(R.array.rec_stop_headset_labels  , R.array.rec_headset_values));
+		m.put(K.REC_STOP_LIMIT    , p(R.array.rec_stop_limit_labels    , R.array.rec_stop_limit_values));
+		m.put(K.REC_START_TIMES   , p(R.array.rec_start_times_labels   , R.array.rec_start_times_values));
+		m.put(K.REC_START_DIR     , p(R.array.rec_start_dir_labels     , R.array.rec_start_dir_values));
+		m.put(K.REC_AUTOREMOVE    , p(R.array.rec_autoremove_labels    , R.array.rec_autoremove_values));
+		m.put(K.REVERSE_BT_TIMEOUT, p(R.array.bt_reverse_timeout_labels, R.array.bt_reverse_timeout_values));
+		m.put(K.BLOCK_MODE        , p(R.array.block_mode_labels        , R.array.block_mode_values));
+		m.put(K.BLOCK_RESUME      , p(R.array.block_resume_labels      , R.array.block_resume_values));
+		m.put(K.BLOCK_SMS_MAX     , p(R.array.blocksms_max_labels      , R.array.blocksms_max_values));
+		m.put(K.TTS_TONE          , p(R.array.tts_tone_labels          , R.array.tts_tone_values));
+		m.put(K.TTS_REPEAT        , p(R.array.tts_repeat_labels        , R.array.tts_repeat_values));
+		m.put(K.TTS_PAUSE         , p(R.array.tts_pause_labels         , R.array.tts_pause_values));
+		m.put(K.URGENT_MODE       , p(R.array.urgent_mode_labels       , R.array.urgent_mode_values));
+		m.put(K.ANSWER_DELAY      , pd);
+		return m;
+	}
+
+	private static Pair<Integer,Integer> p(int lab, int val) { return new Pair<Integer,Integer>(lab, val); }
+
+}

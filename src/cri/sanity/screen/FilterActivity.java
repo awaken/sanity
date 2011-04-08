@@ -13,7 +13,7 @@ public class FilterActivity extends ScreenActivity implements OnPreferenceChange
 {
 	public  static final String EXTRA_SECT  = "cri.sanity.Filter.id";
 	public  static final String EXTRA_TITLE = "cri.sanity.Filter.title";
-	public  static final String SEP         = "§";
+	public  static final String SEP         = Conf.FILTER_SEP+"";
 	private static final String ITEMS_FMT   = A.s(R.string.msg_items);
 	private static final int CODE_NUMS      = 1;
 	private static final int CODE_CONTACTS  = 2;

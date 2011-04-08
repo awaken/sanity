@@ -41,14 +41,15 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 	private boolean gpsAuto, btAuto, btReverse, skipBtConn, screenOff, screenOn;
 	private boolean lastFar, volSolo, headsetOn, wiredHeadsetOn, devsLastEnable;
 	private long    devsLastTime;
-	private int     volRestore, volPhone, volWired, volBt, volSpeaker, volFlags;
+	private int     volRestore, volPhone, volWired, volBt, volSpeaker, volFlags, ringMode, vibrMode;
 	private int     disableDelay, enableDelay, speakerDelay, speakerCallDelay;
 	private float   proximFar;
 	private TTS     tts;
 	private WifiTracker    wifiTrack;
 	private MobDataTracker mobdTrack;
 
-	private final AudioManager audioMan = A.audioMan();
+	private final SensorManager sensorMan = A.sensorMan();
+	private final AudioManager  audioMan  = A.audioMan();
 	private Sensor proximSensor;
 	private Task   taskSpeakerOn;
 	private Task   taskSpeakerOff;
@@ -73,8 +74,7 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 
 	//---- methods
 
-	public final void startup()
-	{
+	public final void startup() {
 		activeInst  = this;
 		shutdown    = false;
 		outgoing    = true;
@@ -84,6 +84,8 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 		rec         = false;
 		btReverse   = false;
 		btCount     = Math.max(A.geti(K.BT_COUNT), 0);
+		ringMode    = -1;
+		vibrMode    = -1;
 		proximRegistered = headsetRegistered = false; 
 		devsLastTime     = 0;
 		devsLastEnable   = true;
@@ -95,15 +97,14 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 		Dev.wakeCpu();
 	}
 
-	private void initCall()
-	{
+	private void initCall() {
 		//A.logd("initCall: begin");
-		proximSensor     = Dev.sensorProxim();
+		proximSensor     = sensorMan.getDefaultSensor(Sensor.TYPE_PROXIMITY);
 		skipBtConn       = A.is(K.SKIP_BT);
 		notifyEnable     = A.is(K.NOTIFY_ENABLE);
 		notifyDisable    = A.is(K.NOTIFY_DISABLE);
-		proximDisable    = A.is(K.DISABLE_PROXIMITY) && proximSensor!=null;
-		proximEnable     = A.is(K.ENABLE_PROXIMITY ) && proximDisable;
+		proximDisable    = proximSensor!=null && A.is(K.DISABLE_PROXIMITY);
+		proximEnable     = proximDisable      && A.is(K. ENABLE_PROXIMITY);
 		proximReverse    = A.is(K.REVERSE_PROXIMITY);
 		rec              = A.is(K.REC);
 		autoSpeaker      = A.is(K.SPEAKER_AUTO) && proximSensor!=null;
@@ -162,14 +163,16 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 	public final String  phoneNumber   () { return phoneNumber; }
 	public final boolean isRingtoneOn  () { return audioMan.getRingerMode() == AudioManager.RINGER_MODE_NORMAL; }
 
-	public final void updateHeadsetBt(boolean on)
-	{
+	public boolean changeRinger(int ring, int vibr) {
+		return changeRinger(ring, vibr, audioMan.getRingerMode(), audioMan.getVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER));
+	}
+
+	public final void updateHeadsetBt(boolean on) {
 		if(wiredHeadsetOn) return;	// if wired headset are on, then the new bt device connected is NOT headset one!
 		updateHeadset(on, volBt);
 	}
 
-	private void updateHeadset(boolean on, int vol)
-	{
+	private void updateHeadset(boolean on, int vol) {
 		if(A.is(K.NOTIFY_HEADSET)) {
 			A.notify(A.s(on? R.string.msg_headset_on : R.string.msg_headset_off)); 
 			if(rec) A.notifyCanc(); 
@@ -186,21 +189,22 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 		//A.logd("headset connected: "+on);
 	}
 
-	private void onRinging()
-	{
+	private void onRinging() {
 		//A.logd("onRinging");
-		outgoing      = false;
-		phoneNumber   = PhoneReceiver.number;
-		boolean block = false;
-		if(CallFilter.includes(phoneNumber, "block", false) && (!A.is(K.BLOCK_SKIP) || isRingtoneOn())) {
-			if(Blocker.apply(A.geti(K.BLOCK_MODE))) return;
-			A.notify(A.s(R.string.err_block));
-			block = true;
-		}
+		outgoing    = false;
+		phoneNumber = PhoneReceiver.number;
+		final int  ringMode = audioMan.getRingerMode();
+		final boolean  ring = ringMode == AudioManager.RINGER_MODE_NORMAL;
+		final CallFilter cf = CallFilter.instance();
+		final boolean block = cf.includes(phoneNumber, "block", false) && (!A.is(K.BLOCK_SKIP) || ring);
+		if(block && Blocker.apply(A.geti(K.BLOCK_MODE)))
+			return;
+		if(!block && !ring && !headsetOn && cf.includes(phoneNumber, "urgent", false))
+			urgentCall(ringMode);
 		final int answer = !block && A.is(K.ANSWER) && (headsetOn || !A.is(K.ANSWER_HEADSET)) && (!A.is(K.ANSWER_SKIP) || isRingtoneOn())
-		                   && CallFilter.includes(phoneNumber, "answer", true)
+		                   && cf.includes(phoneNumber, "answer", true)
 		                   ? A.geti(K.ANSWER_DELAY) : -1;
-		if((answer<0 || answer>1000) && A.is(K.TTS) && (headsetOn || !A.is(K.TTS_HEADSET)) && (!A.is(K.TTS_SKIP) || isRingtoneOn()))
+		if((answer<0 || answer>2000) && A.is(K.TTS) && (headsetOn || !A.is(K.TTS_HEADSET)) && (!A.is(K.TTS_SKIP) || isRingtoneOn()))
 			tts = new TTS(phoneNumber, true);
 		initCall();
 		btReverse();
@@ -208,10 +212,10 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 	}
 
 	// we have a call!
-	private void onOffhook()
-	{
+	private void onOffhook() {
 		//A.logd("onOffhook: begin");
-		if(tts != null) tts.stop();
+		//if(tts != null) tts.stop();
+		if(tts != null) { tts.shutdown(); tts = null; }
 		if(Blocker.onOffhook()) return;
 		offhook = true;
 		if(outgoing) initCall();
@@ -237,12 +241,13 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 	}
 
 	// call completed: restore & shutdown
-	private void onIdle()
-	{
+	private void onIdle() {
 		//A.logd("onIdle: begin");
 		shutdown = true;
-		Task.stop(TASK_SPEAKER);
-		if(offhook && !headsetOn && A.is(K.SPEAKER_SILENT_END)) audioMan.setSpeakerphoneOn(false);
+		if(offhook) {
+			Task.stop(TASK_SPEAKER);
+			if(!headsetOn && A.is(K.SPEAKER_SILENT_END)) audioMan.setSpeakerphoneOn(false);
+		}
 		unregProximity();
 		unregHeadset();
 		PhoneReceiver.number = null;
@@ -256,6 +261,7 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 			screenOff(false);
 			if(A.is(K.VIBRATE_END)) A.vibrate();
 		}
+		restoreRinger();
 		try { A.telMan().listen(this, LISTEN_NONE); } catch(Exception e) {}
 		Blocker.shutdown();
 		CallFilter.shutdown();
@@ -274,8 +280,7 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 		Dev.unwakeCpu();
 	}
 
-	private synchronized void enableDevs(boolean enable)
-	{
+	private synchronized void enableDevs(boolean enable) {
 		if(!enable && headsetOn) return;
 		final long now  = SystemClock.elapsedRealtime();
 		final long diff = now - devsLastTime;
@@ -299,8 +304,7 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 		else       { if(notifyDisable) { A.notify(A.s(R.string.msg_devs_disabled)); if(rec) A.notifyCanc(); }}
 	}
 
-	private synchronized void autoSpeaker(boolean far)
-	{
+	private synchronized void autoSpeaker(boolean far) {
 		if(headsetOn || far==audioMan.isSpeakerphoneOn()) return;
 		if(far && volSpeaker>=0 && volRestore<0)
 			volRestore = volPhone<0 ? audioMan.getStreamVolume(AudioManager.STREAM_VOICE_CALL) : volPhone;  // retrieve current call volume (to restore later)
@@ -319,8 +323,7 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 		if(speakerListener != null) speakerListener.onSpeakerChanged(far);
 	}
 	
-	private void speakerOnFar()
-	{
+	private void speakerOnFar() {
 		if(speakerCallDelay <= 0) {
 			autoSpeaker(true);
 			if(!outgoing) return;
@@ -335,8 +338,7 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 	
 	private void setVolume(int vol) { audioMan.setStreamVolume(AudioManager.STREAM_VOICE_CALL, vol, volFlags); }
 
-	private void setHeadsetVolume(boolean on, int vol)
-	{
+	private void setHeadsetVolume(boolean on, int vol) {
 		if(vol < 0) return;
 		if(!on)
 			vol = volPhone;
@@ -346,8 +348,7 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 		//A.logd((on?"preferred":"restored")+" volume set to level "+vol);
 	}
 
-	private void screenOff(boolean off)
-	{
+	private void screenOff(boolean off) {
 		if(off) {
 			if(!screenOff) return;
 			try { A.devpolMan().lockNow(); } catch(Exception e) {}
@@ -358,8 +359,7 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 		//A.logd("screenOff: "+off);
 	}
 	
-	private void volSolo(boolean enable)
-	{
+	private void volSolo(boolean enable) {
 		if(!volSolo) return;
 		audioMan.setStreamMute(AudioManager.STREAM_SYSTEM      , enable);
 		audioMan.setStreamMute(AudioManager.STREAM_ALARM       , enable);
@@ -368,9 +368,8 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 		//A.logd("set volume solo: "+enable);
 	}
 	
-	private void btReverse()
-	{
-		if(!btReverse) return;
+	private void btReverse() {
+		if(!btReverse || headsetOn) return;
 		Dev.enableBt(true);
 		final int timeout = A.geti(K.REVERSE_BT_TIMEOUT);
 		if(timeout <= 0) return;
@@ -379,6 +378,40 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 			Dev.enableBt(false);
 			btReverse = false;
 		}}.exec(timeout);
+	}
+
+	private void urgentCall(int ringMode) {
+		final int     vibrMode = audioMan.getVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER);
+		final boolean vibrOnly = ringMode==AudioManager.RINGER_MODE_VIBRATE || vibrMode==AudioManager.VIBRATE_SETTING_ONLY_SILENT;
+		if(vibrOnly && A.is(K.URGENT_SKIP)) return;
+		int ring, vibr;
+		switch(A.geti(K.URGENT_MODE)) {
+			case 1: ring = AudioManager.RINGER_MODE_NORMAL ; vibr = AudioManager.VIBRATE_SETTING_OFF;         break;
+			case 2: ring = AudioManager.RINGER_MODE_VIBRATE; vibr = AudioManager.VIBRATE_SETTING_ONLY_SILENT; break;
+			case 3: ring = AudioManager.RINGER_MODE_NORMAL ; vibr = AudioManager.VIBRATE_SETTING_ON;          break;
+			default: return;
+		}
+		changeRinger(ring, vibr, ringMode, vibrMode);
+	}
+
+	private boolean changeRinger(int ringNew, int vibrNew, int ringCur, int vibrCur) {
+		boolean changed = false;
+		if(ringCur != ringNew) {
+			audioMan.setRingerMode(ringNew);
+			if(ringMode == -1) ringMode = ringCur;
+			changed = true;
+		}
+		if(vibrCur != vibrNew) {
+			audioMan.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, vibrNew);
+			if(vibrMode == -1) vibrMode = vibrCur;
+			changed = true;
+		}
+		return changed;
+	}
+	
+	private void restoreRinger() {
+		if(ringMode >= 0) audioMan.setRingerMode(ringMode);
+		if(vibrMode >= 0) audioMan.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, vibrMode);
 	}
 
 	private void regProximity() {
@@ -407,15 +440,13 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 	//---- PhoneStateListener implementation
 
 	@Override
-	public void onCallForwardingIndicatorChanged(boolean cfi)
-	{
+	public void onCallForwardingIndicatorChanged(boolean cfi) {
 		if(outgoing && offhook && !headsetOn && speakerCall>0 && lastFar) speakerOnFar();
 		//A.logd("onCallForwardingIndicatorChanged: "+cfi);
 	}
 
 	@Override
-	public void onCallStateChanged(int state, String num)
-	{
+	public void onCallStateChanged(int state, String num) {
 		switch(state) {
 			case CALL_STATE_RINGING:
 				if(lastCallState != CALL_STATE_NONE) break;		// to skip multiple/concurrent calls
@@ -442,8 +473,7 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 	public void onAccuracyChanged(Sensor sensor, int accuracy) { }
 
 	@Override
-	public void	onSensorChanged(SensorEvent evt)
-	{
+	public void	onSensorChanged(SensorEvent evt) {
 		if(shutdown) return;
 		final float   val = evt.values[0];
 		final boolean far = proximReverse? val<proximFar : val>=proximFar;

@@ -44,6 +44,7 @@ public abstract class HistoryActivity extends ScreenActivity
 					try {
 						if(!file().delete()) throw new Exception();
 						prefGroup.removeAll();
+						onClear();
 					} catch(Exception e) {
 						A.toast(R.string.err);
 					}
@@ -77,6 +78,8 @@ public abstract class HistoryActivity extends ScreenActivity
 	protected abstract char     sep();
 
 	//---- protected api
+
+	protected void onClear() { }
 
 	protected final void postErr(final int idMsg) {
 		handler.post(new Runnable(){ public void run(){ A.toast(idMsg); }});

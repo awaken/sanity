@@ -2,5 +2,11 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<Preference android:key="logo" />
 	<PreferenceCategory android:title="@string/filter_contacts_title"
+	                    android:key="filter_header">
+		<Preference android:title="@string/filter_search_title"
+		            android:summary="@string/filter_search_sum"
+		            android:key="filter_search" />
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/filter_contacts_title"
 	                    android:key="filter_contacts" />
 </PreferenceScreen>

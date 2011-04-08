@@ -16,14 +16,7 @@ public final class Contacts
 	public static final int GRP_SID   = 2;
 	public static final int GRP_ACC   = 3;
 
-	private static String adjustTitle(String title)
-	{
-		if(title == null) return "";
-		final int p = title.indexOf(':');
-		return p>0? title.substring(p+1).trim() : title;
-	}
-	
-	private static String adjustAcc(String acc) { return acc==null || acc.indexOf('@')<0 ? "" : acc; }
+	//--- public api
 
 	public static final Map<String,String> groups()
 	{
@@ -81,5 +74,16 @@ public final class Contacts
 		c.close();
 		return groups;
 	}
+
+	//--- private apiù
+
+	private static String adjustTitle(String title)
+	{
+		if(title == null) return "";
+		final int p = title.indexOf(':');
+		return p>0? title.substring(p+1).trim() : title;
+	}
+	
+	private static String adjustAcc(String acc) { return acc==null || acc.indexOf('@')<0 ? "" : acc; }
 
 }

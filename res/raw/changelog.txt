@@ -1,6 +1,17 @@
+Version 2.07:
+- New: Urgent calls section.
+- New: options to block SMS (Call block section).
+- New: option to pick up call before block (to avoid voicemail).
+- New: option to automatically disable the airplane mode after a given timeout (General section).
+- New: shortcuts to enable silent or airplane mode with timeout.
+- New: shortcuts to any option.
+- New: go to the official forum (About and contacts section).
+- Fix: minor bugs.
+- Change: user interface minor enhancements.
+
 Version 2.06:
 - New: options to answer automatically on incoming calls.
-- New: option to automatically disable the silent mode after a given timeout (in the General section).
+- New: option to automatically disable the silent mode after a given timeout (General section).
 - New: call filter by date and time.
 - Fix: call blocker bugs.
 - Fix: minor bugs.

@@ -50,7 +50,7 @@ public final class P
 	
 	public static final Map<String,Object> skipKeysMap() {
 		Map<String,Object> map = new HashMap<String,Object>();
-		for(String k : K.skipKeys()) map.put(k, null);
+		for(String k : PrefGroups.skipKeys()) map.put(k, null);
 		return map;
 	}
 
@@ -149,7 +149,7 @@ public final class P
 	//---- private api
 
 	private static Map<String,Object> bakMap() {
-		final String[] skipKeys = K.skipKeys();
+		final String[] skipKeys = PrefGroups.skipKeys();
 		final Map<String,Object> bakMap = new HashMap<String,Object>(skipKeys.length);
 		for(String k : skipKeys) {
 			Object v;
@@ -166,7 +166,7 @@ public final class P
 	}
 
 	private static void setWrapKeys() {
-		for(String ki : K.wrapIntKeys()) {
+		for(String ki : PrefGroups.wrapIntKeys()) {
 			final String ks = ki + K.WS;
 			try {
 				int i = A.geti(ki);

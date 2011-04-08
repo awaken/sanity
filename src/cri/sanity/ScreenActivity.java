@@ -26,10 +26,12 @@ public abstract class ScreenActivity extends PrefActivity implements SharedPrefe
 	private static final Map<Integer,Class<?>> mapMenuScreen   = new HashMap<Integer,Class<?>>();
 	private static final Map<String,Object>    mapSkipKeys     = P.skipKeysMap();
 
+	private   static boolean grant = false;
 	protected static boolean nagDefault = true;
 	protected boolean nag;
 	protected boolean shortcut;
 	protected boolean skipAllKeys = false;
+	protected boolean secure = true;
 
 	//---- Activity override
 
@@ -57,6 +59,7 @@ public abstract class ScreenActivity extends PrefActivity implements SharedPrefe
 	public void onResume()
 	{
 		super.onResume();
+    protect();
 		nag();
 		A.prefs().registerOnSharedPreferenceChangeListener(this);
 	}
@@ -67,7 +70,9 @@ public abstract class ScreenActivity extends PrefActivity implements SharedPrefe
 		super.onPause();
 		A.prefs().unregisterOnSharedPreferenceChangeListener(this);
 		nag = nagDefault;
-		if(shortcut) finish();		// finish to allow other screens to be called through shortcut (otherwise this screen will be shown again)
+		if(!shortcut) return;
+		ungrant();
+		finish();		// finish to allow other screens to be called through shortcut (otherwise this screen will be shown again)
 	}
 
 	@Override
@@ -179,6 +184,7 @@ public abstract class ScreenActivity extends PrefActivity implements SharedPrefe
   	screener("screen_record"   , RecordActivity.class   , R.xml.prefs_record   , R.id.menu_rec      , R.layout.img_rec);
   	screener("screen_block"    , BlockerActivity.class  , R.xml.prefs_block    , R.id.menu_block    , R.layout.img_block);
   	screener("screen_tts"      , TtsActivity.class      , R.xml.prefs_tts      , R.id.menu_tts      , R.layout.img_tts);
+  	screener("screen_urgent"   , UrgentActivity.class   , R.xml.prefs_urgent   , R.id.menu_urgent   , R.layout.img_urgent);
   	screener("screen_answer"   , AnswerActivity.class   , R.xml.prefs_answer   , R.id.menu_answer   , R.layout.img_answer);
   	screener("screen_notify"   , NotifyActivity.class   , R.xml.prefs_notify   , R.id.menu_notify   , R.layout.img_notify);
   	screener("screen_about"    , AboutActivity.class    , R.xml.prefs_about    , R.id.menu_about    , R.layout.img_about);
@@ -202,6 +208,28 @@ public abstract class ScreenActivity extends PrefActivity implements SharedPrefe
 		nag = false;
 	}
 
+	protected void ungrant()
+	{
+		grant = false;
+		Alert.resetPwd();
+	}
+
+	//---- private api
+
+	private void protect()
+	{
+    if(grant || !secure) return;
+    final String pwd = A.gets(K.PWD);
+    if(pwd.length() <= 0) return;
+  	Alert.pwdAsk(
+  		new Alert.Edited(){ public void on(String text){
+  			if(text.equals(pwd)) grant = true;
+  			else protect();
+  		}},
+  		new Alert.Click(){ public void on(){ finish(); }}
+  	);
+	}
+	
 	//---- OnSharedPreferenceChangeListener implementation
 
 	public void onSharedPreferenceChanged(SharedPreferences prefs, String key)

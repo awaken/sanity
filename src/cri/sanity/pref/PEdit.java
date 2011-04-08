@@ -16,8 +16,9 @@ public class PEdit extends EditTextPreference implements OnPreferenceChangeListe
 	public String prefix;
 	public String suffix;
 
-	public PEdit(Context ctx)                     { super(ctx);        init(null );              }
-	public PEdit(Context ctx, AttributeSet attrs) { super(ctx, attrs); init(attrs); updateSum(); }
+	public PEdit(Context ctx)                                { super(ctx);               init(null );              }
+	public PEdit(Context ctx, AttributeSet attrs)            { super(ctx, attrs);        init(attrs); updateSum(); }
+	public PEdit(Context ctx, AttributeSet attrs, int style) { super(ctx, attrs, style); init(attrs); updateSum(); }
 
 	//---- ListPreference override
 

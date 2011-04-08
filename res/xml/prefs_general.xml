@@ -8,8 +8,17 @@
                         android:key="enabled" />
     <CheckBoxPreference android:title="@string/silent_limit_title"
                         android:summary="@string/silent_limit_sum"
-                        android:dependency="enabled"
                         android:key="silent_limit" />
+    <CheckBoxPreference android:title="@string/airplane_limit_title"
+                        android:summary="@string/airplane_limit_sum"
+                        android:key="airplane_limit" />
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/general_more_cat">
+    <CheckBoxPreference android:title="@string/admin_title"
+                        android:summary="@string/admin_sum"
+                        android:persistent="false"
+                        android:key="admin" />
     <CheckBoxPreference android:title="@string/force_bt_audio_title"
                         android:summary="@string/force_bt_audio_sum"
                         android:dependency="enabled"
@@ -18,6 +27,9 @@
                         android:summary="@string/reverse_proximity_sum"
                         android:dependency="enabled"
                         android:key="reverse_proximity" />
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/general_prefs_cat">
     <Preference android:title="@string/profile_cat"
                 android:summary="@string/profile_sum"
                 android:widgetLayout="@layout/img_profiles"
@@ -37,4 +49,14 @@
                 android:persistent="false"
                 android:key="reset_prefs" />
 	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/security_cat">
+    <cri.sanity.pref.PPwd android:title="@string/pwd_title"
+                          android:summary="@string/pwd_sum"
+                          android:key="pwd" />
+    <CheckBoxPreference android:title="@string/pwd_clear_title"
+                        android:summary="@string/pwd_clear_sum"
+                        android:key="pwd_clear" />
+	</PreferenceCategory>
+
 </PreferenceScreen>

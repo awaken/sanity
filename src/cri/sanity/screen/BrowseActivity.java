@@ -7,6 +7,7 @@ import java.io.FilenameFilter;
 import java.util.Comparator;
 import java.util.Stack;
 import java.util.Arrays;
+import java.util.Vector;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
@@ -32,7 +33,7 @@ public class BrowseActivity extends ScreenActivity
 	private static final int  PREFIX_LEN = PREFIX.length();
 	private static final String IN       = " ("+A.s(R.string.call_in)+')';
 	private static final String OUT      = " ("+A.s(R.string.call_out)+')';
-	private static final String ANONYM   = A.s(R.string.anonym);
+	private static final String ANONYM   = A.s(R.string.anonymous);
 	private static final ContentResolver resolver = A.resolver();
 	private static final String[] projection = new String[]{ PhoneLookup.DISPLAY_NAME };
 
@@ -185,29 +186,31 @@ public class BrowseActivity extends ScreenActivity
 				fn  = fn.substring(0,p);
 			}
 			// split each filename part separated by SEP_MAIN
-			final String[] fnSplit = fn.split(SEP_MAIN);
+			final Vector<String> fnSplit = A.split(SEP_MAIN, fn, 4);
+			//final String[] fnSplit = fn.split(SEP_MAIN);
 			// set title
-			String date = fnSplit[0];
-			String time = fnSplit[1];
-			final String[] dSplit = date.split(SEP_DATE);
-			date = dSplit[2] + SEP_SHOW + dSplit[1] + SEP_SHOW + dSplit[0];
+			String date = fnSplit.get(0);
+			String time = fnSplit.get(1);
+			final Vector<String> dSplit = A.split(SEP_DATE, date, 3);
+			//final String[] dSplit = date.split(SEP_DATE);
+			date = dSplit.get(2) + SEP_SHOW + dSplit.get(1) + SEP_SHOW + dSplit.get(0);
 			setTitle(date + ", " + time);
 			// set summary
 			if(     ext.equals("m4a")) ext = "MPEG4";
 			else if(ext.equals("3gp")) ext = "3GPP";
 			else if(ext.equals("amr")) ext = "AMR";
 			String sum;
-			final int n = fnSplit.length;
-			if(n<=2 || A.empty(fnSplit[2]))
+			final int n = fnSplit.size();
+			if(n<=2 || A.empty(fnSplit.get(2)))
 				sum = ANONYM+SEP_SUM+ext;
 			else {
 				String num;
 				if(n > 3) {
-					num = fnSplit[3];
-					sum = num + (fnSplit[2].equals("in") ? IN : OUT);
+					num = fnSplit.get(3);
+					sum = num + (fnSplit.get(2).equals("in") ? IN : OUT);
 				}
 				else {
-					num = fnSplit[2];
+					num = fnSplit.get(2);
 					if(!num.equals("in") && !num.equals("out"))
 						sum = new String(num);										// Sanity versions prior to 1.93 have no "in" or "out" in filename!
 					else {

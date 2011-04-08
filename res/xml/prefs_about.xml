@@ -6,25 +6,25 @@
 	  	          android:summary="@string/changelog_sum"
 	  	          android:persistent="false"
 	  	          android:key="changelog" />
-    <Preference android:title="@string/mail_title"
-                android:summary="@string/mail_sum"
+    <Preference android:title="@string/forum_title"
+                android:summary="@string/forum_sum"
 	              android:persistent="false"
-                android:key="mail" />
+                android:key="forum" />
     <Preference android:title="@string/comment_title"
                 android:summary="@string/comment_sum"
 	              android:persistent="false"
                 android:key="comment" />
-    <Preference android:title="@string/eula_title"
-                android:summary="@string/eula_sum"
+    <Preference android:title="@string/mail_title"
+                android:summary="@string/mail_sum"
 	              android:persistent="false"
-                android:key="eula" />
+                android:key="mail" />
     <Preference android:title="@string/paypal_title"
                 android:summary="@string/paypal_sum"
 	              android:persistent="false"
                 android:key="paypal" />
-		<Preference android:title="@string/uninstall_title"
-	  	          android:summary="@string/uninstall_sum"
-	  	          android:persistent="false"
-	  	          android:key="uninstall" />
+    <Preference android:title="@string/eula_title"
+                android:summary="@string/eula_sum"
+	              android:persistent="false"
+                android:key="eula" />
 	</PreferenceCategory>
 </PreferenceScreen>

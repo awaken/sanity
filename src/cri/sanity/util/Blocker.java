@@ -2,74 +2,94 @@ package cri.sanity.util;
 
 import java.io.FileWriter;
 
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.text.format.DateFormat;
 import cri.sanity.*;
+import cri.sanity.screen.CallHistoryActivity;
+import cri.sanity.screen.SmsHistoryActivity;
 
 
 public final class Blocker
 {
-	public  static final char SEP = '|';
-	public  static final int MODE_HANGUP = 0;
-	public  static final int MODE_RADIO  = 1;
-	public  static final int MODE_SILENT = 2;
-	public  static final int MODE_ANSWER = 3;
-	private static final int MODE_NONE   = -1;
-
+	public  static final char SEP           = Conf.BLOCK_SEP;
+	public  static final int MODE_HANGUP    = 0;
+	public  static final int MODE_RADIO     = 1;
+	public  static final int MODE_SILENT    = 2;
+	public  static final int MODE_ANSWER    = 3;
+	private static final int MODE_NONE      = -1;
 	private static final int NID            = 3;
 	private static final int ANSWER_TIMEOUT = 60*1000;
 
-	private static int    mode = MODE_NONE;
-	private static int    ring;
-	private static String name, num;
+	private static int     mode = MODE_NONE;
+	private static boolean pickup;
+	private static String  name, num;
 
 	//---- public api
 
-	public static final boolean apply(int mode)
+	public static final boolean apply(int blockMode)
 	{
 		name = num = null;
-		switch(mode) {
+		switch(blockMode) {
 			case MODE_HANGUP:
-				if(!Dev.endCall()) return false;
+				if(pickup = A.is(K.BLOCK_PICKUP)) Dev.answerCall();
+				else if(!Dev.endCall()) { blockFailed(); return false; }
 				break;
 			case MODE_RADIO:
-				if(!Dev.enableFlightMode(true)) return false;
+				if(pickup = A.is(K.BLOCK_PICKUP)) Dev.answerCall();
+				else if(!Dev.enableFlightMode(true)) { blockFailed(); return false; }
 				break;
 			case MODE_SILENT:
-				ring = A.audioMan().getRingerMode();
-				if(ring == AudioManager.RINGER_MODE_SILENT) return false;
-				A.audioMan().setRingerMode(AudioManager.RINGER_MODE_SILENT);
+				final PhoneListener pl = PhoneListener.getActiveInstance();
+				if(pl==null || !pl.changeRinger(AudioManager.RINGER_MODE_SILENT, AudioManager.VIBRATE_SETTING_OFF)) return false;
 				new Task(){ public void run(){ try { A.devpolMan().lockNow(); } catch(Exception e) {} }}.exec(Conf.BLOCK_LOCK_DELAY);
 				break;
 			case MODE_ANSWER:
 				Dev.answerCall();
 				break;
 			default:
+				blockFailed();
 				return false;
 		}
-		Blocker.mode = mode;
+		mode = blockMode;
 		return true;
 	}
 
 	public static final boolean onOffhook()
 	{
-		if(mode == MODE_NONE  ) return false;
-		if(mode != MODE_ANSWER) return true;
-		final Runnable runMute = new Runnable(){ public void run(){
-			final AudioManager am = A.audioMan();
-			am.setMode(AudioManager.MODE_NORMAL);
-			am.setStreamMute(AudioManager.STREAM_VOICE_CALL, true);
-			am.setStreamSolo(AudioManager.STREAM_ALARM, true);
-			am.setMicrophoneMute(true);
-		}};
-		runMute.run();
-		BlankActivity.postSingleton(runMute);
-		BlankActivity.postSingleton(new Runnable(){ public void run(){ try { A.devpolMan().lockNow(); } catch(Exception e) {} }});
-		Intent i = new Intent(A.app(), BlankActivity.class);
-		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		A.app().startActivity(i);
-		new Task(){ public void run(){ Dev.endCall(); }}.exec(ANSWER_TIMEOUT);
+		switch(mode) {
+			case MODE_NONE:
+				return false;
+			case MODE_HANGUP:
+				if(pickup) { if(!Dev.endCall()) blockFailed(); }
+				break;
+			case MODE_RADIO:
+				if(pickup) { if(!Dev.enableFlightMode(true)) blockFailed(); }
+				break;
+			case MODE_SILENT:
+				break;
+			case MODE_ANSWER:
+				final Runnable runMute = new Runnable(){ public void run(){
+					final AudioManager am = A.audioMan();
+					am.setMode(AudioManager.MODE_NORMAL);
+					am.setStreamMute(AudioManager.STREAM_VOICE_CALL, true);
+					am.setStreamSolo(AudioManager.STREAM_ALARM, true);
+					am.setMicrophoneMute(true);
+				}};
+				runMute.run();
+				BlankActivity.postSingleton(runMute);
+				BlankActivity.postSingleton(new Runnable(){ public void run(){ try { A.devpolMan().lockNow(); } catch(Exception e) {} }});
+				Intent i = new Intent(A.app(), BlankActivity.class);
+				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				A.app().startActivity(i);
+				new Task(){ public void run(){ Dev.endCall(); }}.exec(ANSWER_TIMEOUT);
+				break;
+			default:
+				return false;
+		}
 		return true;
 	}
 
@@ -78,48 +98,60 @@ public final class Blocker
 		Alarmer.stop(Alarmer.ACT_FLIGHTOFF);
 		switch(mode) {
 			case MODE_HANGUP:
+			case MODE_SILENT:
 				break;
 			case MODE_RADIO:
 				final int delay = A.geti(K.BLOCK_RESUME);
 				if(delay > 0) Alarmer.exec(Alarmer.ACT_FLIGHTOFF, delay);
 				else Dev.enableFlightMode(false);
 				break;
-			case MODE_SILENT:
-				A.audioMan().setRingerMode(ring);
-				break;
 			case MODE_ANSWER:
 				final AudioManager am = A.audioMan();
+				am.setMode(AudioManager.MODE_NORMAL);
 				am.setStreamSolo(AudioManager.STREAM_ALARM, false);
 				am.setStreamMute(AudioManager.STREAM_VOICE_CALL, false);
 				am.setMicrophoneMute(false);
 				//am.setMode(AudioManager.MODE_IN_CALL);
-				BlankActivity ba = BlankActivity.getInstance();
+				final BlankActivity ba = BlankActivity.getInstance();
 				if(ba != null) ba.postFinish();
 				break;
 			default:
 				return;
 		}
-		if(A.is(K.BLOCK_NOTIFY)) notification();
+		if(A.is(K.BLOCK_NOTIFY)) notification(false);
 		log();
 		try { A.devpolMan().lockNow(); } catch(Exception e) {}
 		mode = MODE_NONE;
 	}
+
+	public static final void notification(boolean sms)
+	{
+		String msg   = A.name()+": "+A.s(sms? R.string.blocksms_cat : R.string.block_cat);
+		String title = name();
+		if(num.length() > 0) title += " (" + num + ')';
+		final Context ctx = A.app();
+		Intent i = new Intent(ctx, sms? SmsHistoryActivity.class : CallHistoryActivity.class);
+		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		Notification notif = new Notification(R.drawable.ic_block_bar, msg, A.time());
+		notif.flags = Notification.FLAG_AUTO_CANCEL;
+		notif.setLatestEventInfo(ctx, title, msg, PendingIntent.getActivity(ctx, 0, i, 0));
+		A.notifMan().notify(NID, notif);
+	}
 	
 	//---- private api
 
-	private static void notification()
+	private static void blockFailed()
 	{
-		String title = name();
-		if(num.length() > 0) title += " (" + num + ')';
-		A.notify(title, A.name()+": "+A.s(R.string.block_cat), NID, R.drawable.ic_block_bar);
+		A.notify(A.s(R.string.err_block));
+		mode = MODE_NONE;
 	}
-	
+
 	private static void log()
 	{
 		try {
 			FileWriter fw = new FileWriter(A.sdcardDir()+'/'+Conf.BLOCK_FN, true);
-			String line = DateFormat.format(Conf.DATE_PATTERN, A.time()).toString() + SEP + name() + SEP + num() + '\n';
-			fw.append(line);
+			final String date = DateFormat.format(Conf.DATE_PATTERN, A.time()).toString();
+			fw.append(date + SEP + name() + SEP + num() + '\n');
 			fw.flush();
 			fw.close();
 		} catch(Exception e) {}
@@ -130,12 +162,15 @@ public final class Blocker
 	
 	private static void readNameNum()
 	{
-		num = PhoneListener.getActiveInstance().phoneNumber();
+		final PhoneListener pl = PhoneListener.getActiveInstance();
+		final CallFilter    cf = pl==null ? SmsReceiver.callFilter() : CallFilter.instance();
+		if(cf == null) { num = name = ""; return; }
+		num = cf.lastNum();
 		if(num == null) num = "";
 		if(num.length() <= 0)
 			name = A.gets(K.TTS_ANONYM);
 		else {
-			name = CallFilter.searchName(num);
+			name = cf.searchName(num);
 			if(A.empty(name)) name = A.gets(K.TTS_UNKNOWN);
 		}
 	}

@@ -9,25 +9,35 @@ import android.preference.Preference;
 
 public class MainActivity extends ScreenActivity
 {
+	private static final String KEY_UNINSTALL = "uninstall";
+
 	private Handler handler;
 
 	@Override
   public void onCreate(Bundle savedInstanceState) {
     handler     = new Handler();
+    secure      = false;
 		nagDefault  = false;
 		skipAllKeys = true;
 		screener(MainActivity.class, R.xml.prefs);
     super.onCreate(savedInstanceState);
     screenerAll();
-  	setupProximity();
     if(nagDefault = setupFull()) startup();
     if(!Dev.isBtOn()) A.putc(K.BT_COUNT, 0);	// recheck sometimes to avoid false counter
+  	if(A.SDK < 8) setEnabled(KEY_UNINSTALL, false);
+  	else on(KEY_UNINSTALL, new Click(){ public boolean on(){ Alert.msg(A.rawstr(R.raw.uninstall)); return true; }});
   }
 
 	@Override
 	public void onResume() {
 		updateOptions();
 		super.onResume();
+	}
+	
+	@Override
+	public void onDestroy() {
+		ungrant();
+		super.onDestroy();
 	}
 	
 	@Override
@@ -43,11 +53,6 @@ public class MainActivity extends ScreenActivity
 	public boolean isMainActivity() { return true; }
 
 	//---- private api
-
-	private void setupProximity() {
-  	if(Dev.sensorProxim() == null)
-  		setEnabled("screen_proximity", false);
-	}
 
 	private boolean setupFull() {
 		if(License.isChecked()) {
@@ -129,7 +134,7 @@ public class MainActivity extends ScreenActivity
 			Alert.OKCANC
 		);
 	}
-	
+
 	private void updateOptions() {
 		final boolean enabled = A.isEnabled();
 		setEnabled("screen_devices"  , enabled);

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<Preference android:key="logo" />
+	<PreferenceCategory android:title="@string/urgent_cat">
+	  <CheckBoxPreference android:title="@string/urgent_enable_title"
+	                      android:summary="@string/urgent_enable_sum"
+	                      android:persistent="false"
+	                      android:key="urgent" />
+	  <CheckBoxPreference android:title="@string/urgent_skip_title"
+	                      android:summary="@string/urgent_skip_sum"
+	                      android:dependency="urgent"
+	                      android:key="urgent_skip" />
+	  <cri.sanity.pref.PList android:title="@string/urgent_mode_title"
+	                         android:summary="@string/urgent_mode_sum"
+	                         android:dependency="urgent"
+	                         android:key="urgent_mode_s"
+	                         android:entries="@array/urgent_mode_labels"
+	                         android:entryValues="@array/urgent_mode_values" />
+	  <cri.sanity.pref.PFilter android:dependency="urgent"
+	                           android:key="filter_urgent" />
+	</PreferenceCategory>
+</PreferenceScreen>

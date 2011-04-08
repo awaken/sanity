@@ -12,8 +12,8 @@ import android.os.SystemClock;
 
 public class Alarmer extends BroadcastReceiver
 {
-	public  static final String ACT_FLIGHTOFF   = "actFlightOff";
 	public  static final String ACT_SILENTLIMIT = "actSilentLimit";
+	public  static final String ACT_FLIGHTOFF   = "actFlightOff";
 	private static final int    RETRY_TIME      = 60*1000;
 
 	@Override
@@ -46,18 +46,18 @@ public class Alarmer extends BroadcastReceiver
 		return PendingIntent.getBroadcast(ctx, 0, i, PendingIntent.FLAG_ONE_SHOT);
 	}
 
-	public static void actFlightOff()
-	{
-		if(PhoneListener.isRunning()) return;
-		if(Dev.isFlightModeOn()) Dev.enableFlightMode(false);
-	}
-
 	public static void actSilentLimit()
 	{
 		if(PhoneListener.isRunning())
 			exec(ACT_SILENTLIMIT, RETRY_TIME);
 		else
 			A.audioMan().setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+	}
+
+	public static void actFlightOff()
+	{
+		if(PhoneListener.isRunning()) return;
+		if(Dev.isFlightModeOn()) Dev.enableFlightMode(false);
 	}
 
 }

@@ -23,8 +23,11 @@
 	  <CheckBoxPreference android:title="@string/notify_rec_stop_title"
 	                      android:summary="@string/notify_rec_stop_sum"
 	                      android:key="notify_rec_stop" />
-	  <CheckBoxPreference android:title="@string/notify_block_title"
+	  <CheckBoxPreference android:title="@string/block_notify_title"
 	                      android:summary="@string/block_notify_sum"
 	                      android:key="block_notify" />
+	  <CheckBoxPreference android:title="@string/blocksms_notify_title"
+	                      android:summary="@string/blocksms_notify_sum"
+	                      android:key="blocksms_notify" />
 	</PreferenceCategory>
 </PreferenceScreen>

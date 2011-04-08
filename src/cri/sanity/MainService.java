@@ -36,7 +36,6 @@ public final class MainService extends Service
 		running = true;
 		P.upgrade();
 		if(A.is(K.NOTIFY_ACTIVITY)) A.notify(A.s(R.string.msg_running));
-		//if(phoneListener == null) phoneListener = new PhoneListener();
 		phoneListener.startup();
 		A.telMan().listen(phoneListener, PhoneListener.LISTEN);
 		//A.logd("MainService started");
@@ -52,7 +51,6 @@ public final class MainService extends Service
 		//A.logd("MainService destroyed");
 		running = false;
 		super.onDestroy();
-		System.gc();
 	}
 
 }

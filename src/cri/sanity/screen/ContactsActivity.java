@@ -53,7 +53,8 @@ public class ContactsActivity extends ScreenActivity
 		Intent i  = getIntent();
 		sect      = i.getStringExtra(FilterActivity.EXTRA_SECT );
 		String t  = i.getStringExtra(FilterActivity.EXTRA_TITLE);
-		if(!A.empty(t)) prefGroup.setTitle(prefGroup.getTitle()+"  ("+t+')');
+		if(!A.empty(t)) pref("filter_header").setTitle(prefGroup.getTitle()+"  ("+t+')');
+		on("filter_search", new Click(){ public boolean on(){ search(); return true; }});
 		readContacts();
 		changed = false;
 		grouped = false;
