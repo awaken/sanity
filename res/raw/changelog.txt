@@ -1,17 +1,28 @@
+Version 2.09:
+- New: Anonymous calls section.
+- New: options to announce the sender of received SMS.
+- New: option to notify when automatic restoration from silent/airplane mode is activated.
+- New: option to change the audio stream to announce.
+- Fix: minor bugs.
+- Change: minor improvements.
+
+Version 2.08:
+- Fix: force close on Urgent call section.
+
 Version 2.07:
 - New: Urgent calls section.
-- New: options to block SMS (Call block section).
+- New: options to block SMS.
 - New: option to pick up call before block (to avoid voicemail).
-- New: option to automatically disable the airplane mode after a given timeout (General section).
+- New: option to automatically disable the airplane mode after a given timeout.
 - New: shortcuts to enable silent or airplane mode with timeout.
 - New: shortcuts to any option.
-- New: go to the official forum (About and contacts section).
+- New: go to the official forum.
 - Fix: minor bugs.
 - Change: user interface minor enhancements.
 
 Version 2.06:
 - New: options to answer automatically on incoming calls.
-- New: option to automatically disable the silent mode after a given timeout (General section).
+- New: option to automatically disable the silent mode after a given timeout.
 - New: call filter by date and time.
 - Fix: call blocker bugs.
 - Fix: minor bugs.

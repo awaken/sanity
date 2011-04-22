@@ -51,6 +51,7 @@ public final class K
 	public static final String VOL_BT             = "vol_bt";
 	public static final String VOL_SOLO           = "vol_solo";
 	// notification
+	public static final String NOTIFY_TIMEOUT     = "notify_timeout";
 	public static final String NOTIFY_ENABLE      = "notify_enable";
 	public static final String NOTIFY_DISABLE     = "notify_disable";
 	public static final String NOTIFY_ACTIVITY    = "notify_activity";
@@ -100,7 +101,12 @@ public final class K
 	public static final String TTS_UNKNOWN        = "tts_unknown";
 	public static final String TTS_PREFIX         = "tts_prefix";
 	public static final String TTS_SUFFIX         = "tts_suffix";
+	public static final String TTS_STREAM         = "tts_stream";
 	public static final String TTS_FILTER         = "filter_enable_tts";
+	public static final String TTS_SMS            = "ttsms";
+	public static final String TTS_SMS_PREFIX     = "ttsms_prefix";
+	public static final String TTS_SMS_SUFFIX     = "ttsms_suffix";
+	public static final String TTS_SMS_FILTER     = "filter_enable_ttsms";
 	// urgent calls
 	public static final String URGENT_FILTER      = "filter_enable_urgent";
 	public static final String URGENT_SKIP        = "urgent_skip";
@@ -111,6 +117,12 @@ public final class K
 	public static final String ANSWER_SKIP        = "answer_skip";
 	public static final String ANSWER_DELAY       = "answer_delay";
 	public static final String ANSWER_FILTER      = "filter_enable_answer";
+	// anonymous calls
+	public static final String ANONYM             = "anonym";
+	public static final String ANONYM_CONFIRM     = "anonym_confirm";
+	public static final String ANONYM_NOTIFY      = "anonym_notify";
+	public static final String ANONYM_PREFIX      = "anonym_prefix";
+	public static final String ANONYM_FILTER      = "filter_enable_anonym";
 
 	// internals (hidden to user)
 	public static final String FULL      = "full";
@@ -167,7 +179,8 @@ public final class K
 		m.put(VOL_WIRED          , -1);
 		m.put(VOL_BT             , -1);
 		m.put(VOL_SOLO           , false);
-		m.put(NOTIFY_ENABLE      , true);				// notify
+		m.put(NOTIFY_TIMEOUT     , true);				// notify
+		m.put(NOTIFY_ENABLE      , true);
 		m.put(NOTIFY_DISABLE     , true);
 		m.put(NOTIFY_ACTIVITY    , true);
 		m.put(NOTIFY_VOLUME      , false);
@@ -201,7 +214,7 @@ public final class K
 		m.put(BLOCK_SMS_MAX      , 10);
 		m.put(BLOCK_SMS_NOTIFY   , false);
 		m.put(BLOCK_SMS_FILTER   , false);
-		m.put(TTS                , false);			// announce caller
+		m.put(TTS                , false);			// announce caller and SMS
 		m.put(TTS_HEADSET        , false);
 		m.put(TTS_SKIP           , true);
 		m.put(TTS_SOLO           , false);
@@ -214,19 +227,29 @@ public final class K
 		m.put(TTS_PREFIX         , "");
 		m.put(TTS_SUFFIX         , "");
 		m.put(TTS_FILTER         , false);
+		m.put(TTS_STREAM         , false);
+		m.put(TTS_SMS            , false);
+		m.put(TTS_SMS_PREFIX     , "");
+		m.put(TTS_SMS_SUFFIX     , "");
+		m.put(TTS_SMS_FILTER     , false);
 		m.put(URGENT_FILTER      , false);			// urgent calls
 		m.put(URGENT_SKIP        , true);
 		m.put(URGENT_MODE        , AudioManager.RINGER_MODE_NORMAL);
 		m.put(ANSWER             , false);			// auto answer
 		m.put(ANSWER_HEADSET     , false);
 		m.put(ANSWER_SKIP        , false);
-		m.put(ANSWER_DELAY       , 5000);
+		m.put(ANSWER_DELAY       , 7000);
 		m.put(ANSWER_FILTER      , false);
+		m.put(ANONYM             , false);			// anonymous calls
+		m.put(ANONYM_CONFIRM     , false);
+		m.put(ANONYM_NOTIFY      , false);
+		m.put(ANONYM_PREFIX      , "#31#");
+		m.put(ANONYM_FILTER      , false);
 		return m;
 	}
 
+	// upgrade current preferences from an older existing version
 	static final void upgrade(float oldVer, int beta) {
-		// upgrade current preferences from an older existing version
 		if(oldVer < 1.95f) {
 			for(String k : new String[]{ VOL_PHONE, VOL_WIRED, VOL_BT }) {
 				try {
@@ -246,6 +269,20 @@ public final class K
 		if(oldVer < 2.03f) {
 			A.put(BLOCK_FILTER, A.is("block")).del("block");
 			A.put(SPEAKER_VOL, A.is("loud_speaker")? A.audioMan().getStreamMaxVolume(AudioManager.STREAM_VOICE_CALL) : -1).del("loud_speaker");
+		}
+		if(P.verIn(oldVer, 2.06f, 2.09f, beta, 1)) {
+			for(String sect : P.filterSections()) {
+				sect = '_' + sect;
+				final StringBuilder days = new StringBuilder(7);
+				for(int i=1; i<=7; i++) {
+					final String d = Integer.toString(i);
+					final String k = "filter_dt_day" + d + sect;
+					if(A.is(k)) days.append(d);
+					A.del(k);
+				}
+				final int n = days.length();
+				if(n>0 && n<7) A.put("filter_dt_days"+sect, days.toString());
+			}
 		}
 	}
 

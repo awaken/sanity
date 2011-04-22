@@ -27,6 +27,9 @@
 		<item>9 secondi</item>
 		<item>10 secondi</item>
 		<item>15 secondi</item>
+		<item>20 secondi</item>
+		<item>25 secondi</item>
+		<item>30 secondi</item>
 	</string-array>
 
 	<string-array name="enable_delay_labels">
@@ -43,6 +46,9 @@
 		<item>9 secondi</item>
 		<item>10 secondi</item>
 		<item>15 secondi</item>
+		<item>20 secondi</item>
+		<item>25 secondi</item>
+		<item>30 secondi</item>
 	</string-array>
 
 	<string-array name="speaker_call_labels">
@@ -208,6 +214,19 @@
 		<item>Solo suoneria</item>
 		<item>Solo vibrazione</item>
 		<item>Suoneria e vibrazione</item>
+	</string-array>
+
+	<string-array name="anonym_country_labels">
+		<item>USA, Canada (*67)</item>
+		<item>Paesi europei (#31#)</item>
+		<item>Regno Unito, Irlanda (141)</item>
+		<item>Germania (*31#)</item>
+		<item>Danimarca, Svizzera, Argentina (*31*)</item>
+		<item>Israele (*43)</item>
+		<item>Hong Kong (133)</item>
+		<item>Australia (1831)</item>
+		<item>Nuova Zelanda (0197)</item>
+		<item>Prefisso personalizzato</item>
 	</string-array>
 
 </resources>

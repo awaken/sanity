@@ -81,7 +81,14 @@ public final class Dev
 	public static final boolean isIdle   () { return A.telMan().getCallState() == TelephonyManager.CALL_STATE_IDLE;    }
 
 	//---- enable/disable devices
-	
+
+	public static final void dial(String num) {
+		Intent i = new Intent(Intent.ACTION_CALL);
+		i.setData(Uri.parse("tel:"+num));
+		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		A.app().startActivity(i);
+	}
+
 	public static final void answerCall() {
 		try {
 			iTel().answerRingingCall();
@@ -139,6 +146,12 @@ public final class Dev
 		} catch(SettingNotFoundException e) {
 			return -1; 
 		}
+	}
+
+	public static final void lock()
+	{
+		if(A.SDK < 8) return;
+		try { A.devpolMan().lockNow(); } catch(Exception e) {}
 	}
 
 	//public static final boolean isWakeCpu() { return wakeCpuLock!=null && wakeCpuLock.isHeld(); }

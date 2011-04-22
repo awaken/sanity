@@ -12,6 +12,8 @@ import android.app.Application;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.KeyguardManager;
+import android.app.admin.DevicePolicyManager;
 import android.bluetooth.BluetoothAdapter;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -34,15 +36,15 @@ import android.os.Environment;
 import android.os.PowerManager;
 import android.os.Vibrator;
 import android.net.ConnectivityManager;
-import android.app.KeyguardManager;
-import android.app.admin.DevicePolicyManager;
 import android.widget.Toast;
+import android.text.format.DateFormat;
 
 
 public final class A extends Application
 {
-	public  static final int SDK = android.os.Build.VERSION.SDK_INT;
-	private static final int NID = 1;
+	public  static final boolean DEBUG = android.util.Config.DEBUG;
+	public  static final int     SDK   = android.os.Build.VERSION.SDK_INT;
+	private static final int     NID   = 1;
 
 	//---- inner classes
 
@@ -72,6 +74,7 @@ public final class A extends Application
 	private static TelephonyManager         telMan;
 	private static BluetoothAdapter         btAdapter;
 	private static WifiManager              wifiMan;
+	private static SensorManager            sensorMan;
 	private static PowerManager             powerMan;
 	private static LocationManager          locMan;
 	private static DevicePolicyManager      devpolMan;
@@ -89,7 +92,7 @@ public final class A extends Application
 		try { pkgInfo = getPackageManager().getPackageInfo(getPackageName(), 0); }
 		catch(NameNotFoundException e) {}
 	}
-
+	
 	//---- static methods
 
 	// basic
@@ -162,6 +165,9 @@ public final class A extends Application
   }
 
 	public static final long time() { return System.currentTimeMillis(); }
+
+	public static final String date()          { return date(time()); }
+	public static final String date(long time) { return DateFormat.format(Conf.DATE_PATTERN, time).toString(); }
 
 	public static final String sdcardDir() {
 		File file = Environment.getExternalStorageDirectory();
@@ -246,7 +252,14 @@ public final class A extends Application
 	//public static final long   getsl(String key, String def) { return Long   .parseLong (prefs.getString(key, def)); }
 	//public static final float  getsf(String key)             { return Float  .parseFloat(prefs.getString(key, "0")); }
 	//public static final float  getsf(String key, String def) { return Float  .parseFloat(prefs.getString(key, def)); }
-
+	public static final Object get(String key) {
+		try { return geti(key); } catch(Exception ei) {
+		try { return getl(key); } catch(Exception el) {
+		try { return is(key);   } catch(Exception eb) {
+		try { return gets(key); } catch(Exception es) {}}}}
+    return null;
+	}
+	
 	public static final boolean has (String key) { return prefs.contains(key); }
 	public static final A       del (String key) { edit.remove(key);          return a; }
 	public static final A       delc(String key) { edit.remove(key).commit(); return a; }
@@ -317,7 +330,8 @@ public final class A extends Application
 		return locMan;
 	}
 	public static final SensorManager sensorMan() {
-		return (SensorManager)a.getSystemService(SENSOR_SERVICE);
+		if(sensorMan == null) sensorMan = (SensorManager)a.getSystemService(SENSOR_SERVICE);
+		return sensorMan;
 	}
 	public static final AlarmManager alarmMan() {
 		return (AlarmManager)a.getSystemService(ALARM_SERVICE);

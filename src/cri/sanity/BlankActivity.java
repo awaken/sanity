@@ -11,9 +11,15 @@ import android.view.KeyEvent;
 
 public class BlankActivity extends Activity
 {
+	public  static final String EXTRA_BLOCK = "block";
+
+	public  static boolean force = false;
+
 	private static BlankActivity singleton;
 	private static final Collection<Runnable> posts = new LinkedList<Runnable>();
+	
 	private Handler handler;
+	private boolean block = false;
 
 	public static final BlankActivity getInstance() { return singleton; }
 
@@ -37,25 +43,28 @@ public class BlankActivity extends Activity
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		handler = new Handler();
-		if(!PhoneListener.isRunning() || Intent.ACTION_MAIN.equals(getIntent().getAction())) {
-			Intent i = new Intent(A.app(), MainActivity.class);
+		handler  = new Handler();
+		Intent i = getIntent();
+		if((!PhoneListener.isRunning() && !force) || Intent.ACTION_MAIN.equals(i.getAction())) {
+			i = new Intent(A.app(), MainActivity.class);
 			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(i);
 			finish();
 			return;
 		}
+		force = false;
 		if(singleton != null) {
 			finish();
 			return;
 		}
 		singleton = this;
+		block = i.getBooleanExtra(EXTRA_BLOCK, false);
 	}
 
 	@Override
-	public void onStart()
+	public void onResume()
 	{
-		super.onStart();
+		super.onResume();
 		synchronized(posts) {
 			if(posts.isEmpty()) return;
 			for(Runnable r : posts) handler.post(r);
@@ -71,19 +80,23 @@ public class BlankActivity extends Activity
 	}
 
 	@Override
-	public void onBackPressed() { }
+	public void onBackPressed()
+	{
+		if(block) return;
+		super.onBackPressed();
+	}
 
 	@Override
 	public boolean onKeyDown(int code, KeyEvent evt)
 	{
-		if(isBlockedKey(code)) return true;
+		if(block && isBlockedKey(code)) return true;
 		return super.onKeyDown(code, evt);
 	}
 
 	@Override
 	public boolean onKeyUp(int code, KeyEvent evt)
 	{
-		if(isBlockedKey(code)) return true;
+		if(block && isBlockedKey(code)) return true;
 		return super.onKeyUp(code, evt);
 	}
 

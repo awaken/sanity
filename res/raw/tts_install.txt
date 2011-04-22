@@ -1,2 +1,5 @@
-The TTS engine isn't installed on your system. Sanity requires it for announcing the caller.
-Would install TTS engine now?
+No TTS engine has been selected or installed on your system.
+
+Sanity requires it for announcing the caller.
+
+Would you install the TTS engine now?

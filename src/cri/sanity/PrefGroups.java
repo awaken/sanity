@@ -7,6 +7,8 @@ import android.util.Pair;
 
 public final class PrefGroups
 {
+	public static final int SHORTCUT_FILTER_ROW = 3;
+
 	public static final String[][] sections() {
 		return new String[][]{
 			new String[]{ "general_cat", K.ENABLED, K.SILENT_LIMIT, K.AIRPLANE_LIMIT, K.FORCE_BT_AUDIO, K.REVERSE_PROXIMITY, K.PWD, K.PWD_CLEAR },
@@ -15,20 +17,35 @@ public final class PrefGroups
 			new String[]{ "speaker_cat", K.SPEAKER_AUTO, K.SPEAKER_DELAY, K.SPEAKER_CALL, K.SPEAKER_CALL_DELAY, K.SPEAKER_VOL, K.SPEAKER_SILENT_END, K.SPEAKER_ON_COUNT, K.SPEAKER_OFF_COUNT },
 			new String[]{ "rec_cat", K.REC, K.REC_FMT, K.REC_SRC, K.REC_START, K.REC_START_DELAY, K.REC_FILTER, K.REC_START_SPEAKER, K.REC_START_HEADSET, K.REC_START_DIR, K.REC_START_TIMES, K.REC_STOP, K.REC_STOP_DELAY, K.REC_STOP_SPEAKER, K.REC_STOP_HEADSET, K.REC_STOP_LIMIT, K.REC_AUTOREMOVE },
 			new String[]{ "block_cat", K.BLOCK_FILTER, K.BLOCK_MODE, K.BLOCK_RESUME, K.BLOCK_PICKUP, K.BLOCK_SKIP, K.BLOCK_NOTIFY, K.BLOCK_SMS, K.BLOCK_SMS_FILTER, K.BLOCK_SMS_NOTIFY, K.BLOCK_SMS_MAX },
-			new String[]{ "tts_cat", K.TTS, K.TTS_HEADSET, K.TTS_SKIP, K.TTS_SOLO, K.TTS_VOL, K.TTS_TONE, K.TTS_REPEAT, K.TTS_PAUSE, K.TTS_PREFIX, K.TTS_SUFFIX, K.TTS_ANONYM, K.TTS_UNKNOWN, K.TTS_FILTER },
+			new String[]{ "tts_cat", K.TTS, K.TTS_HEADSET, K.TTS_SKIP, K.TTS_SOLO, K.TTS_VOL, K.TTS_TONE, K.TTS_REPEAT, K.TTS_PAUSE, K.TTS_PREFIX, K.TTS_SUFFIX, K.TTS_ANONYM, K.TTS_UNKNOWN, K.TTS_FILTER, K.TTS_STREAM },
 			new String[]{ "urgent_cat", K.URGENT_FILTER, K.URGENT_MODE },
 			new String[]{ "answer_cat", K.ANSWER, K.ANSWER_HEADSET, K.ANSWER_SKIP, K.ANSWER_DELAY, K.ANSWER_FILTER },
+			new String[]{ "anonym_cat", K.ANONYM, K.ANONYM_CONFIRM, K.ANONYM_NOTIFY, K.ANONYM_PREFIX, K.ANONYM_FILTER },
 			new String[]{ "vol_cat", K.VOL_PHONE, K.VOL_WIRED, K.VOL_BT, K.VOL_SOLO },
 			new String[]{ "notify_cat", K.VIBRATE_END, K.NOTIFY_ENABLE, K.NOTIFY_DISABLE, K.NOTIFY_ACTIVITY, K.NOTIFY_VOLUME, K.NOTIFY_REC_STOP },
 		};
 	}
 
+	// SHORTCUT_FILTER_ROW contains how many values are in one row!
+	public static final Object[] filterShortcuts() {
+		return new Object[] {
+			R.string.rec_cat     , R.drawable.menu_rec   , "rec",
+			R.string.block_cat   , R.drawable.menu_block , "block",
+			R.string.blocksms_cat, R.drawable.menu_block , "blocksms",
+			R.string.tts_cat     , R.drawable.menu_tts   , "tts",
+			R.string.ttsms_cat   , R.drawable.menu_tts   , "ttsms",
+			R.string.urgent_cat  , R.drawable.menu_urgent, "urgent",
+			R.string.answer_cat  , R.drawable.menu_answer, "answer",
+			R.string.anonym_cat  , R.drawable.menu_anonym, "anonym",
+		};
+	}
+	
 	public static final String[] skipKeys() { 
 		return new String[]{ K.BT_COUNT, K.NAG, K.CRON, K.FULL, K.LICVER, K.SMS_COUNT };
 	}
 
 	public static final String[] edits() {
-		return new String[]{ K.TTS_PREFIX, K.TTS_SUFFIX, K.TTS_ANONYM, K.TTS_ANONYM };
+		return new String[]{ K.TTS_PREFIX, K.TTS_SUFFIX, K.TTS_ANONYM, K.TTS_ANONYM, K.TTS_SMS_PREFIX, K.TTS_SMS_SUFFIX, K.ANONYM_PREFIX };
 	}
 
 	public static final String[] wrapIntKeys() {
@@ -36,7 +53,7 @@ public final class PrefGroups
 			K.DISABLE_DELAY, K.ENABLE_DELAY, K.SPEAKER_DELAY, K.SPEAKER_CALL, K.SPEAKER_CALL_DELAY, K.SPEAKER_VOL, K.SPEAKER_ON_COUNT, K.SPEAKER_OFF_COUNT,
 			K.VOL_PHONE, K.VOL_WIRED, K.VOL_BT, K.REC_SRC, K.REC_FMT, K.REC_START_DELAY, K.REC_STOP_DELAY, K.REC_START_HEADSET, K.REC_STOP_HEADSET,
 			K.REC_STOP_LIMIT, K.REC_START_TIMES, K.REC_START_DIR, K.REC_AUTOREMOVE, K.REVERSE_BT_TIMEOUT, K.TTS_VOL, K.TTS_TONE, K.TTS_REPEAT, K.TTS_PAUSE,
-			K.BLOCK_MODE, K.BLOCK_RESUME, K.ANSWER_DELAY, K.URGENT_MODE
+			K.BLOCK_MODE, K.BLOCK_RESUME, K.URGENT_MODE, K.ANSWER_DELAY,
 		};
 	}
 

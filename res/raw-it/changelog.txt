@@ -1,17 +1,28 @@
+Versione 2.09:
+- Nuovo: sezione Chiamate anonime.
+- Nuovo: opzioni per annunciare il mittente degli SMS ricevuti.
+- Nuovo: opzione per notificare quando è attivo il ripristino automatico dalla modalità silenziosa/aereo.
+- Nuovo: opzione per cambiare il flusso audio dell'annuncio.
+- Fix: bug minori.
+- Modifica: migliorie minori.
+
+Versione 2.08:
+- Fix: chiusura forzata nella sezione Chiamate urgenti.
+
 Versione 2.07:
 - Nuovo: sezione Chiamate urgenti.
-- Nuovo: opzioni per bloccare gli SMS (sezione Blocco chiamate).
+- Nuovo: opzioni per bloccare gli SMS.
 - Nuovo: opzione per rispondere ad una chiamata un attimo prima di bloccarla (per evitare la segreteria telefonica).
-- Nuovo: opzione per disabilitare automaticamente la modalità aereo dopo un certo timeout (sezione Generale).
+- Nuovo: opzione per disabilitare automaticamente la modalità aereo dopo un certo timeout.
 - Nuovo: scelte rapide per abilitare la modalità silenziosa/aereo con timeout.
 - Nuovo: scelte rapide per qualsiasi opzione.
-- Nuovo: visita il forum ufficiale (sezione Info e contatti).
+- Nuovo: visita il forum ufficiale.
 - Fix: bug minori.
 - Modifica: miglioramenti minori all'interfaccia utente.
 
 Versione 2.06:
 - Nuovo: opzioni per rispondere automaticamente alle chiamate ricevute.
-- Nuovo: opzione per disabilitare automaticamente la modalità silenziosa dopo un certo timeout (sezione Generale).
+- Nuovo: opzione per disabilitare automaticamente la modalità silenziosa dopo un certo timeout.
 - Nuovo: filtro chiamate in base alla data e all'ora.
 - Fix: bug nel blocco chiamate.
 - Fix: bug minori.

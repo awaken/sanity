@@ -14,6 +14,7 @@ public class NotifyActivity extends ScreenActivity
 		setEnabled(K.NOTIFY_REC_STOP , A.is(K.REC));
 		setEnabled(K.BLOCK_NOTIFY    , block);
 		setEnabled(K.BLOCK_SMS_NOTIFY, block && A.is(K.BLOCK_SMS));
-		fullOnly(K.BLOCK_NOTIFY, K.BLOCK_SMS_NOTIFY);
+		setEnabled(K.ANONYM_NOTIFY   , A.is(K.ANONYM));
+		fullOnly(K.BLOCK_NOTIFY, K.BLOCK_SMS_NOTIFY, K.ANONYM_NOTIFY);
 	}
 }

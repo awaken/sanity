@@ -10,6 +10,7 @@ import cri.sanity.*;
 public final class CallFilter
 {
 	private static CallFilter instance;
+	private static String[]   proj;
 	private Cursor   cursor;
 	private String   lastNum, lastName;
 	private String[] lastGroups;
@@ -44,7 +45,10 @@ public final class CallFilter
 			return res(true, sect);
 		// check found contact groups if any
 		if(A.geti("filter_groups_count_"+sect) > 0) {
-			if(lastGroups == null) lastGroups = Contacts.groups(con);
+			synchronized(this) {
+				if(lastGroups == null)
+					lastGroups = Contacts.groups(con);
+			}
 			for(String group : lastGroups)
 				if(A.is("filter_group_"+group+sect)) return true;
 		}
@@ -53,7 +57,7 @@ public final class CallFilter
 	}
 
 	// get display name of given phone number
-	public final String searchName(String num) {
+	public final synchronized String searchName(String num) {
 		if(num==null || num.length()<=0) return null;
 		final boolean cached = num.equals(lastNum);
 		if(cached && lastName!=null) return lastName;
@@ -64,7 +68,7 @@ public final class CallFilter
 	public final String lastNum () { return lastNum;  }
 	public final String lastName() { return lastName; }
 
-	public final void close() {
+	public final synchronized void close() {
 		if(cursor == null) return;
 		cursor.close();
 		cursor     = null;
@@ -82,9 +86,11 @@ public final class CallFilter
 	private static boolean skipDateTime(String sect) {
 		if(!A.is("filter_dt_"+sect)) return false;
 		sect = '_' + sect;
-		// date skip
 		final Calendar cal = Calendar.getInstance();
-		if(!A.is("filter_dt_day"+cal.get(Calendar.DAY_OF_WEEK)+sect)) return true;
+		// date skip
+		//if(!A.is("filter_dt_day"+cal.get(Calendar.DAY_OF_WEEK)+sect)) return true;
+		final String days = A.gets("filter_dt_days"+sect);
+		if(days.length()>0 && days.indexOf(Integer.toString(cal.get(Calendar.DAY_OF_WEEK)))<0) return true;
 		// time skip
 		final int cnt = A.geti("filter_dt_time_count"+sect);
 		if(cnt <= 0) return false;
@@ -105,17 +111,17 @@ public final class CallFilter
 		return true;
 	}
 
-	private boolean query(String num, boolean cached) {
+	private synchronized boolean query(String num, boolean cached) {
 		if(!cached) {
 			if(cursor != null) cursor.close();
 			lastGroups = null;
 			lastNum    = num;
-			if(num.charAt(0) == '+') num = "%2B"+num.substring(1);	// equals to Uri.encode(num) for phone numbers (but faster)
-			cursor = A.resolver().query(Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI, num),
-					                        new String[]{ PhoneLookup._ID, PhoneLookup.DISPLAY_NAME, PhoneLookup.STARRED },
-					                        null, null, null);
+			//if(num.charAt(0) == '+') num = "%2B"+num.substring(1);	// like Uri.encode(num) but faster for phone numbers
+			num = Uri.encode(num);
+			if(proj == null) proj = new String[]{ PhoneLookup._ID, PhoneLookup.DISPLAY_NAME, PhoneLookup.STARRED };
+			cursor = A.resolver().query(Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI, num), proj, null, null, null);
 		}
-		return cursor.moveToFirst();
+		return cursor!=null && cursor.moveToFirst();
 	}
 
 	private boolean isStarred() {

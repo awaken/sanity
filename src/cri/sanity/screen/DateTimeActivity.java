@@ -16,11 +16,11 @@ public class DateTimeActivity extends ScreenActivity implements OnPreferenceChan
 	private static final char   SEP_TIME   = ':';
 	private static final String SEP_RANGE  = "   >>>   ";
 	private static final String FILTER_DAY = "filter_dt_day";
+	private final static String[] DAYS     = new String[]{ "2", "3", "4", "5", "6", "7", "1" };	// mon, tue, wed, thu, fri, sat, sun
 
 	private PreferenceGroup prefGroup, prefTimes;
-	private boolean  changed;
+	private boolean  changedDay, changedTime;
 	private String   sect;
-	private String[] days = new String[]{ "2", "3", "4", "5", "6", "7", "1" };	// mon, tue, wed, thu, fri, sat, sun
 
 	//---- public api
 
@@ -38,7 +38,7 @@ public class DateTimeActivity extends ScreenActivity implements OnPreferenceChan
 		initCheckbox("filter_dt");
 		initDays();
 		initTimes();
-		changed = false;
+		changedDay = changedTime = false;
 	}
 	
 	@Override
@@ -49,7 +49,16 @@ public class DateTimeActivity extends ScreenActivity implements OnPreferenceChan
 			Alert.msg(A.s(R.string.err_datetime_day));
 			return;
 		}
-		if(changed) {
+		if(changedDay) {
+			String k = keySect("filter_dt_days");
+			String selDays = "";
+			if(hasDt)
+				for(String d : DAYS)
+					if(is(FILTER_DAY+d)) selDays += d;
+			if(!hasDt || selDays.length()==7) A.del(k);
+			else A.put(k, selDays);
+		}
+		if(changedTime) {
 			final String keyCount = keySect("filter_dt_time_count");
 			final int oldTimes = A.geti(keyCount);
 			final int newTimes = prefTimes.getPreferenceCount() - 1;
@@ -57,8 +66,9 @@ public class DateTimeActivity extends ScreenActivity implements OnPreferenceChan
 				A.put(keySect("filter_dt_time"+i), ((Pref)prefTimes.getPreference(i)).getTime());
 			for(int i=newTimes+1; i<=oldTimes; i++)
 				A.del(keySect("filter_dt_time"+i));
-			A.putc(keyCount, newTimes);
+			A.put(keyCount, newTimes);
 		}
+		if(changedDay || changedTime) A.commit();
 		Intent i = new Intent();
 		i.putExtra(FilterActivity.EXTRA_SECT, hasDt ? 1 : 0);
 		setResult(RESULT_OK, i);
@@ -76,16 +86,17 @@ public class DateTimeActivity extends ScreenActivity implements OnPreferenceChan
 	private void initDays() {
 		on("alldays", new Click(){ public boolean on(){
 			final boolean enable = !hasAllDays();
-			for(String d : days) {
-				final String k = FILTER_DAY+d;
-				setChecked(k, enable);
-				A.put(keySect(k), enable);
-			}
-			A.commit();
-			return true;
+			for(String d : DAYS) setChecked(FILTER_DAY+d, enable);
+			return changedDay = true;
 		}});
-		for(String d : days)
-			initCheckbox(FILTER_DAY+d);
+		final String checkedDays = A.gets(keySect("filter_dt_days"));
+		final boolean all = checkedDays.length() == 0;
+		final Change change = new Change(){ public boolean on(){ return changedDay = true; }};
+		for(String d : DAYS) {
+			final CheckBoxPreference p = (CheckBoxPreference)pref(FILTER_DAY+d);
+			p.setChecked(all || checkedDays.indexOf(d)>=0);
+			on(p, change);
+		}
 	}
 	
 	private void initTimes()
@@ -121,14 +132,14 @@ public class DateTimeActivity extends ScreenActivity implements OnPreferenceChan
 
 	private boolean hasAllDays() {
 		boolean all = true;
-		for(String d : days)
+		for(String d : DAYS)
 			all &= is(FILTER_DAY+d);
 		return all;
 	}
 	
 	private boolean hasDays() {
 		boolean has = false;
-		for(String d : days)
+		for(String d : DAYS)
 			has |= is(FILTER_DAY+d);
 		return has;
 	}
@@ -173,7 +184,7 @@ public class DateTimeActivity extends ScreenActivity implements OnPreferenceChan
 							break;
 						case 1:		// delete
 							prefTimes.removePreference(Pref.this);
-							changed = true;
+							changedTime = true;
 							break;
 					}
 				}
@@ -183,7 +194,7 @@ public class DateTimeActivity extends ScreenActivity implements OnPreferenceChan
 		@Override
 		public void got(int h1, int m1, int h2, int m2) {
 			setTitle(range2str(this.h1=h1, this.m1=m1, this.h2=h2, this.m2=m2));
-			changed = true;
+			changedTime = true;
 		}
 	}
 

@@ -1,2 +1,5 @@
-El motor TTS no está instalado en su sistema. Sanity se requiere para anunciar la persona que llama.
-Instalaría motor TTS ahora?
+Ningún motor TTS ha sido seleccionado o instalado en su sistema.
+
+Sanity se requiere para anunciar la persona que llama.
+
+¿Quiere instalar el motor TTS ahora?

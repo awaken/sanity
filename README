@@ -18,6 +18,17 @@ An Android application to assist during phone calls.
   Change log
 -------------------
 
+* version 2.09  (22/04/2011)
+- New: Anonymous calls section.
+- New: options to announce the sender of received SMS.
+- New: option to notify when automatic restoration from silent/airplane mode is activated.
+- New: option to change the audio stream to announce.
+- Fix: minor bugs.
+- Change: minor improvements.
+
+* version 2.08  (08/04/2011)
+- Fix: force close on Urgent call section.
+
 * version 2.07  (08/04/2011)
 - New: Urgent calls section.
 - New: options to block SMS (Call block section).
@@ -218,10 +229,27 @@ An Android application to assist during phone calls.
   TODO
 -------------------
 
+* BUGS:
+  - wifi doesn't always restore
+  - sometimes bt headsets are disconnected when Sanity answers the call
+
+* call filter: patterns (prefix, suffix, substring, wildcards)
+
+* change the ringtone at different times/days;
+* choose preferred ringtone volume
+* rising ringtone volume
+
+* new option in profiles: choose which preferences to store in the profile!
+
+* sound/vibrate when losing/restoring gsm signal
+* new bluetooth handling (manually choose paired devices to consider audio ones)
+
+* change the colors of menu_general.png
+* file sizes in record archive (and total file nums + size at the bottom of the page)
+
 * integrated audio player?
+* voicemail
+
+* send sms after call block?
 * flip silence?
 * call log sync to gmail???
-
-* new call block method: attiva la segreteria telefonica?
-
-* voicemail

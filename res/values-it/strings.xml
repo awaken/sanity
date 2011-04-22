@@ -44,11 +44,13 @@
 	<string name="history">Cronologia</string>
 	<string name="call">Chiama</string>
 	<string name="send_sms">Invia SMS</string>
+	<string name="contact">Contatto</string>
 	<string name="view_contact">Mostra il contatto</string>
 	<string name="add_contact">Aggiungi nuovo contatto</string>
 	<string name="copy">Copia</string>
 	<string name="share">Condividi</string>
 	<string name="hours_mins">\  Ore \  \  \  \  \  \  Minuti</string>
+  <string name="phone_number">Numero di telefono</string>
 
 	<string name="always">Sempre</string>
 	<string name="time">Ora</string>
@@ -103,7 +105,7 @@
 	<string name="option_shortcut">Singola opzione</string>
 
   <string name="devices_cat">Dispositivi</string>
-  <string name="devices_sum">Quali dispositivi spegnere per ridurre le onde elettromagnetiche durante la telefonata.</string>
+  <string name="devices_sum">Quali dispositivi accendere o spegnere per ridurre le onde elettromagnetiche durante la chiamata.</string>
   <string name="gps_title">Spegni GPS</string>
   <string name="gps_sum">Disabilita il GPS durante la telefonata (sarà ripristinato al termine della chiamata). Funziona su molti telefoni, ma non su tutti.</string>
   <string name="mobdata_title">Spegni Connessione Dati</string>
@@ -233,7 +235,7 @@
 	<string name="blocksms_cat">Blocco SMS</string>
 	<string name="blocksms_title">Abilita blocco SMS</string>
 	<string name="blocksms_sum">Abilita il sistema di blocco degli SMS per cancellare automaticamente i messaggi non voluti.</string>
-	<string name="blocksms_shared_title">Filtro condiviso</string>
+	<string name="blocksms_shared_title">Filtro condiviso (SMS)</string>
 	<string name="blocksms_shared_sum">Se attivato, usa il filtro del blocco chiamate per bloccare anche gli SMS. In alternativa, puoi scegliere un filtro dedicato al blocco degli SMS.</string>
 	<string name="blocksms_notify_title">Notifica blocco SMS</string>
 	<string name="blocksms_notify_sum">Notifica sulla barra di stato l\'ultimo SMS bloccato.</string>
@@ -242,7 +244,7 @@
 	<string name="blocksms_history_sum">Mostra la lista dettagliata dei messaggi SMS recentemente bloccati.</string>
 
 	<string name="tts_cat">Annuncia chiamante</string>
-	<string name="tts_sum">Pronuncia il nome del chiamante quando si riceve una chiamata.</string>
+	<string name="tts_sum">Pronuncia il nome del chiamante quando si riceve una telefonata o un SMS.</string>
 	<string name="tts_enable_title">Attiva annuncio</string>
 	<string name="tts_enable_sum">Pronuncia il nome del chiamante quando si riceve una chiamata (mentre il telefono squilla).</string>
 	<string name="tts_global_title">Impostazioni globali</string>
@@ -272,8 +274,19 @@
 	<string name="tts_anonym_sum">Scrivi la parola \"Anonimo\" nella tua lingua per annunciare le chiamate anonime.</string>
 	<string name="tts_unknown_title">Sconosciuto</string>
 	<string name="tts_unknown_sum">Scrivi la parola \"Sconosciuto\" nella tua lingua per annunciare un chiamante non in rubrica.</string>
+	<string name="tts_stream_title">Audio alternativo</string>
+	<string name="tts_stream_sum">Usa un flusso audio alternativo per pronunciare. Abilita questa opzione solo se non riesci a sentire l\'annuncio (prova qui sotto).</string>
 	<string name="tts_test_title">Prova</string>
 	<string name="tts_test_sum">Tocca qui per provare ad annunciare usando le opzioni attuali.</string>
+	<string name="ttsms_cat">Annuncia mittente SMS</string>
+	<string name="ttsms_title">Attiva annuncio SMS</string>
+	<string name="ttsms_sum">Pronuncia il nome del mittente all\'arrivo di un SMS (solo il nome del mittente viene pronunciato, NON il contenuto del messaggio).</string>
+	<string name="ttsms_prefix_title">Prefisso (SMS)</string>
+	<string name="ttsms_prefix_sum">Scegli cosa pronunciare PRIMA del nome del mittente.</string>
+	<string name="ttsms_suffix_title">Suffisso (SMS)</string>
+	<string name="ttsms_suffix_sum">Scegli cosa pronunciare DOPO il nome del mittente.</string>
+	<string name="ttsms_shared_title">Filtro condiviso (TTS)</string>
+	<string name="ttsms_shared_sum">Se attivato, usa lo stesso filtro dell\'annuncia chiamante. Altrimenti scegli un filtro specifico per annunciare gli SMS.</string>
 
 	<string name="urgent_cat">Chiamate urgenti</string>
 	<string name="urgent_sum">Scegli su quali numeri far squillare o vibrare il telefono quando è in modalità silenziosa.</string>
@@ -294,6 +307,19 @@
 	<string name="answer_skip_sum">Non rispondere automaticamente quando il telefono è in modalità silenziosa.</string>
 	<string name="answer_delay_title">Ritardo di risposta</string>
 	<string name="answer_delay_sum">Quanto tempo attendere prima di rispondere automaticamente.</string>
+
+	<string name="anonym_cat">Chiamate anonime</string>
+	<string name="anonym_sum">Regole per comporre chiamate anonime (per chiamare come numero privato).</string>
+	<string name="anonym_enable_title">Abilita chiamate anonime</string>
+	<string name="anonym_enable_sum">Scegli se abilitare o disabilitare completamente le chiamate in uscita anonime automatiche.</string>
+	<string name="anonym_confirm_title">Conferma chiamate</string>
+	<string name="anonym_confirm_sum">Se abilitato, Sanity ti chiederà di confermare se la chiamata in uscita deve essere anonima.</string>
+	<string name="anonym_notify_title">Notifica se anonima</string>
+	<string name="anonym_notify_sum">Notifica quando la chiamata in uscita è anonima (in tutti i casi non ci saranno notifiche per chiamate non anonime).</string>
+	<string name="anonym_country_title">Paese</string>
+	<string name="anonym_country_sum">Scegli il tuo paese per impostare il prefisso di composizione usato per rendere privato il tuo numero.</string>
+	<string name="anonym_prefix_title">Prefisso anonimo</string>
+	<string name="anonym_prefix_sum">Il prefisso utilizzato per rendere anonime le tue chiamate. Se non lo conosci, scegli il tuo paese.</string>
 
 	<string name="vol_cat">Volume</string>
 	<string name="vol_sum">Opzioni per la gestione automatica del volume durante una telefonata.</string>
@@ -376,7 +402,7 @@
 
 	<string name="history_clear_title">Pulisci tutto</string>
 	<string name="history_clear_sum">Rimuove tutti gli elementi della cronologia.</string>
-	<string name="history_block">Cronologia - Blocco chiamate</string>
+	<string name="history_call">Cronologia - Blocco chiamate</string>
 	<string name="history_sms">Cronologia - Blocco SMS</string>
 
   <string name="donate_title">Donazione</string>
@@ -399,6 +425,8 @@
   <string name="ask_clear_history">Sei sicuro di voler CANCELLARE tutta la cronologia?</string>
   <string name="ask_silent_limit">Per quante ore e minuti rimanere silenzioso</string>
   <string name="ask_airplane_limit">Per quante ore e minuti rimanere offline</string>
+  <string name="ask_anonym_title">Conferma chiamata anonima</string>
+  <string name="ask_anonym_msg">Vuoi chiamare in anonimo?</string>
 
   <string name="msg_rec_title">Sanity - Registratore</string>
   <string name="msg_rec_start">Tocca qui per AVVIARE la registrazione</string>
@@ -425,6 +453,8 @@
   <string name="msg_prf_addnew">Scegli il nome del nuovo profilo da creare</string>
   <string name="msg_prf_rename">Modifica il nome del profilo</string>
   <string name="msg_prf_nosel">Nessun profilo risulta selezionato!</string>
+  <string name="msg_prf_restore_ok">Sanity: profilo \"%s\" attivo</string>
+  <string name="msg_prf_restore_err">Sanity: impossibile attivare il profilo \"%s\"!</string>
   <string name="msg_nums_edit">Numero telefonico (con prefisso internazionale)</string>
   <string name="msg_empty_list">Non esistono elementi in questa lista. Usa il menù per crearne di nuovi.</string>
   <string name="msg_last_modified">Ultima modifica</string>
@@ -437,10 +467,13 @@
   <string name="msg_contact_sel">\"%s\" selezionato</string>
   <string name="msg_callog_new">Nuovo numero dalle chiamate recenti</string>
   <string name="msg_callog_empty">Il registro non contiene nuovi numeri sconosciuti!</string>
+  <string name="msg_headset_on">Sanity: cuffie collegate.</string>
+  <string name="msg_headset_off">Sanity: cuffie scollegate.</string>
   <string name="msg_incompatible">Spiacente, questa funzionalità non funziona sulla tua versione di Android.</string>
 	<string name="msg_clipboard_copied">Elemento copiato negli appunti</string>
   <string name="msg_mode_scheduled">Sanity: ripristino pianificato alle %s</string>
   <string name="msg_option_set" formatted="false">%s impostato su \"%s\"</string>
+  <string name="msg_anonym_dial">Sanity: composizione chiamata anonima</string>
 
   <string name="err_dir">Sanity errore: impossibile creare la cartella sulla sdcard per salvare le registrazioni audio!</string>
   <string name="err_rec">Sanity errore: impossibile avviare la registrazione audio!</string>

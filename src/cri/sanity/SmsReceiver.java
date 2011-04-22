@@ -5,12 +5,16 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
-import android.text.format.DateFormat;
+import android.text.TextUtils;
 import cri.sanity.util.*;
 
 
@@ -22,45 +26,82 @@ public class SmsReceiver extends BroadcastReceiver
 	private static final String UNSLASH = Conf.SMS_UNSLASH;
 
 	private FileWriter logFile;
+	private String idTTS;
+	private static String anonym, unknown;
 	private static CallFilter cf;
 
-	public static final CallFilter callFilter() { return cf; }
+	// used by TTS and Blocker
+	public static final CallFilter callFilter() { return cf==null? new CallFilter() : cf; }
 
 	@Override
-	public void onReceive(Context ctx, Intent intent) 
+	public void onReceive(Context ctx, Intent i) 
 	{
-		if(!A.isEnabled() || !A.is(K.BLOCK_SMS) || !A.is(K.BLOCK_FILTER)) return;
-		final Bundle extras = intent.getExtras();
+		if(i==null || !A.isEnabled()) return;
+		final Bundle extras = i.getExtras();
 		if(extras == null) return;
-    final Object[] pdus = (Object[])extras.get("pdus");
-    if(pdus == null) return;
-    final int n = pdus.length;
-    if(n <= 0) return;
+    Object[] pdus = (Object[])extras.get("pdus");
+    if(pdus==null || pdus.length<=0) return;
+
+		final AudioManager am = A.audioMan();
+		final boolean tts = A.is(K.TTS_SMS) && !MainService.isRunning()
+			&& (!A.is(K.TTS_SKIP) || am.getRingerMode()==AudioManager.RINGER_MODE_NORMAL)
+			&& (!A.is(K.TTS_HEADSET) || am.isWiredHeadsetOn() || am.isBluetoothA2dpOn() || am.isBluetoothScoOn());
+
+    idTTS = null;
+		if(A.is(K.BLOCK_SMS) && A.is(K.BLOCK_FILTER)) {
+			pdus = block(pdus, extras, getSectTTS(tts));
+	    if(cf != null) cf.close();
+			if(pdus == null) return;
+		}
+		else if(tts) filterTTS(pdus);
+
+		if(A.empty(idTTS)) return;
+		new TTS(new String(idTTS), false, false, true);
+	}
+
+	private Object[] block(Object[] pdus, Bundle extras, String sectTTS)
+	{
     if(cf == null) cf = new CallFilter();
-		final String sect = A.is(K.BLOCK_SMS_FILTER) ? "blocksms" : "block";
     final int max = A.geti(K.BLOCK_SMS_MAX);
-		int cnt = 0;
+    final int n   = pdus.length;
+    final Map<String,Integer> freeNames = sectTTS==null? null : new HashMap<String,Integer>(n);
+		final String sectBlock = A.is(K.BLOCK_SMS_FILTER) ? "blocksms" : "block";
+    final boolean   log     = max != 0;
+    final boolean[] blocked = new boolean[n];
+    SmsMessage msg; String num = null;
+		int blockCount = 0;
     for(int i=0; i<n; i++) {
   		try {
-	    	final SmsMessage msg = SmsMessage.createFromPdu((byte[])pdus[i]);
-	      final String    from = msg.getOriginatingAddress();
-	      if(!cf.includes(from, sect, false)) continue;
-	      if(++cnt == 1) abortBroadcast();
-	      if(max != 0) {
-	      	final String num = cf.lastNum();
-	      	log(num, cf.searchName(num), msg.getMessageBody(), msg.getTimestampMillis());
-	      }
-  		} catch(Exception e) {}
+	    	msg = SmsMessage.createFromPdu((byte[])pdus[i]);
+	    	num = msg.getOriginatingAddress();
+	      if(!cf.includes(num, sectBlock, false)) throw new Exception();
+	      if(log) log(num, cf.searchName(num), msg.getMessageBody(), msg.getTimestampMillis());
+	      blocked[i] = true;
+	      ++blockCount;
+  		} catch(Exception e) {
+  			blocked[i] = false;
+  			if(freeNames != null) filterTTS(cf, sectTTS, num, freeNames);
+  		}
     }
-		if(cnt > 0) {
-			if(A.is(K.BLOCK_SMS_NOTIFY))
-				Blocker.notification(true);
-			if(max != 0) {
-				logClose();
-				if(max > 0) logTrunc(max, cnt + A.geti(K.SMS_COUNT));
-			}
+    if(freeNames!=null && !freeNames.isEmpty())
+    	idTTS = TextUtils.join(", ", freeNames.keySet());
+    if(blockCount <= 0)
+    	return pdus;
+		if(log) {
+			logClose();
+			if(max > 0) logTrunc(max, blockCount + A.geti(K.SMS_COUNT));
 		}
-    cf.close();
+		if(A.is(K.BLOCK_SMS_NOTIFY)) Blocker.notification(true);
+    if(blockCount == n) {
+    	abortBroadcast();
+    	return null;
+    }
+  	final Object[] free = new Object[n - blockCount];
+  	for(int k=0, i=0; i<n; i++)
+  		if(!blocked[i]) free[k++] = pdus[i];
+  	extras.putSerializable("pdus", free);
+  	setResultExtras(extras);
+  	return free;
 	}
 
 	private void log(String num, String name, String body, long time) throws IOException
@@ -68,9 +109,8 @@ public class SmsReceiver extends BroadcastReceiver
 		if(logFile == null) logFile = new FileWriter(smsFn(), true);
 		if(num  == null) num  = "";
 		if(name == null) name = "";
-		final String date = DateFormat.format(Conf.DATE_PATTERN, time).toString();
 		body = body.replace("\r","").replace("\\",UNSLASH).replace("\n","\\n").replace(SEP_S, UNSEP);
-		logFile.append(date + SEP + name + SEP + num + SEP + body + '\n');
+		logFile.append(A.date(time) + SEP + name + SEP + num + SEP + body + '\n');
 	}
 	
 	private void logClose()
@@ -83,7 +123,7 @@ public class SmsReceiver extends BroadcastReceiver
   	logFile = null;
 	}
 
-	private void logTrunc(int max, int cnt)
+	private static void logTrunc(int max, int cnt)
 	{
   	if(cnt < max+max/2) {
   		A.putc(K.SMS_COUNT, cnt);
@@ -115,13 +155,44 @@ public class SmsReceiver extends BroadcastReceiver
   	try {
   		final File f = new File(fn);
   		if(f.delete()) new File(tmp).renameTo(f);
-  		else throw new Exception(getClass().getName());
+  		else throw new Exception("SmsReceiver");
   	} catch(Exception e) {
-  		A.putc(K.SMS_COUNT, getClass().getName().equals(e.getMessage()) ? cnt : 0);
+  		A.putc(K.SMS_COUNT, "SmsReceiver".equals(e.getMessage()) ? cnt : 0);
   		try { new File(tmp).delete(); } catch(Exception e2) {}
   	}
 	}
 
-	private String smsFn() { return A.sdcardDir()+'/'+Conf.SMS_FN; }
+	private void filterTTS(Object[] pdus) {
+		if(cf == null) cf = new CallFilter();
+    final int n = pdus.length;
+    final Map<String,Integer> names = new HashMap<String,Integer>(n);
+    final String sectTTS = getSectTTS(true);
+    for(int i=0; i<n; i++) {
+    	try {
+    		filterTTS(cf, sectTTS, SmsMessage.createFromPdu((byte[])pdus[i]).getOriginatingAddress(), names);
+    	} catch(Exception e) {}
+    }
+    cf.close();
+    idTTS = names.isEmpty() ? null : TextUtils.join(", ", names.keySet());
+	}
+
+	private static void filterTTS(CallFilter cf, String sect, String num, Map<String,Integer> map) {
+		if(!cf.includes(num, sect, true)) return;
+		if(A.empty(num)) {
+			if(anonym == null) anonym = A.gets(K.TTS_ANONYM);
+			if(anonym.length() > 0) map.put(anonym, 1);
+		} else {
+			final String name = cf.searchName(num);
+			if(!A.empty(name)) map.put(unknown, 1);
+			else {
+				if(unknown == null) unknown = A.gets(K.TTS_UNKNOWN);
+				if(unknown.length() > 0) map.put(unknown, 1);
+			}
+		}
+	}
+
+	private static String smsFn() { return A.sdcardDir()+'/'+Conf.SMS_FN; }
+
+	private static String getSectTTS(boolean tts) { return tts? A.is(K.TTS_SMS_FILTER)? "ttsms" : "tts" : null; }
 
 }

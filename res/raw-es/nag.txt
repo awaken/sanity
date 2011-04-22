@@ -1,5 +1,9 @@
-Muchas Gracias por usar Sanity. Esta es la versión gratuita.
+Muchas gracias por instalar Sanity. Esta versión es gratuita.
 
-Si te gusta Sanity, apoya al desarrollador con una donación. Cuando hayas donado, este mensaje sera borrado y asi tambien el limite de los 2 minutos de grabación de las llamadas.
+Si usted hace una donación:
+- este aviso será eliminado;
+- puede grabar llamadas sin límites;
+- usted tendrá acceso a todas las opciones;
+- usted anima a el desarrollador para mejorar Sanity.
 
 ¿Quieres abrir el Market para hacer una donación?

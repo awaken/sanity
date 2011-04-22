@@ -28,12 +28,12 @@ public final class ShortcutActivity extends Activity implements DialogInterface.
 	private static final String EXTRA_SCREEN        = "screen";
 	private static final String SHORTCUT_PREFIX     = "[S] ";
 	private static final int    SHORTCUT_ROW        = 4;
-	private static final int    SHORTCUT_FILTER_ROW = 3;
+	private static final int    SHORTCUT_FILTER_ROW = PrefGroups.SHORTCUT_FILTER_ROW;
 
 	private boolean skipQuit = false;
 
 	// SHORTCUT_ROW contains how many values are in one row!
-	private Object[] getShortcuts() {
+	private static Object[] getShortcuts() {
 		return new Object[] {
 			R.string.option_shortcut       , 0                        , EXTRA_OPTION  , null,
 			R.string.filter_cat            , 0                        , EXTRA_FILTER  , null,
@@ -51,26 +51,18 @@ public final class ShortcutActivity extends Activity implements DialogInterface.
 			R.string.tts_cat               , R.drawable.menu_tts      , EXTRA_SCREEN  , TtsActivity.class.getName(),
 			R.string.urgent_cat            , R.drawable.menu_urgent   , EXTRA_SCREEN  , UrgentActivity.class.getName(),
 			R.string.answer_cat            , R.drawable.menu_answer   , EXTRA_SCREEN  , AnswerActivity.class.getName(),
+			R.string.anonym_cat            , R.drawable.menu_anonym   , EXTRA_SCREEN  , AnonymActivity.class.getName(),
 			R.string.rec_cat               , R.drawable.menu_rec      , EXTRA_SCREEN  , RecordActivity.class.getName(),
 			R.string.rec_shortcut          , R.drawable.ic_rec_now    , EXTRA_REC     , null,
 			R.string.rec_browse_title      , R.drawable.menu_browse   , EXTRA_SCREEN  , BrowseActivity.class.getName(),
-			R.string.history_block         , R.drawable.menu_block    , EXTRA_SCREEN  , CallHistoryActivity.class.getName(),
+			R.string.history_call          , R.drawable.menu_block    , EXTRA_SCREEN  , CallHistoryActivity.class.getName(),
 			R.string.history_sms           , R.drawable.menu_block    , EXTRA_SCREEN  , SmsHistoryActivity.class.getName(),
 			R.string.about_cat             , R.drawable.menu_about    , EXTRA_SCREEN  , AboutActivity.class.getName(),
 		};
 	}
 	
 	// SHORTCUT_FILTER_ROW contains how many values are in one row!
-	private Object[] getFilterShortcuts() {
-		return new Object[] {
-			R.string.rec_cat     , R.drawable.menu_rec   , "rec",
-			R.string.block_cat   , R.drawable.menu_block , "block",
-			R.string.blocksms_cat, R.drawable.menu_block , "blocksms",
-			R.string.tts_cat     , R.drawable.menu_tts   , "tts",
-			R.string.urgent_cat  , R.drawable.menu_urgent, "urgent",
-			R.string.answer_cat  , R.drawable.menu_answer, "answer",
-		};
-	}
+	private static Object[] getFilterShortcuts() { return PrefGroups.filterShortcuts(); }
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

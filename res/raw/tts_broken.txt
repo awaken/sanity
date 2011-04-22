@@ -1,0 +1,5 @@
+Error: the Text-To-Speech (TTS) engine cannot be found in your system!
+
+Please install it from the Market and check it works properly.
+
+Sorry, the "announce caller" options cannot be enabled if the TTS engine doesn't works.

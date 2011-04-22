@@ -7,10 +7,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
-import android.text.format.DateFormat;
 import cri.sanity.*;
-import cri.sanity.screen.CallHistoryActivity;
-import cri.sanity.screen.SmsHistoryActivity;
+import cri.sanity.screen.*;
 
 
 public final class Blocker
@@ -30,6 +28,8 @@ public final class Blocker
 
 	//---- public api
 
+	//public static final boolean isBlocking() { return mode != MODE_NONE; }
+
 	public static final boolean apply(int blockMode)
 	{
 		name = num = null;
@@ -45,7 +45,7 @@ public final class Blocker
 			case MODE_SILENT:
 				final PhoneListener pl = PhoneListener.getActiveInstance();
 				if(pl==null || !pl.changeRinger(AudioManager.RINGER_MODE_SILENT, AudioManager.VIBRATE_SETTING_OFF)) return false;
-				new Task(){ public void run(){ try { A.devpolMan().lockNow(); } catch(Exception e) {} }}.exec(Conf.BLOCK_LOCK_DELAY);
+				new Task(){ public void run(){ Dev.lock(); }}.exec(Conf.BLOCK_LOCK_DELAY);
 				break;
 			case MODE_ANSWER:
 				Dev.answerCall();
@@ -81,8 +81,9 @@ public final class Blocker
 				}};
 				runMute.run();
 				BlankActivity.postSingleton(runMute);
-				BlankActivity.postSingleton(new Runnable(){ public void run(){ try { A.devpolMan().lockNow(); } catch(Exception e) {} }});
+				BlankActivity.postSingleton(new Runnable(){ public void run(){ Dev.lock(); }});
 				Intent i = new Intent(A.app(), BlankActivity.class);
+				i.putExtra(BlankActivity.EXTRA_BLOCK, true);
 				i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				A.app().startActivity(i);
 				new Task(){ public void run(){ Dev.endCall(); }}.exec(ANSWER_TIMEOUT);
@@ -120,7 +121,7 @@ public final class Blocker
 		}
 		if(A.is(K.BLOCK_NOTIFY)) notification(false);
 		log();
-		try { A.devpolMan().lockNow(); } catch(Exception e) {}
+		Dev.lock();
 		mode = MODE_NONE;
 	}
 
@@ -149,9 +150,8 @@ public final class Blocker
 	private static void log()
 	{
 		try {
-			FileWriter fw = new FileWriter(A.sdcardDir()+'/'+Conf.BLOCK_FN, true);
-			final String date = DateFormat.format(Conf.DATE_PATTERN, A.time()).toString();
-			fw.append(date + SEP + name() + SEP + num() + '\n');
+			final FileWriter fw = new FileWriter(A.sdcardDir()+'/'+Conf.BLOCK_FN, true);
+			fw.append(A.date() + SEP + name() + SEP + num() + '\n');
 			fw.flush();
 			fw.close();
 		} catch(Exception e) {}
@@ -162,16 +162,14 @@ public final class Blocker
 	
 	private static void readNameNum()
 	{
-		final PhoneListener pl = PhoneListener.getActiveInstance();
-		final CallFilter    cf = pl==null ? SmsReceiver.callFilter() : CallFilter.instance();
-		if(cf == null) { num = name = ""; return; }
+		final CallFilter cf = PhoneListener.isRunning() ? CallFilter.instance() : SmsReceiver.callFilter();
 		num = cf.lastNum();
 		if(num == null) num = "";
 		if(num.length() <= 0)
-			name = A.gets(K.TTS_ANONYM);
+			name = A.s(R.string.anonymous);
 		else {
 			name = cf.searchName(num);
-			if(A.empty(name)) name = A.gets(K.TTS_UNKNOWN);
+			if(A.empty(name)) name = A.s(R.string.unknown);
 		}
 	}
 	

@@ -1,6 +1,9 @@
 package cri.sanity;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnDismissListener;
@@ -12,15 +15,18 @@ import cri.sanity.util.*;
 
 public class ModeActivity extends Activity implements OnDismissListener
 {
+	public  static final int NID_SILENT = 55;
+	public  static final int NID_FLIGHT = 77;
+
 	private static final String PREFIX_TIME = "priv_mode_time_";
 	private static final String EXTRA_FORCE = "force";
 
 	private static boolean started = false;
 	private static boolean running = false;
-	private String action, msg, forceMethod;
+	private String action, msg, title, forceMethod;
+	private int nid;
 
-	public static final void start(String action, boolean force)
-	{
+	public static final void start(String action, boolean force) {
 		started  = true;
 		Intent i = new Intent(A.app(), ModeActivity.class);
 		i.setAction(action);
@@ -30,8 +36,7 @@ public class ModeActivity extends Activity implements OnDismissListener
 	}
 	
 	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		if(running || !init()) {
 			if(!running) startActivity(new Intent(A.app(), MainActivity.class));
@@ -52,7 +57,10 @@ public class ModeActivity extends Activity implements OnDismissListener
 					A.putc(keyTime, hour<<8 | mins);
 					final long delay = hour*(3600l*1000l) + mins*(60l*1000l);
 					Alarmer.exec(action, delay);
-					if(delay >= 60000) A.toast(String.format(A.s(R.string.msg_mode_scheduled), DateFormat.format("kk:mm", A.time()+delay)));
+					final long  time = A.time();
+					final String msg = String.format(A.s(R.string.msg_mode_scheduled), DateFormat.format("kk:mm", time+delay));
+					A.toast(msg);
+					notification(msg, time);
 				}
 			},
 			this
@@ -60,14 +68,12 @@ public class ModeActivity extends Activity implements OnDismissListener
 	}
 
 	@Override
-	public void onDestroy()
-	{
+	public void onDestroy() {
 		super.onDestroy();
 		running = false;
 	}
 
-	private boolean init()
-	{
+	private boolean init() {
 		if(!started) return false;
 		started = false;
 		final Intent i = getIntent();
@@ -76,20 +82,31 @@ public class ModeActivity extends Activity implements OnDismissListener
 		return checkAction(i.getBooleanExtra(EXTRA_FORCE, false));
 	}
 
-	private boolean checkAction(boolean force)
-	{
+	private boolean checkAction(boolean force) {
 		if(Alarmer.ACT_SILENTLIMIT.equals(action)) {
 			if(!force && A.audioMan().getRingerMode()==AudioManager.RINGER_MODE_NORMAL) return false;
-			msg = A.s(R.string.ask_silent_limit);
 			forceMethod = force? "forceSilent" : null;
+			title       = A.s(R.string.silent_shortcut);
+			msg         = A.s(R.string.ask_silent_limit);
+			nid         = NID_SILENT;
 		}
 		else if(Alarmer.ACT_FLIGHTOFF.equals(action)) {
 			if(!force && !Dev.isFlightModeOn()) return false;
-			msg = A.s(R.string.ask_airplane_limit);
 			forceMethod = force? "forceFlight" : null;
+			title       = A.s(R.string.airplane_shortcut);
+			msg         = A.s(R.string.ask_airplane_limit);
+			nid         = NID_FLIGHT;
 		}
 		else return false;
 		return true;
+	}
+	
+	private void notification(String msg, long time) {
+		final Context ctx = A.app();
+		Notification n = new Notification(R.drawable.ic_timeout_bar, msg, time);
+		n.flags = Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR;
+		n.setLatestEventInfo(ctx, A.name()+" - "+title, msg, PendingIntent.getService(ctx, 0, new Intent(), 0));
+		A.notifMan().notify(nid, n);
 	}
 
 	public static void forceSilent() {
@@ -104,9 +121,6 @@ public class ModeActivity extends Activity implements OnDismissListener
 	}
 
 	@Override
-	public void onDismiss(DialogInterface dlg)
-	{
-		finish();
-	}
+	public void onDismiss(DialogInterface dlg) { finish(); }
 
 }

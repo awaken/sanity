@@ -1,2 +1,5 @@
-Il motore TTS non risulta installato sul tuo sistema. Sanity lo richiede per annunciare il chiamante.
+Il motore TTS non risulta selezionato o installato sul tuo sistema.
+
+Sanity lo richiede per annunciare il chiamante.
+
 Vuoi installare ora il motore TTS?

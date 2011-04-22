@@ -5,6 +5,9 @@
 	  <CheckBoxPreference android:title="@string/vibrate_end_title"
 	                      android:summary="@string/vibrate_end_sum"
 	                      android:key="vibrate_end" />
+	  <CheckBoxPreference android:title="@string/notify_timeout_title"
+	                      android:summary="@string/notify_timeout_sum"
+	                      android:key="notify_timeout" />
 	  <CheckBoxPreference android:title="@string/notify_disable_title"
 	                      android:summary="@string/notify_disable_sum"
 	                      android:key="notify_disable" />
@@ -29,5 +32,8 @@
 	  <CheckBoxPreference android:title="@string/blocksms_notify_title"
 	                      android:summary="@string/blocksms_notify_sum"
 	                      android:key="blocksms_notify" />
+	  <CheckBoxPreference android:title="@string/anonym_notify_title"
+	                      android:summary="@string/anonym_notify_sum"
+	                      android:key="anonym_notify" />
 	</PreferenceCategory>
 </PreferenceScreen>

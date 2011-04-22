@@ -77,8 +77,8 @@ public class RecService extends Service
 		A.notifyCanc(NID);
 	}
 
-	public static final void recStart(int delay) { taskRecStart.exec(TASK_EXEC, delay); }
-	public static final void recStop (int delay) { taskRecStop .exec(TASK_EXEC, delay); }
+	public static final void recStart(int delay) { if(taskRecStart != null) taskRecStart.exec(TASK_EXEC, delay); }
+	public static final void recStop (int delay) { if(taskRecStop  != null) taskRecStop .exec(TASK_EXEC, delay); }
 
 	public static final void checkAutoRec() {
 		if(rec==null || rec.isStarted()) return;
@@ -156,8 +156,14 @@ public class RecService extends Service
 
 	//---- private api
 
-	private static void startService() { A.app().startService(new Intent(A.app(), RecService.class)); }
-	private static void  stopService() { A.app(). stopService(new Intent(A.app(), RecService.class)); }
+	private static void startService() {
+		final Context ctx = A.app();
+		ctx.startService(new Intent(ctx, RecService.class));
+	}
+	private static void stopService() {
+		final Context ctx = A.app();
+		ctx.stopService(new Intent(ctx, RecService.class));
+	}
 
 	private static void recStartAuto() {
 		if(!autoStart) return;

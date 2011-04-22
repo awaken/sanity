@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<Preference android:key="logo" />
+	<PreferenceCategory android:title="@string/anonym_cat">
+	  <CheckBoxPreference android:title="@string/anonym_enable_title"
+	                      android:summary="@string/anonym_enable_sum"
+	                      android:key="anonym" />
+	  <CheckBoxPreference android:title="@string/anonym_confirm_title"
+	                      android:summary="@string/anonym_confirm_sum"
+	                      android:dependency="anonym"
+	                      android:key="anonym_confirm" />
+	  <CheckBoxPreference android:title="@string/anonym_notify_title"
+	                      android:summary="@string/anonym_notify_sum"
+	                      android:dependency="anonym"
+	                      android:key="anonym_notify" />
+	  <cri.sanity.pref.PList android:title="@string/anonym_country_title"
+	                         android:summary="@string/anonym_country_sum"
+													 android:persistent="false"
+	                         android:dependency="anonym"
+	                         android:key="anonym_country"
+	                         android:entries="@array/anonym_country_labels"
+	                         android:entryValues="@array/anonym_country_values" />
+	  <cri.sanity.pref.PEdit android:title="@string/anonym_prefix_title"
+	                         android:summary="@string/anonym_prefix_sum"
+	                         android:dependency="anonym"
+	                         android:key="anonym_prefix" />
+	  <cri.sanity.pref.PFilter android:dependency="anonym"
+	                           android:key="filter_anonym" />
+	</PreferenceCategory>
+</PreferenceScreen>

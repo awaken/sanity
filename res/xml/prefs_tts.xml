@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<Preference android:key="logo" />
+
 	<PreferenceCategory android:title="@string/tts_cat">
 	  <CheckBoxPreference android:title="@string/tts_enable_title"
 	                      android:summary="@string/tts_enable_sum"
@@ -74,6 +75,10 @@
 	                         android:key="tts_unknown" />
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/geek_cat">
+	  <CheckBoxPreference android:title="@string/tts_stream_title"
+	                      android:summary="@string/tts_stream_sum"
+	                      android:dependency="tts"
+	                      android:key="tts_stream" />
 	  <Preference android:title="@string/tts_test_title"
 	              android:summary="@string/tts_test_sum"
 	              android:persistent="false"
@@ -83,4 +88,31 @@
 	  <cri.sanity.pref.PFilter android:dependency="tts"
 	                           android:key="filter_tts" />
 	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/ttsms_cat">
+	  <CheckBoxPreference android:title="@string/ttsms_title"
+	                      android:summary="@string/ttsms_sum"
+	                      android:dependency="tts"
+	                      android:key="ttsms" />
+	  <cri.sanity.pref.PEdit android:title="@string/ttsms_prefix_title"
+	                         android:summary="@string/ttsms_prefix_sum"
+	                         android:dependency="ttsms"
+	                         android:key="ttsms_prefix"
+	                         android:singleLine="true"
+	                         suffix=" " />
+	  <cri.sanity.pref.PEdit android:title="@string/ttsms_suffix_title"
+	                         android:summary="@string/ttsms_suffix_sum"
+	                         android:dependency="ttsms"
+	                         android:key="ttsms_suffix"
+	                         android:singleLine="true"
+	                         prefix=" " />
+	  <CheckBoxPreference android:title="@string/ttsms_shared_title"
+	                      android:summary="@string/ttsms_shared_sum"
+	                      android:persistent="false"
+	                      android:dependency="ttsms"
+	                      android:key="ttsms_shared" />
+	  <cri.sanity.pref.PFilter android:dependency="ttsms"
+	                           android:key="filter_ttsms" />
+	</PreferenceCategory>
+
 </PreferenceScreen>

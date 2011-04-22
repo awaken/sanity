@@ -1,0 +1,5 @@
+Error: el motor Text-To-Speech (TTS) no se puede encontrar en su sistema!
+
+Por favor, instálelo desde el Market y comprobar que funciona correctamente.
+
+Lo sentimos, las opciones de "anunciar llamadas" no se puede habilitar si el motor TTS no funciona.

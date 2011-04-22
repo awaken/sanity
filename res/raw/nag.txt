@@ -1,5 +1,9 @@
-Thank you for using Sanity. This is the free version.
+Thank you for installing Sanity. This is the free version.
 
-If you like Sanity, you can donate for supporting it. After donating, this dialog will be suppressed and the 2 minutes limit of the call recorder will be removed.
+If you make a donation:
+- this notice will be suppressed;
+- you can record calls without limits;
+- you'll have access to all options;
+- you'll encourage the developer to improve Sanity.
 
-Would you open Market now for donating?
+Would you like to open Market now for donating?

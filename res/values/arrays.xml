@@ -39,6 +39,9 @@
 		<item>9 seconds</item>
 		<item>10 seconds</item>
 		<item>15 seconds</item>
+		<item>20 seconds</item>
+		<item>25 seconds</item>
+		<item>30 seconds</item>
 	</string-array>
 	<string-array name="disable_delay_values">
 		<item>0</item>
@@ -53,6 +56,9 @@
 		<item>9000</item>
 		<item>10000</item>
 		<item>15000</item>
+		<item>20000</item>
+		<item>25000</item>
+		<item>30000</item>
 	</string-array>
 
 	<string-array name="enable_delay_labels">
@@ -69,6 +75,9 @@
 		<item>9 seconds</item>
 		<item>10 seconds</item>
 		<item>15 seconds</item>
+		<item>20 seconds</item>
+		<item>25 seconds</item>
+		<item>30 seconds</item>
 	</string-array>
 	<string-array name="enable_delay_values">
 		<item>-1</item>
@@ -84,6 +93,9 @@
 		<item>9000</item>
 		<item>10000</item>
 		<item>15000</item>
+		<item>20000</item>
+		<item>25000</item>
+		<item>30000</item>
 	</string-array>
 
 	<string-array name="speaker_call_labels">
@@ -404,6 +416,31 @@
 		<item>1</item>
 		<item>2</item>
 		<item>3</item>
+	</string-array>
+	
+	<string-array name="anonym_country_labels">
+		<item>USA, Canada (*67)</item>
+		<item>European countries (#31#)</item>
+		<item>United Kingdom, Ireland (141)</item>
+		<item>Germany (*31#)</item>
+		<item>Denmark, Switzerland, Argentina (*31*)</item>
+		<item>Israel (*43)</item>
+		<item>Hong Kong (133)</item>
+		<item>Australia (1831)</item>
+		<item>New Zealand (0197)</item>
+		<item>Custom prefix</item>
+	</string-array>
+	<string-array name="anonym_country_values">
+		<item>*67</item>
+		<item>#31#</item>
+		<item>141</item>
+		<item>*31#</item>
+		<item>*31*</item>
+		<item>*43</item>
+		<item>133</item>
+		<item>1831</item>
+		<item>0197</item>
+		<item></item>
 	</string-array>
 
 </resources>

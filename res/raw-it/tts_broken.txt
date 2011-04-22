@@ -1,0 +1,5 @@
+Errore: il motore Text-To-Speech (TTS) non è stato trovato sul tuo sistema!
+
+Per favore installalo dal Market e verifica che funzioni correttamente.
+
+Spiacente, le opzione di "annuncia chiamante" non possono essere abilitate se il motore TTS non funziona.

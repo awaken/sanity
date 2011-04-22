@@ -14,5 +14,8 @@
 	  <CheckBoxPreference android:title="@string/vol_solo_title"
 	                      android:summary="@string/vol_solo_sum"
 	                      android:key="vol_solo" />
+	  <cri.sanity.pref.PList android:title="@string/tts_vol_title"
+	                         android:summary="@string/tts_vol_sum"
+	                         android:key="tts_vol_s" />
 	</PreferenceCategory>
 </PreferenceScreen>

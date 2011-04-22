@@ -17,16 +17,13 @@ import android.content.IntentFilter;
 
 public final class PhoneListener extends PhoneStateListener implements SensorEventListener
 {
-	public  static final int   LISTEN = LISTEN_CALL_STATE|LISTEN_CALL_FORWARDING_INDICATOR;	
-	private static final int   FORCE_AUTOSPEAKER_DELAY = Conf.FORCE_AUTOSPEAKER_DELAY;
-	private static final int   CALL_STATE_NONE         = -1;
-	private static final int   CALL_STATE_RINGING      = TelephonyManager.CALL_STATE_RINGING;
-	private static final int   CALL_STATE_OFFHOOK      = TelephonyManager.CALL_STATE_OFFHOOK;
-	private static final int   CALL_STATE_IDLE         = TelephonyManager.CALL_STATE_IDLE;
-	private static final int   SPEAKER_CALL_INCOMING   = 1;
-	private static final int   SPEAKER_CALL_OUTGOING   = 2;
-	private static final int   TASK_DEVS               = Task.idNew();
-	private static final int   TASK_SPEAKER            = Task.idNew();
+	public  static final int LISTEN = LISTEN_CALL_STATE|LISTEN_CALL_FORWARDING_INDICATOR;	
+	private static final int FORCE_AUTOSPEAKER_DELAY = Conf.FORCE_AUTOSPEAKER_DELAY;
+	private static final int CALL_STATE_NONE         = -1;
+	private static final int SPEAKER_CALL_INCOMING   = 1;
+	private static final int SPEAKER_CALL_OUTGOING   = 2;
+	private static final int TASK_DEVS               = Task.idNew();
+	private static final int TASK_SPEAKER            = Task.idNew();
 
 	private static PhoneListener activeInst;
 
@@ -48,8 +45,7 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 	private WifiTracker    wifiTrack;
 	private MobDataTracker mobdTrack;
 
-	private final SensorManager sensorMan = A.sensorMan();
-	private final AudioManager  audioMan  = A.audioMan();
+	private final AudioManager audioMan = A.audioMan();
 	private Sensor proximSensor;
 	private Task   taskSpeakerOn;
 	private Task   taskSpeakerOff;
@@ -63,16 +59,19 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 			final boolean on = i.getIntExtra("state",0) != 0;
 			if(on == wiredHeadsetOn) return;
 			updateHeadset(wiredHeadsetOn = on, volWired);
-			if(on && btReverse) { Dev.enableBt(false); btReverse = false; }
+			if(on && btReverse) {
+				btReverse = false;
+				Dev.enableBt(false);
+			}
 		}
 	};
 
-	//---- static methods
+	//---- static public api
 
 	public static final PhoneListener getActiveInstance() { return activeInst; }
 	public static final boolean       isRunning()         { return activeInst != null; }
 
-	//---- methods
+	//---- public api
 
 	public final void startup() {
 		activeInst  = this;
@@ -92,76 +91,15 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 		speakerListener  = null;
 		lastCallState    = CALL_STATE_NONE;
 		wiredHeadsetOn   = audioMan.isWiredHeadsetOn();
-		headsetOn        = (btCount>0 && A.is(K.FORCE_BT_AUDIO)) || wiredHeadsetOn || audioMan.isBluetoothA2dpOn() || audioMan.isBluetoothScoOn();
-		notifyEnable = notifyDisable = false;
+		headsetOn        = wiredHeadsetOn || (btCount>0 && A.is(K.FORCE_BT_AUDIO)) || audioMan.isBluetoothA2dpOn() || audioMan.isBluetoothScoOn();
 		Dev.wakeCpu();
 	}
 
-	private void initCall() {
-		//A.logd("initCall: begin");
-		proximSensor     = sensorMan.getDefaultSensor(Sensor.TYPE_PROXIMITY);
-		skipBtConn       = A.is(K.SKIP_BT);
-		notifyEnable     = A.is(K.NOTIFY_ENABLE);
-		notifyDisable    = A.is(K.NOTIFY_DISABLE);
-		proximDisable    = proximSensor!=null && A.is(K.DISABLE_PROXIMITY);
-		proximEnable     = proximDisable      && A.is(K. ENABLE_PROXIMITY);
-		proximReverse    = A.is(K.REVERSE_PROXIMITY);
-		rec              = A.is(K.REC);
-		autoSpeaker      = A.is(K.SPEAKER_AUTO) && proximSensor!=null;
-		screenOff        = Admin.isActive() && A.is(K.SCREEN_OFF);
-		screenOn         = A.is(K.SCREEN_ON);
-		speakerOnCount   = A.geti(K.SPEAKER_ON_COUNT);
-		speakerOffCount  = A.geti(K.SPEAKER_OFF_COUNT);
-		speakerOn        = speakerOnCount  >= 0;
-		speakerOff       = speakerOffCount >= 0;
-		speakerCall      = A.geti(K.SPEAKER_CALL);
-		speakerDelay     = A.geti(K.SPEAKER_DELAY);
-		speakerCallDelay = A.geti(K.SPEAKER_CALL_DELAY);
-		disableDelay     = A.geti(K.DISABLE_DELAY);
-		enableDelay      = A.geti(K.ENABLE_DELAY);
-		if(enableDelay < 0) enableDelay = disableDelay;
-		volRestore = -1;
-		volSpeaker = A.geti(K.SPEAKER_VOL);
-		volPhone   = A.geti(K.VOL_PHONE);
-		volWired   = A.geti(K.VOL_WIRED);
-		volBt      = A.geti(K.VOL_BT);
-		volSolo    = A.is(K.VOL_SOLO);
-		volFlags   = A.is(K.NOTIFY_VOLUME) ? AudioManager.FLAG_SHOW_UI : 0;
-		final boolean hotspot = A.is(K.SKIP_HOTSPOT) && Dev.isHotspotOn();
-		final boolean tether  = A.is(K.SKIP_TETHER) && Dev.isTetheringOn();
-		final boolean btOn    = Dev.isBtOn();
-		gpsAuto = A.is(K.AUTO_GPS) && Dev.isGpsOn();
-		final boolean wifi = !hotspot && A.is(K.AUTO_WIFI) && A.wifiMan().isWifiEnabled();
-		final boolean mobd = !hotspot && !tether && (!gpsAuto || !A.is(K.SKIP_MOBDATA)) && A.is(K.AUTO_MOBDATA) && Dev.isMobDataOn();
-		wifiTrack = wifi? new WifiTracker()    : null;
-		mobdTrack = mobd? new MobDataTracker() : null;
-		btAuto    = btOn && A.is(K.AUTO_BT);
-		btReverse = !btOn && !headsetOn && A.is(K.REVERSE_BT);
-		if(autoSpeaker) {
-			taskSpeakerOn  = new Task(){ public void run(){ autoSpeaker(true ); }};
-			taskSpeakerOff = new Task(){ public void run(){ autoSpeaker(false); }};
-		}
-		if(hasAutoDev()) {
-			taskDevsOn     = new Task(){ public void run(){ enableDevs (true ); }};
-			taskDevsOff    = new Task(){ public void run(){ enableDevs (false); }};
-		}
-		regProximity();
-		regHeadset();
-		if(rec) RecService.start(this);
-		//A.logd("startup PhoneListener: end");
-	}
-
-	//public final int     getState     () { return lastCallState; }
-	//public final boolean isRinging    () { return lastCallState == CALL_STATE_RINGING; }
-	//public final boolean isOffhook    () { return lastCallState == CALL_STATE_OFFHOOK; }
-	//private      boolean isIdle       () { return lastCallState == CALL_STATE_IDLE; }
-	//public final boolean isShutdown   () { return shutdown; }
-	public final boolean isOutgoing    () { return outgoing; }
+	public final boolean isOutgoing    () { return outgoing;  }
 	public final boolean isHeadsetOn   () { return headsetOn; }
 	public final boolean hasAutoDev    () { return mobdTrack!=null || wifiTrack!=null || btAuto || gpsAuto; }
 	public final boolean hasAutoSpeaker() { return autoSpeaker; }
 	public final String  phoneNumber   () { return phoneNumber; }
-	public final boolean isRingtoneOn  () { return audioMan.getRingerMode() == AudioManager.RINGER_MODE_NORMAL; }
 
 	public boolean changeRinger(int ring, int vibr) {
 		return changeRinger(ring, vibr, audioMan.getRingerMode(), audioMan.getVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER));
@@ -170,6 +108,76 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 	public final void updateHeadsetBt(boolean on) {
 		if(wiredHeadsetOn) return;	// if wired headset are on, then the new bt device connected is NOT headset one!
 		updateHeadset(on, volBt);
+	}
+	
+	//---- private api
+
+	private void initCall() {
+		//A.logd("PhoneListener.initCall: begin");
+		proximSensor = A.sensorProxim();
+		if(proximSensor == null) {
+			proximDisable = proximEnable = proximReverse = autoSpeaker = false;
+		} else {
+			autoSpeaker     = A.is(K.SPEAKER_AUTO);
+			speakerDelay    = A.geti(K.SPEAKER_DELAY);
+			speakerOnCount  = A.geti(K.SPEAKER_ON_COUNT);
+			speakerOffCount = A.geti(K.SPEAKER_OFF_COUNT);
+			speakerOn       = speakerOnCount  >= 0;
+			speakerOff      = speakerOffCount >= 0;
+			proximReverse   = A.is(K.REVERSE_PROXIMITY);
+			proximDisable   = A.is(K.DISABLE_PROXIMITY);
+			if(!proximDisable)
+				proximEnable  = false;
+			else {
+				proximEnable  = A.is(K. ENABLE_PROXIMITY);
+				disableDelay  = A.geti(K.DISABLE_DELAY);
+				enableDelay   = A.geti(K.ENABLE_DELAY);
+				if(enableDelay < 0) enableDelay = disableDelay;
+			}
+		}
+		speakerCall      = A.geti(K.SPEAKER_CALL);
+		speakerCallDelay = A.geti(K.SPEAKER_CALL_DELAY);
+		screenOff  = Admin.isActive() && A.is(K.SCREEN_OFF);
+		screenOn   = A.is(K.SCREEN_ON);
+		rec        = A.is(K.REC);
+		volRestore = -1;
+		volSpeaker = A.geti(K.SPEAKER_VOL);
+		volPhone   = A.geti(K.VOL_PHONE);
+		volWired   = A.geti(K.VOL_WIRED);
+		volBt      = A.geti(K.VOL_BT);
+		volSolo    = A.is(K.VOL_SOLO);
+		volFlags   = A.is(K.NOTIFY_VOLUME) ? AudioManager.FLAG_SHOW_UI : 0;
+		gpsAuto    = A.is(K.AUTO_GPS) && Dev.isGpsOn();
+		boolean mobd = (!gpsAuto || !A.is(K.SKIP_MOBDATA)) && A.is(K.AUTO_MOBDATA) && Dev.isMobDataOn();
+		boolean wifi = A.is(K.AUTO_WIFI) && A.wifiMan().isWifiEnabled();
+		if((wifi || mobd) && A.is(K.SKIP_HOTSPOT) && Dev.isHotspotOn()) wifi = mobd = false;
+		else if(mobd && A.is(K.SKIP_TETHER) && Dev.isTetheringOn()) mobd = false;
+		wifiTrack = wifi? new WifiTracker()    : null;
+		mobdTrack = mobd? new MobDataTracker() : null;
+		if(Dev.isBtOn()) {
+			btAuto     = A.is(K.AUTO_BT);
+			btReverse  = false;
+			skipBtConn = A.is(K.SKIP_BT);
+		} else {
+			btAuto     = false;
+			btReverse  = !headsetOn && A.is(K.REVERSE_BT);
+		}
+		if(autoSpeaker) {
+			taskSpeakerOn  = new Task(){ public void run(){ autoSpeaker(true ); }};
+			taskSpeakerOff = new Task(){ public void run(){ autoSpeaker(false); }};
+		}
+		if(!hasAutoDev()) {
+			proximEnable = proximDisable = false;
+		} else {
+			taskDevsOn     = new Task(){ public void run(){ enableDevs (true ); }};
+			taskDevsOff    = new Task(){ public void run(){ enableDevs (false); }};
+			notifyEnable   = A.is(K.NOTIFY_ENABLE);
+			notifyDisable  = A.is(K.NOTIFY_DISABLE);
+		}
+		regProximity();
+		regHeadset();
+		if(rec) RecService.start(this);
+		//A.logd("PhoneListener.initCall: end");
 	}
 
 	private void updateHeadset(boolean on, int vol) {
@@ -201,13 +209,13 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 			return;
 		if(!block && !ring && !headsetOn && cf.includes(phoneNumber, "urgent", false))
 			urgentCall(ringMode);
-		final int answer = !block && A.is(K.ANSWER) && (headsetOn || !A.is(K.ANSWER_HEADSET)) && (!A.is(K.ANSWER_SKIP) || isRingtoneOn())
+		final int answer = !block && A.is(K.ANSWER) && (headsetOn || !A.is(K.ANSWER_HEADSET)) && (!A.is(K.ANSWER_SKIP) || ring)
 		                   && cf.includes(phoneNumber, "answer", true)
 		                   ? A.geti(K.ANSWER_DELAY) : -1;
-		if((answer<0 || answer>2000) && A.is(K.TTS) && (headsetOn || !A.is(K.TTS_HEADSET)) && (!A.is(K.TTS_SKIP) || isRingtoneOn()))
-			tts = new TTS(phoneNumber, true);
+		if((answer<0 || answer>2000) && A.is(K.TTS) && (headsetOn || !A.is(K.TTS_HEADSET)) && (!A.is(K.TTS_SKIP) || ring))
+			tts = new TTS(phoneNumber, true, true, false);
 		initCall();
-		btReverse();
+		btAdjust();
 		if(answer >= 0) new Task(){ public void run(){ Dev.answerCall(); }}.exec(answer);
 	}
 
@@ -233,7 +241,7 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 		if(!proximDisable) enableDevs(false);
 		if(outgoing) {
 			phoneNumber = PhoneReceiver.number;
-			btReverse();
+			btAdjust();
 		}
 		if(rec) RecService.checkAutoRec();
 		if(!lastFar) screenOff(true);
@@ -242,8 +250,8 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 
 	// call completed: restore & shutdown
 	private void onIdle() {
-		//A.logd("onIdle: begin");
 		shutdown = true;
+		//A.logd("onIdle: begin");
 		if(offhook) {
 			Task.stop(TASK_SPEAKER);
 			if(!headsetOn && A.is(K.SPEAKER_SILENT_END)) audioMan.setSpeakerphoneOn(false);
@@ -270,8 +278,9 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 		if(mobdTrack != null) { mobdTrack.shutdown(); mobdTrack = null; }
 		if(wifiTrack != null) { wifiTrack.shutdown(); wifiTrack = null; }
 		Task.shutdownWait();
-		if((btReverse || A.is(K.BT_OFF)) && Dev.isBtOn()) { Dev.enableBt(false); A.putc(K.BT_COUNT, 0); }
-		else if(!Dev.isBtOn()) A.putc(K.BT_COUNT, 0);	// recheck to avoid false counter
+		final boolean btOn = Dev.isBtOn();
+		if((btReverse || A.is(K.BT_OFF)) && btOn) { Dev.enableBt(false); A.putc(K.BT_COUNT, 0); }
+		else if(!btOn) A.putc(K.BT_COUNT, 0);		// recheck to avoid false counter
 		offhook = false;
 		phoneNumber = null;
 		MainService.stop();
@@ -295,7 +304,6 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 		if(wifiTrack!=null && enable!=wifiTrack.willOn()) { wifiTrack.enable(enable); done = true; }
 		if(mobdTrack!=null && enable!=mobdTrack.willOn()) { mobdTrack.enable(enable); done = true; }
 		if(btAuto && !btReverse && (!skipBtConn||btCount<1) && enable!=Dev.isBtOn()) { Dev.enableBt(enable); done = true; }
-		//else A.logd("btAuto="+btAuto+", btReverse="+btReverse+", skipBtConn="+skipBtConn+", btCount="+btCount+", isBtOn()="+Dev.isBtOn());
 		//A.logd("enableDevs: "+enable+", done = "+done);
 		if(!done) return;
 		devsLastTime   = now;
@@ -351,7 +359,7 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 	private void screenOff(boolean off) {
 		if(off) {
 			if(!screenOff) return;
-			try { A.devpolMan().lockNow(); } catch(Exception e) {}
+			Dev.lock();
 		} else {
 			if(!screenOn) return;
 			Dev.wakeScreen();
@@ -368,16 +376,25 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 		//A.logd("set volume solo: "+enable);
 	}
 	
-	private void btReverse() {
-		if(!btReverse || headsetOn) return;
-		Dev.enableBt(true);
-		final int timeout = A.geti(K.REVERSE_BT_TIMEOUT);
-		if(timeout <= 0) return;
-		new Task(){ public void run(){
-			if(headsetOn || !btReverse) return;
-			Dev.enableBt(false);
-			btReverse = false;
-		}}.exec(timeout);
+	private void btAdjust() {
+		if(headsetOn) return;
+		boolean btOn;
+		if(!btReverse)
+			btOn = Dev.isBtOn();
+		else {
+			btOn = true;
+			Dev.enableBt(true);
+			final int timeout = A.geti(K.REVERSE_BT_TIMEOUT);
+			if(timeout > 0) new Task(){ public void run(){
+				if(headsetOn || !btReverse) return;
+				Dev.enableBt(false);
+				btReverse = false;
+			}}.exec(timeout);
+		}
+		if(btOn) {
+			audioMan.setBluetoothScoOn(true);
+			headsetOn |= audioMan.isBluetoothScoOn();
+		}
 	}
 
 	private void urgentCall(int ringMode) {
@@ -408,10 +425,14 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 		}
 		return changed;
 	}
-	
+
 	private void restoreRinger() {
-		if(ringMode >= 0) audioMan.setRingerMode(ringMode);
-		if(vibrMode >= 0) audioMan.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, vibrMode);
+		if(ringMode >= 0) {
+			ModeReceiver.skip = true;	// FIX??????
+			audioMan.setRingerMode(ringMode);
+		}
+		if(vibrMode >= 0)
+			audioMan.setVibrateSetting(AudioManager.VIBRATE_TYPE_RINGER, vibrMode);
 	}
 
 	private void regProximity() {
@@ -448,17 +469,17 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 	@Override
 	public void onCallStateChanged(int state, String num) {
 		switch(state) {
-			case CALL_STATE_RINGING:
+			case TelephonyManager.CALL_STATE_RINGING:
 				if(lastCallState != CALL_STATE_NONE) break;		// to skip multiple/concurrent calls
 				//A.logd("onRinging");
 				onRinging();
 				break;
-			case CALL_STATE_OFFHOOK:
+			case TelephonyManager.CALL_STATE_OFFHOOK:
 				if(offhook) break;		// check against "offhook" to skip multiple/concurrent calls
 				//A.logd("onOffhook");
 				onOffhook();
 				break;
-			case CALL_STATE_IDLE:
+			case TelephonyManager.CALL_STATE_IDLE:
 				//A.logd("onIdle");
 				onIdle();
 				break;
@@ -477,27 +498,27 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 		if(shutdown) return;
 		final float   val = evt.values[0];
 		final boolean far = proximReverse? val<proximFar : val>=proximFar;
-		//A.logd("proximity sensor value = "+val);
+		//A.logd("proximity sensor: value="+val+", far="+far+", lastFar="+lastFar);
 		if(far == lastFar) return;
 		if(offhook && !headsetOn) {
+			// auto switch handsfree
 			if(autoSpeaker && !headsetOn) {
 				if(far) {
-					if(speakerOn && taskSpeakerOn!=null) {
+					if(speakerOn) {
 						taskSpeakerOn.exec(TASK_SPEAKER, speakerDelay);
 						speakerOn = --speakerOnCount != 0;
 					}
-				}
-				else {
-					if(speakerOff && taskSpeakerOff!=null) {
+				} else {
+					if(speakerOff) {
 						taskSpeakerOff.exec(TASK_SPEAKER, 0);
 						speakerOff = --speakerOffCount != 0;
 					}
 				}
 			}
-			if(proximDisable && (!far || proximEnable)) {
-				if(far) { if(taskDevsOn  != null) taskDevsOn .exec(TASK_DEVS,  enableDelay); }
-				else    { if(taskDevsOff != null) taskDevsOff.exec(TASK_DEVS, disableDelay); }
-			}
+			// auto switch devices
+			if(far) { if(proximEnable ) taskDevsOn .exec(TASK_DEVS,  enableDelay); }
+			else    { if(proximDisable) taskDevsOff.exec(TASK_DEVS, disableDelay); }
+			// auto switch screen
 			screenOff(!far);
 		}
 		lastFar = far;

@@ -42,12 +42,26 @@ public final class P
 		else setDefIfNew(dst);
 	}
 
+	public static final boolean verIn(float ver, float minVer, float maxVer, int beta, int maxBeta) {
+		return ver>=minVer && (ver<maxVer || (ver==maxVer && (beta>0 && beta<=maxBeta)));
+	}
+
 	public static final boolean backupExists() {
 		final String dir = A.sdcardDir();
 		if(dir == null) return false;
 		return new File(dir, Conf.BACKUP_FN).exists();
 	}
-	
+
+	public static final String[] filterSections() {
+		final Object[] shortcuts = PrefGroups.filterShortcuts();
+		final int      row       = PrefGroups.SHORTCUT_FILTER_ROW;
+		final int      n         = shortcuts.length / row;
+		final String[] filters   = new String[n];
+		for(int i=0; i<n; i+=row)
+			filters[i] = (String)shortcuts[i*row + 2];
+		return filters;
+	}
+
 	public static final Map<String,Object> skipKeysMap() {
 		Map<String,Object> map = new HashMap<String,Object>();
 		for(String k : PrefGroups.skipKeys()) map.put(k, null);
@@ -152,15 +166,8 @@ public final class P
 		final String[] skipKeys = PrefGroups.skipKeys();
 		final Map<String,Object> bakMap = new HashMap<String,Object>(skipKeys.length);
 		for(String k : skipKeys) {
-			Object v;
-			try { v = A.geti(k); } catch(Exception ei) {
-			try { v = A.getl(k); } catch(Exception el) {
-			try { v = A.is(k);   } catch(Exception eb) {
-			try { v = A.gets(k); } catch(Exception es) {
-				//A.logd("error: unable to get skip key \""+k+'"');
-				continue;
-			}}}}
-			bakMap.put(k, v);
+			final Object v = A.get(k);
+			if(v != null) bakMap.put(k, v);
 		}
 		return bakMap;
 	}
@@ -169,7 +176,7 @@ public final class P
 		for(String ki : PrefGroups.wrapIntKeys()) {
 			final String ks = ki + K.WS;
 			try {
-				int i = A.geti(ki);
+				final int i = A.geti(ki);
 				if(A.has(ks)) A.del(ks);
 				A.put(ks, Integer.toString(i));
 			}	catch(Exception e) { try {

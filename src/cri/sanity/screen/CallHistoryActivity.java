@@ -13,7 +13,7 @@ public class CallHistoryActivity extends HistoryActivity
 	@Override
 	protected String   fnHistory() { return Conf.BLOCK_FN; }
 	@Override
-	protected String   mainTitle() { return A.s(R.string.history_block); }
+	protected String   mainTitle() { return A.s(R.string.history_call); }
 	@Override
 	protected Class<?> prefClass() { return Pref.class; }
 	@Override

@@ -33,14 +33,17 @@ public final class Admin
   public static final void request(Context ctx) {
   	if(A.SDK < 8) return;
     final Intent i = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
-    i.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, compName());
+    i.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN   , compName());
     i.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, A.rawstr(R.raw.admin_explanation));
     ctx.startActivity(i);
   }
 
   public static final void remove() {
-  	if(!isActive()) return;
-  	A.devpolMan().removeActiveAdmin(compName());
+  	final ComponentName cn = compName();
+  	synchronized(cn) {
+	  	if(!isActive()) return;
+	  	try { A.devpolMan().removeActiveAdmin(cn); } catch(Exception e) {}
+  	}
   }
   
   public static final void prefSetup(final Preference p) {
@@ -65,7 +68,7 @@ public final class Admin
 		}
   }
 
-	public static final void prefCheck(Preference p) { 
+	public static final void prefCheck(Preference p) {
 		((CheckBoxPreference)p).setChecked(isActive());
 	}
 

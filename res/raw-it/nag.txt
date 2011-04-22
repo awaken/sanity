@@ -1,5 +1,9 @@
-Grazie per aver installato Sanity. Questa è la versione libera e gratuita.
+Grazie per aver installato Sanity. Questa è la versione gratuita.
 
-Se Sanity ti piace, puoi effettuare una donazione per supportarlo. Una volta completata la donazione, questa finestra verrà soppressa e il limite di 2 minuti del registratore verrà rimosso.
+Se effettui una donazione:
+- questo avviso verrà soppresso;
+- potrai registrare le chiamate senza limiti;
+- avrai accesso a tutte le opzioni;
+- incoraggerai lo sviluppatore a migliorare Sanity.
 
 Vuoi aprire ora il Market per la donazione?

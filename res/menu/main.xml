@@ -6,6 +6,7 @@
 	<item android:id="@+id/menu_tts" android:icon="@drawable/menu_tts" android:title="@string/tts_cat" />
 	<item android:id="@+id/menu_urgent" android:icon="@drawable/menu_urgent" android:title="@string/urgent_cat" />
 	<item android:id="@+id/menu_answer" android:icon="@drawable/menu_answer" android:title="@string/answer_cat" />
+	<item android:id="@+id/menu_anonym" android:icon="@drawable/menu_anonym" android:title="@string/anonym_cat" />
 	<item android:id="@+id/menu_speaker" android:icon="@drawable/menu_speaker" android:title="@string/speaker_cat" />
 	<item android:id="@+id/menu_devices" android:icon="@drawable/menu_devices" android:title="@string/devices_cat" />
 	<item android:id="@+id/menu_proximity" android:icon="@drawable/menu_proximity" android:title="@string/proximity_cat" />

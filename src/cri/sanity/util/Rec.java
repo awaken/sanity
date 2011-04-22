@@ -9,25 +9,17 @@ import cri.sanity.*;
 
 public class Rec
 {
-	public static final int    SRC_MIC      = AudioSource.MIC;
-	public static final int    SRC_CALL     = AudioSource.VOICE_CALL;
-	public static final int    SRC_CAM      = AudioSource.CAMCORDER;
-	public static final int    SRC_IN       = AudioSource.VOICE_UPLINK;
-	public static final int    SRC_OUT      = AudioSource.VOICE_DOWNLINK;
-	public static final int    SRC_RECOGN   = AudioSource.VOICE_RECOGNITION;
-	public static final int    FMT_MP4      = OutputFormat.MPEG_4;
-	public static final int    FMT_3GP      = OutputFormat.THREE_GPP;
-	public static final int    FMT_AMR      = OutputFormat.RAW_AMR;
-	public static final int    DEF_SRC      = SRC_MIC;
-	public static final int    DEF_FMT      = FMT_MP4;
-	public static final String DEF_PREFIX   = Conf.REC_PREFIX;
-	public static final String DEF_SUFFIX   = "";
-	public static final String FILE_PATTERN = Conf.REC_DATE_PATTERN+Conf.REC_SEP+Conf.REC_TIME_PATTERN;
+	public  static final int    DEF_SRC      = AudioSource.MIC;
+	public  static final int    DEF_FMT      = OutputFormat.THREE_GPP;
+	private static final String DEF_PREFIX   = Conf.REC_PREFIX;
+	private static final String DEF_SUFFIX   = "";
+	private static final String FILE_PATTERN = Conf.REC_DATE_PATTERN+Conf.REC_SEP+Conf.REC_TIME_PATTERN;
 
 	public int    src, fmt;
 	public String prefix, suffix, fn;
 
 	private boolean started = false;
+	private boolean vanilla = true;
 	private MediaRecorder mediaRec;
 
 	//---- public api
@@ -48,6 +40,7 @@ public class Rec
 
 	public final String  fn()        { return fn; }
 	public final boolean isStarted() { return started; }
+	public final boolean isVanilla() { return vanilla; }
 
 	public final synchronized void start()
 	{
@@ -56,6 +49,7 @@ public class Rec
 			mediaRec.prepare();
 			mediaRec.start();
 			started = true;
+			vanilla = false;
 			//A.logd("rec started");
 		} catch(Exception e) {
 			A.notify(A.s(R.string.err_rec));
@@ -78,8 +72,9 @@ public class Rec
 	{
 		if(mediaRec == null) return;
 		if(started) stop();
-		try { mediaRec.release(); } catch(Exception e) {}
+		try { if(!vanilla) mediaRec.release(); } catch(Exception e) {}
 		mediaRec = null;
+		vanilla  = true;
 	}
 
 	//---- private api
@@ -108,9 +103,9 @@ public class Rec
 		}
 		fn += '/' + prefix + DateFormat.format(FILE_PATTERN, A.time()) + suffix;
 		switch(fmt) {
-			case FMT_3GP: fn += ".3gp"; break;
-			case FMT_MP4: fn += ".m4a"; break;
-			case FMT_AMR: fn += ".amr"; break;
+			case OutputFormat.THREE_GPP: fn += ".3gp"; break;
+			case OutputFormat.MPEG_4   : fn += ".m4a"; break;
+			case OutputFormat.RAW_AMR  : fn += ".amr"; break;
 		}
 		return fn;
 	}

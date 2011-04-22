@@ -33,6 +33,11 @@
 		            android:widgetLayout="@layout/img_answer"
 		            android:persistent="false"
 		            android:key="screen_answer" />
+		<Preference android:title="@string/anonym_cat"
+		            android:summary="@string/anonym_sum"
+		            android:widgetLayout="@layout/img_anonym"
+		            android:persistent="false"
+		            android:key="screen_anonym" />
 		<Preference android:title="@string/speaker_cat"
 		            android:summary="@string/speaker_sum"
 		            android:widgetLayout="@layout/img_speaker"

@@ -35,7 +35,7 @@ public class BrowseActivity extends ScreenActivity
 	private static final String OUT      = " ("+A.s(R.string.call_out)+')';
 	private static final String ANONYM   = A.s(R.string.anonymous);
 	private static final ContentResolver resolver = A.resolver();
-	private static final String[] projection = new String[]{ PhoneLookup.DISPLAY_NAME };
+	private static final String[] proj = new String[]{ PhoneLookup.DISPLAY_NAME };
 
 	private PreferenceCategory prefGroup;
 	private Stack<Pref> selected = new Stack<Pref>();
@@ -219,14 +219,12 @@ public class BrowseActivity extends ScreenActivity
 					}
 				}
 				if(num.length() > 1) {
-					final Cursor c = resolver.query(Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI, Uri.encode(num)), projection, null, null, null);
-					if(c != null) {
-						if(c.moveToFirst()) {
-							final String name = c.getString(c.getColumnIndex(PhoneLookup.DISPLAY_NAME));
-							if(!A.empty(name)) sum += '\n'+name;
-						}
-						c.close();
+					final Cursor c = resolver.query(Uri.withAppendedPath(PhoneLookup.CONTENT_FILTER_URI, Uri.encode(num)), proj, null, null, null);
+					if(c.moveToFirst()) {
+						final String name = c.getString(c.getColumnIndex(PhoneLookup.DISPLAY_NAME));
+						if(!A.empty(name)) sum += '\n'+name;
 					}
+					c.close();
 				}
 				sum += SEP_SUM+ext;
 			}

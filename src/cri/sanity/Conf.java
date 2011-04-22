@@ -3,14 +3,13 @@ package cri.sanity;
 
 public final class Conf
 {
-	public static final boolean FULL = false;
-	public static final int     BETA = 0;
+	public static final boolean FULL  = false;
+	public static final int     BETA  = 0;
 
 	public static final int NAG_TIMEOUT             = 4*3600*1000;				// 4 hours
 	public static final int SERVICE_TIMEOUT         = 2000;
 	public static final int DEVS_MIN_RETRY          = 2000;
 	public static final int FORCE_AUTOSPEAKER_DELAY = 3000;
-	public static final int CALL_SCREEN_TIMEOUT     = 300;
 	public static final int VIBRATE_TIME            = 400;
 	public static final int TRACKER_SWITCH_DELAY    = 200;
 	public static final int TTS_UNMUTE_DELAY        = 200;

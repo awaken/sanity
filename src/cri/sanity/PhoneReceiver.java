@@ -17,10 +17,8 @@ public class PhoneReceiver extends BroadcastReceiver
 		final String s = i.getStringExtra(TelephonyManager.EXTRA_STATE);
 		if(TelephonyManager.EXTRA_STATE_RINGING.equals(s))
 			number = i.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
-		else if(!TelephonyManager.EXTRA_STATE_OFFHOOK.equals(s)) {
-			number = i.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
+		else if(!TelephonyManager.EXTRA_STATE_OFFHOOK.equals(s))
 			return;
-		}
 		MainService.start();
 	}
 

@@ -13,27 +13,34 @@ public class ModeReceiver extends BroadcastReceiver
 	@Override
 	public void onReceive(Context ctx, Intent i)
 	{
-		if(i==null || PhoneListener.isRunning()) return;
+		if(i==null || MainService.isRunning()) return;
 		String act = i.getAction();
 		if(act == null) return;
+		if(skip) { skip = false; return; }
+
+		String  enable;
+		int     nid;
 		boolean abort;
 
 		if(AudioManager.RINGER_MODE_CHANGED_ACTION.equals(act)) {
-			if(!A.is(K.SILENT_LIMIT)) return;
-			act   = Alarmer.ACT_SILENTLIMIT;
-			abort = i.getIntExtra(AudioManager.EXTRA_RINGER_MODE, AudioManager.RINGER_MODE_NORMAL) == AudioManager.RINGER_MODE_NORMAL;
+			act    = Alarmer.ACT_SILENTLIMIT;
+			enable = K.SILENT_LIMIT;
+			nid    = ModeActivity.NID_SILENT;
+			abort  = i.getIntExtra(AudioManager.EXTRA_RINGER_MODE, AudioManager.RINGER_MODE_NORMAL) == AudioManager.RINGER_MODE_NORMAL;
 		}
 		else if(Intent.ACTION_AIRPLANE_MODE_CHANGED.equals(act)) {
-			if(!A.is(K.AIRPLANE_LIMIT)) return;
-			act   = Alarmer.ACT_FLIGHTOFF;
-			abort = !i.getBooleanExtra("state", false);
+			act    = Alarmer.ACT_FLIGHTOFF;
+			enable = K.AIRPLANE_LIMIT;
+			nid    = ModeActivity.NID_FLIGHT;
+			abort  = !i.getBooleanExtra("state", false);
 		}
 		else return;
 
-		if(skip) { skip = false; return; }
-		Alarmer.stop(act);
-		if(abort) return;
-		ModeActivity.start(act, false);
+		if(abort) {
+			Alarmer.stop(act);
+			A.notifyCanc(nid);
+		}	else if(A.is(enable))
+			ModeActivity.start(act, false);
 	}
 
 }

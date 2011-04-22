@@ -45,7 +45,7 @@ public final class WifiTracker extends BroadcastReceiver
 		try {
 			if(action != ACT_NONE) {
 				waiter = true;
-				wait(Conf.DEVS_MIN_RETRY * 3);
+				wait(Conf.DEVS_MIN_RETRY * 2);
 			}
 		} catch(Exception e) {}
 		try { A.app().unregisterReceiver(this); } catch(Exception e) {}

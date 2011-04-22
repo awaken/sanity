@@ -46,11 +46,13 @@
 	<string name="history">History</string>
 	<string name="call">Call</string>
 	<string name="send_sms">Send SMS</string>
+	<string name="contact">Contact</string>
 	<string name="view_contact">View contact</string>
 	<string name="add_contact">Add new contact</string>
 	<string name="copy">Copy</string>
 	<string name="share">Share</string>
 	<string name="hours_mins">\  Hours \  \  \  Minutes</string>
+  <string name="phone_number">Phone number</string>
 
 	<string name="always">Always</string>
 	<string name="time">Time</string>
@@ -80,7 +82,7 @@
   <string name="general_more_cat">Troubleshoot</string>
   <string name="general_prefs_cat">Manage preferences</string>
   <string name="enabled_title">Enable Sanity</string>
-  <string name="enabled_sum">Enable or disable whole Sanity sytem. If disabled, this application won\'t affect phone calls.</string>
+  <string name="enabled_sum">Enable or disable whole Sanity system. If disabled, this application won\'t affect phone calls.</string>
   <string name="silent_limit_title">Silent mode Timeout</string>
   <string name="silent_limit_sum">Each time you activate the Silent mode, Sanity will ask you to choose a timeout for restoring automatically the Normal mode.</string>
   <string name="airplane_limit_title">Airplane mode Timeout</string>
@@ -107,7 +109,7 @@
 	<string name="option_shortcut">Single option</string>
 
   <string name="devices_cat">Devices</string>
-  <string name="devices_sum">Which devices should be disabled for reducing electromagnetic waves during a call.</string>
+  <string name="devices_sum">Which devices should be enabled or disabled to reduce electromagnetic waves during a call.</string>
   <string name="devices_rules_cat">Exceptions</string>
   <string name="gps_title">Turn off GPS</string>
   <string name="gps_sum">Disable GPS during a call (it will be restored at call end). It works with many phone models, but not with all.</string>
@@ -237,7 +239,7 @@
 	<string name="blocksms_cat">SMS blocker</string>
 	<string name="blocksms_title">Enable SMS blocker</string>
 	<string name="blocksms_sum">Enable SMS blocking system to automatically delete unwanted messages.</string>
-	<string name="blocksms_shared_title">Shared filter</string>
+	<string name="blocksms_shared_title">Shared filter (SMS)</string>
 	<string name="blocksms_shared_sum">If activated, use the filter of the call blocker to block the SMS also. Otherwise you can choose a specific filter to block SMS.</string>
 	<string name="blocksms_notify_title">Notify SMS blocking</string>
 	<string name="blocksms_notify_sum">Notify the last blocked SMS on the status bar.</string>
@@ -246,7 +248,7 @@
 	<string name="blocksms_history_sum">Show the detailed list of recent blocked SMS messages.</string>
 
 	<string name="tts_cat">Announce caller</string>
-	<string name="tts_sum">Speak the name of the caller when receiving a call.</string>
+	<string name="tts_sum">Speak the name of the caller when receiving a call or a SMS.</string>
 	<string name="tts_enable_title">Enable announce</string>
 	<string name="tts_enable_sum">Speak the caller\'s name when a call is received (while the phone rings).</string>
 	<string name="tts_global_title">Global settings</string>
@@ -276,8 +278,19 @@
 	<string name="tts_anonym_sum">Type the word \"Anonymous\" in your language to announce anonymous calls.</string>
 	<string name="tts_unknown_title">Unknown</string>
 	<string name="tts_unknown_sum">Type the word \"Unknown\" in your language to announce caller is not in contacts.</string>
+	<string name="tts_stream_title">Alternate audio</string>
+	<string name="tts_stream_sum">Use an alternate audio stream for announcing. Enable this option only if you cannot hear the announcement (try it hereunder).</string>
 	<string name="tts_test_title">Test</string>
 	<string name="tts_test_sum">Tap here to try announcing using current options.</string>
+	<string name="ttsms_cat">Announce sender of SMS</string>
+	<string name="ttsms_title">Enable announce SMS</string>
+	<string name="ttsms_sum">Speak the name of the sender when receiving a SMS (only the sender\'s name is announced, NOT the message content).</string>
+	<string name="ttsms_prefix_title">Prefix (SMS)</string>
+	<string name="ttsms_prefix_sum">Choose what to speak BEFORE the sender\'s name.</string>
+	<string name="ttsms_suffix_title">Suffix (SMS)</string>
+	<string name="ttsms_suffix_sum">Choose what to speak AFTER the sender\'s name.</string>
+	<string name="ttsms_shared_title">Shared filter (TTS)</string>
+	<string name="ttsms_shared_sum">If activated, use the filter of the call announcer. Otherwise you can choose a specific filter to announce SMS.</string>
 
 	<string name="urgent_cat">Urgent calls</string>
 	<string name="urgent_sum">Choose what phone numbers your phone will ring or vibrate also when it\'s in silent mode.</string>
@@ -299,6 +312,19 @@
 	<string name="answer_delay_title">Delay of answer</string>
 	<string name="answer_delay_sum">Delay time before answering automatically.</string>
 
+	<string name="anonym_cat">Anonymous calls</string>
+	<string name="anonym_sum">Rules to dial anonymous call (automatically hide your caller ID).</string>
+	<string name="anonym_enable_title">Enable anonymous calls</string>
+	<string name="anonym_enable_sum">Choose to enable or disable automatic anonymous outgoing calls completely.</string>
+	<string name="anonym_confirm_title">Confirm calls</string>
+	<string name="anonym_confirm_sum">If enabled, Sanity will ask you to confirm if the outgoing call should be anonymous.</string>
+	<string name="anonym_notify_title">Notify if anonymous</string>
+	<string name="anonym_notify_sum">Notify when the outgoing call is anonymous (in all cases you won\'t be notified when not anonymous).</string>
+	<string name="anonym_country_title">Country</string>
+	<string name="anonym_country_sum">Choose your country to set the dialing prefix used for hiding your caller ID.</string>
+	<string name="anonym_prefix_title">Anonymous prefix</string>
+	<string name="anonym_prefix_sum">The custom prefix used for hiding your caller ID. If you don\'t know it, choose your country.</string>
+
 	<string name="vol_cat">Volume</string>
 	<string name="vol_sum">Options for automatic volume setting during a call.</string>
 	<string name="vol_phone_title">Phone volume</string>
@@ -312,6 +338,8 @@
 
   <string name="notify_cat">Notification</string>
   <string name="notify_sum">Choose when Sanity should show notifications.</string>
+  <string name="notify_timeout_title">Notify timeout</string>
+  <string name="notify_timeout_sum">Notify when automatic restoration from silent/airplane mode is active.</string>
   <string name="notify_disable_title">Notify turning off</string>
   <string name="notify_disable_sum">Notify when devices are automatically turned off by Sanity.</string>
   <string name="notify_enable_title">Notify restoring</string>
@@ -380,7 +408,7 @@
 
 	<string name="history_clear_title">Clear all</string>
 	<string name="history_clear_sum">Remove all history entries.</string>
-	<string name="history_block">History - Call blocker</string>
+	<string name="history_call">History - Call blocker</string>
 	<string name="history_sms">History - SMS blocker</string>
 
   <string name="donate_title">Donate</string>
@@ -403,6 +431,8 @@
   <string name="ask_clear_history">Are you sure to REMOVE all history entries?</string>
   <string name="ask_silent_limit">How many hours and minutes to remain silent</string>
   <string name="ask_airplane_limit">How many hours and minutes to remain offline</string>
+  <string name="ask_anonym_title">Confirm anonymous call</string>
+  <string name="ask_anonym_msg">Would you call anonymously?</string>
 
   <string name="msg_rec_title">Sanity - Recorder</string>
   <string name="msg_rec_start">Tap here to START call recording</string>
@@ -447,8 +477,9 @@
   <string name="msg_headset_off">Sanity: headsets disconnected.</string>
   <string name="msg_incompatible">Sorry, this feature doen\'t work on your Android version.</string>
 	<string name="msg_clipboard_copied">Element copied to clipboard</string>
-  <string name="msg_mode_scheduled">Sanity: restore scheduled at %s</string>
+  <string name="msg_mode_scheduled">Sanity: restoration planned at %s</string>
   <string name="msg_option_set" formatted="false">%s is set to \"%s\"</string>
+  <string name="msg_anonym_dial">Sanity: dialing anonymous call</string>
 
   <string name="err_dir">Sanity error: unable to create directory on sdcard for saving audio recording!</string>
   <string name="err_rec">Sanity error: unable to start audio recording!</string>
