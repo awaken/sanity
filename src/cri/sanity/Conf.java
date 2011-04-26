@@ -3,8 +3,7 @@ package cri.sanity;
 
 public final class Conf
 {
-	public static final boolean FULL  = false;
-	public static final int     BETA  = 0;
+	public static final boolean FULL = false;
 
 	public static final int NAG_TIMEOUT             = 4*3600*1000;				// 4 hours
 	public static final int SERVICE_TIMEOUT         = 2000;

@@ -11,10 +11,10 @@ import cri.sanity.Conf;
 public abstract class Task implements Runnable
 {
 	public static class Pool extends ScheduledThreadPoolExecutor {
-		public Pool() { super(1); }
+		public Pool() { super(3); }		// FIX: leave 3???
 	}
 	
-	private static final Map<Integer,ScheduledFuture<?>> map = new HashMap<Integer,ScheduledFuture<?>>();
+	private static final Map<Integer,ScheduledFuture<?>> map = new HashMap<Integer,ScheduledFuture<?>>(16);
 	private static Pool pool;
 	private static int idCur = 0;
 
@@ -38,7 +38,7 @@ public abstract class Task implements Runnable
 		map.put(id, pool.schedule(this, delay, TimeUnit.MILLISECONDS));
 		//}
 	}
-	
+
 	//---- static methods
 
 	public static final int idCur() { return   idCur; }

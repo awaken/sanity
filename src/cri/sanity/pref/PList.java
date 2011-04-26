@@ -37,9 +37,7 @@ public class PList extends ListPreference implements OnPreferenceChangeListener
 	public boolean onPreferenceChange(Preference p, Object o) {
 		if(listener!=null && !listener.onPreferenceChange(p, o)) return false;
 		update(findEntry(o));
-		final String key = getKey();
-		if(key.endsWith(K.WS))																																	// is this key a wrap one?
-			A.putc(key.substring(0, key.length()-K.WS.length()), Integer.parseInt((String)o));		// wrap key found: convert to integer
+		if(isWrap()) A.putc(getWrapKey(), Integer.parseInt((String)o));		// wrap key found: convert to integer
 		return true;
 	}
 
@@ -48,6 +46,7 @@ public class PList extends ListPreference implements OnPreferenceChangeListener
 	public final void update() { update(getEntry()); }
 
 	public final CharSequence findEntry(Object findValue) {
+		if(findValue == null) return null;
 		CharSequence[] vals = getEntryValues();
 		if(vals == null) return null;
 		final int n = vals.length;
@@ -56,9 +55,33 @@ public class PList extends ListPreference implements OnPreferenceChangeListener
 		return null;
 	}
 
+	public final boolean isWrap() {
+		final String key = getKey();
+		return key!=null && key.endsWith(K.WS);
+	}
+	
+	public final String getWrapKey() {
+		final String key = getKey();
+		return key.substring(0, key.length()-K.WS.length());
+	}
+
+	public final int getValueInt() {
+		try {
+			return Integer.parseInt(getValue());
+		} catch(Exception e) {
+			return 0;
+		}
+	}
+
 	//---- private api
 
-	private void init() { super.setOnPreferenceChangeListener(this); }
+	private void init() {
+		super.setOnPreferenceChangeListener(this);
+		if(!isWrap()) return;
+		setPersistent(false);
+		final String k = getWrapKey();
+		if(A.has(k)) super.setValue(Integer.toString(A.geti(k)));
+	}
 
 	private void update(Object entry) {
 		if(sum == null) sum = getSummary();

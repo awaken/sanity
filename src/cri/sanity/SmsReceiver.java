@@ -183,7 +183,7 @@ public class SmsReceiver extends BroadcastReceiver
 			if(anonym.length() > 0) map.put(anonym, 1);
 		} else {
 			final String name = cf.searchName(num);
-			if(!A.empty(name)) map.put(unknown, 1);
+			if(!A.empty(name)) map.put(name, 1);
 			else {
 				if(unknown == null) unknown = A.gets(K.TTS_UNKNOWN);
 				if(unknown.length() > 0) map.put(unknown, 1);

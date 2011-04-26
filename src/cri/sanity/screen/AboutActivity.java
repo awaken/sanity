@@ -1,5 +1,7 @@
 package cri.sanity.screen;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -45,13 +47,22 @@ public class AboutActivity extends ScreenActivity
 		return true;
 	}
 	
-	private static final String subject() {
-		return fullName() + (A.isFull()? Conf.FULL? " (Full)" : " (Donate)" : "") + "  -  id:" + A.telMan().getDeviceId();
+	private static String subject() {
+		return fullName()+(A.isFull()?Conf.FULL?" (Full)":" (Donate)":"")+"  -  id:"+A.telMan().getDeviceId()+"  ["+googleAccount()+']';
 	}
 
-	private static final String donateUrl() {
+	private static String donateUrl() {
 		return DONATE_URL.replace(NAME_VAR , Uri.encode(subject()))
 		                 .replace(EMAIL_VAR, Uri.encode(AUTHOR_EMAIL));
+	}
+	
+	private static String googleAccount() {
+		final AccountManager am = AccountManager.get(A.app());
+		if(am == null) return null;
+		final Account[] accs = am.getAccountsByType("com.google");
+		if(accs==null || accs.length<=0) return null;
+		final String name = accs[0].name;
+		return A.empty(name) ? null : name.trim().toLowerCase();
 	}
 
 }

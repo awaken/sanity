@@ -125,9 +125,8 @@ public abstract class ScreenActivity extends PrefActivity implements SharedPrefe
 	//---- public api
 
 	public static final String fullName() {
-		String v = A.name() + "  v" + A.ver();
-		if(Conf.BETA > 0) { v += " beta "; if(Conf.BETA > 1) v += Conf.BETA; }
-		return v;
+		final int b = A.beta();
+		return A.name()+"  v"+A.verName() + (b<1?"" : " beta"+(b>1? " "+b : ""));
 	}
 	public static final String appDesc() {
 		String year = DateFormat.format("yyyy", A.time()).toString();

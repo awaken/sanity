@@ -299,7 +299,7 @@ public final class ShortcutActivity extends Activity implements DialogInterface.
 		Alert.choose(name, items, new Alert.Click(){ public void on(){
 			final Object v = vals2[which];
 			if(A.has(K.PRF_NAME)) A.del(K.PRF_NAME);
-			if(mapInt.get(key) != null) A.put(key+K.WS, ((Integer)v).toString());
+			//if(mapInt.get(key) != null) A.put(key+K.WS, ((Integer)v).toString());
 			A.putc(key, v);
 			optionSet(name, items2[which]);
 		}}).setOnDismissListener(this);

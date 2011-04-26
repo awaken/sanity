@@ -44,7 +44,7 @@ public class RecordActivity extends ScreenActivity
 			return true;
 		}});
 		on(K.REC_START_SPEAKER, new Change(){ public boolean on(){
-			setEnabled(REC_START_TIMES, (Boolean)value || A.getsi(REC_START_HEADSET)!=RecService.ACT_HEADSET_SKIP);
+			setEnabled(REC_START_TIMES, (Boolean)value || A.geti(K.REC_START_HEADSET)!=RecService.ACT_HEADSET_SKIP);
 			return true;
 		}});
 		on(REC_START_HEADSET, new Change(){ public boolean on(){
@@ -72,10 +72,11 @@ public class RecordActivity extends ScreenActivity
 		setEnabled(K.REC_START_SPEAKER, A.is(K.REC_START) && (A.is(K.SPEAKER_AUTO) || speakerCall));
 		setEnabled(K.REC_STOP_SPEAKER , A.is(K.REC_STOP ) && (A.is(K.SPEAKER_AUTO) || speakerCall));
 		setEnabled(  REC_STOP_LIMIT   , A.is(K.REC_STOP ) &&  A.isFull());
-		setEnabled(  REC_START_TIMES  , A.is(K.REC_START_SPEAKER) || A.getsi(REC_START_HEADSET)!=RecService.ACT_HEADSET_SKIP);
+		setEnabled(  REC_START_TIMES  , A.is(K.REC_START_SPEAKER) || A.geti(K.REC_START_HEADSET)!=RecService.ACT_HEADSET_SKIP);
 		setChecked( "rec_scan"        , scanAllowed());
 	}
 
+	// manage multimedia scanner
 	private static boolean scanAllowed() { return !scanFile().exists(); }
 	private static File    scanFile   () { return new File(scanFn());   }
 	private static String  scanFn     () { return A.sdcardDir() + "/.nomedia"; }

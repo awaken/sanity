@@ -16,11 +16,16 @@ public final class Alarmer extends BroadcastReceiver
 	public  static final String ACT_SILENTLIMIT = "actSilentLimit";
 	public  static final String ACT_FLIGHTOFF   = "actFlightOff";
 	public  static final String ACT_SETPROFILE  = "actSetProfile";
+	public  static final String ACT_ONIDLE      = "actOnIdleAsync";
+	public  static final String ACT_BOOT        = "actBootAsync";
 	public  static final String EXTRA_PROFILE   = "prf";
 	private static final int    RETRY_TIME      = 60*1000;
 
 	private Context ctx;
 	private Bundle  extras;
+
+	public Alarmer() {}
+	public Alarmer(Bundle extras) { this.extras = extras; }
 
 	//---- receiver implementation
 
@@ -29,9 +34,13 @@ public final class Alarmer extends BroadcastReceiver
 		if(i == null) return;
 		final String action = i.getAction();
 		if(action == null) return;
-		this.ctx    = ctx;
-		this.extras = i.getExtras();
-		try { Alarmer.class.getMethod(action).invoke(this); } catch(Exception e) {}
+		if(action.endsWith("Async"))
+			runService(i);
+		else {
+			this.ctx    = ctx;
+			this.extras = i.getExtras();
+			runAction(action);
+		}
 	}
 
 	//---- public api
@@ -49,11 +58,26 @@ public final class Alarmer extends BroadcastReceiver
 		am.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime()+delay, pi);
 	}
 
-	public static final void stop(String action) {
+	public static void stop(String action) {
 		A.alarmMan().cancel(alarmIntent(action));
 	}
 
+	public static void runService(String action, Bundle extras) {
+		final Intent i = new Intent(action);
+		if(extras != null) i.putExtras(extras);
+		runService(i);
+	}
+	public final static void runService(Intent i) {
+		final Context ctx = A.app();
+		i.setClass(ctx, AlarmService.class);
+		ctx.startService(i);
+	}
+
 	//---- private api
+
+	public void runAction(String action) {
+		try { Alarmer.class.getMethod(action).invoke(this); } catch(Exception e) {}
+	}
 
 	private static PendingIntent alarmIntent(String action) {
 		return alarmIntent(action, null);
@@ -92,6 +116,14 @@ public final class Alarmer extends BroadcastReceiver
 		// TODO
 		//P.load
 		A.toast(ctx, String.format(A.s(R.string.msg_prf_restore_ok), prf));
+	}
+
+	public final void actOnIdleAsync() {
+		if(A.is(K.REC)) RecService.cron();
+	}
+
+	public final void actBootAsync() {
+		if(A.is(K.REC)) RecService.cron();
 	}
 
 }

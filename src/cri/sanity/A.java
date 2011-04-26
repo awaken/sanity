@@ -104,7 +104,9 @@ public final class A extends Application
 	public static final Resources           resources() { if(resources==null) resources=a.getResources();       return resources; }
 	public static final ContentResolver      resolver() { if(resolver ==null) resolver =a.getContentResolver(); return resolver;  }
 	//public static final PackageInfo           pkgInfo() { return pkgInfo; }
-	public static final String                    ver() { return pkgInfo.versionName; }
+	public static final String                verName() { return pkgInfo.versionName; }
+	public static final int                   verCode() { return pkgInfo.versionCode; }
+	public static final int                      beta() { return pkgInfo.versionCode % 100; }
 
 	// log
 	//public static final int logd(Object o, String method) { return Log.d(name, o.getClass().getSimpleName()+'.'+method); }
@@ -233,8 +235,7 @@ public final class A extends Application
 
 	public static final boolean isEnabled() { return prefs.getBoolean(K.ENABLED, false); }
 	public static final boolean isFull()    { return full; }
-	public static final boolean isBeta()    { return Conf.BETA > 0; }
-	public static final void setFull(boolean full) { A.putc(K.FULL, A.full=full); }
+	public static final void setFull(boolean full) { putc(K.FULL, A.full=full); }
 
 	public static final boolean is(String key)                { return prefs.getBoolean(key, false); }
 	//public static final boolean is(String key, boolean def)   { return prefs.getBoolean(key, def  ); }

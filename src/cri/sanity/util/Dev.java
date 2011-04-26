@@ -1,7 +1,6 @@
 package cri.sanity.util;
 
 import java.lang.reflect.Method;
-import android.os.PowerManager;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.provider.Settings.System;
@@ -11,6 +10,8 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.app.KeyguardManager.KeyguardLock;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.net.Uri;
 import com.android.internal.telephony.ITelephony;
 import cri.sanity.A;
@@ -23,8 +24,8 @@ public final class Dev
 	private static WifiMan      gWifi;
 	private static ConnMan      gConn;
 	private static KeyguardLock keyguardLock;
-	private static PowerManager.WakeLock wakeCpuLock;
-	private static PowerManager.WakeLock wakeScreenLock;
+	private static WakeLock     wakeScreenLock;
+	//private static WakeLock     wakeCpuLock;
 
 	//---- getting devices
 
@@ -78,6 +79,7 @@ public final class Dev
 	public static final boolean isTetheringSupported() { return gConn().callable("getTetheredIfaces", "getTetherableUsbRegexs"); }
 
 	public static final boolean isRinging() { return A.telMan().getCallState() == TelephonyManager.CALL_STATE_RINGING; }
+	public static final boolean isOffhook() { return A.telMan().getCallState() == TelephonyManager.CALL_STATE_OFFHOOK; }
 	public static final boolean isIdle   () { return A.telMan().getCallState() == TelephonyManager.CALL_STATE_IDLE;    }
 
 	//---- enable/disable devices
@@ -154,40 +156,39 @@ public final class Dev
 		try { A.devpolMan().lockNow(); } catch(Exception e) {}
 	}
 
+	public static final WakeLock newCpuWakeLock() {
+		return A.powerMan().newWakeLock(
+			PowerManager.PARTIAL_WAKE_LOCK|PowerManager.ON_AFTER_RELEASE|PowerManager.ACQUIRE_CAUSES_WAKEUP, A.name());
+	}
 	//public static final boolean isWakeCpu() { return wakeCpuLock!=null && wakeCpuLock.isHeld(); }
-	public static final void wakeCpu() { wakeCpu(false); }
-	public static final void wakeCpu(boolean release) {
-		if(wakeCpuLock == null) {
-			wakeCpuLock = A.powerMan().newWakeLock(
-				PowerManager.PARTIAL_WAKE_LOCK|PowerManager.ON_AFTER_RELEASE|PowerManager.ACQUIRE_CAUSES_WAKEUP, "Dev");
-			wakeCpuLock.setReferenceCounted(false);
-		}
+	/*public static final void wakeCpu() {
+		if(wakeCpuLock == null) wakeCpuLock = newCpuWakeLock();
 		wakeCpuLock.acquire();
-		if(release) wakeCpuLock.release();
 	}
 	public static final void unwakeCpu() {
 		if(wakeCpuLock==null || !wakeCpuLock.isHeld()) return;
 		wakeCpuLock.release();
 	}
+	*/
 
 	//public static final boolean isWakeScreen() { return wakeScreenLock!=null && wakeScreenLock.isHeld(); }
 	public static final void wakeScreen() { wakeScreen(true); }
 	public static final void wakeScreen(boolean release) {
 		if(wakeScreenLock == null) {
 			wakeScreenLock = A.powerMan().newWakeLock(
-				PowerManager.SCREEN_DIM_WAKE_LOCK|PowerManager.ON_AFTER_RELEASE|PowerManager.ACQUIRE_CAUSES_WAKEUP, "Dev");
+				PowerManager.SCREEN_DIM_WAKE_LOCK|PowerManager.ON_AFTER_RELEASE|PowerManager.ACQUIRE_CAUSES_WAKEUP, A.name());
 			wakeScreenLock.setReferenceCounted(false);
 		}
 		wakeScreenLock.acquire();
 		if(release) wakeScreenLock.release();
 	}
-	public static final void unwakeScreen() {
-		if(wakeScreenLock==null || !wakeScreenLock.isHeld()) return;
-		wakeScreenLock.release();
-	}
+	//public static final void unwakeScreen() {
+	//	if(wakeScreenLock==null || !wakeScreenLock.isHeld()) return;
+	//	wakeScreenLock.release();
+	//}
 
 	public static final void enableLock(boolean enable) {
-		if(keyguardLock == null) keyguardLock = A.keyguardMan().newKeyguardLock("Dev");
+		if(keyguardLock == null) keyguardLock = A.keyguardMan().newKeyguardLock(A.name());
 		if(enable) keyguardLock.reenableKeyguard();
 		else       keyguardLock.disableKeyguard();
 	}

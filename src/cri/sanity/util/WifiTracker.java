@@ -19,10 +19,9 @@ public final class WifiTracker extends BroadcastReceiver
 	private static final int DISABLED    = WifiManager.WIFI_STATE_DISABLED;
 	private static final int TASK_ACTION = Task.idNew();
 
-	private int state;
-	private int action = ACT_NONE;
-	private boolean waiter = false;
-	private final WifiManager wifiMan = A.wifiMan();
+	private int state, action;
+	private boolean waiter;
+	private final WifiManager wifiMan;
 
 	private final Task taskAction = new Task() {
 		@Override
@@ -36,7 +35,10 @@ public final class WifiTracker extends BroadcastReceiver
 
 	public WifiTracker()
 	{
-		state = ENABLED;
+		wifiMan = A.wifiMan();
+		state   = wifiMan.getWifiState();
+		action  = ACT_NONE;
+		waiter  = false;
 		A.app().registerReceiver(this, new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION));
 	}
 
@@ -51,7 +53,7 @@ public final class WifiTracker extends BroadcastReceiver
 		try { A.app().unregisterReceiver(this); } catch(Exception e) {}
 	}
 
-	public boolean isOn() { return state == ENABLED || state == ENABLING; }
+	//public boolean isOn() { return state==ENABLED || state==ENABLING; }
 
 	public synchronized boolean willOn() {
 		return (action==ACT_NONE && (state==ENABLED || state==ENABLING)) || (action==ACT_ENABLE && Task.has(TASK_ACTION)) ;

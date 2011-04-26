@@ -74,7 +74,10 @@ public final class License
 	
 	//---- private api
 	
-	private static final String ver() { return A.ver() + (A.isBeta()? "b"+Conf.BETA : ""); }
+	private static final String ver() {
+		final int b = A.beta();
+		return A.verName() + (b>0? "b"+b : "");
+	}
 
 	private static boolean allow(Handler handler, final Runnable onAfter)
 	{

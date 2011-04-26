@@ -1,3 +1,8 @@
+Version 2.10:
+- Fix: bug when announcing the sender of SMS.
+- Fix: bug in automatic handsfree.
+- Fix: minor bugs.
+
 Version 2.09:
 - New: Anonymous calls section.
 - New: options to announce the sender of received SMS.

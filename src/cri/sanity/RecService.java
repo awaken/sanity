@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.SystemClock;
-import android.telephony.TelephonyManager;
 
 
 public class RecService extends Service
@@ -132,12 +131,13 @@ public class RecService extends Service
 	public IBinder onBind(Intent intent) { return null; }
 
 	@Override
-	public int onStartCommand(Intent intent, int flags, int id) {
+	public int onStartCommand(Intent i, int flags, int id) {
+		if(i == null) return START_STICKY;
 		final long now = SystemClock.elapsedRealtime();
 		if(now-ts < Conf.SERVICE_TIMEOUT) return START_STICKY;
 		ts = now;
 		if(!running)           running = true;
-		else if(rec == null) { A.notifyCanc(NID); stopSelf(); return START_NOT_STICKY; }
+		else if(rec == null) { A.notifyCanc(NID); stopSelf(); return START_STICKY; }
 		else {
 			if(rec.isStarted()) recStop (0);
 			else                recStart(0);
@@ -149,8 +149,8 @@ public class RecService extends Service
 
 	@Override
 	public void onDestroy() {
-		running = false;
 		A.notifyCanc(NID);
+		running = false;
 		super.onDestroy();
 	}
 
@@ -229,7 +229,7 @@ public class RecService extends Service
 			@Override
 			public void run() {
 				try {
-					if(rec==null || rec.isStarted() || A.telMan().getCallState()!=TelephonyManager.CALL_STATE_OFFHOOK) return;
+					if(rec==null || rec.isStarted() || !Dev.isOffhook()) return;
 					if(A.empty(rec.suffix)) {
 						if(pl == null) { stopService(); return; }
 						rec.suffix = Conf.REC_SEP + (pl.isOutgoing()? "out" : "in");

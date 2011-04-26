@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 		      package="cri.sanity" android:installLocation="auto"
-		      android:versionCode="46" android:versionName="2.09">
+		      android:versionCode="21000" android:versionName="2.10">
 
   <application android:icon="@drawable/ic_app"
                android:label="@string/app"
@@ -50,8 +50,15 @@
 
 	  <service android:name=".MainService" />
 	  <service android:name=".RecService" />
+	  <service android:name=".AlarmService" />
 
 	  <receiver android:name=".Alarmer" />
+
+	  <receiver android:name=".BootReceiver">
+      <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED" />
+      </intent-filter>
+    </receiver>
 
 	  <receiver android:name=".OutgoingReceiver">
       <intent-filter android:priority="10000">

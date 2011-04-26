@@ -59,7 +59,7 @@ public final class MobDataTracker extends PhoneStateListener
 		try { A.telMan().listen(this, LISTEN_NONE); } catch(Exception e) {}
 	}
 
-	public boolean isOn() { return state==ENABLED  || state==ENABLING;  }
+	//public boolean isOn() { return state==ENABLED  || state==ENABLING;  }
 
 	public synchronized boolean willOn() {
 		return (action==ACT_NONE && (state==ENABLED || state==ENABLING)) || (action==ACT_ENABLE && Task.has(TASK_ACTION));

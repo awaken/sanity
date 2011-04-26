@@ -1,7 +1,7 @@
 Sanity
 Copyright (C) Cristiano Tagliamonte
 
-An Android application to assist during phone calls.
+Android application to assist during phone calls.
 
     This application is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,6 +17,11 @@ An Android application to assist during phone calls.
 -------------------
   Change log
 -------------------
+
+* version 2.10  (26/04/2011)
+- Fix: bug when announcing the sender of SMS.
+- Fix: bug in automatic handsfree.
+- Fix: minor bugs.
 
 * version 2.09  (22/04/2011)
 - New: Anonymous calls section.
@@ -232,6 +237,7 @@ An Android application to assist during phone calls.
 * BUGS:
   - wifi doesn't always restore
   - sometimes bt headsets are disconnected when Sanity answers the call
+  - sometimes ANR on call end (after recording starts)
 
 * call filter: patterns (prefix, suffix, substring, wildcards)
 

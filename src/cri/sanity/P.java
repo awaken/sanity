@@ -23,8 +23,9 @@ public final class P
 	public static final void setDefaults() {
 		final Map<String,?> bakMap = bakMap();
 		A.edit().clear();
-		A.putAll(getDefaults()).putAll(bakMap).commit();
-		setWrapKeys();
+		A.putAll(getDefaults()).putAll(bakMap);
+		//A.commit();
+		//setWrapKeys();
 		setVer();
 	}
 
@@ -40,10 +41,6 @@ public final class P
 	public static final void renameBool(String dst, String old) {
 		if(A.has(old)) A.put(dst, A.is(old)).del(old);
 		else setDefIfNew(dst);
-	}
-
-	public static final boolean verIn(float ver, float minVer, float maxVer, int beta, int maxBeta) {
-		return ver>=minVer && (ver<maxVer || (ver==maxVer && (beta>0 && beta<=maxBeta)));
 	}
 
 	public static final boolean backupExists() {
@@ -153,10 +150,9 @@ public final class P
 	}
 
 	public static final boolean upgrade() {
-		final String ver = A.gets(K.VER );
-		final int   beta = A.geti(K.BETA);
-		if(A.ver().equals(ver) && beta==Conf.BETA) return false;
-		upgrade(verNum(ver), beta);
+		final int ver = verSaved();
+		if(A.verCode() == ver) return false;
+		upgrade(ver);
 		return true;
 	}
 
@@ -172,46 +168,34 @@ public final class P
 		return bakMap;
 	}
 
-	private static void setWrapKeys() {
-		for(String ki : PrefGroups.wrapIntKeys()) {
-			final String ks = ki + K.WS;
-			try {
-				final int i = A.geti(ki);
-				if(A.has(ks)) A.del(ks);
-				A.put(ks, Integer.toString(i));
-			}	catch(Exception e) { try {
-				final String s = A.gets(ki);
-				A.put(ki, Integer.parseInt(s)).put(ks, s);
-			} catch(Exception e2) { try {
-				A.put(ki, A.getsi(ks));
-			} catch(Exception e3) {
-				final int v = (Integer)getDefaults().get(ki);
-				A.put(ki, v).put(ks, Integer.parseInt(ks));
-			}}}
-		}
-	}
-
-	private static void upgrade(float oldVer, int beta) {
-		if(oldVer < 0.1f)
+	private static void upgrade(int oldVer) {
+		if(oldVer < 17000)
 			setDefaults();
 		else {
-			Map<String,Object> def = getDefaults();
-			K.upgrade(oldVer, beta);
+			final Map<String,Object> def = getDefaults();
+			K.upgrade(oldVer);
 			A.commit();
 			for(String k : def.keySet())
 				if(!A.has(k)) A.put(k, def.get(k));
-			A.commit();
-			setWrapKeys();
+			//A.commit();
+			//setWrapKeys();
 			setVer();
 		}
 	}
-
-	private static float verNum(String v) {
-		try { return Float.parseFloat(v); }
-		catch(Exception e) { return 0f; }
+	
+	private static int verSaved() {
+		try {
+			return A.geti(K.VER);
+		} catch(Exception e) { try {
+			final int ver = (int)(Float.parseFloat(A.gets(K.VER)) * 10000f);
+			final int b = A.geti("beta");
+			return b<1? ver : ver-100+b;
+		} catch(Exception e2) {
+			return 0;
+		}}
 	}
 
-	private static void setVer() { A.put(K.VER, A.ver()).putc(K.BETA, Conf.BETA); }
+	private static void setVer() { A.putc(K.VER, A.verCode()); }
 
 	private static Map<String,Object> defs;
 

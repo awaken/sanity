@@ -47,7 +47,10 @@ public class TtsActivity extends ScreenActivity
  			final int vol    = A.geti(K.TTS_VOL);
  			if(vol >= 0) {
  				final int volmax = A.audioMan().getStreamMaxVolume(stream);
- 				if(vol > volmax) A.put(K.TTS_VOL, volmax).putc(K.TTS_VOL+K.WS, volmax+"");
+ 				if(vol > volmax) {
+ 					A.put(K.TTS_VOL, volmax);
+ 					((PList)pref(K.TTS_VOL+K.WS)).setValue(volmax+"");
+ 				}
  			}
  			setVolumeLevels(stream);
  			return true;

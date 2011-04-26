@@ -23,7 +23,7 @@ public class PEdit extends EditTextPreference implements OnPreferenceChangeListe
 	//---- ListPreference override
 
 	@Override
-	public void setText(String text) { text = wrap(text); super.setText(text); updateSum(text); }
+	public void setText(String text) { text = fullText(text); super.setText(text); updateSum(text); }
 	@Override
 	public void setSummary(int id) { super.setSummary(sum = A.s(id)); }
 	@Override
@@ -37,16 +37,32 @@ public class PEdit extends EditTextPreference implements OnPreferenceChangeListe
 	@Override
 	public boolean onPreferenceChange(Preference p, Object o) {
 		if(listener!=null && !listener.onPreferenceChange(p, o)) return false;
-		updateSum(wrap(o));
-		final String key = getKey();
-		if(key.endsWith(K.WS))																																	// is this key a wrap one?
-			A.putc(key.substring(0, key.length()-K.WS.length()), Integer.parseInt((String)o));		// wrap key found: convert to integer
+		updateSum(fullText(o));
+		if(isWrap()) A.putc(getWrapKey(), Integer.parseInt((String)o));		// wrap key found: convert to integer
 		return true;
 	}
 
 	//---- public api
 
 	public final void updateSum() { updateSum(getText()); }
+
+	public final boolean isWrap() {
+		final String key = getKey();
+		return key!=null && key.endsWith(K.WS);
+	}
+	
+	public final String getWrapKey() {
+		final String key = getKey();
+		return key.substring(0, key.length()-K.WS.length());
+	}
+
+	public final int getValueInt() {
+		try {
+			return Integer.parseInt(getText());
+		} catch(Exception e) {
+			return 0;
+		}
+	}
 
 	//---- private api
 
@@ -58,9 +74,13 @@ public class PEdit extends EditTextPreference implements OnPreferenceChangeListe
 		}
 		if(prefix == null) prefix = "";
 		if(suffix == null) suffix = "";
+		if(!isWrap()) return;
+		setPersistent(false);
+		final String k = getWrapKey();
+		if(A.has(k)) super.setText(Integer.toString(A.geti(k)));
 	}
 
-	private String wrap(Object text) {
+	private String fullText(Object text) {
 		final String t = (String)text;
 		return A.empty(t)? "" : prefix+t.trim()+suffix;
 	}

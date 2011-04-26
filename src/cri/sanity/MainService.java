@@ -1,38 +1,45 @@
 package cri.sanity;
 
-import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
-import android.os.IBinder;
+import cri.sanity.util.*;
 
 
-public final class MainService extends Service
+public final class MainService extends WakeService
 {
 	private static boolean running = false;
 	private static PhoneListener phoneListener;
 
 	//---- static methods
 
-	public static final boolean isRunning () { return running ; }
+	public static boolean isRunning() { return running ; }
 
-	public static final void start() { A.app().startService(new Intent(A.app(), MainService.class)); }
-	public static final void stop () { A.app(). stopService(new Intent(A.app(), MainService.class)); }
+	public static void start()
+	{
+		final Context ctx = A.app();
+		ctx.startService(new Intent(ctx, MainService.class));
+	}
+
+	public static void stop()
+	{
+		final Context ctx = A.app();
+		ctx.stopService(new Intent(ctx, MainService.class)); 
+	}
 
 	//---- methods
 
 	@Override
-	public IBinder onBind(Intent intent) { return null; }
-
-	@Override
 	public void onCreate()
 	{
-		if(phoneListener == null) phoneListener = new PhoneListener();
 		super.onCreate();
+		if(phoneListener == null) phoneListener = new PhoneListener();
 	}
 
 	@Override
 	public int onStartCommand(Intent i, int flags, int id)
 	{
-		if(running || PhoneListener.isRunning()) return START_STICKY;
+		if(i==null || running || PhoneListener.isRunning()) return START_STICKY;
+		if(Dev.isIdle()) { stopSelf(); RecService.stop(); return START_STICKY; }
 		running = true;
 		P.upgrade();
 		if(A.is(K.NOTIFY_ACTIVITY)) A.notify(A.s(R.string.msg_running));
@@ -47,7 +54,6 @@ public final class MainService extends Service
 	{
 		try { A.telMan().listen(phoneListener, PhoneListener.LISTEN_NONE); } catch(Exception e) {}
 		A.notifyCanc();
-		//A.notifyCancAll();
 		//A.logd("MainService destroyed");
 		running = false;
 		super.onDestroy();

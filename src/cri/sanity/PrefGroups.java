@@ -40,21 +40,12 @@ public final class PrefGroups
 		};
 	}
 	
-	public static final String[] skipKeys() { 
+	public static final String[] skipKeys() {
 		return new String[]{ K.BT_COUNT, K.NAG, K.CRON, K.FULL, K.LICVER, K.SMS_COUNT };
 	}
 
 	public static final String[] edits() {
 		return new String[]{ K.TTS_PREFIX, K.TTS_SUFFIX, K.TTS_ANONYM, K.TTS_ANONYM, K.TTS_SMS_PREFIX, K.TTS_SMS_SUFFIX, K.ANONYM_PREFIX };
-	}
-
-	public static final String[] wrapIntKeys() {
-		return new String[]{
-			K.DISABLE_DELAY, K.ENABLE_DELAY, K.SPEAKER_DELAY, K.SPEAKER_CALL, K.SPEAKER_CALL_DELAY, K.SPEAKER_VOL, K.SPEAKER_ON_COUNT, K.SPEAKER_OFF_COUNT,
-			K.VOL_PHONE, K.VOL_WIRED, K.VOL_BT, K.REC_SRC, K.REC_FMT, K.REC_START_DELAY, K.REC_STOP_DELAY, K.REC_START_HEADSET, K.REC_STOP_HEADSET,
-			K.REC_STOP_LIMIT, K.REC_START_TIMES, K.REC_START_DIR, K.REC_AUTOREMOVE, K.REVERSE_BT_TIMEOUT, K.TTS_VOL, K.TTS_TONE, K.TTS_REPEAT, K.TTS_PAUSE,
-			K.BLOCK_MODE, K.BLOCK_RESUME, K.URGENT_MODE, K.ANSWER_DELAY,
-		};
 	}
 
 	public static final Map<String,Pair<Integer,Integer>> intLabVals() {

@@ -6,7 +6,6 @@ import android.media.MediaRecorder.*;
 import android.text.format.DateFormat;
 import cri.sanity.*;
 
-
 public class Rec
 {
 	public  static final int    DEF_SRC      = AudioSource.MIC;
@@ -38,9 +37,11 @@ public class Rec
 		//A.logd("rec { src="+this.src+", fmt="+this.fmt+", prefix=\""+this.prefix+"\", suffix=\""+this.suffix+"\" }");
 	}
 
-	public final String  fn()        { return fn; }
+	public final String  fn()        { return fn;      }
 	public final boolean isStarted() { return started; }
 	public final boolean isVanilla() { return vanilla; }
+
+	// FIX: remove synchronized in start(), stop(), release()???
 
 	public final synchronized void start()
 	{
@@ -50,17 +51,21 @@ public class Rec
 			mediaRec.start();
 			started = true;
 			vanilla = false;
+			//A.audioMan().setMicrophoneMute(false);	// FIX: remove???
 			//A.logd("rec started");
 		} catch(Exception e) {
 			A.notify(A.s(R.string.err_rec));
+			started = true;
+			stop();
 			//A.logd(e);
 		}
 	}
 
 	public final synchronized void stop()
 	{
-		if(!started || mediaRec==null) return;
+		if(!started) return;
 		started = false;
+		if(mediaRec == null) return;
 		try {
 			mediaRec.stop();
 			mediaRec.reset();
@@ -70,8 +75,8 @@ public class Rec
 
 	public final synchronized void release()
 	{
+		stop();
 		if(mediaRec == null) return;
-		if(started) stop();
 		try { if(!vanilla) mediaRec.release(); } catch(Exception e) {}
 		mediaRec = null;
 		vanilla  = true;
@@ -81,6 +86,8 @@ public class Rec
 
 	private boolean init()
 	{
+		A.audioMan().setMicrophoneMute(false);
+		System.gc();
 		if(mediaRec == null) mediaRec = new MediaRecorder();
 		mediaRec.setAudioSource(src);
 		mediaRec.setOutputFormat(fmt);

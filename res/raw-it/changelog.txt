@@ -1,3 +1,8 @@
+Versione 2.10:
+- Fix: bug nella pronuncia del mittente di SMS.
+- Fix: bug nel vivavoce automatico.
+- Fix: bug minori.
+
 Versione 2.09:
 - Nuovo: sezione Chiamate anonime.
 - Nuovo: opzioni per annunciare il mittente degli SMS ricevuti.

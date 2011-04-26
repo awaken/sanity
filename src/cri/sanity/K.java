@@ -249,8 +249,8 @@ public final class K
 	}
 
 	// upgrade current preferences from an older existing version
-	static final void upgrade(float oldVer, int beta) {
-		if(oldVer < 1.95f) {
+	static final void upgrade(int oldVer) {
+		if(oldVer < 19500) {
 			for(String k : new String[]{ VOL_PHONE, VOL_WIRED, VOL_BT }) {
 				try {
 					switch(A.getsi(k)) {
@@ -264,16 +264,17 @@ public final class K
 				}}
 			}
 		}
-		if(oldVer < 1.96f)
+		if(oldVer < 19600)
 			A.put(SPEAKER_CALL, A.is(SPEAKER_CALL)? 3 : 0).del(SPEAKER_CALL);
 		if(oldVer < 2.03f) {
 			A.put(BLOCK_FILTER, A.is("block")).del("block");
 			A.put(SPEAKER_VOL, A.is("loud_speaker")? A.audioMan().getStreamMaxVolume(AudioManager.STREAM_VOICE_CALL) : -1).del("loud_speaker");
 		}
-		if(P.verIn(oldVer, 2.06f, 2.09f, beta, 1)) {
+		if(oldVer>=20600 && oldVer<=20801) {
+			final StringBuilder days = new StringBuilder(7);
 			for(String sect : P.filterSections()) {
 				sect = '_' + sect;
-				final StringBuilder days = new StringBuilder(7);
+				days.setLength(0);
 				for(int i=1; i<=7; i++) {
 					final String d = Integer.toString(i);
 					final String k = "filter_dt_day" + d + sect;
@@ -283,6 +284,11 @@ public final class K
 				final int n = days.length();
 				if(n>0 && n<7) A.put("filter_dt_days"+sect, days.toString());
 			}
+		}
+		if(oldVer < 20901) {
+			A.del(K.VER).del("beta");
+			for(String key : A.prefs().getAll().keySet())
+				if(key.endsWith(K.WS) || (key.startsWith("filter_") && key.endsWith("null"))) A.del(key);
 		}
 	}
 
