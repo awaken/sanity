@@ -19,9 +19,10 @@ public class FilterActivity extends ScreenActivity implements OnPreferenceChange
 	private static final int CODE_CONTACTS  = 2;
 	private static final int CODE_GROUPS    = 3;
 	private static final int CODE_DATETIME  = 4;
+	private static final int CODE_PREFIX    = 5;
 
 	public static PFilter pref;
-	private String sect, title, sumNums, sumContacts, sumGroups, sumDt;
+	private String sect, title, sumNums, sumContacts, sumGroups, sumDt, sumPrefix;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -54,6 +55,10 @@ public class FilterActivity extends ScreenActivity implements OnPreferenceChange
 		sumGroups = p.getSummary().toString();
 		setSumGroups(A.geti(keySect("filter_groups_count")), p);
 		on(p, new Click(){ public boolean on(){ return startAct(GroupsActivity.class, CODE_GROUPS); }});
+		p = pref("filter_prefix");
+		sumPrefix = p.getSummary().toString();
+		setSumPrefix(A.geti(keySect("filter_prefix_count")), p);
+		on(p, new Click(){ public boolean on(){ return startAct(PrefixActivity.class, CODE_PREFIX); }});
 	}
 
 	@Override
@@ -90,6 +95,9 @@ public class FilterActivity extends ScreenActivity implements OnPreferenceChange
 				break;
 			case CODE_DATETIME:
 				setSumDt(k>0, null);
+				break;
+			case CODE_PREFIX:
+				setSumPrefix(k, null);
 				break;
 		}
 	}
@@ -133,14 +141,16 @@ public class FilterActivity extends ScreenActivity implements OnPreferenceChange
 			pref("filter_nums").setEnabled(!on);
 		else if(key.equals("filter_all")) {
 			pref("filter_anonym").setEnabled(!on);
+			pref("filter_prefix").setEnabled(!on);
 			CheckBoxPreference p = (CheckBoxPreference)pref("filter_allcontacts");
 			p.setEnabled(!on);
-			final boolean fon = !on && !p.isChecked();
+			boolean fon = !on && !p.isChecked();
 			pref("filter_star"    ).setEnabled(fon);
 			pref("filter_contacts").setEnabled(fon);
 			pref("filter_groups"  ).setEnabled(fon);
 			p = (CheckBoxPreference)pref("filter_unknown");
 			p.setEnabled(!on);
+			fon = !on && !p.isChecked();
 			pref("filter_nums").setEnabled(!on && !p.isChecked());
 		}
 	}
@@ -152,6 +162,10 @@ public class FilterActivity extends ScreenActivity implements OnPreferenceChange
 	private void setSumNums(int cnt, Preference p) {
 		if(p == null) p = pref("filter_nums");
 		p.setSummary(sumNums + itemsFmt(cnt));
+	}
+	private void setSumPrefix(int cnt, Preference p) {
+		if(p == null) p = pref("filter_prefix");
+		p.setSummary(sumPrefix + itemsFmt(cnt));
 	}
 	private void setSumContacts(int cnt, Preference p) {
 		if(p == null) p = pref("filter_contacts");

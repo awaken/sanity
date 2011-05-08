@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 
 // tool class of application preferences
@@ -17,15 +18,18 @@ public final class P
 	//---- public api
 
 	public static final Map<String,Object> getDefaults() {
-		if(defs == null) defs = K.getDefaults();
+		if(defs != null) return defs;
+		defs = new HashMap<String,Object>();
+		final Object[] list = K.getDefaults();
+		final int n = list.length;
+		for(int i=0; i<n; i+=2)
+			defs.put((String)list[i], list[i+1]);
 		return defs;
 	}
 	public static final void setDefaults() {
 		final Map<String,?> bakMap = bakMap();
 		A.edit().clear();
 		A.putAll(getDefaults()).putAll(bakMap);
-		//A.commit();
-		//setWrapKeys();
 		setVer();
 	}
 
@@ -57,6 +61,16 @@ public final class P
 		for(int i=0; i<n; i+=row)
 			filters[i] = (String)shortcuts[i*row + 2];
 		return filters;
+	}
+
+	public static final String[] intLabels() {
+		Set<String> set = PrefGroups.intLabVals().keySet();
+		String[]    vol = PrefGroups.volumes();
+		String[]    all = new String[set.size() + vol.length];
+		int i = 0;
+		for(String k : set) all[i++] = k;
+		for(String k : vol) all[i++] = k;
+		return all;
 	}
 
 	public static final Map<String,Object> skipKeysMap() {
@@ -112,7 +126,7 @@ public final class P
 		boolean read = false;
 		BufferedReader in = null;
 		try {
-			in = new BufferedReader(new FileReader(fn));
+			in = new BufferedReader(new FileReader(fn), 8192);
 			for(;;) {
 				final String line = in.readLine();
 				if(line.length() <= 0) continue;

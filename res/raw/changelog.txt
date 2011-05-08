@@ -1,3 +1,13 @@
+Version 2.11:
+- New: option to vibrate when an outgoing call begins.
+- New: option to choose the vibration mode.
+- New: option to show new incoming SMS for fast reading and replying.
+- New: option to choose volume to announce SMS.
+- New: option to use an alternative way to answer automatically.
+- New: option to speed up application startup.
+- New: filter phone numbers by prefix.
+- Fix: minor bugs.
+
 Version 2.10:
 - Fix: bug when announcing the sender of SMS.
 - Fix: bug in automatic handsfree.

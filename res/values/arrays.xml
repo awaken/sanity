@@ -443,4 +443,27 @@
 		<item></item>
 	</string-array>
 
+	<string-array name="vibrate_mode_labels">
+		<item>Single short</item>
+		<item>Single mid</item>
+		<item>Single long</item>
+		<item>Double short</item>
+		<item>Double mid</item>
+		<item>Double long</item>
+		<item>Triple short</item>
+		<item>Triple mid</item>
+		<item>Triple long</item>
+	</string-array>
+	<string-array name="vibrate_mode_values">
+		<item>11</item>
+		<item>12</item>
+		<item>13</item>
+		<item>21</item>
+		<item>22</item>
+		<item>23</item>
+		<item>31</item>
+		<item>32</item>
+		<item>33</item>
+	</string-array>
+
 </resources>

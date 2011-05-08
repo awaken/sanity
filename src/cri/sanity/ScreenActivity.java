@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import cri.sanity.util.*;
-import cri.sanity.screen.*;
 
 
 public abstract class ScreenActivity extends PrefActivity implements SharedPreferences.OnSharedPreferenceChangeListener
@@ -114,8 +113,7 @@ public abstract class ScreenActivity extends PrefActivity implements SharedPrefe
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
-		final int      id  = item.getItemId();
-		final Class<?> cls = mapMenuScreen.get(id);
+		final Class<?> cls = mapMenuScreen.get(item.getItemId());
 		if(cls == null) return super.onOptionsItemSelected(item);
 		if(!isMainActivity()) finish();		// to avoid big activity stack, terminate current activity if it isn't the main one
 		startActivity(new Intent(A.app(), cls));
@@ -139,16 +137,20 @@ public abstract class ScreenActivity extends PrefActivity implements SharedPrefe
 		return true;
 	}
 
+	/*
 	public final void screener(String key, final Class<?> cls, int idPref, int idMenu, int widget) {
 		screener(pref(key), cls, idPref, idMenu, widget);
 	}
+	*/
 	public final void screener(Preference p, final Class<?> cls, int idPref, int idMenu, int widget) {
 		mapScreenWidget.put(cls, widget);
 		screener(p, cls, idPref, idMenu);
 	}
+	/*
 	public final void screener(String key, final Class<?> cls, int idPref, int idMenu) {
 		screener(pref(key), cls, idPref, idMenu);
 	}
+	*/
 	public final void screener(Preference p, final Class<?> cls, int idPref, int idMenu) {
 		screener(cls, idPref);
 		if(idMenu > 0) {
@@ -157,8 +159,7 @@ public abstract class ScreenActivity extends PrefActivity implements SharedPrefe
 		}
 		if(p == null) return;
 		on(p, new Click(){ public boolean on(){
-			Intent i = new Intent(A.app(), cls);
-			startActivity(i);
+			startActivity(new Intent(A.app(), cls));
 			return true;
 		}});
 	}
@@ -175,19 +176,10 @@ public abstract class ScreenActivity extends PrefActivity implements SharedPrefe
 	protected final void screenerAll()
 	{
 		// all preferences screens
-  	screener("screen_general"  , GeneralActivity.class  , R.xml.prefs_general  , R.id.menu_general  , R.layout.img_general);
-  	screener("screen_devices"  , DevicesActivity.class  , R.xml.prefs_devices  , R.id.menu_devices  , R.layout.img_devices);
-  	screener("screen_proximity", ProximityActivity.class, R.xml.prefs_proximity, R.id.menu_proximity, R.layout.img_proximity);
-  	screener("screen_speaker"  , SpeakerActivity.class  , R.xml.prefs_speaker  , R.id.menu_speaker  , R.layout.img_speaker);
-  	screener("screen_volume"   , VolumeActivity.class   , R.xml.prefs_volume   , R.id.menu_vol      , R.layout.img_vol);
-  	screener("screen_record"   , RecordActivity.class   , R.xml.prefs_record   , R.id.menu_rec      , R.layout.img_rec);
-  	screener("screen_block"    , BlockerActivity.class  , R.xml.prefs_block    , R.id.menu_block    , R.layout.img_block);
-  	screener("screen_tts"      , TtsActivity.class      , R.xml.prefs_tts      , R.id.menu_tts      , R.layout.img_tts);
-  	screener("screen_urgent"   , UrgentActivity.class   , R.xml.prefs_urgent   , R.id.menu_urgent   , R.layout.img_urgent);
-  	screener("screen_answer"   , AnswerActivity.class   , R.xml.prefs_answer   , R.id.menu_answer   , R.layout.img_answer);
-  	screener("screen_anonym"   , AnonymActivity.class   , R.xml.prefs_anonym   , R.id.menu_anonym   , R.layout.img_anonym);
-  	screener("screen_notify"   , NotifyActivity.class   , R.xml.prefs_notify   , R.id.menu_notify   , R.layout.img_notify);
-  	screener("screen_about"    , AboutActivity.class    , R.xml.prefs_about    , R.id.menu_about    , R.layout.img_about);
+		final Object[] s = PrefGroups.screens();
+		final int      n = s.length;
+		for(int i=0; i<n; i+=5)
+			screener(pref((String)s[i+0]), (Class<?>)s[i+1], (Integer)s[i+2], (Integer)s[i+3], (Integer)s[i+4]);
 	}
 
 	protected void nag()

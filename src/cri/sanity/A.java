@@ -34,7 +34,6 @@ import android.util.Log;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.PowerManager;
-import android.os.Vibrator;
 import android.net.ConnectivityManager;
 import android.widget.Toast;
 import android.text.format.DateFormat;
@@ -92,7 +91,7 @@ public final class A extends Application
 		try { pkgInfo = getPackageManager().getPackageInfo(getPackageName(), 0); }
 		catch(NameNotFoundException e) {}
 	}
-	
+
 	//---- static methods
 
 	// basic
@@ -153,7 +152,7 @@ public final class A extends Application
 	public static final String rawstr(int resId) {
 		try {
 			InputStream    is = resources().openRawResource(resId);
-			BufferedReader br = new BufferedReader(new InputStreamReader(is));
+			BufferedReader br = new BufferedReader(new InputStreamReader(is), 8192);
 			StringBuilder  s  = new StringBuilder(1024);
 			String line;
 			while((line = br.readLine()) != null)
@@ -297,7 +296,7 @@ public final class A extends Application
 	//---- manage devices
 
 	public static final NotificationManager notifMan() {
-		if(notifMan == null) notifMan = (NotificationManager)a.getSystemService(Context.NOTIFICATION_SERVICE);
+		if(notifMan == null) notifMan = (NotificationManager)a.getSystemService(NOTIFICATION_SERVICE);
 		return notifMan;
 	}
 	public static final AudioManager audioMan() { 
@@ -343,9 +342,6 @@ public final class A extends Application
 	public static final BluetoothAdapter btAdapter() {
 		if(btAdapter == null) btAdapter = BluetoothAdapter.getDefaultAdapter();
 		return btAdapter;
-	}
-	public static final void vibrate() {
-		((Vibrator)a.getSystemService(VIBRATOR_SERVICE)).vibrate(Conf.VIBRATE_TIME);
 	}
 
 	public static final Sensor sensorProxim() {

@@ -69,6 +69,12 @@
 		            android:dependency="filter_enable"
 		            android:key="filter_groups"
 		            android:widgetLayout="@layout/img_groups" />
+		<Preference android:title="@string/filter_prefix_title"
+		            android:summary="@string/filter_prefix_sum"
+                android:persistent="false"
+		            android:dependency="filter_enable"
+		            android:key="filter_prefix"
+		            android:widgetLayout="@layout/img_prefix" />
 	</PreferenceCategory>
 
 </PreferenceScreen>

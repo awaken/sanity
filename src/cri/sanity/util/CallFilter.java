@@ -25,7 +25,7 @@ public final class CallFilter
 		if(instance != null)
 			instance.close();
 	}
-	
+
 	public final boolean includes(String num, String sect, boolean resultIfDisabled) {
 		if(!A.is("filter_enable_"+sect) || skipDateTime(sect)) return resultIfDisabled;
 		// check if this filter has all numbers
@@ -34,8 +34,8 @@ public final class CallFilter
 		if(num==null || num.length()<=0)
 			return res(A.is("filter_anonym_"+sect), sect);
 		// search contacts by number (skip duplicate search of the last number)
-		if(!query(num, num.equals(lastNum)))
-			return res(A.is("filter_unknown_"+sect) || A.is("filter_num_"+num+sect), sect);		// no contact found: check inside explicit number list
+		if(!query(num, num.equals(lastNum)))		// no contact found: check inside explicit number list and check prefix
+			return res(A.is("filter_unknown_"+sect) || A.is("filter_num_"+num+sect) || skipPrefix(num,sect), sect);
 		// contact found: check for all contacts or if contact is starred
 		if(A.is("filter_allcontacts_"+sect) || (A.is("filter_star_"+sect) && isStarred()))
 			return res(true, sect);
@@ -45,15 +45,14 @@ public final class CallFilter
 			return res(true, sect);
 		// check found contact groups if any
 		if(A.geti("filter_groups_count_"+sect) > 0) {
-			synchronized(this) {
-				if(lastGroups == null)
-					lastGroups = Contacts.groups(con);
-			}
+			//synchronized(this) {
+			if(lastGroups == null) lastGroups = Contacts.groups(con);
+			//}
 			for(String group : lastGroups)
-				if(A.is("filter_group_"+group+sect)) return true;
+				if(A.is("filter_group_"+group+sect)) return res(true, sect);
 		}
-		// not found in this filter
-		return res(false, sect);
+		// check number prefix
+		return res(skipPrefix(num,sect), sect);
 	}
 
 	// get display name of given phone number
@@ -109,6 +108,23 @@ public final class CallFilter
 			return false;
 		}
 		return true;
+	}
+	
+	private static boolean skipPrefix(String num, String sect) {
+		final String prefix = A.gets("filter_prefix_"+sect);
+		final int    len    = prefix.length();
+		if(len <= 0) return false;
+		String pre;
+		int end, beg = 0;
+		do {
+			end = prefix.indexOf(Conf.FILTER_SEP, beg);
+			if(end < 0) pre = prefix.substring(beg);
+			else if(beg == end) break;
+			else pre = prefix.substring(beg, end);
+			if(num.startsWith(pre)) return true;
+			beg = end + 1;
+		} while(beg>0 && beg<len);
+		return false;
 	}
 
 	private synchronized boolean query(String num, boolean cached) {

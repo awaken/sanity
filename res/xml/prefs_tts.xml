@@ -94,6 +94,10 @@
 	                      android:summary="@string/ttsms_sum"
 	                      android:dependency="tts"
 	                      android:key="ttsms" />
+	  <cri.sanity.pref.PList android:title="@string/ttsms_vol_title"
+	                         android:summary="@string/ttsms_vol_sum"
+	                         android:dependency="ttsms"
+	                         android:key="ttsms_vol_s" />
 	  <cri.sanity.pref.PEdit android:title="@string/ttsms_prefix_title"
 	                         android:summary="@string/ttsms_prefix_sum"
 	                         android:dependency="ttsms"

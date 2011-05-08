@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 		      package="cri.sanity" android:installLocation="auto"
-		      android:versionCode="21000" android:versionName="2.10">
+		      android:versionCode="21100" android:versionName="2.11">
 
   <application android:icon="@drawable/ic_app"
                android:label="@string/app"
@@ -22,6 +22,7 @@
     <activity android:theme="@style/Theme" android:name=".screen.VolumeActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.RecordActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.NotifyActivity" />
+    <activity android:theme="@style/Theme" android:name=".screen.VibraActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.AboutActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.BrowseActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.ProfileActivity" />
@@ -37,6 +38,7 @@
     <activity android:theme="@style/Theme" android:name=".screen.ContactsActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.GroupsActivity" />
     <activity android:theme="@style/Theme" android:name=".screen.NumsActivity" />
+    <activity android:theme="@style/Theme" android:name=".screen.PrefixActivity" />
 
     <activity android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" android:name=".ModeActivity" />
     <activity android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" android:name=".BlankActivity" />
@@ -49,6 +51,8 @@
     </activity>
 
 	  <service android:name=".MainService" />
+	  <service android:name=".BootService" />
+	  <service android:name=".PickupService" />
 	  <service android:name=".RecService" />
 	  <service android:name=".AlarmService" />
 
@@ -126,6 +130,8 @@
 	<uses-permission android:name="android.permission.VIBRATE" />
 	<uses-permission android:name="android.permission.READ_CONTACTS" />
 	<uses-permission android:name="android.permission.RECEIVE_SMS" />
+	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+	<uses-permission android:name="android.permission.READ_LOGS" />
 
 	<supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true"
 	                  android:xlargeScreens="true" android:anyDensity="true" />

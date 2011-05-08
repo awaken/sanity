@@ -1,7 +1,7 @@
 package cri.sanity;
 
-import java.util.HashMap;
 import java.util.Map;
+
 import android.media.AudioManager;
 import cri.sanity.util.*;
 
@@ -11,6 +11,8 @@ public final class K
 {
 	// general
 	public static final String ENABLED            = "enabled";
+	public static final String QUICK_START        = "quick_start";
+	public static final String SMS_ALERT          = "sms_alert";
 	public static final String SILENT_LIMIT       = "silent_limit";
 	public static final String AIRPLANE_LIMIT     = "airplane_limit";
 	public static final String FORCE_BT_AUDIO     = "force_bt_audio";
@@ -58,7 +60,10 @@ public final class K
 	public static final String NOTIFY_VOLUME      = "notify_volume";
 	public static final String NOTIFY_HEADSET     = "notify_headset";
 	public static final String NOTIFY_REC_STOP    = "notify_rec_stop";
+	// vibrate
+	public static final String VIBRATE_PICKUP     = "vibrate_pickup";
 	public static final String VIBRATE_END        = "vibrate_end";
+	public static final String VIBRATE_MODE       = "vibrate_mode";
 	// call recorder
 	public static final String REC                = "rec";
 	public static final String REC_FMT            = "rec_fmt";
@@ -75,7 +80,6 @@ public final class K
 	public static final String REC_STOP_LIMIT     = "rec_stop_limit";
 	public static final String REC_START_DIR      = "rec_start_dir";
 	public static final String REC_AUTOREMOVE     = "rec_autoremove";
-	public static final String REC_CALLSCREEN     = "rec_callscreen";
 	public static final String REC_FILTER         = "filter_enable_rec";
 	// call blocker
 	public static final String BLOCK_FILTER       = "filter_enable_block";
@@ -104,6 +108,7 @@ public final class K
 	public static final String TTS_STREAM         = "tts_stream";
 	public static final String TTS_FILTER         = "filter_enable_tts";
 	public static final String TTS_SMS            = "ttsms";
+	public static final String TTS_SMS_VOL        = "ttsms_vol";
 	public static final String TTS_SMS_PREFIX     = "ttsms_prefix";
 	public static final String TTS_SMS_SUFFIX     = "ttsms_suffix";
 	public static final String TTS_SMS_FILTER     = "filter_enable_ttsms";
@@ -116,6 +121,7 @@ public final class K
 	public static final String ANSWER_HEADSET     = "answer_headset";
 	public static final String ANSWER_SKIP        = "answer_skip";
 	public static final String ANSWER_DELAY       = "answer_delay";
+	public static final String ANSWER_ALT         = "answer_alt";
 	public static final String ANSWER_FILTER      = "filter_enable_answer";
 	// anonymous calls
 	public static final String ANONYM             = "anonym";
@@ -140,112 +146,117 @@ public final class K
 
 	//--- methods: only class P should call these methods!
 
-	static final Map<String,Object> getDefaults() {
-		final Map<String,Object> m = new HashMap<String,Object>();
-		// all preferences default values
-		m.put(ENABLED            , true);				// main
-		m.put(SILENT_LIMIT       , false);
-		m.put(AIRPLANE_LIMIT     , false);
-		m.put(FORCE_BT_AUDIO     , false);
-		m.put(REVERSE_PROXIMITY  , false);
-		m.put(PWD                , "");
-		m.put(PWD_CLEAR          , false);
-		m.put(AUTO_MOBDATA       , false);			// devices
-		m.put(AUTO_WIFI          , false);
-		m.put(AUTO_BT            , false);
-		m.put(AUTO_GPS           , false);
-		m.put(SKIP_BT            , true);
-		m.put(SKIP_MOBDATA       , false);
-		m.put(SKIP_HOTSPOT       , true);
-		m.put(SKIP_TETHER        , true);
-		m.put(REVERSE_BT         , false);
-		m.put(REVERSE_BT_TIMEOUT , 30*1000);
-		m.put(BT_OFF             , false);
-		m.put(DISABLE_PROXIMITY  , false);			// proximity
-		m.put(DISABLE_DELAY      , 2000);
-		m.put(ENABLE_DELAY       , 4000);
-		m.put(ENABLE_PROXIMITY   , false);
-		m.put(SCREEN_OFF         , true);
-		m.put(SCREEN_ON          , true);
-		m.put(SPEAKER_AUTO       , false);			// speaker
-		m.put(SPEAKER_DELAY      , 1000);
-		m.put(SPEAKER_CALL       ,  0);
-		m.put(SPEAKER_CALL_DELAY ,  0);
-		m.put(SPEAKER_VOL        , -1);
-		m.put(SPEAKER_SILENT_END , true);
-		m.put(SPEAKER_ON_COUNT   ,  0);
-		m.put(SPEAKER_OFF_COUNT  ,  0);
-		m.put(VOL_PHONE          , -1);					// volume
-		m.put(VOL_WIRED          , -1);
-		m.put(VOL_BT             , -1);
-		m.put(VOL_SOLO           , false);
-		m.put(NOTIFY_TIMEOUT     , true);				// notify
-		m.put(NOTIFY_ENABLE      , true);
-		m.put(NOTIFY_DISABLE     , true);
-		m.put(NOTIFY_ACTIVITY    , true);
-		m.put(NOTIFY_VOLUME      , false);
-		m.put(NOTIFY_HEADSET     , false);
-		m.put(NOTIFY_REC_STOP    , true);
-		m.put(VIBRATE_END        , false);
-		m.put(REC                , false);			// call recorder
-		m.put(REC_SRC            , Rec.DEF_SRC);
-		m.put(REC_FMT            , Rec.DEF_FMT);
-		m.put(REC_START          , false);
-		m.put(REC_STOP           , false);
-		m.put(REC_START_DELAY    , 3000);
-		m.put(REC_STOP_DELAY     , 3000);
-		m.put(REC_START_SPEAKER  , true);
-		m.put(REC_STOP_SPEAKER   , true);
-		m.put(REC_START_HEADSET  , 0);
-		m.put(REC_STOP_HEADSET   , 0);
-		m.put(REC_STOP_LIMIT     , 0);
-		m.put(REC_START_TIMES    , 0);
-		m.put(REC_START_DIR      , 0);
-		m.put(REC_AUTOREMOVE     , 0);
-		m.put(REC_CALLSCREEN     , true);
-		m.put(REC_FILTER         , false);
-		m.put(BLOCK_FILTER       , false);			// call blocker
-		m.put(BLOCK_MODE         , Blocker.MODE_RADIO);
-		m.put(BLOCK_RESUME       , 0);
-		m.put(BLOCK_PICKUP       , false);
-		m.put(BLOCK_SKIP         , false);
-		m.put(BLOCK_NOTIFY       , false);
-		m.put(BLOCK_SMS          , false);
-		m.put(BLOCK_SMS_MAX      , 10);
-		m.put(BLOCK_SMS_NOTIFY   , false);
-		m.put(BLOCK_SMS_FILTER   , false);
-		m.put(TTS                , false);			// announce caller and SMS
-		m.put(TTS_HEADSET        , false);
-		m.put(TTS_SKIP           , true);
-		m.put(TTS_SOLO           , false);
-		m.put(TTS_VOL            , -1);
-		m.put(TTS_TONE           ,  0);
-		m.put(TTS_REPEAT         , 1000);
-		m.put(TTS_PAUSE          , 1000);
-		m.put(TTS_ANONYM         , A.s(R.string.anonymous));
-		m.put(TTS_UNKNOWN        , A.s(R.string.unknown));
-		m.put(TTS_PREFIX         , "");
-		m.put(TTS_SUFFIX         , "");
-		m.put(TTS_FILTER         , false);
-		m.put(TTS_STREAM         , false);
-		m.put(TTS_SMS            , false);
-		m.put(TTS_SMS_PREFIX     , "");
-		m.put(TTS_SMS_SUFFIX     , "");
-		m.put(TTS_SMS_FILTER     , false);
-		m.put(URGENT_FILTER      , false);			// urgent calls
-		m.put(URGENT_SKIP        , true);
-		m.put(URGENT_MODE        , AudioManager.RINGER_MODE_NORMAL);
-		m.put(ANSWER             , false);			// auto answer
-		m.put(ANSWER_HEADSET     , false);
-		m.put(ANSWER_SKIP        , false);
-		m.put(ANSWER_DELAY       , 7000);
-		m.put(ANSWER_FILTER      , false);
-		m.put(ANONYM             , false);			// anonymous calls
-		m.put(ANONYM_CONFIRM     , false);
-		m.put(ANONYM_NOTIFY      , false);
-		m.put(ANONYM_PREFIX      , "#31#");
-		m.put(ANONYM_FILTER      , false);
-		return m;
+	// all preferences default values
+	static final Object[] getDefaults() {
+		return new Object[] {
+			ENABLED            , true,				// main
+			QUICK_START        , false,
+			SMS_ALERT          , false,
+			SILENT_LIMIT       , false,
+			AIRPLANE_LIMIT     , false,
+			FORCE_BT_AUDIO     , false,
+			REVERSE_PROXIMITY  , false,
+			PWD                , "",
+			PWD_CLEAR          , false,
+			AUTO_MOBDATA       , false,			// devices
+			AUTO_WIFI          , false,
+			AUTO_BT            , false,
+			AUTO_GPS           , false,
+			SKIP_BT            , true,
+			SKIP_MOBDATA       , false,
+			SKIP_HOTSPOT       , true,
+			SKIP_TETHER        , true,
+			REVERSE_BT         , false,
+			REVERSE_BT_TIMEOUT , 30*1000,
+			BT_OFF             , false,
+			DISABLE_PROXIMITY  , false,			// proximity
+			DISABLE_DELAY      , 2000,
+			ENABLE_DELAY       , 4000,
+			ENABLE_PROXIMITY   , false,
+			SCREEN_OFF         , true,
+			SCREEN_ON          , true,
+			SPEAKER_AUTO       , false,			// speaker
+			SPEAKER_DELAY      , 1000,
+			SPEAKER_CALL       ,  0,
+			SPEAKER_CALL_DELAY ,  0,
+			SPEAKER_VOL        , -1,
+			SPEAKER_SILENT_END , true,
+			SPEAKER_ON_COUNT   ,  0,
+			SPEAKER_OFF_COUNT  ,  0,
+			VOL_PHONE          , -1,					// volume
+			VOL_WIRED          , -1,
+			VOL_BT             , -1,
+			VOL_SOLO           , false,
+			VIBRATE_PICKUP     , false,				// vibrate
+			VIBRATE_END        , false,
+			VIBRATE_MODE       , 21,
+			NOTIFY_TIMEOUT     , true,				// notify
+			NOTIFY_ENABLE      , true,
+			NOTIFY_DISABLE     , true,
+			NOTIFY_ACTIVITY    , true,
+			NOTIFY_VOLUME      , false,
+			NOTIFY_HEADSET     , false,
+			NOTIFY_REC_STOP    , true,
+			REC                , false,				// call recorder
+			REC_SRC            , Rec.DEF_SRC,
+			REC_FMT            , Rec.DEF_FMT,
+			REC_START          , false,
+			REC_STOP           , false,
+			REC_START_DELAY    , 3000,
+			REC_STOP_DELAY     , 3000,
+			REC_START_SPEAKER  , true,
+			REC_STOP_SPEAKER   , true,
+			REC_START_HEADSET  , 0,
+			REC_STOP_HEADSET   , 0,
+			REC_STOP_LIMIT     , 0,
+			REC_START_TIMES    , 0,
+			REC_START_DIR      , 0,
+			REC_AUTOREMOVE     , 0,
+			REC_FILTER         , false,
+			BLOCK_FILTER       , false,				// call blocker
+			BLOCK_MODE         , Blocker.MODE_RADIO,
+			BLOCK_RESUME       , 0,
+			BLOCK_PICKUP       , false,
+			BLOCK_SKIP         , false,
+			BLOCK_NOTIFY       , false,
+			BLOCK_SMS          , false,
+			BLOCK_SMS_MAX      , 10,
+			BLOCK_SMS_NOTIFY   , false,
+			BLOCK_SMS_FILTER   , false,
+			TTS                , false,				// announce caller and SMS
+			TTS_HEADSET        , false,
+			TTS_SKIP           , true,
+			TTS_SOLO           , false,
+			TTS_VOL            , -1,
+			TTS_TONE           ,  0,
+			TTS_REPEAT         , 1000,
+			TTS_PAUSE          , 1000,
+			TTS_ANONYM         , A.s(R.string.anonymous),
+			TTS_UNKNOWN        , A.s(R.string.unknown),
+			TTS_PREFIX         , "",
+			TTS_SUFFIX         , "",
+			TTS_FILTER         , false,
+			TTS_STREAM         , false,
+			TTS_SMS            , false,
+			TTS_SMS_VOL        , -1,
+			TTS_SMS_PREFIX     , "",
+			TTS_SMS_SUFFIX     , "",
+			TTS_SMS_FILTER     , false,
+			URGENT_FILTER      , false,			// urgent calls
+			URGENT_SKIP        , true,
+			URGENT_MODE        , AudioManager.RINGER_MODE_NORMAL,
+			ANSWER             , false,			// auto answer
+			ANSWER_HEADSET     , false,
+			ANSWER_SKIP        , false,
+			ANSWER_DELAY       , 7000,
+			ANSWER_ALT         , false,
+			ANSWER_FILTER      , false,
+			ANONYM             , false,			// anonymous calls
+			ANONYM_CONFIRM     , false,
+			ANONYM_NOTIFY      , false,
+			ANONYM_PREFIX      , "#31#",
+			ANONYM_FILTER      , false,
+		};
 	}
 
 	// upgrade current preferences from an older existing version
@@ -266,7 +277,7 @@ public final class K
 		}
 		if(oldVer < 19600)
 			A.put(SPEAKER_CALL, A.is(SPEAKER_CALL)? 3 : 0).del(SPEAKER_CALL);
-		if(oldVer < 2.03f) {
+		if(oldVer < 20300) {
 			A.put(BLOCK_FILTER, A.is("block")).del("block");
 			A.put(SPEAKER_VOL, A.is("loud_speaker")? A.audioMan().getStreamMaxVolume(AudioManager.STREAM_VOICE_CALL) : -1).del("loud_speaker");
 		}
@@ -289,6 +300,15 @@ public final class K
 			A.del(K.VER).del("beta");
 			for(String key : A.prefs().getAll().keySet())
 				if(key.endsWith(K.WS) || (key.startsWith("filter_") && key.endsWith("null"))) A.del(key);
+		}
+		if(oldVer < 21002) {
+			A.del("rec_callscreen");
+			final Map<String,?> defs = P.getDefaults();
+			for(String k : P.intLabels()) {
+				if(!A.has(k)) continue;
+				try { A.geti(k); } catch(Exception e) {
+				try { A.put(k, A.getsi(k)); } catch(Exception e2) { A.put(k, ((Integer)defs.get(k)).intValue()); } finally { A.del(k); }}
+			}
 		}
 	}
 

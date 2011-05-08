@@ -72,10 +72,11 @@ public abstract class PrefActivity extends PreferenceActivity
 		enabledDep = !enabledDep || A.isEnabled();
 		p.setEnabled(enabledDep && (dep==null || (dep.isEnabled() && dep.isChecked())));
 		if(     p instanceof CheckBoxPreference) ((CheckBoxPreference)p).setChecked(A.is(key));
-		else if(p instanceof ListPreference    ) ((ListPreference)p).setValue(A.gets(key));
+		else if(p instanceof PList             ) { PList q = (PList)p; if(q.isWrap()) q.setValue(A.geti(q.getWrapKey())); else q.setValue(A.gets(key)); }
 		else if(p instanceof PFilter           ) ((PFilter)p).updateSum();
 		else if(p instanceof PEdit             ) ((PEdit  )p).updateSum();
 		else if(p instanceof PPwd              ) ((PPwd   )p).updateSum();
+		else if(p instanceof ListPreference    ) ((ListPreference)p).setValue(A.gets(key));
 	}
 	public final void updatePref      (String     key ) { updatePref(key, true); }
 	public final void updatePrefs     (String ... keys) { for(final String k : keys) updatePref(k, true ); }

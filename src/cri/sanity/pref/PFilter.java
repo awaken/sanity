@@ -36,7 +36,7 @@ public final class PFilter extends Preference implements OnPreferenceClickListen
 	public final String filterKey() { return "filter_enable_"+sect(); }
 
 	public final void updateSum() {
-		setSummary(sum + " (" + A.s(A.is(filterKey())? R.string.active : R.string.disactive) + ')');
+		setSummary(sum + " (" + A.s(A.is(filterKey())? R.string.active : R.string.inactive) + ')');
 	}
 
 	public final void updateSum(boolean enable) {

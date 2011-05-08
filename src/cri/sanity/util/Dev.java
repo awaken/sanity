@@ -15,6 +15,7 @@ import android.os.PowerManager.WakeLock;
 import android.net.Uri;
 import com.android.internal.telephony.ITelephony;
 import cri.sanity.A;
+import cri.sanity.K;
 import cri.sanity.ghost.*;
 
 
@@ -93,6 +94,7 @@ public final class Dev
 
 	public static final void answerCall() {
 		try {
+			if(A.is(K.ANSWER_ALT)) throw new Exception();
 			iTel().answerRingingCall();
 		} catch(Exception e) {
 			Intent i1 = new Intent(Intent.ACTION_MEDIA_BUTTON);             

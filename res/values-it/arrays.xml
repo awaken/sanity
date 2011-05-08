@@ -229,4 +229,16 @@
 		<item>Prefisso personalizzato</item>
 	</string-array>
 
+	<string-array name="vibrate_mode_labels">
+		<item>Singola breve</item>
+		<item>Singola media</item>
+		<item>Singola lunga</item>
+		<item>Doppia breve</item>
+		<item>Doppia media</item>
+		<item>Doppia lunga</item>
+		<item>Tripla breve</item>
+		<item>Tripla media</item>
+		<item>Tripla lunga</item>
+	</string-array>
+
 </resources>

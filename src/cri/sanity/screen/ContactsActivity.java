@@ -162,7 +162,7 @@ public class ContactsActivity extends ScreenActivity
 			Data.MIMETYPE+"='"+GroupMembership.CONTENT_ITEM_TYPE+'\'',
 			null, GroupMembership.CONTACT_ID
 		);
-		if(async==null || !async.isCancelled())
+		if(async!=null && !async.isCancelled())
 			readContactGroups(async, c);
 		c.close();
 	}
@@ -177,6 +177,7 @@ public class ContactsActivity extends ScreenActivity
 		Pref    lastPref = null;
 		CharSequence sum = null;
 		do {
+			if(prefs == null) return;
 			Pref   p = prefs .get(c.getString(colCon));
 			String g = groups.get(c.getString(colGrp));
 			if(p==null || g==null) continue;

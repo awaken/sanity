@@ -27,6 +27,7 @@ public final class Alert
 	public  static final int OPENDEL   = 4;
 	public  static final int BAKRES    = 5;
 	public  static final int COPYSHARE = 6;
+	public  static final int REPLY     = 7;
 	private static final int DEF       = OKCANC;
 	private static final String TITLE  = A.name();
 
@@ -99,13 +100,14 @@ public final class Alert
   public static final AlertDialog msg(String title, String msg, Click pos, Click neg, Click neu, int type, boolean cancelable, Context ctx) {
   	int idPos=0, idNeg=0, idNeu=0;
   	switch(type) {
-  		case SIMPLE   : idPos = R.string.ok    ;                                                  break;
+  		case SIMPLE   : idPos = R.string.close ;                                                  break;
   		case OKCANC   : idPos = R.string.ok    ; idNeg = R.string.canc   ;                        break;
   		case YESNO    : idPos = R.string.yes   ; idNeg = R.string.no     ;                        break;
   		case YESNOCANC: idPos = R.string.yes   ; idNeu = R.string.no     ; idNeg = R.string.canc; break;
   		case OPENDEL  : idPos = R.string.open  ; idNeg = R.string.del    ;                        break;
   		case BAKRES   : idPos = R.string.backup; idNeg = R.string.restore;                        break;
   		case COPYSHARE: idPos = R.string.copy  ; idNeg = R.string.share  ;                        break;
+  		case REPLY    : idPos = R.string.reply ; idNeg = R.string.close  ;                        break;
   	}
 		final AlertDialog.Builder adb = new AlertDialog.Builder(ctx);
 		adb.setIcon(R.drawable.ic_bar);

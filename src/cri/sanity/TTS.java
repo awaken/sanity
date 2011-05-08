@@ -80,27 +80,29 @@ public class TTS implements OnInitListener, OnUtteranceCompletedListener
 		else if(!sms)          { stream = STREAM1_INT; streamStr = STREAM1_STR; }
 		else                   { stream = STREAM3_INT; streamStr = STREAM3_STR; }
 		final AudioManager audioMan = A.audioMan();
-		final int vol = A.geti(K.TTS_VOL);
-		if(vol >= 0) {
-			this.vol = audioMan.getStreamVolume(stream);
-			audioMan.setStreamVolume(stream, vol, 0);
-		}
 		// tone setup
 		final int tone = A.geti(K.TTS_TONE);
 		if(tone > 0) tts.setPitch(tone * (1f/100f));
 		// what and how announce
 		String keyPrefix, keySuffix;
+		int vol;
 		if(sms) {
 			if(solo = A.is(K.TTS_SOLO)) audioMan.setStreamSolo(stream, true);
 			keyPrefix = K.TTS_SMS_PREFIX;
 			keySuffix = K.TTS_SMS_SUFFIX;
 			repeat    = 1;
+			vol       = A.geti(K.TTS_SMS_VOL);
 		} else {
 			if(solo = A.is(K.TTS_SOLO)) audioMan.setStreamMute(AudioManager.STREAM_RING, true);
 			keyPrefix = K.TTS_PREFIX;
 			keySuffix = K.TTS_SUFFIX;
-			repeat    =  A.geti(K.TTS_REPEAT);
-			pause     =  A.geti(K.TTS_PAUSE);
+			repeat    = A.geti(K.TTS_REPEAT);
+			pause     = A.geti(K.TTS_PAUSE);
+			vol       = A.geti(K.TTS_VOL);
+		}
+		if(vol >= 0) {
+			this.vol = audioMan.getStreamVolume(stream);
+			audioMan.setStreamVolume(stream, vol, 0);
 		}
 		id = (A.gets(keyPrefix) + id + A.gets(keySuffix)).trim();
 		// finally speak!

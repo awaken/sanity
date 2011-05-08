@@ -17,5 +17,8 @@
 	  <cri.sanity.pref.PList android:title="@string/tts_vol_title"
 	                         android:summary="@string/tts_vol_sum"
 	                         android:key="tts_vol_s" />
+	  <cri.sanity.pref.PList android:title="@string/ttsms_vol_title"
+	                         android:summary="@string/ttsms_vol_sum"
+	                         android:key="ttsms_vol_s" />
 	</PreferenceCategory>
 </PreferenceScreen>

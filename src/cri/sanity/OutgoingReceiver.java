@@ -50,8 +50,9 @@ public class OutgoingReceiver extends BroadcastReceiver implements OnCancelListe
 
 	private static void setCallNum(String num)
 	{
-		if(!MainService.isRunning())
-			PhoneReceiver.number = num;
+		if(MainService.isRunning()) return;
+		PhoneReceiver.number = num;
+		if(A.is(K.VIBRATE_PICKUP)) PickupService.start();
 	}
 
 	private void alert(final String num, String name)

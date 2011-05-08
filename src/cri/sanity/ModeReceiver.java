@@ -13,7 +13,7 @@ public class ModeReceiver extends BroadcastReceiver
 	@Override
 	public void onReceive(Context ctx, Intent i)
 	{
-		if(i==null || MainService.isRunning()) return;
+		if(i==null || MainService.isRunning() || !A.isEnabled()) return;
 		String act = i.getAction();
 		if(act == null) return;
 		if(skip) { skip = false; return; }

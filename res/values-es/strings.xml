@@ -34,7 +34,7 @@
 	<string name="restore">Restaurar</string>
 	<string name="show">Muestra</string>
 	<string name="active">Habilitado</string>
-	<string name="disactive">Off</string>
+	<string name="inactive">Off</string>
 	<string name="prefix">Prefijo</string>
 	<string name="suffix">Sufijo</string>
 	<string name="starred">Favorito</string>
@@ -51,6 +51,8 @@
 	<string name="share">Compartir</string>
 	<string name="hours_mins">Horas \  \  \  \  Minutos</string>
   <string name="phone_number">Número de telefóno</string>
+  <string name="reply">Responder</string>
+  <string name="close">Cerrar</string>
 
 	<string name="always">Siempre</string>
 	<string name="time">Hora</string>
@@ -77,10 +79,15 @@
 
 	<string name="general_cat">General</string>
 	<string name="general_sum">Opciones principales de aplicación.</string>
-  <string name="general_more_cat">Solución de problemas</string>
+  <string name="general_limit_cat">Manejar los estados del teléfono</string>
+  <string name="general_prob_cat">Soluciónes de problemas</string>
   <string name="general_prefs_cat">Administrar las preferencias</string>
 	<string name="enabled_title">Activar Sanity</string>
 	<string name="enabled_sum">Activar o desactivar Sanity. Desactivado,la aplicación no funcionara durante las llamadas de teléfono.</string>
+  <string name="quick_start_title">Inicio rápido</string>
+  <string name="quick_start_sum">Inicio rápido de Sanidad durante las llamadas y SMS (el proceso siempre se quedará en la memoria como servicio en segundo plano).</string>
+  <string name="sms_alert_title">Alertas SMS</string>
+  <string name="sms_alert_sum">Mostrar cada nuevo SMS entrante que le solicitará que responder.</string>
   <string name="silent_limit_title">Modo Silencio limitado</string>
   <string name="silent_limit_sum">Cada vez que active el Modo Silencio, Sanity le pedirá que elija un tiempo de espera para restaurar automáticamente el Modo Normal.</string>
   <string name="airplane_limit_title">Modo Avión limitado</string>
@@ -213,8 +220,6 @@
 	<string name="rec_stop_limit_sum">Elija la duración máxima de una grabación de audio. Sanity va a detener la grabación después de esta duración.</string>
 	<string name="rec_autoremove_title">Eliminación automática</string>
 	<string name="rec_autoremove_sum">Eliminar automáticamente las grabaciones de edad. Elija cuánto tiempo debe mantener los registros.</string>
-	<string name="rec_callscreen_title">Pantalla de llamada</string>
-	<string name="rec_callscreen_sum">Mostrar la pantalla de llamada justo después de iniciar o detener manualmente la grabación.</string>
 	<string name="rec_shortcut">Grabar Llamada</string>
 
 	<string name="block_cat">Bloqueador de llamadas</string>
@@ -258,8 +263,8 @@
 	<string name="tts_skip_sum">No anunciar la persona que llama cuando el teléfono está en modo silencio.</string>
 	<string name="tts_solo_title">Silenciar tono</string>
 	<string name="tts_solo_sum">Silenciar el tono de llamada al anunciar el nombre de la persona que llama.</string>
-	<string name="tts_vol_title">Volumem de anuncio</string>
-	<string name="tts_vol_sum">Elija el nivel de volumen utilizado para anunciar.</string>
+	<string name="tts_vol_title">Volumem anuncio</string>
+	<string name="tts_vol_sum">Elija el nivel de volumen utilizado para anunciar las lamadas.</string>
 	<string name="tts_tone_title">Tono de voz</string>
 	<string name="tts_tone_sum">Elige el tono de voz para anunciar el nombre de la persona que llama.</string>
 	<string name="tts_how_cat">Repetir y pausar el anuncio</string>
@@ -283,6 +288,8 @@
 	<string name="ttsms_cat">Anuncian remitente del SMS</string>
 	<string name="ttsms_title">Habilitar anuncio de SMS</string>
 	<string name="ttsms_sum">Diga el nombre del remitente al recibir un SMS (sólo el nombre del remitente se anuncia, no el contenido del mensaje).</string>
+	<string name="ttsms_vol_title">Volumem anuncio SMS</string>
+	<string name="ttsms_vol_sum">Elija el nivel de volumen utilizado para anunciar el SMS.</string>
 	<string name="ttsms_prefix_title">Prefijo (SMS)</string>
 	<string name="ttsms_prefix_sum">Elija lo que hablar ANTES del nombre del remitente.</string>
 	<string name="ttsms_suffix_title">Sufijo (SMS)</string>
@@ -309,6 +316,8 @@
 	<string name="answer_skip_sum">No conteste automáticamente cuando el teléfono está en modo silencio.</string>
 	<string name="answer_delay_title">Retardo de la respuesta</string>
 	<string name="answer_delay_sum">Tiempo de retardo antes de contestar de forma automática.</string>
+	<string name="answer_alt_title">Alternativa respuesta</string>
+	<string name="answer_alt_sum">Use una manera alternativa de responder. Compruebe que sólo si la respuesta automática no funciona en su teléfono.</string>
 
 	<string name="anonym_cat">Llamadas anónimas</string>
 	<string name="anonym_sum">Reglas para marcar llamada anónima (ocultar automáticamente su ID de llamada).</string>
@@ -334,6 +343,17 @@
 	<string name="vol_solo_title">Conversacion unicamente</string>
 	<string name="vol_solo_sum">Reproducir unicamente el audio de la conversacion, silenciando cualquier otra reproduccion durante las llamadas.</string>
 
+	<string name="vibrate_cat">Vibración</string>
+	<string name="vibrate_sum">Elija el que los eventos especiales que hacen vibrar el teléfono.</string>
+  <string name="vibrate_pickup_title">Vibrar al principio</string>
+  <string name="vibrate_pickup_sum">Vibre cuando una llamada saliente comienza.</string>
+	<string name="vibrate_end_title">Vibrar al final</string>
+	<string name="vibrate_end_sum">Vibrar cuando terminas la llamada.</string>
+  <string name="vibrate_mode_title">Modo de vibración</string>
+  <string name="vibrate_mode_sum">Elija el modo de vibración del teléfono.</string>
+  <string name="vibrate_test_title">Prueba la vibración</string>
+  <string name="vibrate_test_sum">Pulse aquí para probar el modo de vibración.</string>
+
 	<string name="notify_cat">Notificaciones</string>
 	<string name="notify_sum">Elegir cuando Sanity debe mostrar las notificaciones.</string>
 	<string name="notify_disable_title">Notificar al apagar</string>
@@ -348,8 +368,6 @@
   <string name="notify_headset_sum">Notificar cuando los auriculares están conectados o desconectados.</string>
   <string name="notify_rec_stop_title">Notificar la grabación</string>
   <string name="notify_rec_stop_sum">Notificar cuando la grabación del audio se detiene por Sanity.</string>
-	<string name="vibrate_end_title">Vibración</string>
-	<string name="vibrate_end_sum">Vibrar cuando terminas la llamada.</string>
 
 	<string name="about_cat">Saber mas y contactar</string>
 	<string name="about_sum">Informacion sobre esta aplicación y maneras de contactar con el desarrollador.</string>
@@ -358,7 +376,7 @@
   <string name="forum_title">Foro oficial</string>
   <string name="forum_sum">Pulse aquí para abrir la página web oficial del foro del desarrollador. Puede usar esto foro para reportar algun fallo o error y enviar sus sugerencias.</string>
 	<string name="mail_title">Escribe al desarrollador</string>
-	<string name="mail_sum">Pulse aquie para escribir un e-mail al desarrollador (Preferentemente en Ingles).</string>
+	<string name="mail_sum">Pulse aquie para escribir un e-mail al desarrollador. ¡Utilice el foro para cualquier pregunta sobre Sanity!</string>
 	<string name="comment_title">Dejanos un comentario</string>
 	<string name="comment_sum">Te invitamos a dejar un comentario en el Market y decirnos que te parece esta aplicación. Porfavor los errores o fallos solamente por e-mail, no en el Market.</string>
 	<string name="eula_title">Licencia GNU GPL v3</string>
@@ -397,6 +415,8 @@
 	<string name="filter_star_sum">Todos los contactos que agregó a favoritos.</string>
 	<string name="filter_groups_title">Lista de grupos</string>
 	<string name="filter_groups_sum">Elegir los grupos de contactos en la lista.</string>
+	<string name="filter_prefix_title">Prefijos</string>
+	<string name="filter_prefix_sum">Elija los prefijos telefónicos en la lista.</string>
 	<string name="filter_dt_title">Fecha y hora</string>
 	<string name="filter_dt_sum">Elegir el momento de este filtro debe estar habilitado.</string>
 	<string name="filter_dt_enable_title">Elija la fecha y la hora</string>
@@ -457,6 +477,7 @@
   <string name="msg_prf_restore_ok">Sanity: perfil \"%s\" activado</string>
   <string name="msg_prf_restore_err">Sanity: no es posible activar el perfil \"%s\"!</string>
   <string name="msg_nums_edit">Número de teléfono (con el prefijo internacional)</string>
+  <string name="msg_prefix_edit">Prefijo de teléfono (con el prefijo internacional)</string>
   <string name="msg_empty_list">No hay entradas en esta lista. Utilice el menú para crear otras nuevas.</string>
   <string name="msg_last_modified">Última modificación</string>
 	<string name="msg_email_choose">Elige como enviar el e-mail</string>
@@ -474,6 +495,7 @@
   <string name="msg_mode_scheduled">Sanity: restauración prevista a las %s</string>
   <string name="msg_option_set" formatted="false">%s se establece en \"%s\"</string>
   <string name="msg_anonym_dial">Sanity: marcación llamada anónima</string>
+  <string name="msg_sms_from">SMS de %s</string>
 
 	<string name="err_dir">Sanity error: no se puede crear el directorio para guardar las grabaciónes de audio!</string>
 	<string name="err_rec">Sanity error: no se puede iniciar la grabación de audio!</string>

@@ -132,17 +132,17 @@ public class RecService extends Service
 
 	@Override
 	public int onStartCommand(Intent i, int flags, int id) {
+		if(!MainService.isRunning()) return quit();
 		if(i == null) return START_STICKY;
 		final long now = SystemClock.elapsedRealtime();
 		if(now-ts < Conf.SERVICE_TIMEOUT) return START_STICKY;
 		ts = now;
-		if(!running)           running = true;
-		else if(rec == null) { A.notifyCanc(NID); stopSelf(); return START_STICKY; }
+		if(!running) running = true;
+		else if(rec == null) return quit();
 		else {
 			if(rec.isStarted()) recStop (0);
 			else                recStart(0);
-			if(A.is(K.REC_CALLSCREEN))
-				try { Dev.iTel().showCallScreen(); } catch(Exception e) {}
+			try { Dev.iTel().showCallScreen(); } catch(Exception e) {}
 		}
 		return START_STICKY;
 	}
@@ -155,6 +155,12 @@ public class RecService extends Service
 	}
 
 	//---- private api
+	
+	private int quit() {
+		A.notifyCanc(NID);
+		stopSelf();
+		return START_STICKY;
+	}
 
 	private static void startService() {
 		final Context ctx = A.app();

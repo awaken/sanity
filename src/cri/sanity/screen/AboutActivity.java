@@ -1,6 +1,5 @@
 package cri.sanity.screen;
 
-import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Intent;
 import android.net.Uri;
@@ -57,12 +56,11 @@ public class AboutActivity extends ScreenActivity
 	}
 	
 	private static String googleAccount() {
-		final AccountManager am = AccountManager.get(A.app());
-		if(am == null) return null;
-		final Account[] accs = am.getAccountsByType("com.google");
-		if(accs==null || accs.length<=0) return null;
-		final String name = accs[0].name;
-		return A.empty(name) ? null : name.trim().toLowerCase();
+		try {
+		 return AccountManager.get(A.app()).getAccountsByType("com.google")[0].name.trim().toLowerCase();
+		} catch(Exception e) {
+			return null;
+		}
 	}
 
 }

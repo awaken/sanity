@@ -2,6 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<Preference android:key="logo" />
 	<PreferenceCategory android:title="@string/speaker_cat">
+
 	  <CheckBoxPreference android:title="@string/auto_speaker_title"
 	                      android:summary="@string/auto_speaker_sum"
 	                      android:key="auto_speaker" />
@@ -28,6 +29,7 @@
 	                      android:summary="@string/silent_end_speaker_sum"
 	                      android:key="silent_end_speaker" />
 	</PreferenceCategory>
+
 	<PreferenceCategory android:title="@string/geek_cat">
 	  <cri.sanity.pref.PList android:title="@string/speaker_on_count_title"
 	                         android:summary="@string/speaker_on_count_sum"
@@ -42,4 +44,5 @@
 	                         android:entries="@array/speaker_count_labels"
 	                         android:entryValues="@array/speaker_count_values" />
 	</PreferenceCategory>
+
 </PreferenceScreen>

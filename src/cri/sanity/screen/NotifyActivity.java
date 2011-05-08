@@ -1,7 +1,7 @@
 package cri.sanity.screen;
 
-import cri.sanity.*;
 import android.os.Bundle;
+import cri.sanity.*;
 
 
 public class NotifyActivity extends ScreenActivity

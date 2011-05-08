@@ -6,15 +6,28 @@
     <CheckBoxPreference android:title="@string/enabled_title"
                         android:summary="@string/enabled_sum"
                         android:key="enabled" />
+    <CheckBoxPreference android:title="@string/quick_start_title"
+                        android:summary="@string/quick_start_sum"
+                        android:dependency="enabled"
+                        android:key="quick_start" />
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/general_limit_cat">
+    <CheckBoxPreference android:title="@string/sms_alert_title"
+                        android:summary="@string/sms_alert_sum"
+                        android:dependency="enabled"
+                        android:key="sms_alert" />
     <CheckBoxPreference android:title="@string/silent_limit_title"
                         android:summary="@string/silent_limit_sum"
+                        android:dependency="enabled"
                         android:key="silent_limit" />
     <CheckBoxPreference android:title="@string/airplane_limit_title"
                         android:summary="@string/airplane_limit_sum"
+                        android:dependency="enabled"
                         android:key="airplane_limit" />
 	</PreferenceCategory>
 
-	<PreferenceCategory android:title="@string/general_more_cat">
+	<PreferenceCategory android:title="@string/general_prob_cat">
     <CheckBoxPreference android:title="@string/admin_title"
                         android:summary="@string/admin_sum"
                         android:persistent="false"

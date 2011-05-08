@@ -12,5 +12,6 @@
 	<item android:id="@+id/menu_proximity" android:icon="@drawable/menu_proximity" android:title="@string/proximity_cat" />
 	<item android:id="@+id/menu_vol" android:icon="@drawable/menu_vol" android:title="@string/vol_cat" />
 	<item android:id="@+id/menu_notify" android:icon="@drawable/menu_notify" android:title="@string/notify_cat" />
+	<item android:id="@+id/menu_vibra" android:icon="@drawable/menu_vibra" android:title="@string/vibrate_cat" />
 	<item android:id="@+id/menu_about" android:icon="@drawable/menu_about" android:title="@string/about_cat" />
 </menu>

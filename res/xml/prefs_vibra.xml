@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<Preference android:key="logo" />
+	<PreferenceCategory android:title="@string/vibrate_cat">
+	  <CheckBoxPreference android:title="@string/vibrate_pickup_title"
+	                      android:summary="@string/vibrate_pickup_sum"
+	                      android:key="vibrate_pickup" />
+	  <CheckBoxPreference android:title="@string/vibrate_end_title"
+	                      android:summary="@string/vibrate_end_sum"
+	                      android:key="vibrate_end" />
+	  <cri.sanity.pref.PList android:title="@string/vibrate_mode_title"
+	                         android:summary="@string/vibrate_mode_sum"
+	                         android:key="vibrate_mode_s"
+	                         android:entries="@array/vibrate_mode_labels"
+	                         android:entryValues="@array/vibrate_mode_values"/>
+	  <Preference android:title="@string/vibrate_test_title"
+	              android:summary="@string/vibrate_test_sum"
+	              android:persistent="false"
+	              android:key="vibrate_test" />
+	</PreferenceCategory>
+</PreferenceScreen>

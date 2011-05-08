@@ -51,7 +51,7 @@ public class Rec
 			mediaRec.start();
 			started = true;
 			vanilla = false;
-			//A.audioMan().setMicrophoneMute(false);	// FIX: remove???
+			A.audioMan().setMicrophoneMute(false);	// FIX: remove???
 			//A.logd("rec started");
 		} catch(Exception e) {
 			A.notify(A.s(R.string.err_rec));

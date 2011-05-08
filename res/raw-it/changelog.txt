@@ -1,3 +1,13 @@
+Versione 2.11:
+- Nuovo: opzione per vibrare quando inizia una telefonata effettuata.
+- Nuovo: opzione per scegliere la modalità di vibrazione.
+- Nuovo: opzione per mostrare nuovi SMS arrivati per lettura e risposta rapida.
+- Nuovo: opzione per impostare il volume per annunciare gli SMS.
+- Nuovo: opzione per usare un modo alternativo per rispondere automaticamente.
+- Nuovo: opzione per velocizzare l'avvio dell'applicazione.
+- Nuovo: filtra i numeri telefonici dal prefisso.
+- Fix: bug minori.
+
 Versione 2.10:
 - Fix: bug nella pronuncia del mittente di SMS.
 - Fix: bug nel vivavoce automatico.

@@ -1,5 +1,6 @@
 package cri.sanity.screen;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -14,6 +15,14 @@ public class GeneralActivity extends ScreenActivity
 	{
 		super.onCreate(savedInstanceState);
 		Admin.prefSetup(pref("admin"));
+
+		on(K.QUICK_START, new Change(){ public boolean on(){
+			final Context ctx = A.app();
+			final Intent  i   = new Intent(ctx, BootService.class);
+			if((Boolean)value) ctx.startService(i);
+			else               ctx. stopService(i);
+			return true;
+		}});
 
 		on(K.FORCE_BT_AUDIO, new Change(){ public boolean on(){
 			if(!(Boolean)value) return true;
@@ -106,7 +115,7 @@ public class GeneralActivity extends ScreenActivity
 		Admin.prefCheck(pref("admin"));
 		super.onResume();
 	}
-	
+
 	private void updateScreenPrefs()
 	{
 		updatePrefs(K.FORCE_BT_AUDIO, K.REVERSE_PROXIMITY);

@@ -260,6 +260,7 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 	private void onIdle() {
 		shutdown = true;
 		//A.logd("onIdle: begin");
+		PickupService.stop();
 		if(offhook) {
 			Task.stop(TASK_SPEAKER);
 			if(!headsetOn && A.is(K.SPEAKER_SILENT_END)) audioMan.setSpeakerphoneOn(false);
@@ -275,7 +276,7 @@ public final class PhoneListener extends PhoneStateListener implements SensorEve
 			Dev.enableLock(true);
 			volSolo(false);
 			screenOff(false);
-			if(A.is(K.VIBRATE_END)) A.vibrate();
+			if(A.is(K.VIBRATE_END)) Vibra.vibra();
 		}
 		restoreRinger();
 		try { A.telMan().listen(this, LISTEN_NONE); } catch(Exception e) {}

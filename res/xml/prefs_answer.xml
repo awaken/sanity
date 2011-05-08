@@ -21,5 +21,9 @@
 	                         android:entryValues="@array/disable_delay_values" />
 	  <cri.sanity.pref.PFilter android:dependency="answer"
 	                           android:key="filter_answer" />
+	  <CheckBoxPreference android:title="@string/answer_alt_title"
+	                      android:summary="@string/answer_alt_sum"
+	                      android:dependency="answer"
+	                      android:key="answer_alt" />
 	</PreferenceCategory>
 </PreferenceScreen>

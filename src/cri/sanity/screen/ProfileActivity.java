@@ -258,7 +258,7 @@ public class ProfileActivity extends ScreenActivity implements FilenameFilter
 			if(v == -1) return A.s(R.string.nochange);
 			return Integer.toString(v);
 		}
-		if(o instanceof Boolean) return A.s((Boolean)o? R.string.active : R.string.disactive);
+		if(o instanceof Boolean) return A.s((Boolean)o? R.string.active : R.string.inactive);
 		if(o instanceof Long   ) return Long.toString((Long)o);
 		if(o instanceof Float  ) return Float.toString((Float)o);
 		if(o instanceof String ) return (String)o;

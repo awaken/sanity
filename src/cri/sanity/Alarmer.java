@@ -120,10 +120,12 @@ public final class Alarmer extends BroadcastReceiver
 
 	public final void actOnIdleAsync() {
 		if(A.is(K.REC)) RecService.cron();
+		if(A.is(K.QUICK_START) && !BootService.isRunning())
+			A.app().startService(new Intent(A.app(), BootService.class));
 	}
 
 	public final void actBootAsync() {
-		if(A.is(K.REC)) RecService.cron();
+		actOnIdleAsync();
 	}
 
 }

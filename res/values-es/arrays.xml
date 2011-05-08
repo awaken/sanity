@@ -229,4 +229,16 @@
 		<item>Prefijo personalizado</item>
 	</string-array>
 
+	<string-array name="vibrate_mode_labels">
+		<item>Sola breve</item>
+		<item>Sola media</item>
+		<item>Sola prolongada</item>
+		<item>Doble breve</item>
+		<item>Doble media</item>
+		<item>Doble prolongada</item>
+		<item>Triple breve</item>
+		<item>Triple media</item>
+		<item>Triple prolongada</item>
+	</string-array>
+
 </resources>

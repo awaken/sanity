@@ -7,11 +7,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.text.TextUtils;
@@ -55,6 +57,9 @@ public class SmsReceiver extends BroadcastReceiver
 		}
 		else if(tts) filterTTS(pdus);
 
+		if(pdus!=null && pdus.length>0 && A.is(K.SMS_ALERT))
+			smsAlert(SmsMessage.createFromPdu((byte[])pdus[0]));
+		
 		if(A.empty(idTTS)) return;
 		new TTS(new String(idTTS), false, false, true);
 	}
@@ -73,7 +78,7 @@ public class SmsReceiver extends BroadcastReceiver
     for(int i=0; i<n; i++) {
   		try {
 	    	msg = SmsMessage.createFromPdu((byte[])pdus[i]);
-	    	num = msg.getOriginatingAddress();
+	    	num = msg.getDisplayOriginatingAddress();
 	      if(!cf.includes(num, sectBlock, false)) throw new Exception();
 	      if(log) log(num, cf.searchName(num), msg.getMessageBody(), msg.getTimestampMillis());
 	      blocked[i] = true;
@@ -136,7 +141,7 @@ public class SmsReceiver extends BroadcastReceiver
   	try { fn = smsFn(); } catch(Exception e) { return; }
 	  final String tmp = fn + ".tmp";
 	  try {
-			in = new BufferedReader(new FileReader(fn));
+			in = new BufferedReader(new FileReader(fn), 8192);
 			for(int n=cnt-max; --n>=0;)
 				in.readLine();
 	  	fw = new FileWriter(tmp, false);
@@ -169,7 +174,7 @@ public class SmsReceiver extends BroadcastReceiver
     final String sectTTS = getSectTTS(true);
     for(int i=0; i<n; i++) {
     	try {
-    		filterTTS(cf, sectTTS, SmsMessage.createFromPdu((byte[])pdus[i]).getOriginatingAddress(), names);
+    		filterTTS(cf, sectTTS, SmsMessage.createFromPdu((byte[])pdus[i]).getDisplayOriginatingAddress(), names);
     	} catch(Exception e) {}
     }
     cf.close();
@@ -181,14 +186,53 @@ public class SmsReceiver extends BroadcastReceiver
 		if(A.empty(num)) {
 			if(anonym == null) anonym = A.gets(K.TTS_ANONYM);
 			if(anonym.length() > 0) map.put(anonym, 1);
+		} else if(!isTelNum(num)) {
+			map.put(num, 1);
 		} else {
 			final String name = cf.searchName(num);
-			if(!A.empty(name)) map.put(name, 1);
+			if(!A.empty(name))
+				map.put(name, 1);
 			else {
 				if(unknown == null) unknown = A.gets(K.TTS_UNKNOWN);
 				if(unknown.length() > 0) map.put(unknown, 1);
 			}
 		}
+	}
+	
+	private static void smsAlert(SmsMessage sms) {
+		final String from = sms.getDisplayOriginatingAddress();
+		final String name = new CallFilter().searchName(from);
+		final String body = sms.getMessageBody();
+		BlankActivity.force = true;
+		BlankActivity.postSingleton(new Runnable(){ public void run(){
+			Alert.activity = BlankActivity.getInstance();
+			Alert.msg(
+				String.format(A.s(R.string.msg_sms_from), A.empty(name)? from : name),
+				body,
+				new Alert.Click(){ public void on(){
+					Intent i = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:"+from));
+					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					A.app().startActivity(i);
+				}},
+				null,
+				Alert.REPLY
+			).setOnDismissListener(new OnDismissListener() {
+				@Override
+				public void onDismiss(DialogInterface dialog) {
+					BlankActivity.getInstance().postFinish();
+					Alert.activity = null;
+				}
+			});
+		}});
+		Intent i = new Intent(A.app(), BlankActivity.class);
+		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		A.app().startActivity(i);
+	}
+
+	private static boolean isTelNum(String num) {
+		for(char c : num.toCharArray())
+			if(c!='+' && c!='-' && c<'0' && c>'9') return false;
+		return true;
 	}
 
 	private static String smsFn() { return A.sdcardDir()+'/'+Conf.SMS_FN; }

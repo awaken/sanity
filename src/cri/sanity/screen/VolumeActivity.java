@@ -15,9 +15,13 @@ public class VolumeActivity extends ScreenActivity
 		CharSequence[][] arr = getVolumeLevels(AudioManager.STREAM_VOICE_CALL);
   	for(String k : new String[]{ K.VOL_PHONE, K.VOL_WIRED, K.VOL_BT })
   		setVolumeLevels((PList)pref(k + K.WS), arr);
-		setVolumeLevels((PList)pref(K.TTS_VOL+K.WS), TtsActivity.getVolumeStream());
-  	fullOnly(K.TTS_VOL+K.WS);
-  	if(!A.is(K.TTS)) setEnabled(K.TTS_VOL+K.WS, false);
+		setVolumeLevels((PList)pref(K.TTS_VOL    +K.WS), TtsActivity.getVolumeStream());
+		setVolumeLevels((PList)pref(K.TTS_SMS_VOL+K.WS), TtsActivity.getVolumeStreamSMS());
+  	if(!A.is(K.TTS)) {
+  		setEnabled(K.TTS_VOL+K.WS, false);
+  		if(!A.is(K.TTS_SMS)) setEnabled(K.TTS_SMS_VOL+K.WS, false);
+  	}
+  	fullOnly(K.TTS_VOL+K.WS, K.TTS_SMS_VOL+K.WS);
   }
 
 	public static CharSequence[][] getVolumeLevels(int stream)

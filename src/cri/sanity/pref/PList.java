@@ -73,6 +73,8 @@ public class PList extends ListPreference implements OnPreferenceChangeListener
 		}
 	}
 
+	public final void setValue(int v) { setValue(Integer.toString(v)); }
+
 	//---- private api
 
 	private void init() {

@@ -47,6 +47,7 @@ public final class ShortcutActivity extends Activity implements DialogInterface.
 			R.string.speaker_cat           , R.drawable.menu_speaker  , EXTRA_SCREEN  , SpeakerActivity.class.getName(),
 			R.string.vol_cat               , R.drawable.menu_vol      , EXTRA_SCREEN  , VolumeActivity.class.getName(),
 			R.string.notify_cat            , R.drawable.menu_notify   , EXTRA_SCREEN  , NotifyActivity.class.getName(),
+			R.string.vibrate_cat           , R.drawable.menu_vibra    , EXTRA_SCREEN  , VibraActivity.class.getName(),
 			R.string.block_cat             , R.drawable.menu_block    , EXTRA_SCREEN  , BlockerActivity.class.getName(),
 			R.string.tts_cat               , R.drawable.menu_tts      , EXTRA_SCREEN  , TtsActivity.class.getName(),
 			R.string.urgent_cat            , R.drawable.menu_urgent   , EXTRA_SCREEN  , UrgentActivity.class.getName(),
@@ -211,8 +212,7 @@ public final class ShortcutActivity extends Activity implements DialogInterface.
 		else {
 			if(RecService.isRecord()) { RecService.recStop (0); A.toast(R.string.msg_rec_limit); }
 			else                      { RecService.recStart(0); A.toast(R.string.msg_rec_go   ); }
-			if(A.is(K.REC_CALLSCREEN))
-				try { Dev.iTel().showCallScreen(); } catch(Exception e) {}
+			try { Dev.iTel().showCallScreen(); } catch(Exception e) {}
 		}
 		return false;
 	}
@@ -271,7 +271,7 @@ public final class ShortcutActivity extends Activity implements DialogInterface.
 		} else {
 			final Object v = P.getDefaults().get(key);
 			if(v instanceof Boolean) {
-				items = new String[]{ A.s(R.string.disactive), A.s(R.string.active) };
+				items = new String[]{ A.s(R.string.inactive), A.s(R.string.active) };
 				vals  = new Boolean[]{ false, true };
 				selected = A.is(key) ? 1 : 0;
 			} else if(v instanceof Integer && key.indexOf("vol")>=0) {
@@ -370,10 +370,11 @@ public final class ShortcutActivity extends Activity implements DialogInterface.
 	}
 
 	private void askDonate() {
+		skipQuit = true;
 		Alert.msg(
 			A.rawstr(R.raw.shortcut_free),
 			new Alert.Click(){ public void on(){ Goto.marketDetails(License.FULL_PKG); }},
-			null
+			new Alert.Click(){ public void on(){ skipQuit = false; finish(); }}
 		).setOnDismissListener(this);
 	}
 

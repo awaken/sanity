@@ -18,6 +18,8 @@ public class TtsActivity extends ScreenActivity
 	private static final String KEY_FILTER      = "filter_tts";
 	private static final String KEY_SMS_FILTER  = "filter_ttsms";
 	private static final String KEY_SMS_SHARED  = "ttsms_shared";
+	private static final String KEY_VOL         = K.TTS_VOL     + K.WS;
+	private static final String KEY_SMS_VOL     = K.TTS_SMS_VOL + K.WS;
 	private static final int    CODE_CHECK      = 1;
 	private static final int    TEST_MIN_REPEAT = 10;
 	private static final int    TEST_MAX_REPEAT = 10;
@@ -43,19 +45,30 @@ public class TtsActivity extends ScreenActivity
  			return true;
  		}});
  		on(K.TTS_STREAM, new Change(){ public boolean on(){
- 			final int stream = getVolumeStream((Boolean)value);
- 			final int vol    = A.geti(K.TTS_VOL);
+ 			final boolean alt = (Boolean)value;
+ 			final int stream = getVolumeStream(alt);
+ 			int vol = A.geti(K.TTS_VOL);
  			if(vol >= 0) {
  				final int volmax = A.audioMan().getStreamMaxVolume(stream);
  				if(vol > volmax) {
  					A.put(K.TTS_VOL, volmax);
- 					((PList)pref(K.TTS_VOL+K.WS)).setValue(volmax+"");
+ 					((PList)pref(KEY_VOL)).setValue(volmax);
  				}
  			}
- 			setVolumeLevels(stream);
+ 			vol = A.geti(K.TTS_SMS_VOL);
+ 			if(vol >= 0) {
+ 				final int volmax = A.audioMan().getStreamMaxVolume(stream);
+ 				if(vol > volmax) {
+ 					A.put(K.TTS_VOL, volmax);
+ 					((PList)pref(KEY_SMS_VOL)).setValue(volmax);
+ 				}
+ 			}
+ 			setVolumeLevels   (stream);
+ 			setVolumeLevelsSMS(stream);
  			return true;
  		}});
  		setVolumeLevels();
+ 		setVolumeLevelsSMS();
  		on(KEY_GLOBAL, new Click(){ public boolean on(){
  			Intent i = new Intent();
  			i.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -98,7 +111,7 @@ public class TtsActivity extends ScreenActivity
     	p.setEnabled(!on);
     	return true;
     }});
- 		fullOnly(K.TTS_HEADSET, K.TTS_SOLO, K.TTS_VOL+K.WS, K.TTS_REPEAT+K.WS, K.TTS_PAUSE+K.WS, KEY_FILTER,
+ 		fullOnly(K.TTS_HEADSET, K.TTS_SOLO, KEY_VOL, KEY_SMS_VOL, K.TTS_REPEAT+K.WS, K.TTS_PAUSE+K.WS, KEY_FILTER,
  		         K.TTS_SMS_PREFIX, K.TTS_SMS_SUFFIX, KEY_SMS_SHARED, KEY_SMS_FILTER);
   }
 
@@ -135,10 +148,14 @@ public class TtsActivity extends ScreenActivity
 		}
 	}
 
-	public  static final int getVolumeStream()            { return getVolumeStream(A.is(K.TTS_STREAM)); }
-	private static final int getVolumeStream(boolean alt) { return alt? TTS.STREAM2_INT : TTS.STREAM1_INT; }
-	private void setVolumeLevels(int stream)              { VolumeActivity.setVolumeLevels((PList)pref(K.TTS_VOL+K.WS), stream); }
-	private void setVolumeLevels()                        { setVolumeLevels(getVolumeStream()); }
+	public  static final int getVolumeStream()               { return getVolumeStream   (A.is(K.TTS_STREAM)); }
+	public  static final int getVolumeStreamSMS()            { return getVolumeStreamSMS(A.is(K.TTS_STREAM)); }
+	private static final int getVolumeStream   (boolean alt) { return alt? TTS.STREAM2_INT : TTS.STREAM1_INT; }
+	private static final int getVolumeStreamSMS(boolean alt) { return alt? TTS.STREAM3_INT : TTS.STREAM1_INT; }
+	private void setVolumeLevels   (int stream)              { VolumeActivity.setVolumeLevels((PList)pref(KEY_VOL    ), stream); }
+	private void setVolumeLevelsSMS(int stream)              { VolumeActivity.setVolumeLevels((PList)pref(KEY_SMS_VOL), stream); }
+	private void setVolumeLevels()                           { setVolumeLevels   (getVolumeStream   ()); }
+	private void setVolumeLevelsSMS()                        { setVolumeLevelsSMS(getVolumeStreamSMS()); }
 
 	private void ttsBroken() { Alert.msg(A.rawstr(R.raw.tts_broken)); }
 

@@ -18,6 +18,16 @@ Android application to assist during phone calls.
   Change log
 -------------------
 
+* version 2.11  (08/05/2011)
+- New: option to vibrate when an outgoing call begins.
+- New: option to choose the vibration mode.
+- New: option to show new incoming SMS for fast reading and replying.
+- New: option to choose volume to announce SMS.
+- New: option to use an alternative way to answer automatically.
+- New: option to speed up application startup.
+- New: filter phone numbers by prefix.
+- Fix: minor bugs.
+
 * version 2.10  (26/04/2011)
 - Fix: bug when announcing the sender of SMS.
 - Fix: bug in automatic handsfree.
@@ -237,9 +247,11 @@ Android application to assist during phone calls.
 * BUGS:
   - wifi doesn't always restore
   - sometimes bt headsets are disconnected when Sanity answers the call
-  - sometimes ANR on call end (after recording starts)
+  - sometimes ANR on call end (after recording starts and/or on WifiTracker.shutdown)
 
 * call filter: patterns (prefix, suffix, substring, wildcards)
+
+* option to remove android notifications of call log for blocked calls
 
 * change the ringtone at different times/days;
 * choose preferred ringtone volume
@@ -250,8 +262,8 @@ Android application to assist during phone calls.
 * sound/vibrate when losing/restoring gsm signal
 * new bluetooth handling (manually choose paired devices to consider audio ones)
 
-* change the colors of menu_general.png
-* file sizes in record archive (and total file nums + size at the bottom of the page)
+* file sizes in record archive (and total file nums + size at the bottom of the page) and if less than 4k say "corrupted"
+* customizable record filenames
 
 * integrated audio player?
 * voicemail
@@ -259,3 +271,5 @@ Android application to assist during phone calls.
 * send sms after call block?
 * flip silence?
 * call log sync to gmail???
+
+* customizable recording file names

@@ -58,6 +58,11 @@
 		            android:widgetLayout="@layout/img_vol"
 		            android:persistent="false"
 		            android:key="screen_volume" />
+		<Preference android:title="@string/vibrate_cat"
+		            android:summary="@string/vibrate_sum"
+		            android:widgetLayout="@layout/img_vibra"
+		            android:persistent="false"
+		            android:key="screen_vibra" />
 		<Preference android:title="@string/notify_cat"
 		            android:summary="@string/notify_sum"
 		            android:widgetLayout="@layout/img_notify"

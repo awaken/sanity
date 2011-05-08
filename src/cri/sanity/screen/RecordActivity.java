@@ -40,7 +40,7 @@ public class RecordActivity extends ScreenActivity
 		on(K.REC_STOP, new Change(){ public boolean on(){
 			final boolean on = (Boolean)value;
 			setEnabled(K.REC_STOP_SPEAKER, on && (A.is(K.SPEAKER_AUTO) || speakerCall));
-			setEnabled(  REC_STOP_LIMIT  , on &&  A.isFull());
+			setEnabled(REC_STOP_LIMIT, on &&  A.isFull());
 			return true;
 		}});
 		on(K.REC_START_SPEAKER, new Change(){ public boolean on(){
@@ -69,9 +69,11 @@ public class RecordActivity extends ScreenActivity
 
 	private void updateEnabled() {
 		speakerCall = A.geti(K.SPEAKER_CALL) != 0;
-		setEnabled(K.REC_START_SPEAKER, A.is(K.REC_START) && (A.is(K.SPEAKER_AUTO) || speakerCall));
-		setEnabled(K.REC_STOP_SPEAKER , A.is(K.REC_STOP ) && (A.is(K.SPEAKER_AUTO) || speakerCall));
-		setEnabled(  REC_STOP_LIMIT   , A.is(K.REC_STOP ) &&  A.isFull());
+		boolean speakerAuto = speakerCall || A.is(K.SPEAKER_AUTO);
+		boolean recStop = A.is(K.REC_STOP);
+		setEnabled(K.REC_START_SPEAKER, speakerAuto && A.is(K.REC_START));
+		setEnabled(K.REC_STOP_SPEAKER , speakerAuto && recStop);
+		setEnabled(  REC_STOP_LIMIT   , recStop && A.isFull());
 		setEnabled(  REC_START_TIMES  , A.is(K.REC_START_SPEAKER) || A.geti(K.REC_START_HEADSET)!=RecService.ACT_HEADSET_SKIP);
 		setChecked( "rec_scan"        , scanAllowed());
 	}

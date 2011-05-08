@@ -97,7 +97,7 @@ public abstract class HistoryActivity extends ScreenActivity
 		boolean read = false;
 		BufferedReader in = null;
 		try {
-			in = new BufferedReader(new FileReader(f));
+			in = new BufferedReader(new FileReader(f), 8192);
 			final Constructor<?> constr = prefClass().getDeclaredConstructors()[0];
 			final int n = lineItems() - 1;
 			String[] items = new String[lineItems()];

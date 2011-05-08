@@ -13,5 +13,4 @@ public class BootReceiver extends BroadcastReceiver
 		if(!A.isEnabled()) return;
 		Alarmer.runService(Alarmer.ACT_BOOT, null);
 	}
-
 }

@@ -3,6 +3,7 @@ package cri.sanity;
 import java.util.HashMap;
 import java.util.Map;
 import android.util.Pair;
+import cri.sanity.screen.*;
 
 
 public final class PrefGroups
@@ -11,7 +12,7 @@ public final class PrefGroups
 
 	public static final String[][] sections() {
 		return new String[][]{
-			new String[]{ "general_cat", K.ENABLED, K.SILENT_LIMIT, K.AIRPLANE_LIMIT, K.FORCE_BT_AUDIO, K.REVERSE_PROXIMITY, K.PWD, K.PWD_CLEAR },
+			new String[]{ "general_cat", K.ENABLED, K.QUICK_START, K.SILENT_LIMIT, K.AIRPLANE_LIMIT, K.FORCE_BT_AUDIO, K.REVERSE_PROXIMITY, K.PWD, K.PWD_CLEAR },
 			new String[]{ "devices_cat", K.AUTO_MOBDATA, K.AUTO_WIFI, K.AUTO_GPS, K.AUTO_BT, K.SKIP_BT, K.SKIP_MOBDATA, K.SKIP_HOTSPOT, K.SKIP_TETHER, K.REVERSE_BT, K.REVERSE_BT_TIMEOUT, K.BT_OFF },
 			new String[]{ "proximity_cat", K.DISABLE_PROXIMITY, K.DISABLE_DELAY, K.ENABLE_PROXIMITY, K.ENABLE_DELAY, K.SCREEN_OFF, K.SCREEN_ON },
 			new String[]{ "speaker_cat", K.SPEAKER_AUTO, K.SPEAKER_DELAY, K.SPEAKER_CALL, K.SPEAKER_CALL_DELAY, K.SPEAKER_VOL, K.SPEAKER_SILENT_END, K.SPEAKER_ON_COUNT, K.SPEAKER_OFF_COUNT },
@@ -22,7 +23,8 @@ public final class PrefGroups
 			new String[]{ "answer_cat", K.ANSWER, K.ANSWER_HEADSET, K.ANSWER_SKIP, K.ANSWER_DELAY, K.ANSWER_FILTER },
 			new String[]{ "anonym_cat", K.ANONYM, K.ANONYM_CONFIRM, K.ANONYM_NOTIFY, K.ANONYM_PREFIX, K.ANONYM_FILTER },
 			new String[]{ "vol_cat", K.VOL_PHONE, K.VOL_WIRED, K.VOL_BT, K.VOL_SOLO },
-			new String[]{ "notify_cat", K.VIBRATE_END, K.NOTIFY_ENABLE, K.NOTIFY_DISABLE, K.NOTIFY_ACTIVITY, K.NOTIFY_VOLUME, K.NOTIFY_REC_STOP },
+			new String[]{ "vibrate_cat", K.VIBRATE_PICKUP, K.VIBRATE_END, K.VIBRATE_MODE },
+			new String[]{ "notify_cat", K.NOTIFY_ENABLE, K.NOTIFY_DISABLE, K.NOTIFY_ACTIVITY, K.NOTIFY_VOLUME, K.NOTIFY_REC_STOP },
 		};
 	}
 
@@ -46,6 +48,29 @@ public final class PrefGroups
 
 	public static final String[] edits() {
 		return new String[]{ K.TTS_PREFIX, K.TTS_SUFFIX, K.TTS_ANONYM, K.TTS_ANONYM, K.TTS_SMS_PREFIX, K.TTS_SMS_SUFFIX, K.ANONYM_PREFIX };
+	}
+
+	public static final String[] volumes() {
+		return new String[]{ K.VOL_PHONE, K.VOL_WIRED, K.VOL_BT, K.SPEAKER_VOL, K.TTS_VOL, K.TTS_SMS_VOL };
+	}
+
+	public static final Object[] screens() {
+		return new Object[] {
+	  	"screen_general"  , GeneralActivity.class  , R.xml.prefs_general  , R.id.menu_general  , R.layout.img_general,
+	  	"screen_devices"  , DevicesActivity.class  , R.xml.prefs_devices  , R.id.menu_devices  , R.layout.img_devices,
+	  	"screen_proximity", ProximityActivity.class, R.xml.prefs_proximity, R.id.menu_proximity, R.layout.img_proximity,
+	  	"screen_speaker"  , SpeakerActivity.class  , R.xml.prefs_speaker  , R.id.menu_speaker  , R.layout.img_speaker,
+	  	"screen_volume"   , VolumeActivity.class   , R.xml.prefs_volume   , R.id.menu_vol      , R.layout.img_vol,
+	  	"screen_record"   , RecordActivity.class   , R.xml.prefs_record   , R.id.menu_rec      , R.layout.img_rec,
+	  	"screen_block"    , BlockerActivity.class  , R.xml.prefs_block    , R.id.menu_block    , R.layout.img_block,
+	  	"screen_tts"      , TtsActivity.class      , R.xml.prefs_tts      , R.id.menu_tts      , R.layout.img_tts,
+	  	"screen_urgent"   , UrgentActivity.class   , R.xml.prefs_urgent   , R.id.menu_urgent   , R.layout.img_urgent,
+	  	"screen_answer"   , AnswerActivity.class   , R.xml.prefs_answer   , R.id.menu_answer   , R.layout.img_answer,
+	  	"screen_anonym"   , AnonymActivity.class   , R.xml.prefs_anonym   , R.id.menu_anonym   , R.layout.img_anonym,
+	  	"screen_vibra"    , VibraActivity.class    , R.xml.prefs_vibra    , R.id.menu_vibra    , R.layout.img_vibra,
+	  	"screen_notify"   , NotifyActivity.class   , R.xml.prefs_notify   , R.id.menu_notify   , R.layout.img_notify,
+	  	"screen_about"    , AboutActivity.class    , R.xml.prefs_about    , R.id.menu_about    , R.layout.img_about,				
+		};
 	}
 
 	public static final Map<String,Pair<Integer,Integer>> intLabVals() {
@@ -78,6 +103,7 @@ public final class PrefGroups
 		m.put(K.TTS_PAUSE         , p(R.array.tts_pause_labels         , R.array.tts_pause_values));
 		m.put(K.URGENT_MODE       , p(R.array.urgent_mode_labels       , R.array.urgent_mode_values));
 		m.put(K.ANSWER_DELAY      , pd);
+		m.put(K.VIBRATE_MODE      , p(R.array.vibrate_mode_labels      , R.array.vibrate_mode_values));
 		return m;
 	}
 
